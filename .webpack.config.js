@@ -12,7 +12,7 @@ if (process.env.NODE_ENV === "development" ||
 
 module.exports = {
   devtool: webpackDevtool,
-  entry: ['babel-polyfill', config.files.srcJS],
+  entry: [config.files.srcJS],
   output: {filename: config.files.distJS},
   module: {
     loaders: [{
