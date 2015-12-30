@@ -15,9 +15,9 @@ var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
 var webpack = require('webpack');
 
-var config = require('./configuration');
+var config = require('./.build.config');
 var packageInfo = require('./package');
-var webpackConfig = require('./webpack.config.js');
+var webpackConfig = require('./.webpack.config');
 
 var development = process.env.NODE_ENV === 'development';
 
@@ -42,11 +42,11 @@ gulp.task('browsersync', function () {
 
 // Create a function so we can use it inside of webpack's watch function.
 function eslintFn () {
-  return gulp.src([config.dirs.srcJS + "/**/*.?(js|jsx)"])
+  return gulp.src([config.dirs.srcJS + '/**/*.?(js|jsx)'])
     .pipe(eslint())
-    .pipe(eslint.formatEach("stylish", process.stderr));
+    .pipe(eslint.formatEach('stylish', process.stderr));
 };
-gulp.task("eslint", eslintFn);
+gulp.task('eslint', eslintFn);
 
 gulp.task('images', function () {
   return gulp.src([
@@ -129,7 +129,7 @@ gulp.task('webpack', ['eslint'], function () {
       throw new gutil.PluginError('webpack', err);
     }
 
-    gutil.log("[webpack]", stats.toString({
+    gutil.log('[webpack]', stats.toString({
       children: false,
       chunks: false,
       colors: true,

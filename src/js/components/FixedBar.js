@@ -1,9 +1,15 @@
+import classnames from 'classnames';
 import React from 'react';
 
 export default class FixedBar extends React.Component {
   render() {
+    let classes = classnames({
+      [this.props.className]: true,
+      [this.props.layoutClassName]: true
+    });
+
     return (
-      <div className={`${this.props.className} ${this.props.layoutClassName}`}>
+      <div className={classes}>
         {this.props.children}
       </div>
     );

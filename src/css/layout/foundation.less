@@ -5,6 +5,10 @@ html {
 .application-wrapper {
   flex: 1;
   flex-direction: column;
+
+  &.has-navigation-bar {
+    padding-top: @fixed-bar-height;
+  }
 }
 
 .fixed-bar {
@@ -17,8 +21,4 @@ html {
 
 .page-wrapper {
   flex: 1;
-
-  &.has-navigation-bar {
-    padding-top: @fixed-bar-height;
-  }
 }
