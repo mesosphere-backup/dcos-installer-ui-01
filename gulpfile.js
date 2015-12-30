@@ -73,6 +73,10 @@ gulp.task('less', function () {
       paths: [config.dirs.cssSrc], // @import paths
       plugins: [colorLighten]
     }))
+    .on('error', function (err) {
+        gutil.log(err);
+        this.emit('end');
+    })
     .pipe(autoprefixer())
     .pipe(gulpif(development, sourcemaps.write()))
     .pipe(gulp.dest(config.dirs.distCSS))
