@@ -12,7 +12,7 @@ export default class NavigationItem extends React.Component {
     return (
       <Link className={classes} to={this.props.link}
         activeClassName={this.props.activeClassName}>
-        {this.props.label}
+        {this.props.children}
       </Link>
     );
   }
@@ -26,8 +26,8 @@ NavigationItem.defaultProps = {
 
 NavigationItem.propTypes = {
   activeClassName: React.PropTypes.string,
+  children: React.PropTypes.node,
   className: React.PropTypes.string,
   layoutClassName: React.PropTypes.string,
-  label: React.PropTypes.string,
-  link: React.PropTypes.string
+  link: React.PropTypes.string.isRequired
 };

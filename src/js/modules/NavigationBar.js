@@ -1,22 +1,35 @@
 import React from 'react';
 
 import FixedBar from '../components/FixedBar';
+import IconChevron from '../components/icons/IconChevron';
 import NavigationItem from '../components/NavigationItem';
+import NavigationNextStep from './NavigationNextStep';
 
 export default class NavigationBar extends React.Component {
   render() {
     return (
       <FixedBar className="navigation-bar">
-        <NavigationItem link="setup" label="Setup" />
-        <NavigationItem link="pre-flight" label="Pre-Flight" />
-        <NavigationItem link="deploy" label="Deploy" />
-        <NavigationItem link="post-flight" label="Post-Flight" />
-        <NavigationItem link="success" label="Success" />
+        <NavigationItem link="setup">
+          Setup
+        </NavigationItem>
+        <IconChevron />
+        <NavigationItem link="pre-flight">
+          Pre-Flight
+        </NavigationItem>
+        <IconChevron />
+        <NavigationItem link="deploy">
+          Deploy
+        </NavigationItem>
+        <IconChevron />
+        <NavigationItem link="post-flight">
+          Post-Flight
+        </NavigationItem>
+        <IconChevron />
+        <NavigationItem link="success">
+          Success
+        </NavigationItem>
+        <NavigationNextStep />
       </FixedBar>
     );
   }
 }
-
-NavigationBar.propTypes = {
-  children: React.PropTypes.node
-};

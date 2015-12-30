@@ -1,4 +1,84 @@
+@navigation-item-font-size: @body-text-font-size;
+@navigation-item-padding-vertical: @base-spacing-unit * 1/2;
+@navigation-item-padding-horizontal: @base-spacing-unit * 1/2;
+
+@navigation-item-chevron-fill: @navigation-item-inactive-foreground;
+
+@navigation-item-active-foreground: @white;
+@navigation-item-inactive-foreground: #80848F;
+@navigation-item-inactive-hover: color-lighten(@navigation-item-inactive-foreground, 20%);
+
+@navigation-item-next-font-size: @navigation-item-font-size * 4/5;
+@navigation-item-next-padding-horizontal: @base-spacing-unit;
+
+@navigation-item-next-active-background: @green;
+@navigation-item-next-active-foreground: @white;
+@navigation-item-next-active-chevron-fill: @navigation-item-next-active-foreground;
+@navigation-item-next-disabled-background: transparent;
+@navigation-item-next-disabled-foreground: #3E4352;
+@navigation-item-next-disabled-chevron-fill: @navigation-item-next-disabled-foreground;
+
 .navigation-bar {
   background: @neutral;
   color: @white;
+
+  .icon {
+    fill: @navigation-item-chevron-fill;
+    opacity: 0.8;
+  }
+}
+
+.navigation-item {
+  align-self: stretch;
+  align-items: center;
+  color: @navigation-item-inactive-foreground;
+  display: inline-flex;
+  font-size: @navigation-item-font-size;
+  padding: @navigation-item-padding-vertical @navigation-item-padding-horizontal;
+
+  &:hover {
+    color: @navigation-item-inactive-hover;
+    text-decoration: none;
+  }
+
+  &.is-active {
+    color: @navigation-item-active-foreground;
+  }
+
+  &.button {
+    border-radius: 0;
+    height: auto;
+  }
+}
+
+.navigation-item-next {
+  background: @navigation-item-next-active-background;
+  bottom: 0;
+  color: @navigation-item-next-active-foreground;
+  font-size: @navigation-item-next-font-size;
+  font-weight: 700;
+  padding-left: @navigation-item-next-padding-horizontal;
+  padding-right: @navigation-item-next-padding-horizontal;
+  position: absolute;
+  right: 0;
+  text-transform: uppercase;
+  top: 0;
+
+  &:hover {
+    color: @navigation-item-next-active-foreground;
+  }
+
+  &.is-disabled {
+    background: @navigation-item-next-disabled-background;
+    color: @navigation-item-next-disabled-foreground;
+
+    .icon {
+      fill: @navigation-item-next-disabled-chevron-fill;
+    }
+  }
+
+  .icon {
+    fill: @navigation-item-next-active-chevron-fill;
+    margin-left: @base-spacing-unit * 1/3;
+  }
 }
