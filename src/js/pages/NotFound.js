@@ -1,15 +1,15 @@
 import React from 'react';
 
-import Page from '../components/Page';
 import PageSection from '../components/PageSection';
+import PageWithNavigation from '../modules/PageWithNavigation';
 import SectionHeader from '../components/SectionHeader';
 import SectionHeaderIcon from '../components/SectionHeaderIcon';
 import SectionHeaderPrimary from '../components/SectionHeaderPrimary';
 
-export default class NotFound extends React.Component {
+module.exports = class NotFound extends React.Component {
   render() {
     return (
-      <Page hasNavigationBar={true}>
+      <PageWithNavigation hasNavigationBar={true}>
         <PageSection>
           <SectionHeader>
             <SectionHeaderIcon/>
@@ -18,7 +18,7 @@ export default class NotFound extends React.Component {
             </SectionHeaderPrimary>
           </SectionHeader>
         </PageSection>
-      </Page>
+      </PageWithNavigation>
     );
   }
 }

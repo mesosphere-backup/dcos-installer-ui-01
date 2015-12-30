@@ -8,7 +8,7 @@ import SectionHeaderIcon from '../components/SectionHeaderIcon';
 import SectionHeaderPrimary from '../components/SectionHeaderPrimary';
 import SectionFooter from '../components/SectionFooter';
 
-export default class Begin extends React.Component {
+module.exports = class Begin extends React.Component {
   render() {
     return (
       <Page hasNavigationBar={false}>

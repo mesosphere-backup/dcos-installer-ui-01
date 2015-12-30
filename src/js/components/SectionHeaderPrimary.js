@@ -1,12 +1,9 @@
 import classnames from 'classnames';
 import React from 'react';
 
-export default class SectionHeader extends React.Component {
+class SectionHeaderPrimary extends React.Component {
   render() {
-    let classes = classnames({
-      [this.props.className]: true,
-      [this.props.layoutClassName]: true
-    });
+    let classes = classnames(this.props.className, this.props.layoutClassName);
 
     return (
       <h1 className={classes}>
@@ -16,13 +13,15 @@ export default class SectionHeader extends React.Component {
   }
 }
 
-SectionHeader.defaultProps = {
-  className: 'section-header',
+SectionHeaderPrimary.defaultProps = {
+  className: 'section-header-primary',
   layoutClassName: 'text-align-center'
 };
 
-SectionHeader.propTypes = {
+SectionHeaderPrimary.propTypes = {
   children: React.PropTypes.node,
   className: React.PropTypes.string,
   layoutClassName: React.PropTypes.string
 };
+
+module.exports = SectionHeaderPrimary;

@@ -7,7 +7,6 @@ import {render} from 'react-dom';
 import Application from './modules/Application';
 import Begin from './pages/Begin';
 import Deploy from './pages/Deploy';
-import NavigationBar from './modules/NavigationBar';
 import NotFound from './pages/NotFound';
 import Postflight from './pages/Postflight';
 import Preflight from './pages/Preflight';
@@ -17,31 +16,13 @@ import Success from './pages/Success';
 render((
   <Router history={browserHistory}>
     <Route path="/" component={Application}>
-      <IndexRoute components={{view: Begin}}/>
-      <Route path="setup" components={{
-        view: Setup,
-        navigationBar: NavigationBar
-      }}/>
-      <Route path="pre-flight" components={{
-        view: Preflight,
-        navigationBar: NavigationBar
-      }}/>
-      <Route path="deploy" components={{
-        view: Deploy,
-        navigationBar: NavigationBar
-      }}/>
-      <Route path="post-flight" components={{
-        view: Postflight,
-        navigationBar: NavigationBar
-      }}/>
-      <Route path="success" components={{
-        view: Success,
-        navigationBar: NavigationBar
-      }}/>
-      <Route path="*" components={{
-        view: NotFound,
-        navigationBar: NavigationBar
-      }}/>
+      <IndexRoute components={Begin} />
+      <Route path="setup" components={Setup} />
+      <Route path="pre-flight" components={Preflight} />
+      <Route path="deploy" components={Deploy} />
+      <Route path="post-flight" components={Postflight} />
+      <Route path="success" components={Success} />
+      <Route path="*" components={NotFound} />
     </Route>
   </Router>
 ), document.getElementById('application'));

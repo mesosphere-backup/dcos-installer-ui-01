@@ -4,11 +4,9 @@ import React from 'react';
 import IconChevron from '../components/icons/IconChevron';
 import NavigationItem from '../components/NavigationItem';
 
-export default class NavigationNextStep extends React.Component {
+module.exports = class NavigationNextStep extends React.Component {
   render() {
-    let classes = classnames({
-      'navigation-item': true,
-      'navigation-item-next': true,
+    let classes = classnames('navigation-item', 'navigation-item-next', {
       'is-disabled': false
     });
 

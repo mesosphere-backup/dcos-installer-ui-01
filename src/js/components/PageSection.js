@@ -1,12 +1,9 @@
 import classnames from 'classnames';
 import React from 'react';
 
-export default class PageSection extends React.Component {
+class PageSection extends React.Component {
   render() {
-    let classes = classnames({
-      [this.props.className]: true,
-      [this.props.layoutClassName]: true
-    });
+    let classes = classnames(this.props.className, this.props.layoutClassName);
 
     return (
       <div className={classes}>
@@ -26,3 +23,5 @@ PageSection.propTypes = {
   className: React.PropTypes.string,
   layoutClassName: React.PropTypes.string
 };
+
+module.exports = PageSection;

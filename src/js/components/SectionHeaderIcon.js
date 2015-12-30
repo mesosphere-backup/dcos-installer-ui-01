@@ -1,12 +1,9 @@
 import classnames from 'classnames';
 import React from 'react';
 
-export default class SectionHeader extends React.Component {
+class SectionHeaderIcon extends React.Component {
   render() {
-    let classes = classnames({
-      [this.props.className]: true,
-      [this.props.layoutClassName]: true
-    });
+    let classes = classnames(this.props.className, this.props.layoutClassName);
 
     return (
       <div className={classes}>
@@ -16,13 +13,15 @@ export default class SectionHeader extends React.Component {
   }
 }
 
-SectionHeader.defaultProps = {
-  className: 'section-header',
+SectionHeaderIcon.defaultProps = {
+  className: 'section-header-icon',
   layoutClassName: ''
 };
 
-SectionHeader.propTypes = {
+SectionHeaderIcon.propTypes = {
   children: React.PropTypes.node,
   className: React.PropTypes.string,
   layoutClassName: React.PropTypes.string
 };
+
+module.exports = SectionHeaderIcon;
