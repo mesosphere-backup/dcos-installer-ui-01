@@ -20,8 +20,8 @@
     "react-dom": "^0.14.3",
     "react-router": "^1.0.3",
     "reactjs-components": "0.0.32",
-    "statics": "^0.1.0",
-    "underscore": "^1.8.3"
+    "reactjs-mixin": "0.0.2",
+    "statics": "^0.1.0"
   },
   "devDependencies": {
     "babel-core": "^6.3.26",
