@@ -22,7 +22,6 @@ Application.propTypes = {
   children: React.PropTypes.node,
   className: React.PropTypes.string,
   layoutClassName: React.PropTypes.string,
-  navigationBar: React.PropTypes.node,
   view: React.PropTypes.node
 };
 
