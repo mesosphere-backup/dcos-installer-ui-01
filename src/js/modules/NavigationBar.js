@@ -5,7 +5,7 @@ import IconChevron from '../components/icons/IconChevron';
 import NavigationItem from '../components/NavigationItem';
 import NavigationNextStep from './NavigationNextStep';
 
-export default class NavigationBar extends React.Component {
+module.exports = class NavigationBar extends React.Component {
   render() {
     return (
       <FixedBar className="navigation-bar">

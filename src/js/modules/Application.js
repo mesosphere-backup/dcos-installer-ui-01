@@ -1,18 +1,13 @@
 import classnames from 'classnames';
 import React from 'react';
 
-export default class Application extends React.Component {
+class Application extends React.Component {
   render() {
-    let classes = classnames({
-      'has-navigation-bar': this.props.navigationBar,
-      [this.props.className]: true,
-      [this.props.layoutClassName]: true
-    });
+    let classes = classnames(this.props.className, this.props.layoutClassName);
 
     return (
       <div className={classes}>
-        {this.props.navigationBar}
-        {this.props.view}
+        {this.props.children}
       </div>
     );
   }
@@ -27,6 +22,7 @@ Application.propTypes = {
   children: React.PropTypes.node,
   className: React.PropTypes.string,
   layoutClassName: React.PropTypes.string,
-  navigationBar: React.PropTypes.node,
   view: React.PropTypes.node
 };
+
+module.exports = Application;

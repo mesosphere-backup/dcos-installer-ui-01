@@ -1,12 +1,10 @@
 import classnames from 'classnames';
 import React from 'react';
 
-export default class Page extends React.Component {
+class Page extends React.Component {
   render() {
-    let classes = classnames({
-      'has-navigation-bar': this.props.hasNavigationBar,
-      [this.props.className]: true,
-      [this.props.layoutClassName]: true
+    let classes = classnames(this.props.className, this.props.layoutClassName, {
+      'has-navigation-bar': this.props.hasNavigationBar
     });
 
     return (
@@ -29,3 +27,5 @@ Page.propTypes = {
   hasNavigationBar: React.PropTypes.bool,
   layoutClassName: React.PropTypes.string
 };
+
+module.exports = Page;

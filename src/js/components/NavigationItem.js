@@ -2,12 +2,9 @@ import classnames from 'classnames';
 import {Link} from 'react-router';
 import React from 'react';
 
-export default class NavigationItem extends React.Component {
+class NavigationItem extends React.Component {
   render() {
-    let classes = classnames({
-      [this.props.className]: true,
-      [this.props.layoutClassName]: true
-    });
+    let classes = classnames(this.props.className, this.props.layoutClassName);
 
     return (
       <Link className={classes} to={this.props.link}
@@ -31,3 +28,5 @@ NavigationItem.propTypes = {
   layoutClassName: React.PropTypes.string,
   link: React.PropTypes.string.isRequired
 };
+
+module.exports = NavigationItem;
