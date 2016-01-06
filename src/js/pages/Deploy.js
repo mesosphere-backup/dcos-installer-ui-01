@@ -1,5 +1,6 @@
 import React from 'react';
 
+import IconCheckmark from '../components/icons/IconCheckmark';
 import PageSection from '../components/PageSection';
 import PageWithNavigation from '../modules/PageWithNavigation';
 import SectionBody from '../components/SectionBody';
@@ -15,7 +16,9 @@ module.exports = class Deploy extends React.Component {
       <PageWithNavigation hasNavigationBar={true}>
         <PageSection>
           <SectionHeader>
-            <SectionHeaderIcon/>
+            <SectionHeaderIcon>
+              <IconCheckmark />
+            </SectionHeaderIcon>
             <SectionHeaderPrimary>
               Deploying DCOS...
             </SectionHeaderPrimary>

@@ -7,7 +7,7 @@ class SectionHeaderIcon extends React.Component {
 
     return (
       <div className={classes}>
-        Icon
+        {this.props.children}
       </div>
     );
   }

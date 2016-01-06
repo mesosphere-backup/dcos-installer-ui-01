@@ -1,5 +1,6 @@
 import React from 'react';
 
+import IconSpinner from '../components/icons/IconSpinner';
 import PageSection from '../components/PageSection';
 import PageWithNavigation from '../modules/PageWithNavigation';
 import SectionBody from '../components/SectionBody';
@@ -15,7 +16,9 @@ module.exports = class Preflight extends React.Component {
       <PageWithNavigation hasNavigationBar={true}>
         <PageSection>
           <SectionHeader>
-            <SectionHeaderIcon/>
+            <SectionHeaderIcon>
+              <IconSpinner />
+            </SectionHeaderIcon>
             <SectionHeaderPrimary>
               Running Pre-Flight...
             </SectionHeaderPrimary>

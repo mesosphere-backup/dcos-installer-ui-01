@@ -1,6 +1,6 @@
 import React from 'react';
 
-module.exports = class IconInfo extends React.Component {
+module.exports = class IconChevron extends React.Component {
   render() {
     return (
       <svg

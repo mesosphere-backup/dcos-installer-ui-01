@@ -1,5 +1,6 @@
 import React from 'react';
 
+import IconError from '../components/icons/IconError';
 import PageSection from '../components/PageSection';
 import PageWithNavigation from '../modules/PageWithNavigation';
 import SectionBody from '../components/SectionBody';
@@ -15,7 +16,9 @@ module.exports = class Setup extends React.Component {
       <PageWithNavigation hasNavigationBar={true}>
         <PageSection>
           <SectionHeader>
-            <SectionHeaderIcon/>
+            <SectionHeaderIcon>
+              <IconError />
+            </SectionHeaderIcon>
             <SectionHeaderPrimary>
               Setup...
             </SectionHeaderPrimary>

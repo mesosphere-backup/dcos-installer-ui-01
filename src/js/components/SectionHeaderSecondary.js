@@ -15,7 +15,7 @@ class SectionHeaderSecondary extends React.Component {
 
 SectionHeaderSecondary.defaultProps = {
   className: 'section-header-secondary',
-  layoutClassName: 'text-align-center'
+  layoutClassName: 'flush text-align-center'
 };
 
 SectionHeaderSecondary.propTypes = {
