@@ -11,7 +11,7 @@ import SectionFooter from '../components/SectionFooter';
 module.exports = class Begin extends React.Component {
   render() {
     return (
-      <Page inverse={true} hasNavigationBar={false}>
+      <Page inverse={true}>
         <PageSection>
           <SectionHeader>
             <SectionHeaderIcon/>

@@ -1,0 +1,104 @@
+@progress-bar-margin-top: @base-spacing-unit * 1/4;
+@progress-bar-header-margin-bottom: @base-spacing-unit * 1/5;
+
+@progress-bar-label-foreground: #595E6C;
+@progress-bar-label-foreground-error: @red;
+@progress-bar-label-foreground-success: @green;
+@progress-bar-label-icon-margin-bottom: -0.15em;
+@progress-bar-label-icon-margin-right: @base-spacing-unit * 1/5;
+
+@progress-bar-progress-foreground: @progress-bar-label-foreground;
+@progress-bar-detail-font-size: @body-text-font-size * 7/8;
+@progress-bar-detail-foreground: #999;
+
+@progress-bar-border: fade(@black, 10%);
+
+@progress-bar-fill-height: 6px;
+@progress-bar-fill-error: @grey;
+@progress-bar-fill-ongoing: @blue;
+@progress-bar-fill-success: @green;
+
+.progress-bar {
+
+  & + .progress-bar {
+    margin-top: @progress-bar-margin-top;
+  }
+}
+
+.progress-bar-header {
+  display: flex;
+  font-weight: 500;
+  margin-bottom: @progress-bar-header-margin-bottom;
+}
+
+.progress-bar-label {
+  color: @progress-bar-label-foreground;
+  flex: 1 1 auto;
+
+  .is-erroneous & {
+    color: @progress-bar-label-foreground-error;
+  }
+
+  .is-successful & {
+    color: @progress-bar-label-foreground-success;
+  }
+
+  .icon {
+    margin-bottom: @progress-bar-label-icon-margin-bottom;
+    margin-right: @progress-bar-label-icon-margin-right;
+  }
+}
+
+.progress-bar-progress {
+  color: @progress-bar-progress-foreground;
+  flex: 0 0 auto;
+  text-align: right;
+}
+
+.progress-bar-fill-wrapper {
+  height: @progress-bar-fill-height;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+
+  &,
+  &:after {
+    border-radius: @progress-bar-fill-height;
+  }
+
+  &:after {
+    box-shadow: inset 0 0 0 1px @progress-bar-border;
+    content: '';
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    z-index: 2;
+  }
+}
+
+.progress-bar-fill {
+  background: @progress-bar-fill-ongoing;
+  height: 100%;
+  position: absolute;
+  z-index: 1;
+
+  .is-erroneous & {
+    background: @progress-bar-fill-error;
+  }
+
+  .is-successful & {
+    background: @progress-bar-fill-success;
+  }
+}
+
+.progress-bar-detail {
+  color: @progress-bar-detail-foreground;
+  font-size: @progress-bar-detail-font-size;
+
+  // This ensures there will always be at least one whitespace character in the
+  // element, because we want this element to always be the same height.
+  &:after {
+    content: '\00a0';
+    display: inline;
+  }
+}

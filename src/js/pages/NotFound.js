@@ -9,7 +9,7 @@ import SectionHeaderPrimary from '../components/SectionHeaderPrimary';
 module.exports = class NotFound extends React.Component {
   render() {
     return (
-      <PageWithNavigation hasNavigationBar={true}>
+      <PageWithNavigation>
         <PageSection>
           <SectionHeader>
             <SectionHeaderIcon/>

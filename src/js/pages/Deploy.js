@@ -1,8 +1,9 @@
 import React from 'react';
 
-import IconCheckmark from '../components/icons/IconCheckmark';
+import IconCircleCheckmark from '../components/icons/IconCircleCheckmark';
 import PageSection from '../components/PageSection';
 import PageWithNavigation from '../components/PageWithNavigation';
+import ProgressBar from '../components/ProgressBar';
 import SectionBody from '../components/SectionBody';
 import SectionHeader from '../components/SectionHeader';
 import SectionHeaderIcon from '../components/SectionHeaderIcon';
@@ -13,22 +14,24 @@ import SectionFooter from '../components/SectionFooter';
 module.exports = class Deploy extends React.Component {
   render() {
     return (
-      <PageWithNavigation hasNavigationBar={true}>
+      <PageWithNavigation>
         <PageSection>
           <SectionHeader>
             <SectionHeaderIcon>
-              <IconCheckmark />
+              <IconCircleCheckmark />
             </SectionHeaderIcon>
             <SectionHeaderPrimary>
-              Deploying DCOS...
+              Deploy Complete
             </SectionHeaderPrimary>
             <SectionHeaderSecondary>
               No Errors Found
             </SectionHeaderSecondary>
           </SectionHeader>
           <SectionBody>
-            Masters Progress<br />
-            Agents Progress
+            <ProgressBar label="Masters Deployed" progress={100}
+              state="success" />
+            <ProgressBar label="Agents Deployed" progress={100}
+              state="success" />
           </SectionBody>
           <SectionFooter>
             Actions

@@ -17,7 +17,7 @@ class SectionHeaderPrimary extends React.Component {
 
 SectionHeaderPrimary.defaultProps = {
   className: 'section-header-primary',
-  layoutClassName: 'flush text-align-center'
+  layoutClassName: 'flush-top text-align-center'
 };
 
 SectionHeaderPrimary.propTypes = {
