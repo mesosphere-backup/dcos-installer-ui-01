@@ -15,7 +15,7 @@ class SectionFooter extends React.Component {
 
 SectionFooter.defaultProps = {
   className: 'section-footer',
-  layoutClassName: ''
+  layoutClassName: 'text-align-center'
 };
 
 SectionFooter.propTypes = {

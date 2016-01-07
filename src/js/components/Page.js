@@ -4,7 +4,8 @@ import React from 'react';
 class Page extends React.Component {
   render() {
     let classes = classnames(this.props.className, this.props.layoutClassName, {
-      'has-navigation-bar': this.props.hasNavigationBar
+      'has-navigation-bar': this.props.hasNavigationBar,
+      'is-inverted': this.props.inverse
     });
 
     return (
@@ -25,6 +26,7 @@ Page.propTypes = {
   children: React.PropTypes.node,
   className: React.PropTypes.string,
   hasNavigationBar: React.PropTypes.bool,
+  inverse: React.PropTypes.bool,
   layoutClassName: React.PropTypes.string
 };
 

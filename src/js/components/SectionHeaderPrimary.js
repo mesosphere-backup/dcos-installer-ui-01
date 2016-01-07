@@ -3,7 +3,9 @@ import React from 'react';
 
 class SectionHeaderPrimary extends React.Component {
   render() {
-    let classes = classnames(this.props.className, this.props.layoutClassName);
+    let classes = classnames(this.props.className, this.props.layoutClassName, {
+      'inverse': this.props.inverse
+    });
 
     return (
       <h1 className={classes}>
@@ -21,6 +23,7 @@ SectionHeaderPrimary.defaultProps = {
 SectionHeaderPrimary.propTypes = {
   children: React.PropTypes.node,
   className: React.PropTypes.string,
+  inverse: React.PropTypes.bool,
   layoutClassName: React.PropTypes.string
 };
 

@@ -11,16 +11,16 @@ import SectionFooter from '../components/SectionFooter';
 module.exports = class Begin extends React.Component {
   render() {
     return (
-      <Page hasNavigationBar={false}>
+      <Page inverse={true} hasNavigationBar={false}>
         <PageSection>
           <SectionHeader>
             <SectionHeaderIcon/>
-            <SectionHeaderPrimary>
+            <SectionHeaderPrimary inverse={true}>
               Mesosphere DCOS 1.6
             </SectionHeaderPrimary>
           </SectionHeader>
           <SectionFooter>
-            <Link to="setup" className="button button-stroke">Begin</Link>
+            <Link to="setup" className="button button-stroke button-rounded button-inverse">Begin</Link>
           </SectionFooter>
         </PageSection>
       </Page>
