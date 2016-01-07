@@ -1,0 +1,143 @@
+@tooltip-background: @neutral;
+@tooltip-foreground: @white;
+@tooltip-padding-vertical: @base-spacing-unit * 1/2;
+@tooltip-padding-horizontal: @base-spacing-unit;
+@tooltip-arrow-border-width: 7px;
+@tooltip-arrow-offset: 8px;
+
+.tooltip-wrapper {
+  display: inline-block;
+  position: relative;
+}
+
+.tooltip {
+  background: @tooltip-background;
+  color: @tooltip-foreground;
+  opacity: 0;
+  padding: @tooltip-padding-vertical @tooltip-padding-horizontal;
+  position: absolute;
+  transition: opacity 0.3s, visibility 0.5s;
+  white-space: nowrap;
+  visibility: hidden;
+
+  &:after {
+    border-color: @tooltip-background;
+    border-style: solid;
+    border-width: @tooltip-arrow-border-width;
+    content: '';
+    position: absolute;
+  }
+
+  &.wrap-text {
+    white-space: normal;
+  }
+
+  &.is-open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  &.position-bottom,
+  &.position-top {
+
+    &.anchor-center {
+      left: 50%;
+      transform: translateX(-50%);
+
+      &:after {
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    }
+
+    &.anchor-start {
+      left: @tooltip-arrow-offset * -1px;
+
+      &:after {
+        left: @tooltip-arrow-offset;
+      }
+    }
+
+    &.anchor-end {
+      right: @tooltip-arrow-offset * -1px;
+
+      &:after {
+        right: @tooltip-arrow-offset;
+      }
+    }
+  }
+
+  &.position-bottom {
+    top: calc(~"100% + @{tooltip-arrow-border-width}");
+
+    &:after {
+      border-left-color: transparent;
+      border-right-color: transparent;
+      border-top: none;
+      bottom: 100%;
+    }
+  }
+
+  &.position-top {
+    bottom: calc(~"100% + @{tooltip-arrow-border-width}");
+
+    &:after {
+      border-bottom: none;
+      border-left-color: transparent;
+      border-right-color: transparent;
+      top: 100%;
+    }
+  }
+
+  &.position-left,
+  &.position-right {
+
+    &.anchor-center {
+      top: 50%;
+      transform: translateY(-50%);
+
+      &:after {
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    }
+
+    &.anchor-start {
+      top: @tooltip-arrow-offset * -1px;
+
+      &:after {
+        top: @tooltip-arrow-offset;
+      }
+    }
+
+    &.anchor-end {
+      bottom: @tooltip-arrow-offset * -1px;
+
+      &:after {
+        bottom: @tooltip-arrow-offset;
+      }
+    }
+  }
+
+  &.position-left {
+    right: calc(~"100% + @{tooltip-arrow-border-width}");
+
+    &:after {
+      border-bottom-color: transparent;
+      border-right: none;
+      border-top-color: transparent;
+      left: 100%;
+    }
+  }
+
+  &.position-right {
+    left: calc(~"100% + @{tooltip-arrow-border-width}");
+
+    &:after {
+      border-bottom-color: transparent;
+      border-left: none;
+      border-top-color: transparent;
+      right: 100%;
+    }
+  }
+}
