@@ -5,6 +5,8 @@ import React from 'react';
 /* eslint-enable no-unused-vars */
 import {StoreMixin} from 'mesosphere-shared-reactjs';
 
+import IconDownload from './icons/IconDownload';
+
 const METHODS_TO_BIND = [
   'handleModalClose',
   'handleServerError',
@@ -72,7 +74,14 @@ class APIErrorModal extends mixin(StoreMixin) {
         <button
           className="button button-stroke button-rounded button-large"
           onClick={this.handleDownloadLogs} >
-          Download Logs
+          <ul className="list-inline">
+            <li>
+              <IconDownload />
+            </li>
+            <li>
+              Download Logs
+            </li>
+          </ul>
         </button>
       </div>
     );
