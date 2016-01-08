@@ -6,7 +6,6 @@ import PreFlightStore from '../stores/PreFlightStore';
 import SetupStore from '../stores/SetupStore';
 
 const ListenersDescription = {
-
   deploy: {
     store: DeployStore,
     events: {
@@ -62,7 +61,6 @@ const ListenersDescription = {
     },
     listenAlways: true
   }
-
 };
 
 module.exports = ListenersDescription;
