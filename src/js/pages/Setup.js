@@ -9,6 +9,7 @@ import SectionHeaderIcon from '../components/SectionHeaderIcon';
 import SectionHeaderPrimary from '../components/SectionHeaderPrimary';
 import SectionHeaderSecondary from '../components/SectionHeaderSecondary';
 import SectionFooter from '../components/SectionFooter';
+import Tooltip from '../components/Tooltip';
 
 module.exports = class Setup extends React.Component {
   render() {
@@ -21,6 +22,7 @@ module.exports = class Setup extends React.Component {
             </SectionHeaderIcon>
             <SectionHeaderPrimary>
               Setup...
+              <Tooltip content="I'm a tooltip!" />
             </SectionHeaderPrimary>
             <SectionHeaderSecondary>
               No Errors Found
