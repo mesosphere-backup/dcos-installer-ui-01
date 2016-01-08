@@ -24,7 +24,7 @@
   "rules": {
     "eqeqeq": [2, "smart"],
     "quotes": [2, "single"],
-    "indent": [2, 2],
+    "indent": [2, 2, {"SwitchCase": 1}],
     "camelcase": [2, {"properties": "never"}],
     "camelcase": [2, {"properties": "always"}],
     "strict": [2, "global"],

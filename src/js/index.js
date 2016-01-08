@@ -2,6 +2,8 @@ import createHistory from 'history/lib/createHashHistory';
 import {IndexRoute, Route, Router} from 'react-router';
 import React from 'react';
 
+require('./utils/StoreMixinConfig');
+
 import Application from './components/Application';
 import Begin from './pages/Begin';
 import Deploy from './pages/Deploy';
