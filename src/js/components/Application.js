@@ -1,8 +1,6 @@
 import classnames from 'classnames';
 import React from 'react';
 
-import APIErrorModal from '../components/APIErrorModal';
-
 class Application extends React.Component {
   render() {
     let classes = classnames(this.props.className, this.props.layoutClassName);
@@ -10,7 +8,6 @@ class Application extends React.Component {
     return (
       <div className={classes}>
         {this.props.children}
-        <APIErrorModal />
       </div>
     );
   }

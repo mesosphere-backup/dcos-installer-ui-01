@@ -1,5 +1,6 @@
 import React from 'react';
 
+import ErrorLabel from '../components/ErrorLabel';
 import IconSpinner from '../components/icons/IconSpinner';
 import PageSection from '../components/PageSection';
 import PageWithNavigation from '../components/PageWithNavigation';
@@ -24,7 +25,7 @@ module.exports = class Preflight extends React.Component {
               Running Pre-Flight...
             </SectionHeaderPrimary>
             <SectionHeaderSecondary>
-              No Errors Found
+              <ErrorLabel step="preflight" />
             </SectionHeaderSecondary>
           </SectionHeader>
           <SectionBody>

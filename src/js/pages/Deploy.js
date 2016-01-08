@@ -1,5 +1,6 @@
 import React from 'react';
 
+import ErrorLabel from '../components/ErrorLabel';
 import IconCircleCheckmark from '../components/icons/IconCircleCheckmark';
 import PageSection from '../components/PageSection';
 import PageWithNavigation from '../components/PageWithNavigation';
@@ -24,7 +25,7 @@ module.exports = class Deploy extends React.Component {
               Deploy Complete
             </SectionHeaderPrimary>
             <SectionHeaderSecondary>
-              No Errors Found
+              <ErrorLabel step="deploy" />
             </SectionHeaderSecondary>
           </SectionHeader>
           <SectionBody>

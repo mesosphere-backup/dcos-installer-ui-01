@@ -1,5 +1,6 @@
 import React from 'react';
 
+import ErrorLabel from '../components/ErrorLabel';
 import IconWarning from '../components/icons/IconWarning';
 import PageSection from '../components/PageSection';
 import PageWithNavigation from '../components/PageWithNavigation';
@@ -24,7 +25,7 @@ module.exports = class Postflight extends React.Component {
               Running Post-Flight...
             </SectionHeaderPrimary>
             <SectionHeaderSecondary>
-              No Errors Found
+              <ErrorLabel step="postflight" />
             </SectionHeaderSecondary>
           </SectionHeader>
           <SectionBody>

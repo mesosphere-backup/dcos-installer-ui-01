@@ -8,59 +8,17 @@ import {StoreMixin} from 'mesosphere-shared-reactjs';
 import IconDownload from './icons/IconDownload';
 
 const METHODS_TO_BIND = [
-  'handleModalClose',
-  'handleServerError',
   'handleDownloadLogs'
 ];
-
-function getEventsFromStoreListeners(storeListeners) {
-  let events = [];
-
-  storeListeners.forEach((store) => {
-    store.events.forEach((storeEvent) => {
-      events.push(this.store_getChangeFunctionName(store.name, storeEvent));
-    });
-  });
-
-  return events;
-}
 
 class APIErrorModal extends mixin(StoreMixin) {
   constructor() {
     super();
 
-    this.state = {
-      isOpen: false,
-      errors: []
-    };
-
-    this.store_listeners = [
-      // Add stores here.
-    ];
+    this.store_listeners = [];
 
     METHODS_TO_BIND.forEach((method) => {
       this[method] = this[method].bind(this);
-    });
-
-    let events = getEventsFromStoreListeners.call(this, this.store_listeners);
-    events.forEach((event) => {
-      this[event] = this.handleServerError;
-    });
-  }
-
-  handleModalClose() {
-    this.setState({
-      isOpen: false,
-      errors: []
-    });
-  }
-
-  handleServerError(id, errorMessage) {
-    let errors = this.state.errors.concat([errorMessage]);
-
-    this.setState({
-      errors,
-      isOpen: true
     });
   }
 
@@ -88,7 +46,7 @@ class APIErrorModal extends mixin(StoreMixin) {
   }
 
   getContent() {
-    let errors = this.state.errors.map(function (error) {
+    let errors = this.props.errors.map(function (error) {
       return (
         <div className="error-message-container">
           <p key="errorMessage">
@@ -117,8 +75,8 @@ class APIErrorModal extends mixin(StoreMixin) {
         innerBodyClass="modal-content-inner"
         maxHeightPercentage={0.6}
         modalClass="modal modal-large"
-        onClose={this.handleModalClose}
-        open={this.state.isOpen}
+        onClose={this.props.onClose}
+        open={this.props.open}
         showCloseButton={false}
         showHeader={false}
         showFooter={true}>
@@ -127,5 +85,10 @@ class APIErrorModal extends mixin(StoreMixin) {
     );
   }
 }
+
+APIErrorModal.propTypes = {
+  errors: React.PropTypes.array,
+  open: React.PropTypes.bool
+};
 
 module.exports = APIErrorModal;
