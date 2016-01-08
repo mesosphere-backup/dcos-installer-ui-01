@@ -1,7 +1,13 @@
 @tooltip-background: @neutral;
-@tooltip-foreground: @white;
+@tooltip-foreground: #D6D7DA;
+
+@tooltip-border-radius: 3px;
+@tooltip-font-size: @body-text-font-size * 1.125;
+@tooltip-line-height: @body-text-line-height * 1.125;
+
 @tooltip-padding-vertical: @base-spacing-unit * 1/2;
 @tooltip-padding-horizontal: @base-spacing-unit;
+
 @tooltip-arrow-border-width: 7px;
 @tooltip-arrow-offset: 8px;
 
@@ -12,11 +18,14 @@
 
 .tooltip {
   background: @tooltip-background;
+  border-radius: @tooltip-border-radius;
   color: @tooltip-foreground;
+  font-size: @tooltip-font-size;
+  line-height: @tooltip-line-height;
   opacity: 0;
   padding: @tooltip-padding-vertical @tooltip-padding-horizontal;
   position: absolute;
-  transition: opacity 0.3s, visibility 0.5s;
+  transition: opacity 0.3s, visibility 0.3s;
   white-space: nowrap;
   visibility: hidden;
 
