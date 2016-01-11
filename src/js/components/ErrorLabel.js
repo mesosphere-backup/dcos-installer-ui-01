@@ -24,7 +24,6 @@ class ErrorLabel extends React.Component {
   }
 
   handleErrorClose() {
-    console.log('happened');
     this.setState({openErrorModal: false});
   }
 
