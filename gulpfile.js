@@ -8,7 +8,7 @@ var gulpif = require('gulp-if');
 var gutil = require('gulp-util');
 var imagemin = require('gulp-imagemin');
 var less = require('gulp-less');
-var minifyCSS = require('gulp-minify-css');
+var cssNano = require('gulp-cssnano');
 var replace = require('gulp-replace');
 var spawn = require('child_process').spawn;
 var sourcemaps = require('gulp-sourcemaps');
@@ -85,7 +85,7 @@ gulp.task('less', function () {
 
 gulp.task('minify-css', ['less'], function () {
   return gulp.src(config.files.distCSS)
-    .pipe(minifyCSS())
+    .pipe(cssNano())
     .pipe(gulp.dest(config.dirs.distCSS));
 });
 
