@@ -4,7 +4,7 @@ import React from 'react';
 /* eslint-enable no-unused-vars */
 import {render} from 'react-dom';
 
-import Application from './modules/Application';
+import Application from './components/Application';
 import Begin from './pages/Begin';
 import Deploy from './pages/Deploy';
 import NotFound from './pages/NotFound';
