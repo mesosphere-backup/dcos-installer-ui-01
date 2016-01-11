@@ -2,7 +2,7 @@ import React from 'react';
 
 import IconError from '../components/icons/IconError';
 import PageSection from '../components/PageSection';
-import PageWithNavigation from '../modules/PageWithNavigation';
+import PageWithNavigation from '../components/PageWithNavigation';
 import SectionBody from '../components/SectionBody';
 import SectionHeader from '../components/SectionHeader';
 import SectionHeaderIcon from '../components/SectionHeaderIcon';
