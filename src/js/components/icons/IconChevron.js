@@ -1,10 +1,15 @@
+import classnames from 'classnames';
 import React from 'react';
 
-module.exports = class IconChevron extends React.Component {
+class IconChevron extends React.Component {
   render() {
+    let classes = classnames('icon icon-chevron', {
+      'reversed': this.props.reversed
+    });
+
     return (
       <svg
-        className="icon icon-chevron"
+        className={classes}
         height="10px"
         viewBox="0 0 7 10"
         width="7px"
@@ -14,3 +19,9 @@ module.exports = class IconChevron extends React.Component {
     );
   }
 }
+
+IconChevron.propTypes = {
+  reversed: React.PropTypes.bool
+};
+
+module.exports = IconChevron;
