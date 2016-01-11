@@ -1,7 +1,6 @@
-import {browserHistory, IndexRoute, Route, Router} from 'react-router';
-/* eslint-disable no-unused-vars */
+import createHistory from 'history/lib/createHashHistory';
+import {IndexRoute, Route, Router} from 'react-router';
 import React from 'react';
-/* eslint-enable no-unused-vars */
 
 import Application from './components/Application';
 import Begin from './pages/Begin';
@@ -12,8 +11,12 @@ import Preflight from './pages/Preflight';
 import Setup from './pages/Setup';
 import Success from './pages/Success';
 
+let history = createHistory({
+  queryKey: false
+});
+
 React.render((
-  <Router history={browserHistory}>
+  <Router history={history}>
     <Route path="/" component={Application}>
       <IndexRoute components={Begin} />
       <Route path="setup" components={Setup} />
