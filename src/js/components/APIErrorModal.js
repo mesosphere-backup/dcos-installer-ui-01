@@ -46,13 +46,13 @@ class APIErrorModal extends mixin(StoreMixin) {
   }
 
   getContent() {
-    let errors = this.props.errors.map(function (error) {
+    let errors = this.props.errors.map(function (error, i) {
       return (
-        <div className="error-message-container">
-          <p key="errorMessage">
+        <div key={i} className="error-message-container">
+          <p>
             {error.message}
           </p>
-          <p className="emphasize flush-bottom" key="errorIP">
+          <p className="emphasize flush-bottom">
             {error.ip}
           </p>
         </div>
@@ -60,7 +60,7 @@ class APIErrorModal extends mixin(StoreMixin) {
     });
 
     return (
-      <div>
+      <div className="modal-body container-pod flush-bottom modal-content">
         {errors}
       </div>
     );
@@ -69,15 +69,14 @@ class APIErrorModal extends mixin(StoreMixin) {
   render() {
     return (
       <Modal
-        bodyClass="modal-body container-pod flush-bottom modal-content"
         footer={this.getFooter()}
         headerContainerClass="container container-pod container-pod-short"
-        innerBodyClass="modal-content-inner"
+        innerBodyClass=""
         maxHeightPercentage={0.6}
         modalClass="modal modal-large"
         onClose={this.props.onClose}
         open={this.props.open}
-        showCloseButton={false}
+        showCloseButton={true}
         showHeader={false}
         showFooter={true}>
         {this.getContent()}
