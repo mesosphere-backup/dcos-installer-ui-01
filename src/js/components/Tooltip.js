@@ -1,6 +1,5 @@
 import classnames from 'classnames';
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 import IconTooltip from './icons/IconTooltip';
 
@@ -32,7 +31,7 @@ class Tooltip extends React.Component {
     if (this.refs.tooltipContent) {
       let viewportHeight = global.window.innerHeight;
       let viewportWidth = global.window.innerWidth;
-      let tooltipContent = ReactDOM.findDOMNode(this.refs.tooltipContent);
+      let tooltipContent = React.findDOMNode(this.refs.tooltipContent);
       let tooltipPosition = tooltipContent.getBoundingClientRect();
 
       // Change the position if the tooltip will be rendered off the screen.
