@@ -13,23 +13,23 @@ module.exports = class NavigationBar extends React.Component {
       <FixedBar className="navigation-bar">
         <NavigationPreviousStep />
         <NavigationItems>
-          <NavigationItem link="setup">
+          <NavigationItem link="/setup">
             Setup
           </NavigationItem>
           <IconChevron />
-          <NavigationItem link="pre-flight">
+          <NavigationItem link="/pre-flight">
             Pre-Flight
           </NavigationItem>
           <IconChevron />
-          <NavigationItem link="deploy">
+          <NavigationItem link="/deploy">
             Deploy
           </NavigationItem>
           <IconChevron />
-          <NavigationItem link="post-flight">
+          <NavigationItem link="/post-flight">
             Post-Flight
           </NavigationItem>
           <IconChevron />
-          <NavigationItem link="success">
+          <NavigationItem link="/success">
             Success
           </NavigationItem>
         </NavigationItems>

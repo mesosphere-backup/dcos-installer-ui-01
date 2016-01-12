@@ -1,6 +1,6 @@
 import createHistory from 'history/lib/createHashHistory';
-import {IndexRoute, Route, Router} from 'react-router';
 import React from 'react';
+import {Route, Router} from 'react-router';
 
 require('./utils/StoreMixinConfig');
 
@@ -19,14 +19,14 @@ let history = createHistory({
 
 React.render((
   <Router history={history}>
+    <Route path="/" component={Begin} />
     <Route path="/" component={Application}>
-      <IndexRoute components={Begin} />
-      <Route path="setup" components={Setup} />
-      <Route path="pre-flight" components={Preflight} />
-      <Route path="deploy" components={Deploy} />
-      <Route path="post-flight" components={Postflight} />
-      <Route path="success" components={Success} />
-      <Route path="*" components={NotFound} />
+      <Route path="setup" component={Setup} />
+      <Route path="pre-flight" component={Preflight} />
+      <Route path="deploy" component={Deploy} />
+      <Route path="post-flight" component={Postflight} />
+      <Route path="success" component={Success} />
+      <Route path="*" component={NotFound} />
     </Route>
   </Router>
 ), document.getElementById('application'));

@@ -2,7 +2,7 @@ import React from 'react';
 
 import IconError from '../components/icons/IconError';
 import PageSection from '../components/PageSection';
-import PageWithNavigation from '../components/PageWithNavigation';
+import Page from '../components/Page';
 import SectionBody from '../components/SectionBody';
 import SectionHeader from '../components/SectionHeader';
 import SectionHeaderIcon from '../components/SectionHeaderIcon';
@@ -13,7 +13,7 @@ import Tooltip from '../components/Tooltip';
 module.exports = class Setup extends React.Component {
   render() {
     return (
-      <PageWithNavigation>
+      <Page hasNavigationBar={true}>
         <PageSection>
           <SectionHeader>
             <SectionHeaderIcon>
@@ -31,7 +31,7 @@ module.exports = class Setup extends React.Component {
             Actions
           </SectionFooter>
         </PageSection>
-      </PageWithNavigation>
+      </Page>
     );
   }
 }

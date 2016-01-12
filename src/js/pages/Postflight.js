@@ -2,8 +2,8 @@ import React from 'react';
 
 import ErrorLabel from '../components/ErrorLabel';
 import IconWarning from '../components/icons/IconWarning';
+import Page from '../components/Page';
 import PageSection from '../components/PageSection';
-import PageWithNavigation from '../components/PageWithNavigation';
 import ProgressBar from '../components/ProgressBar';
 import SectionBody from '../components/SectionBody';
 import SectionHeader from '../components/SectionHeader';
@@ -15,7 +15,7 @@ import SectionFooter from '../components/SectionFooter';
 module.exports = class Postflight extends React.Component {
   render() {
     return (
-      <PageWithNavigation>
+      <Page hasNavigationBar={true}>
         <PageSection>
           <SectionHeader>
             <SectionHeaderIcon>
@@ -38,7 +38,7 @@ module.exports = class Postflight extends React.Component {
             Actions
           </SectionFooter>
         </PageSection>
-      </PageWithNavigation>
+      </Page>
     );
   }
 }

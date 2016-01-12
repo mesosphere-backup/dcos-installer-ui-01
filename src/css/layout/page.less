@@ -1,4 +1,5 @@
 .page-wrapper {
+  align-self: stretch;
   flex: 1;
 
   &.is-inverted {
@@ -13,4 +14,73 @@
 .page-section {
   max-width: 350px;
   width: 100%;
+}
+
+.page-transition-wrapper,
+.page-transition-container {
+  align-self: stretch;
+  flex: 1;
+}
+
+.page-transition-wrapper {
+  position: relative;
+}
+
+.page-transition-container {
+  height: auto;
+  left: 0;
+  min-height: 100%;
+  min-width: 100%;
+  position: absolute;
+  top: 0;
+  transform: translateX(0);
+  transition: transform 1s;
+}
+
+.page-transition-forward-enter {
+  transform: translateX(100%);
+
+  & + .page-transition-forward-enter {
+    transform: translateX(-100%);
+  }
+
+  & + .page-transition-forward-enter-active {
+    transform: translateX(0);
+  }
+}
+
+.page-transition-forward-enter-active {
+  transform: translateX(0);
+}
+
+.page-transition-forward-leave {
+  transform: translateX(0);
+}
+
+.page-transition-forward-leave-active {
+  transform: translateX(-100%);
+}
+
+.page-transition-backward-enter {
+  transform: translateX(-100%);
+
+  & + .page-transition-backward-enter {
+    transform: translateX(100%);
+  }
+
+  & + .page-transition-backward-enter-active {
+    transform: translateX(0);
+  }
+}
+
+.page-transition-backward-enter-active {
+  transform: translateX(0);
+}
+
+.page-transition-backward-leave {
+  transform: translateX(0);
+}
+
+.page-transition-backward-leave-active {
+  transform: translateX(100%);
 }

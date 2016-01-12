@@ -1,7 +1,7 @@
 import React from 'react';
 
 import PageSection from '../components/PageSection';
-import PageWithNavigation from '../components/PageWithNavigation';
+import Page from '../components/Page';
 import SectionHeader from '../components/SectionHeader';
 import SectionHeaderIcon from '../components/SectionHeaderIcon';
 import SectionHeaderPrimary from '../components/SectionHeaderPrimary';
@@ -9,7 +9,7 @@ import SectionHeaderPrimary from '../components/SectionHeaderPrimary';
 module.exports = class NotFound extends React.Component {
   render() {
     return (
-      <PageWithNavigation>
+      <Page hasNavigationBar={true}>
         <PageSection>
           <SectionHeader>
             <SectionHeaderIcon/>
@@ -18,7 +18,7 @@ module.exports = class NotFound extends React.Component {
             </SectionHeaderPrimary>
           </SectionHeader>
         </PageSection>
-      </PageWithNavigation>
+      </Page>
     );
   }
 }

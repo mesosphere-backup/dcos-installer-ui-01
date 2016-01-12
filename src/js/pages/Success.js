@@ -1,7 +1,7 @@
 import React from 'react';
 
 import PageSection from '../components/PageSection';
-import PageWithNavigation from '../components/PageWithNavigation';
+import Page from '../components/Page';
 import SectionBody from '../components/SectionBody';
 import SectionHeader from '../components/SectionHeader';
 import SectionHeaderIcon from '../components/SectionHeaderIcon';
@@ -11,7 +11,7 @@ import SectionFooter from '../components/SectionFooter';
 module.exports = class Success extends React.Component {
   render() {
     return (
-      <PageWithNavigation>
+      <Page hasNavigationBar={true}>
         <PageSection>
           <SectionHeader>
             <SectionHeaderIcon/>
@@ -26,7 +26,7 @@ module.exports = class Success extends React.Component {
             Actions
           </SectionFooter>
         </PageSection>
-      </PageWithNavigation>
+      </Page>
     );
   }
 }
