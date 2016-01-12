@@ -28,18 +28,16 @@ class Upload extends React.Component {
     this.uploadFile(e.target.files[0]);
   }
 
-  handleUploadFinish() {
-    return (e) => {
-      this.props.onUploadFinish(e.target.result);
-      this.setState({uploading: false});
-    };
+  handleUploadFinish(e) {
+    this.props.onUploadFinish(e.target.result);
+    this.setState({uploading: false});
   }
 
   uploadFile(file) {
     var reader = new FileReader();
 
     // Listen for file to be done uploading.
-    reader.onload = this.handleUploadFinish();
+    reader.onload = this.handleUploadFinish;
 
     // Begin to read in the file.
     reader.readAsText(file);
@@ -52,11 +50,11 @@ class Upload extends React.Component {
     }
 
     return (
-      <a onClick={this.handleUploadClick}>
+      <a className="clickable" onClick={this.handleUploadClick}>
         {displayText}
         <input
           ref="uploadInput"
-          style={{display: 'none'}}
+          className="hidden"
           type="file"
           onChange={this.handleUpload} />
       </a>
