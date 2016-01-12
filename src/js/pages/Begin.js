@@ -20,7 +20,7 @@ module.exports = class Begin extends React.Component {
             </SectionHeaderPrimary>
           </SectionHeader>
           <SectionFooter>
-            <Link to="setup" className="button button-stroke button-rounded button-inverse">Begin</Link>
+            <Link to="/setup" className="button button-stroke button-rounded button-inverse">Begin</Link>
           </SectionFooter>
         </PageSection>
       </Page>
