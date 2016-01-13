@@ -19,7 +19,9 @@
     "react-router": "^1.0.3",
     "reactjs-components": "0.0.32",
     "reactjs-mixin": "0.0.2",
-    "underscore": "^1.7.0"
+    "statics": "^0.1.0",
+    "underscore": "^1.7.0",
+    "zxcvbn": "^4.2.0"
   },
   "devDependencies": {
     "babel-core": "^6.3.26",
