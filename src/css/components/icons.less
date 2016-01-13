@@ -28,6 +28,47 @@
   fill: @red;
 }
 
+.icon-password-strength {
+  fill: #ee2133;
+
+  .bar {
+    fill: @password-strength-neutral;
+    fill-rule: evenodd;
+    opacity: 0.9;
+  }
+
+  &.strength-1 {
+
+    .bar-1 {
+      fill: @password-strength-red;
+    }
+  }
+
+  &.strength-2 {
+
+    .bar-1,
+    .bar-2 {
+      fill: @password-strength-orange;
+    }
+  }
+
+  &.strength-3 {
+
+    .bar-1,
+    .bar-2,
+    .bar-3 {
+      fill: @password-strength-yellow;
+    }
+  }
+
+  &.strength-4 {
+
+    .bar {
+      fill: @password-strength-green;
+    }
+  }
+}
+
 .icon-spinner {
   animation: icon-spinner 2s linear infinite;
 }

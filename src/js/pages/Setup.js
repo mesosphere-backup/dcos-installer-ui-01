@@ -3,6 +3,7 @@ import React from 'react';
 import IconError from '../components/icons/IconError';
 import PageSection from '../components/PageSection';
 import Page from '../components/Page';
+import PasswordStrengthMeter from '../components/PasswordStrengthMeter';
 import SectionBody from '../components/SectionBody';
 import SectionHeader from '../components/SectionHeader';
 import SectionHeaderIcon from '../components/SectionHeaderIcon';
