@@ -16,14 +16,14 @@
     "flux": "^2.1.1",
     "history": "^1.17.0",
     "less-color-lighten": "0.0.1",
-    "mesosphere-shared-reactjs": "0.0.5",
+    "mesosphere-shared-reactjs": "0.0.6",
     "morgan": "^1.6.1",
     "react": "^0.13.3",
     "react-router": "^1.0.3",
     "reactjs-components": "0.0.32",
     "reactjs-mixin": "0.0.2",
     "statics": "^0.1.0",
-    "underscore": "^1.8.3"
+    "underscore": "^1.7.0"
   },
   "devDependencies": {
     "babel-core": "^6.3.26",
