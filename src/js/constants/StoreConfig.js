@@ -20,6 +20,7 @@ const ListenersDescription = {
   installer: {
     store: InstallerStore,
     events: {
+      currentStageChange: EventTypes.CURRENT_STAGE_CHANGE,
       installInProgressChange: EventTypes.GLOBAL_INSTALL_IN_PROGRESS_CHANGE,
       nextStepChange: EventTypes.GLOBAL_NEXT_STEP_CHANGE
     },

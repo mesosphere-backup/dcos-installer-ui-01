@@ -9,6 +9,7 @@ let InstallerStore = Store.createStore({
 
   init: function () {
     this.set({
+      currentStage: null,
       dcosURL: null,
       installInProgress: false,
       nextStep: {
@@ -28,11 +29,15 @@ let InstallerStore = Store.createStore({
     this.removeListener(eventName, callback);
   },
 
+  getCurrentStage: function () {
+
+  },
+
   setInstallInProgress: function (installInProgress) {
     InstallerStore.set({
       installInProgress: installInProgress
     });
-    InstallerStore.emitChange(EventTypes.GLOBAL_INSTALL_IN_PROGRESS_CHANGE);
+    InstallerStore.emit(EventTypes.GLOBAL_INSTALL_IN_PROGRESS_CHANGE);
   },
 
   setNextStep: function (stepData) {
@@ -42,7 +47,7 @@ let InstallerStore = Store.createStore({
       link: stepData.link,
       visible: stepData.visible
     });
-    InstallerStore.emitChange(EventTypes.GLOBAL_NEXT_STEP_CHANGE);
+    InstallerStore.emit(EventTypes.GLOBAL_NEXT_STEP_CHANGE);
   }
 });
 
