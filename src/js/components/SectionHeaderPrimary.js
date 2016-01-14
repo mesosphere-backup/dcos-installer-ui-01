@@ -3,9 +3,10 @@ import React from 'react';
 
 class SectionHeaderPrimary extends React.Component {
   render() {
-    let classes = classnames(this.props.className, this.props.layoutClassName, {
-      'inverse': this.props.inverse
-    });
+    let classes = classnames(this.props.className, this.props.layoutClassName,
+      `text-align-${this.props.align}`, {
+        'inverse': this.props.inverse
+      });
 
     return (
       <h1 className={classes}>
@@ -16,11 +17,13 @@ class SectionHeaderPrimary extends React.Component {
 }
 
 SectionHeaderPrimary.defaultProps = {
+  align: 'center',
   className: 'section-header-primary',
-  layoutClassName: 'flush-top text-align-center'
+  layoutClassName: 'flush-top'
 };
 
 SectionHeaderPrimary.propTypes = {
+  align: React.PropTypes.oneOf(['center', 'left', 'right']),
   children: React.PropTypes.node,
   className: React.PropTypes.string,
   inverse: React.PropTypes.bool,

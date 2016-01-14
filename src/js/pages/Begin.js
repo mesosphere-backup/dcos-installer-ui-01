@@ -4,6 +4,7 @@ import React from 'react';
 import IconArrow from '../components/icons/IconArrow';
 import IconLogomark from '../components/icons/IconLogomark';
 import Page from '../components/Page';
+import PageContent from '../components/PageContent';
 import PageFooter from '../components/PageFooter';
 import PageSection from '../components/PageSection';
 import SectionHeader from '../components/SectionHeader';

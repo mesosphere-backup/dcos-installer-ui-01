@@ -3,6 +3,7 @@ import React from 'react';
 import ErrorLabel from '../components/ErrorLabel';
 import IconWarning from '../components/icons/IconWarning';
 import Page from '../components/Page';
+import PageContent from '../components/PageContent';
 import PageSection from '../components/PageSection';
 import ProgressBar from '../components/ProgressBar';
 import SectionBody from '../components/SectionBody';
@@ -16,28 +17,30 @@ module.exports = class Postflight extends React.Component {
   render() {
     return (
       <Page hasNavigationBar={true}>
-        <PageSection>
-          <SectionHeader>
-            <SectionHeaderIcon>
-              <IconWarning />
-            </SectionHeaderIcon>
-            <SectionHeaderPrimary>
-              Running Post-Flight...
-            </SectionHeaderPrimary>
-            <SectionHeaderSecondary>
-              <ErrorLabel step="postflight" />
-            </SectionHeaderSecondary>
-          </SectionHeader>
-          <SectionBody>
-            <ProgressBar detail="Checking 1 of 2" label="Checking Masters"
-              progress={80.32483} state="ongoing" />
-            <ProgressBar detail="Checking 0 of 2" label="Checking Agents"
-              progress={10.32483} state="error" />
-          </SectionBody>
-          <SectionFooter>
-            Actions
-          </SectionFooter>
-        </PageSection>
+        <PageContent>
+          <PageSection>
+            <SectionHeader>
+              <SectionHeaderIcon>
+                <IconWarning />
+              </SectionHeaderIcon>
+              <SectionHeaderPrimary>
+                Running Post-Flight...
+              </SectionHeaderPrimary>
+              <SectionHeaderSecondary>
+                <ErrorLabel step="postflight" />
+              </SectionHeaderSecondary>
+            </SectionHeader>
+            <SectionBody>
+              <ProgressBar detail="Checking 1 of 2" label="Checking Masters"
+                progress={80.32483} state="ongoing" />
+              <ProgressBar detail="Checking 0 of 2" label="Checking Agents"
+                progress={10.32483} state="error" />
+            </SectionBody>
+            <SectionFooter>
+              Actions
+            </SectionFooter>
+          </PageSection>
+        </PageContent>
       </Page>
     );
   }

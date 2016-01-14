@@ -1,7 +1,8 @@
 import React from 'react';
 
-import PageSection from '../components/PageSection';
 import Page from '../components/Page';
+import PageContent from '../components/PageContent';
+import PageSection from '../components/PageSection';
 import SectionBody from '../components/SectionBody';
 import SectionHeader from '../components/SectionHeader';
 import SectionHeaderIcon from '../components/SectionHeaderIcon';
@@ -12,20 +13,22 @@ module.exports = class Success extends React.Component {
   render() {
     return (
       <Page hasNavigationBar={true}>
-        <PageSection>
-          <SectionHeader>
-            <SectionHeaderIcon/>
-            <SectionHeaderPrimary>
-              Successfully installed on 382 Nodes
-            </SectionHeaderPrimary>
-          </SectionHeader>
-          <SectionBody>
-            Some content...
-          </SectionBody>
-          <SectionFooter>
-            Actions
-          </SectionFooter>
-        </PageSection>
+        <PageContent>
+          <PageSection>
+            <SectionHeader>
+              <SectionHeaderIcon/>
+              <SectionHeaderPrimary>
+                Successfully installed on 382 Nodes
+              </SectionHeaderPrimary>
+            </SectionHeader>
+            <SectionBody>
+              Some content...
+            </SectionBody>
+            <SectionFooter>
+              Actions
+            </SectionFooter>
+          </PageSection>
+        </PageContent>
       </Page>
     );
   }
