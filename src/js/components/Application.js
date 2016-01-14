@@ -1,4 +1,3 @@
-import classnames from 'classnames';
 import React from 'react/addons';
 
 const CSSTransitionGroup = React.addons.CSSTransitionGroup;
@@ -56,11 +55,10 @@ class Application extends React.Component {
   }
 
   render() {
-    let classes = classnames(this.props.className, this.props.layoutClassName);
-
     return (
-      <div className={classes}>
-        <NavigationBar />
+      <div className="application-wrapper flex-box flex-box-fit-height">
+        <NavigationBar activeRoute={this.props.location.pathname}
+          routes={this.props.route.childRoutes} />
         <CSSTransitionGroup
           transitionName={`page-transition-${this.state.transitionDirection}`}
           component="div" className={'page-transition-wrapper flex-box ' +
@@ -76,16 +74,9 @@ class Application extends React.Component {
   }
 }
 
-Application.defaultProps = {
-  className: 'application-wrapper',
-  layoutClassName: 'flex-box flex-box-fit-height'
-};
-
 Application.propTypes = {
   children: React.PropTypes.node,
-  className: React.PropTypes.string,
   location: React.PropTypes.object,
-  layoutClassName: React.PropTypes.string,
   route: React.PropTypes.object,
   view: React.PropTypes.node
 };

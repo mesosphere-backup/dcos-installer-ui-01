@@ -17,7 +17,7 @@ module.exports = class NavigationNextStep extends mixin(StoreMixin) {
     super();
 
     this.state = {
-      enabled: false,
+      disabled: true,
       label: null,
       link: null,
       visible: false
@@ -46,7 +46,7 @@ module.exports = class NavigationNextStep extends mixin(StoreMixin) {
     }
 
     let classes = classnames('navigation-item', 'navigation-item-next', {
-      'is-disabled': false
+      'is-disabled': this.state.disabled
     });
 
     return (

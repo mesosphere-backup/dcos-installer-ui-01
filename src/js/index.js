@@ -23,11 +23,11 @@ React.render((
     <Route component={EnforceStage}>
       <Route path="/" component={Begin} />
       <Route path="/" component={Application}>
-        <Route path="setup" component={Setup} />
-        <Route path="pre-flight" component={Preflight} />
-        <Route path="deploy" component={Deploy} />
-        <Route path="post-flight" component={Postflight} />
-        <Route path="success" component={Success} />
+        <Route path="setup" display="Setup" component={Setup} />
+        <Route path="pre-flight" display="Pre-Flight" component={Preflight} />
+        <Route path="deploy" display="Deploy" component={Deploy} />
+        <Route path="post-flight" display="Post-Flight" component={Postflight} />
+        <Route path="success" display="Success" component={Success} />
         <Route path="*" component={NotFound} />
       </Route>
     </Route>
