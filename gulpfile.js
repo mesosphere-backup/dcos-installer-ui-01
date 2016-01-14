@@ -6,7 +6,6 @@ var eslint = require('gulp-eslint');
 var gulp = require('gulp');
 var gulpif = require('gulp-if');
 var gutil = require('gulp-util');
-var imagemin = require('gulp-imagemin');
 var less = require('gulp-less');
 var cssNano = require('gulp-cssnano');
 var replace = require('gulp-replace');
@@ -53,10 +52,6 @@ gulp.task('images', function () {
       config.dirs.srcImg + '/**/*.*',
       '!' + config.dirs.srcImg + '/**/_exports/**/*.*'
     ])
-    .pipe(imagemin({
-      progressive: true,
-      svgoPlugins: [{removeViewBox: false}]
-    }))
     .pipe(gulp.dest(config.dirs.distImg));
 });
 
