@@ -20,7 +20,7 @@ module.exports = class NavigationNextStep extends mixin(StoreMixin) {
       disabled: true,
       label: null,
       link: null,
-      visible: false
+      visible: true
     };
 
     this.store_listeners = [
