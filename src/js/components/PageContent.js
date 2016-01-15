@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import React from 'react';
 
-class PageSection extends React.Component {
+class PageContent extends React.Component {
   render() {
     let classes = classnames(this.props.className, this.props.layoutClassName);
 
@@ -13,15 +13,15 @@ class PageSection extends React.Component {
   }
 }
 
-PageSection.defaultProps = {
+PageContent.defaultProps = {
   className: 'page-content',
   layoutClassName: ''
 };
 
-PageSection.propTypes = {
+PageContent.propTypes = {
   children: React.PropTypes.node,
   className: React.PropTypes.string,
   layoutClassName: React.PropTypes.string
 };
 
-module.exports = PageSection;
+module.exports = PageContent;
