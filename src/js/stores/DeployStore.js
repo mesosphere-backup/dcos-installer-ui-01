@@ -33,7 +33,7 @@ let DeployStore = Store.createStore({
 
   fetchLogs: StageActions.fetchLogs.bind(null, stageID),
 
-  fetchDeployStatus: StageActions.fetchStageStatus.bind(null, stageID),
+  fetchStageStatus: StageActions.fetchStageStatus.bind(null, stageID),
 
   addChangeListener: function (eventName, callback) {
     this.on(eventName, callback);
