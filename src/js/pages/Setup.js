@@ -32,8 +32,8 @@ module.exports = class Setup extends React.Component {
         ssh_key: null,
         username: null,
         password: '',
-        zookeeper_ips: null,
-        zookeeper_port: null,
+        zk_exhibitor_hosts: null,
+        zk_exhibitor_port: null,
         upstream_dns_servers: null
       },
       isComplete: false,
@@ -141,16 +141,16 @@ module.exports = class Setup extends React.Component {
       [
         {
           fieldType: 'text',
-          name: 'zookeeper_ips',
+          name: 'zk_exhibitor_hosts',
           placeholder: 'Please provide 1, 3, or 5 IPv4 addresses.',
           showLabel: 'Bootstrapping Zookeeper IP Address(es)',
-          value: this.state.formData.zookeeper_ips
+          value: this.state.formData.zk_exhibitor_hosts
         },
         {
           fieldType: 'text',
-          name: 'zookeeper_port',
+          name: 'zk_exhibitor_port',
           showLabel: 'Bootstrapping Zookeeper Port',
-          value: this.state.formData.zookeeper_port
+          value: this.state.formData.zk_exhibitor_port
         }
       ],
       {
