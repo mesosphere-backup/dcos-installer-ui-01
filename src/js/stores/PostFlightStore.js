@@ -29,7 +29,7 @@ let PostFlightStore = Store.createStore({
     });
   },
 
-  beginDeploy: StageActions.beginStage.bind(null, stageID),
+  beginStage: StageActions.beginStage.bind(null, stageID),
 
   fetchLogs: StageActions.fetchLogs.bind(null, stageID),
 
