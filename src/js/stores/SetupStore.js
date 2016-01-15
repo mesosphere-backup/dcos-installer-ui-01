@@ -46,6 +46,18 @@ let SetupStore = Store.createStore({
       case ActionTypes.SETUP_RECEIVE_USER_INPUT:
         SetupStore.validateUserInput(action.data);
         break;
+      case ActionTypes.CONFIGURE_CHANGE_SUCCESS:
+        // Handle fetch configure success
+        break;
+      case ActionTypes.CONFIGURE_CHANGE_ERROR:
+        // Handle fetch configure failed
+        break;
+      case ActionTypes.CONFIGURE_UPDATE_SUCCESS:
+        // Handle post configure success
+        break;
+      case ActionTypes.CONFIGURE_UPDATE_ERROR:
+        // Handle post configure failed
+        break;
     }
 
     return true;

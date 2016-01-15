@@ -62,6 +62,12 @@ let DeployStore = Store.createStore({
       case ActionTypes.DEPLOY_UPDATE_SUCCESS:
         DeployStore.processUpdateSuccess(action.data);
         break;
+      case ActionTypes.DEPLOY_BEGIN_SUCCESS:
+        this.emit(EventTypes.DEPLOY_BEGIN_SUCCESS);
+        break;
+      case ActionTypes.DEPLOY_BEGIN_ERROR:
+        this.emit(EventTypes.DEPLOY_BEGIN_ERROR, action.data);
+        break;
     }
 
     return true;

@@ -62,6 +62,10 @@ let PostFlightStore = Store.createStore({
       case ActionTypes.POSTFLIGHT_UPDATE_SUCCESS:
         PostFlightStore.processUpdateSuccess(action.data);
         break;
+      case ActionTypes.POSTFLIGHT_BEGIN_SUCCESS:
+        this.emit(EventTypes.POSTFLIGHT_BEGIN_SUCCESS);
+      case ActionTypes.POSTFLIGHT_BEGIN_ERROR:
+        this.emit(EventTypes.POSTFLIGHT_BEGIN_ERROR, action.data);
     }
 
     return true;

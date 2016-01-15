@@ -1,4 +1,4 @@
-import RequestUtil from './RequestUtil';
+import {RequestUtil} from 'mesosphere-shared-reactjs';
 
 import ActionTypes from './ActionTypes';
 import AppDispatcher from './AppDispatcher';
