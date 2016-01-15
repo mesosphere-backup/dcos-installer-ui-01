@@ -3,8 +3,9 @@ import {GetSetMixin, Store} from 'mesosphere-shared-reactjs';
 import ActionTypes from '../constants/ActionTypes';
 import AppDispatcher from '../events/AppDispatcher';
 import EventTypes from '../constants/EventTypes';
+import ConfigActions from '../events/ConfigActions';
 
-let InstallerStore = Store.createStore({
+let SetupStore = Store.createStore({
   storeID: 'setup',
 
   mixins: [GetSetMixin],
@@ -17,6 +18,12 @@ let InstallerStore = Store.createStore({
       warning: null
     });
   },
+
+  fetchConfig: ConfigActions.fetchConfig,
+
+  fetchConfigState: ConfigActions.fetchConfigState,
+
+  updateConfig: ConfigActions.updateConfig,
 
   addChangeListener: function (eventName, callback) {
     this.on(eventName, callback);
@@ -37,7 +44,7 @@ let InstallerStore = Store.createStore({
 
     switch (action.type) {
       case ActionTypes.SETUP_RECEIVE_USER_INPUT:
-        InstallerStore.validateUserInput(action.data);
+        SetupStore.validateUserInput(action.data);
         break;
     }
 
@@ -46,4 +53,4 @@ let InstallerStore = Store.createStore({
 
 });
 
-module.exports = InstallerStore;
+module.exports = SetupStore;

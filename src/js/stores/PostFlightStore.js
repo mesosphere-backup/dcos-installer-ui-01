@@ -3,6 +3,9 @@ import {GetSetMixin, Store} from 'mesosphere-shared-reactjs';
 import ActionTypes from '../constants/ActionTypes';
 import AppDispatcher from '../events/AppDispatcher';
 import EventTypes from '../constants/EventTypes';
+import StageActions from '../events/StageActions';
+
+const stageID = 'postflight';
 
 let PostFlightStore = Store.createStore({
   storeID: 'postFlight',
@@ -25,6 +28,12 @@ let PostFlightStore = Store.createStore({
       status: 'Running Post-Flight...'
     });
   },
+
+  beginDeploy: StageActions.beginStage.bind(null, stageID),
+
+  fetchLogs: StageActions.fetchLogs.bind(null, stageID),
+
+  fetchDeployStatus: StageActions.fetchStageStatus.bind(null, stageID),
 
   addChangeListener: function (eventName, callback) {
     this.on(eventName, callback);

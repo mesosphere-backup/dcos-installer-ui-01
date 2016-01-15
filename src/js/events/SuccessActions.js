@@ -1,0 +1,28 @@
+import RequestUtil from './RequestUtil';
+
+import ActionTypes from './ActionTypes';
+import AppDispatcher from './AppDispatcher';
+import Config from '../config/Config';
+
+const SuccessActions = {
+  fetchDCOSURL: function () {
+    RequestUtil.json({
+      url: `${Config.rootUrl}${Config.apiPrefex}/success`,
+      success: function (response) {
+        AppDispatcher.handleServerAction({
+          type: ActionTypes.DCOS_UI_URL_CHANGE,
+          data: response
+        });
+      },
+      error: function (xhr) {
+        AppDispatcher.handleServerAction({
+          type: ActionTypes.DCOS_UI_URL_ERROR,
+          data: xhr
+        });
+      }
+    });
+  }
+};
+
+module.exports = SuccessActions;
+

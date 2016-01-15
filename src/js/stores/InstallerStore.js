@@ -1,6 +1,7 @@
 import {GetSetMixin, Store} from 'mesosphere-shared-reactjs';
 
 import EventTypes from '../constants/EventTypes';
+import SuccessActions from '../events/SuccessActions';
 
 let InstallerStore = Store.createStore({
   storeID: 'installer',
@@ -20,6 +21,8 @@ let InstallerStore = Store.createStore({
       }
     });
   },
+
+  fetchDCOSURL: SuccessActions.fetchDCOSURL,
 
   addChangeListener: function (eventName, callback) {
     this.on(eventName, callback);
