@@ -4,14 +4,25 @@ import React from 'react';
 
 class NavigationItem extends React.Component {
   render() {
-    let classes = classnames(this.props.className, this.props.layoutClassName);
+    let classes = classnames(this.props.className, this.props.layoutClassName, {
+      [this.props.activeClassName]: this.props.isActive
+    });
 
-    return (
-      <Link className={classes} to={this.props.link}
-        activeClassName={this.props.activeClassName}>
+    let navigationItem = (
+      <div className={classes} activeClassName={this.props.activeClassName}>
         {this.props.children}
-      </Link>
+      </div>
     );
+
+    if (this.props.link) {
+      navigationItem = (
+        <Link className={classes} to={this.props.link}>
+          {this.props.children}
+        </Link>
+      );
+    }
+
+    return navigationItem;
   }
 }
 
@@ -25,8 +36,9 @@ NavigationItem.propTypes = {
   activeClassName: React.PropTypes.string,
   children: React.PropTypes.node,
   className: React.PropTypes.string,
+  isActive: React.PropTypes.bool,
   layoutClassName: React.PropTypes.string,
-  link: React.PropTypes.string.isRequired
+  link: React.PropTypes.string
 };
 
 module.exports = NavigationItem;

@@ -6,7 +6,6 @@
 
 @navigation-item-active-foreground: @white;
 @navigation-item-inactive-foreground: #80848F;
-@navigation-item-inactive-hover: color-lighten(@navigation-item-inactive-foreground, 20%);
 
 @navigation-item-next-font-size: @navigation-item-font-size * 4/5;
 @navigation-item-next-padding-horizontal: @base-spacing-unit;
@@ -35,11 +34,6 @@
   display: inline-flex;
   font-size: @navigation-item-font-size;
   padding: @navigation-item-padding-vertical @navigation-item-padding-horizontal;
-
-  &:hover {
-    color: @navigation-item-inactive-hover;
-    text-decoration: none;
-  }
 
   &.is-active {
     color: @navigation-item-active-foreground;
