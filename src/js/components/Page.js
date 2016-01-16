@@ -4,6 +4,7 @@ import React from 'react';
 class Page extends React.Component {
   render() {
     let classes = classnames(this.props.className, this.props.layoutClassName, {
+      [`page-${this.props.pageName}`]: this.props.pageName,
       'has-navigation-bar': this.props.hasNavigationBar,
       'is-inverted': this.props.inverse
     });
@@ -27,7 +28,8 @@ Page.propTypes = {
   className: React.PropTypes.string,
   hasNavigationBar: React.PropTypes.bool,
   inverse: React.PropTypes.bool,
-  layoutClassName: React.PropTypes.string
+  layoutClassName: React.PropTypes.string,
+  pageName: React.PropTypes.string
 };
 
 module.exports = Page;

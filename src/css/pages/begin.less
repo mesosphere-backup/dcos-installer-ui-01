@@ -1,0 +1,36 @@
+@page-begin-primary-header-font-size: 1.8em;
+@page-begin-primary-header-line-height: 1.8em;
+
+@page-begin-secondary-header-color: #C2C4CA;
+@page-begin-secondary-header-font-size: 1.2em;
+@page-begin-secondary-header-line-height: 1.2em;
+
+.page-begin {
+  padding-bottom: @fixed-footer-height;
+
+  .icon {
+    height: auto;
+    width: 100px;
+  }
+
+  .section-header-primary {
+    font-size: @page-begin-primary-header-font-size;
+    line-height: @page-begin-primary-header-line-height;
+  }
+
+  .section-header-secondary {
+    color: @page-begin-secondary-header-color;
+    font-size: @page-begin-secondary-header-font-size;
+    line-height: @page-begin-secondary-header-line-height;
+  }
+
+  .button {
+
+    .icon {
+      height: 16px;
+      margin-top: -1px;
+      vertical-align: middle;
+      width: 16px;
+    }
+  }
+}
