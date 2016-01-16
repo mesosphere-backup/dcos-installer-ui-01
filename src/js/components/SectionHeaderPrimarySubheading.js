@@ -4,8 +4,8 @@ import React from 'react';
 class SectionHeaderPrimarySubheading extends React.Component {
   render() {
     let classes = classnames(this.props.className, this.props.layoutClassName, {
-        'inverse': this.props.inverse
-      });
+      'inverse': this.props.inverse
+    });
 
     return (
       <p className={classes}>

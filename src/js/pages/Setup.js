@@ -7,7 +7,6 @@ import FormLabelContent from '../components/FormLabelContent';
 import Page from '../components/Page';
 import PageContent from '../components/PageContent';
 import PageSection from '../components/PageSection';
-import PasswordStrengthMeter from '../components/PasswordStrengthMeter';
 import SectionAction from '../components/SectionAction';
 import SectionBody from '../components/SectionBody';
 import SectionHeader from '../components/SectionHeader';
@@ -27,6 +26,7 @@ module.exports = class Setup extends React.Component {
       formData: {
         master_ips: null,
         agent_ips: null,
+        ip_detect_script: null,
         ssh_username: null,
         ssh_port: null,
         ssh_key: null,
