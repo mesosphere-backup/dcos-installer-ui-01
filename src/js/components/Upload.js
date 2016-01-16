@@ -19,7 +19,8 @@ class Upload extends React.Component {
     });
   }
 
-  handleUploadClick() {
+  handleUploadClick(event) {
+    event.preventDefault();
     React.findDOMNode(this.refs.uploadInput).click();
   }
 
@@ -50,14 +51,16 @@ class Upload extends React.Component {
     }
 
     return (
-      <a className="clickable" onClick={this.handleUploadClick}>
-        {displayText}
+      <span>
+        <a className="clickable" onClick={this.handleUploadClick}>
+          {displayText}
+        </a>
         <input
           ref="uploadInput"
           className="hidden"
           type="file"
           onChange={this.handleUpload} />
-      </a>
+      </span>
     );
   }
 }
