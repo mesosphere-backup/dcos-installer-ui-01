@@ -1,15 +1,17 @@
 var srcFolder = './src';
-var distFolder = './dist';
+var distFolderAssets = '../dcos_installer/templates/assets';
+var distFolderHTML = '../dcos_installer/templates';
 
 var dirs = {
   src: srcFolder,
-  dist: distFolder,
+  dist: distFolderAssets,
   srcJS: srcFolder + '/js',
-  distJS: distFolder,
+  distJS: distFolderAssets,
   srcCSS: srcFolder + '/css',
-  distCSS: distFolder,
+  distCSS: distFolderAssets,
   srcImg: srcFolder + '/img',
-  distImg: distFolder + '/img'
+  distImg: distFolderAssets + '/img',
+  distHTML: distFolderHTML
 };
 
 var files = {
@@ -18,7 +20,7 @@ var files = {
   srcCSS: dirs.srcCSS + '/index.less',
   distCSS: dirs.distCSS + '/index.css',
   srcHTML: dirs.src + '/index.html',
-  distHTML: dirs.dist + '/index.html'
+  distHTML: dirs.distHTML + '/index.html'
 };
 
 module.exports = {

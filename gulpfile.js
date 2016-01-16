@@ -31,7 +31,7 @@ gulp.task('browsersync', function () {
     open: false,
     port: 4200,
     server: {
-      baseDir: config.dirs.dist
+      baseDir: config.dirs.distHTML
     },
     socket: {
       domain: 'localhost:4200'
@@ -57,7 +57,7 @@ gulp.task('images', function () {
 
 gulp.task('html', function () {
   return gulp.src(config.files.srcHTML)
-    .pipe(gulp.dest(config.dirs.dist))
+    .pipe(gulp.dest(config.dirs.distHTML))
     .on('end', browserSyncReload);
 });
 
