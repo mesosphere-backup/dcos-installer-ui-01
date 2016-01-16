@@ -4,7 +4,7 @@ import {Dispatcher} from 'flux';
 import ActionTypes from '../constants/ActionTypes';
 
 let AppDispatcher = _.extend(new Dispatcher(), {
-  handleGlobalAction: function (action) {
+  handleServerAction: function (action) {
     if (!action.type) {
       console.warn('Empty action.type: you likely mistyped the action.');
     }

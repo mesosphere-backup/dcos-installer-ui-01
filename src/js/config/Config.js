@@ -1,4 +1,4 @@
-const Config = {
+let Config = {
   apiPrefix: '/api/v1/',
   rootUrl: ''
 };
