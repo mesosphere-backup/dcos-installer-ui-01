@@ -7,7 +7,7 @@ import Config from '../config/Config';
 const ConfigActions = {
   fetchConfig: function () {
     RequestUtil.json({
-      url: `${Config.rootUrl}${Config.apiPrefex}/configure`,
+      url: `${Config.rootUrl}${Config.apiPrefix}/configure`,
       success: function (response) {
         AppDispatcher.handleServerAction({
           type: ActionTypes.CONFIGURE_STATUS_CHANGE_SUCCESS,
@@ -25,7 +25,7 @@ const ConfigActions = {
 
   fetchConfigState: function () {
     RequestUtil.json({
-      url: `${Config.rootUrl}${Config.apiPrefex}/configure/status`,
+      url: `${Config.rootUrl}${Config.apiPrefix}/configure/status`,
       success: function (response) {
         AppDispatcher.handleServerAction({
           type: ActionTypes.CONFIGURE_CHANGE_SUCCESS,
@@ -43,7 +43,7 @@ const ConfigActions = {
 
   updateConfig: function (data) {
     RequestUtil.json({
-      url: `${Config.rootUrl}${Config.apiPrefex}/configure`,
+      url: `${Config.rootUrl}${Config.apiPrefix}/configure`,
       method: 'post',
       data,
       success: function () {

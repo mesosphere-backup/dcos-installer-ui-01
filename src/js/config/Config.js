@@ -1,5 +1,6 @@
 let Config = {
   apiPrefix: '/api/v1/',
+  environment: '@@ENV',
   rootUrl: ''
 };
 
