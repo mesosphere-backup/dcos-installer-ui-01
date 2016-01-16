@@ -7,6 +7,7 @@ import FormLabelContent from '../components/FormLabelContent';
 import Page from '../components/Page';
 import PageContent from '../components/PageContent';
 import PageSection from '../components/PageSection';
+import PasswordStrengthMeter from '../components/PasswordStrengthMeter';
 import SectionAction from '../components/SectionAction';
 import SectionBody from '../components/SectionBody';
 import SectionHeader from '../components/SectionHeader';
@@ -49,7 +50,7 @@ module.exports = class Setup extends React.Component {
     return [
       [
         {
-          fieldType: 'text',
+          fieldType: 'textarea',
           name: 'master_ips',
           placeholder: 'Please provide 1, 3, or 5 IPv4 addresses.',
           showLabel: (
@@ -66,10 +67,10 @@ module.exports = class Setup extends React.Component {
           value: this.state.formData.master_ips
         },
         {
-          fieldType: 'text',
+          fieldType: 'textarea',
           name: 'agent_ips',
-          placeholder: 'Please provide 1 to n IPv4 addresses to serve as your \
-             datacenter\'s Agents.',
+          placeholder: 'Please provide 1 to n IPv4 addresses to serve as your' +
+            ' datacenter\'s Agents.',
           showLabel: (
             <FormLabel>
               <FormLabelContent>
@@ -120,9 +121,16 @@ module.exports = class Setup extends React.Component {
           value: this.state.formData.username
         },
         {
-          defaultPasswordValue: true,
           fieldType: this.state.passwordFieldType,
           name: 'password',
+          renderer: (inputField) => {
+            return (
+              <div className="password-strength-wrapper">
+                {inputField}
+                <PasswordStrengthMeter password={this.state.formData.password}/>
+              </div>
+            );
+          },
           showLabel: 'Password',
           value: this.state.formData.password
         },
@@ -140,7 +148,7 @@ module.exports = class Setup extends React.Component {
       ],
       [
         {
-          fieldType: 'text',
+          fieldType: 'textarea',
           name: 'zk_exhibitor_hosts',
           placeholder: 'Please provide 1, 3, or 5 IPv4 addresses.',
           showLabel: 'Bootstrapping Zookeeper IP Address(es)',
@@ -163,13 +171,17 @@ module.exports = class Setup extends React.Component {
   }
 
   handleFormChange(formData) {
-    let passwordFieldType = 'password';
+    let newFormData = _.extend({}, this.state.formData, formData);
 
-    if (formData.reveal_password[0].checked) {
+    let passwordFieldType = this.state.passwordFieldType;
+
+    if (formData.reveal_password && formData.reveal_password[0].checked) {
       passwordFieldType = 'text';
+    } else if (formData.reveal_password && !formData.reveal_password[0].checked) {
+      passwordFieldType = 'password';
     }
 
-    this.setState({passwordFieldType});
+    this.setState({formData: newFormData, passwordFieldType});
   }
 
   handleUploadSuccess(destination) {
@@ -197,7 +209,8 @@ module.exports = class Setup extends React.Component {
               </SectionHeaderPrimary>
             </SectionHeader>
             <SectionBody>
-              <Form definition={this.getDeploymentSettingsFormDefinition()} />
+              <Form definition={this.getDeploymentSettingsFormDefinition()}
+                onChange={this.handleFormChange} />
             </SectionBody>
           </PageSection>
           <PageSection>
@@ -217,7 +230,7 @@ module.exports = class Setup extends React.Component {
           </PageSection>
           <PageSection>
             <SectionFooter>
-              <SectionAction enabled={true}
+              <SectionAction enabled={true} linkTo="/pre-flight"
                 onClick={this.handleSubmitClick} type="primary">
                 Run Pre-Flight
               </SectionAction>

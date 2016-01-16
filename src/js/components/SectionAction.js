@@ -1,4 +1,5 @@
 import classnames from 'classnames';
+import {Link} from 'react-router';
 import React from 'react';
 
 class SectionAction extends React.Component {
@@ -13,9 +14,9 @@ class SectionAction extends React.Component {
     });
 
     return (
-      <button className={classes} onClick={props.onClick}>
+      <Link className={classes} onClick={props.onClick} to={props.linkTo}>
         {this.props.children}
-      </button>
+      </Link>
     );
   }
 }
@@ -27,6 +28,7 @@ SectionAction.defaultProps = {
 SectionAction.propTypes = {
   children: React.PropTypes.node,
   className: React.PropTypes.string,
+  linkTo: React.PropTypes.string,
   onClick: React.PropTypes.func,
   type: React.PropTypes.oneOf(['primary', 'secondary'])
 };
