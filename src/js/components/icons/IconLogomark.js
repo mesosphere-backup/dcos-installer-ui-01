@@ -1,4 +1,3 @@
-import classnames from 'classnames';
 import React from 'react';
 
 module.exports = class IconLogomark extends React.Component {

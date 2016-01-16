@@ -16,28 +16,30 @@ import SectionFooter from '../components/SectionFooter';
 module.exports = class Begin extends React.Component {
   render() {
     return (
-      <Page inverse={true} size="small" pageName="begin">
-        <PageSection>
-          <SectionHeader>
-            <SectionHeaderIcon>
-              <IconLogomark />
-            </SectionHeaderIcon>
-            <SectionHeaderPrimary inverse={true}>
-              Mesosphere DCOS 1.6
-            </SectionHeaderPrimary>
-            <SectionHeaderSecondary inverse={true}>
-              Welcome to the DCOS 1.6 Installer. You will be guided through the
-              steps necessary to setup and install version 1.6 of the DCOS in
-              your datacenter.
-            </SectionHeaderSecondary>
-          </SectionHeader>
-          <SectionFooter>
-            <Link to="/setup" className="button button-large button-rounded button-primary">
-              Begin Installation
-              <IconArrow />
-            </Link>
-          </SectionFooter>
-        </PageSection>
+      <Page inverse={true} size="medium" pageName="begin">
+        <PageContent>
+          <PageSection>
+            <SectionHeader>
+              <SectionHeaderIcon>
+                <IconLogomark />
+              </SectionHeaderIcon>
+              <SectionHeaderPrimary inverse={true}>
+                Mesosphere DCOS 1.6
+              </SectionHeaderPrimary>
+              <SectionHeaderSecondary inverse={true}>
+                Welcome to the DCOS 1.6 Installer. You will be guided through the
+                steps necessary to setup and install version 1.6 of the DCOS in
+                your datacenter.
+              </SectionHeaderSecondary>
+            </SectionHeader>
+            <SectionFooter>
+              <Link to="/setup" className="button button-large button-rounded button-primary">
+                Begin Installation
+                <IconArrow />
+              </Link>
+            </SectionFooter>
+          </PageSection>
+        </PageContent>
         <PageFooter />
       </Page>
     );
