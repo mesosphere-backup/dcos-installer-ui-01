@@ -51,11 +51,11 @@ let SetupStore = Store.createStore({
     this.emit(EventTypes.CONFIGURE_STATUS_CHANGE_ERROR);
   },
 
-  handleConfigureTypeError: function (data) {
+  handleConfigureTypeError: function () {
     this.emit(EventTypes.CONFIGURE_TYPE_CHANGE_ERROR);
   },
 
-  handleConfigureUpdateError: function (data) {
+  handleConfigureUpdateError: function () {
     this.emit(EventTypes.CONFIGURE_UPDATE_ERROR);
   },
 

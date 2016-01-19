@@ -102,12 +102,9 @@ module.exports = class Setup extends mixin(StoreMixin) {
   }
 
   onSetupStoreCurrentConfigChangeError() {
-    let currentConfig = _.extend({}, this.state.formData,
-      SetupStore.get('currentConfig'));
+    let formData = this.getNewFormData(SetupStore.get('currentConfig'));
 
-    this.setState({
-      formData: currentConfig
-    });
+    this.setState({formData});
   }
 
   onSetupStoreCurrentConfigChangeSuccess() {
@@ -240,8 +237,12 @@ module.exports = class Setup extends mixin(StoreMixin) {
     ];
   }
 
+  getNewFormData(newFormData) {
+    return _.extend({}, this.state.formData, newFormData);
+  }
+
   handleFormChange(formData) {
-    let newFormData = _.extend({}, this.state.formData, formData);
+    let newFormData = this.getNewFormData(formData);
 
     let passwordFieldType = this.state.passwordFieldType;
 
@@ -257,7 +258,7 @@ module.exports = class Setup extends mixin(StoreMixin) {
 
   handleUploadSuccess(destination) {
     return (fileContents) => {
-      let formData = _.extend({}, this.state.formData, {
+      let formData = this.getNewFormData({
         [destination]: fileContents
       });
 
@@ -265,7 +266,7 @@ module.exports = class Setup extends mixin(StoreMixin) {
     }
   }
 
-  submitFormData(formData) {
+  submitFormData() {
 
   }
 
