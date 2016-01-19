@@ -1,37 +1,39 @@
-function processHostState(hostStatus, role, state) {
+function processHostState(hostState, host, role, state) {
   let stateType = state[`${role}s`];
+  let hostStatus = hostState.host_status;
+  stateType.totalStarted += 1;
 
-  let errorDetails = stateType.errorDetails;
-  stateType.error += 1;
-  stateType.errorDetails = errorDetails.concat(hostStatus.stderr);
-  stateType.total += 1;
+  if (hostStatus === 'running') {
+    stateType.completed = false;
+  }
+
+  if (hostStatus === 'error') {
+    stateType.errors += 1;
+    state.errorDetails.push({host, errors: hostState.stderr});
+  }
 }
 
 const ProcessStageUtil = {
   processState(response) {
     let state = {
       slaves: {
-        error: 0,
-        errorDetails: [],
-        total: 0
+        completed: true,
+        errors: 0,
+        totalSlaves: response.total_slaves,
+        totalStarted: 0
       },
-      // Flag to determine if stage is still running.
-      completed: true,
+      errorDetails: [],
       masters: {
-        error: 0,
-        errorDetails: [],
-        total: 0
+        completed: true,
+        errors: 0,
+        totalMasters: response.total_masters,
+        totalStarted: 0
       }
     };
 
-    Object.keys(response).forEach(function (host) {
+    Object.keys(response.hosts).forEach(function (host) {
       let hostStatus = response[host];
-
-      if (hostStatus.state === 'running') {
-        state.completed = false;
-      }
-
-      processHostState(hostStatus, hostStatus.role, state);
+      processHostState(hostStatus, host, hostStatus.tags.role, state);
     });
 
     return state;
