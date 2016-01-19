@@ -7,7 +7,7 @@ import Config from '../config/Config';
 const SuccessActions = {
   fetchDCOSURL: function () {
     RequestUtil.json({
-      url: `${Config.rootUrl}${Config.apiPrefix}/success`,
+      url: `${Config.rootUrl}${Config.apiPrefix}success`,
       success: function (response) {
         AppDispatcher.handleServerAction({
           type: ActionTypes.DCOS_UI_URL_CHANGE,

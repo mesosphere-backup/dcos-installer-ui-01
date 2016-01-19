@@ -1,5 +1,6 @@
 let Config = {
   apiPrefix: '/api/v1/',
+  apiRequestThrottle: 1000,
   environment: '@@ENV',
   rootUrl: ''
 };

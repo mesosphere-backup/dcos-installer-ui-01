@@ -13,8 +13,11 @@ let SetupStore = Store.createStore({
   init: function () {
     this.set({
       completed: false,
-      configType: 'minimal',
-      currentConfig: data,
+      configType: {
+        type: null,
+        message: null
+      },
+      currentConfig: null,
       currentConfigError: null,
       errors: null
     });
@@ -47,7 +50,7 @@ let SetupStore = Store.createStore({
   },
 
   handleConfigureStatusChangeError: function (data) {
-    this.set({configStatus: data});
+    this.set({errors: data.response});
     this.emit(EventTypes.CONFIGURE_STATUS_CHANGE_ERROR);
   },
 
@@ -55,14 +58,13 @@ let SetupStore = Store.createStore({
     this.emit(EventTypes.CONFIGURE_TYPE_CHANGE_ERROR);
   },
 
-  handleConfigureUpdateError: function () {
+  handleConfigureUpdateError: function (data) {
+    this.set({errors: data.response});
     this.emit(EventTypes.CONFIGURE_UPDATE_ERROR);
   },
 
   processConfigureTypeResponse: function (data) {
-    this.set({
-      configType: data
-    });
+    this.set({configType: data});
     this.emit(EventTypes.CONFIGURE_TYPE_CHANGE_SUCCESS);
   },
 

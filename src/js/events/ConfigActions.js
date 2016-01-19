@@ -7,7 +7,7 @@ import Config from '../config/Config';
 const ConfigActions = {
   fetchConfig: function () {
     RequestUtil.json({
-      url: `${Config.rootUrl}${Config.apiPrefix}/configure`,
+      url: `${Config.rootUrl}${Config.apiPrefix}configure`,
       success: function (response) {
         AppDispatcher.handleServerAction({
           type: ActionTypes.CONFIGURE_CHANGE_SUCCESS,
@@ -17,7 +17,9 @@ const ConfigActions = {
       error: function (xhr) {
         AppDispatcher.handleServerAction({
           type: ActionTypes.CONFIGURE_CHANGE_ERROR,
-          data: xhr
+          data: {
+            response:RequestUtil.parseResponseBody(xhr)
+          }
         });
       }
     });
@@ -25,7 +27,7 @@ const ConfigActions = {
 
   fetchConfigState: function () {
     RequestUtil.json({
-      url: `${Config.rootUrl}${Config.apiPrefix}/configure/status`,
+      url: `${Config.rootUrl}${Config.apiPrefix}configure/status`,
       success: function (response) {
         AppDispatcher.handleServerAction({
           type: ActionTypes.CONFIGURE_STATUS_CHANGE_SUCCESS,
@@ -35,7 +37,9 @@ const ConfigActions = {
       error: function (xhr) {
         AppDispatcher.handleServerAction({
           type: ActionTypes.CONFIGURE_STATUS_CHANGE_ERROR,
-          data: xhr
+          data: {
+            response:RequestUtil.parseResponseBody(xhr)
+          }
         });
       }
     });
@@ -43,7 +47,7 @@ const ConfigActions = {
 
   fetchConfigType: function () {
     RequestUtil.json({
-      url: `${Config.rootUrl}${Config.apiPrefix}/configure/type`,
+      url: `${Config.rootUrl}${Config.apiPrefix}configure/type`,
       success: function (response) {
         AppDispatcher.handleServerAction({
           type: ActionTypes.CONFIGURE_TYPE_CHANGE_SUCCESS,
@@ -53,7 +57,9 @@ const ConfigActions = {
       error: function (xhr) {
         AppDispatcher.handleServerAction({
           type: ActionTypes.CONFIGURE_TYPE_CHANGE_ERROR,
-          data: xhr
+          data: {
+            response:RequestUtil.parseResponseBody(xhr)
+          }
         });
       }
     });
@@ -61,7 +67,7 @@ const ConfigActions = {
 
   updateConfig: function (data) {
     RequestUtil.json({
-      url: `${Config.rootUrl}${Config.apiPrefix}/configure`,
+      url: `${Config.rootUrl}${Config.apiPrefix}configure`,
       method: 'post',
       data,
       success: function () {
@@ -69,9 +75,13 @@ const ConfigActions = {
           type: ActionTypes.CONFIGURE_UPDATE_SUCCESS
         });
       },
-      error: function () {
+      error: function (xhr) {
         AppDispatcher.handleServerAction({
-          type: ActionTypes.CONFIGURE_UPDATE_ERROR
+          type: ActionTypes.CONFIGURE_UPDATE_ERROR,
+          data: {
+            response: RequestUtil.parseResponseBody(xhr),
+            request: data
+          }
         });
       }
     });

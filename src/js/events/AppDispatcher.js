@@ -1,4 +1,4 @@
-import _ from 'underscore';
+import _ from 'lodash';
 import {Dispatcher} from 'flux';
 
 import ActionTypes from '../constants/ActionTypes';
