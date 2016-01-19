@@ -1,6 +1,10 @@
 import _ from 'underscore';
 import {Form} from 'reactjs-components';
+import mixin from 'reactjs-mixin';
+/* eslint-disable no-unused-vars */
 import React from 'react';
+/* eslint-enable no-unused-vars */
+import {StoreMixin} from 'mesosphere-shared-reactjs';
 
 import FormLabel from '../components/FormLabel';
 import FormLabelContent from '../components/FormLabelContent';
@@ -14,16 +18,22 @@ import SectionHeader from '../components/SectionHeader';
 import SectionHeaderPrimary from '../components/SectionHeaderPrimary';
 import SectionHeaderPrimarySubheading from '../components/SectionHeaderPrimarySubheading';
 import SectionFooter from '../components/SectionFooter';
+import SetupStore from '../stores/SetupStore';
 import Tooltip from '../components/Tooltip';
 import Upload from '../components/Upload';
 
-const METHODS_TO_BIND = ['handleFormChange', 'handleUploadSuccess'];
+const METHODS_TO_BIND = [
+  'handleFormChange',
+  'handleUploadSuccess',
+  'submitFormData'
+];
 
-module.exports = class Setup extends React.Component {
+module.exports = class Setup extends mixin(StoreMixin) {
   constructor() {
     super();
 
     this.state = {
+      configType: 'minimal',
       formData: {
         master_ips: null,
         agent_ips: null,
@@ -41,12 +51,70 @@ module.exports = class Setup extends React.Component {
       passwordFieldType: 'password'
     };
 
+    this.store_listeners = [
+      {
+        name: 'setup',
+        events: [
+          'configStatusChangeError',
+          'configStatusChangeSuccess',
+          'configTypeChangeError',
+          'configTypeChangeSuccess',
+          'configUpdateError',
+          'configUpdateSuccess',
+          'currentConfigChangeError',
+          'currentConfigChangeSuccess'
+        ]
+      }
+    ];
+
     METHODS_TO_BIND.forEach((method) => {
       this[method] = this[method].bind(this);
     });
   }
 
-  getDeploymentSettingsFormDefinition() {
+  componentWillMount() {
+    SetupStore.fetchConfigType();
+    SetupStore.fetchConfig();
+  }
+
+  onSetupStoreConfigStatusChangeError() {
+    // Display server error.
+  }
+
+  onSetupStoreConfigStatusChangeSuccess() {
+    // Display validation response. If successful, enable "Run Pre-Flight" button
+  }
+
+  onSetupStoreConfigTypeChangeError() {
+    // Display server error
+  }
+
+  onSetupStoreConfigTypeChangeSuccess() {
+    // Set state with new config type.
+  }
+
+  onSetupStoreConfigUpdateError() {
+    // Display server error
+  }
+
+  onSetupStoreConfigUpdateSuccess() {
+    // Display validation response. If successful, enable "Run Pre-Flight" button
+  }
+
+  onSetupStoreCurrentConfigChangeError() {
+    let currentConfig = _.extend({}, this.state.formData,
+      SetupStore.get('currentConfig'));
+
+    this.setState({
+      formData: currentConfig
+    });
+  }
+
+  onSetupStoreCurrentConfigChangeSuccess() {
+    // Populate form data with response
+  }
+
+  getFormDefinition() {
     return [
       [
         {
@@ -106,12 +174,14 @@ module.exports = class Setup extends React.Component {
         name: 'ssh_key',
         showLabel: 'SSH Key',
         value: this.state.formData.ssh_key
-      }
-    ];
-  }
-
-  getEnvironmentSettingsFormDefinition() {
-    return [
+      },
+      <SectionHeaderPrimary align="left">
+        DCOS Environment Settings
+        <SectionHeaderPrimarySubheading>
+          Enter the admin information for the primary DCOS user. This user
+          will be able to manage and add other users.
+        </SectionHeaderPrimarySubheading>
+      </SectionHeaderPrimary>,
       [
         {
           fieldType: 'text',
@@ -175,12 +245,13 @@ module.exports = class Setup extends React.Component {
 
     let passwordFieldType = this.state.passwordFieldType;
 
-    if (formData.reveal_password && formData.reveal_password[0].checked) {
+    if (formData.reveal_password[0].checked) {
       passwordFieldType = 'text';
-    } else if (formData.reveal_password && !formData.reveal_password[0].checked) {
+    } else {
       passwordFieldType = 'password';
     }
 
+    this.submitFormData(formData);
     this.setState({formData: newFormData, passwordFieldType});
   }
 
@@ -192,6 +263,10 @@ module.exports = class Setup extends React.Component {
 
       this.setState({formData});
     }
+  }
+
+  submitFormData(formData) {
+
   }
 
   render() {
@@ -209,22 +284,7 @@ module.exports = class Setup extends React.Component {
               </SectionHeaderPrimary>
             </SectionHeader>
             <SectionBody>
-              <Form definition={this.getDeploymentSettingsFormDefinition()}
-                onChange={this.handleFormChange} />
-            </SectionBody>
-          </PageSection>
-          <PageSection>
-            <SectionHeader>
-              <SectionHeaderPrimary align="left">
-                DCOS Environment Settings
-                <SectionHeaderPrimarySubheading>
-                  Enter the admin information for the primary DCOS user. This user
-                  will be able to manage and add other users.
-                </SectionHeaderPrimarySubheading>
-              </SectionHeaderPrimary>
-            </SectionHeader>
-            <SectionBody>
-              <Form definition={this.getEnvironmentSettingsFormDefinition()}
+              <Form definition={this.getFormDefinition()}
                 onChange={this.handleFormChange} />
             </SectionBody>
           </PageSection>

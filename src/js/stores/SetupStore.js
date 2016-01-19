@@ -13,15 +13,18 @@ let SetupStore = Store.createStore({
   init: function () {
     this.set({
       completed: false,
-      errors: null,
-      success: null,
-      warning: null
+      configType: 'minimal',
+      currentConfig: data,
+      currentConfigError: null,
+      errors: null
     });
   },
 
   fetchConfig: ConfigActions.fetchConfig,
 
   fetchConfigState: ConfigActions.fetchConfigState,
+
+  fetchConfigType: ConfigActions.fetchConfigType,
 
   updateConfig: ConfigActions.updateConfig,
 
@@ -33,30 +36,79 @@ let SetupStore = Store.createStore({
     this.removeListener(eventName, callback);
   },
 
-  validateUserInput: function () {
-    // TODO: Send user input to server.
-    // TODO: Determine successful & erroneous fields, display as such.
-    this.emit(EventTypes.SETUP_USER_INPUT_VALIDATED);
+  handleConfigureChangeSuccess: function (data) {
+    this.set({currentConfig: data});
+    this.emit(EventTypes.CONFIGURE_CHANGE_SUCCESS);
+  },
+
+  handleConfigureChangeError: function (data) {
+    this.set({currentConfigError: data});
+    this.emit(EventTypes.CONFIGURE_CHANGE_ERROR);
+  },
+
+  handleConfigureStatusChangeError: function (data) {
+    this.set({configStatus: data});
+    this.emit(EventTypes.CONFIGURE_STATUS_CHANGE_ERROR);
+  },
+
+  handleConfigureTypeError: function (data) {
+    this.emit(EventTypes.CONFIGURE_TYPE_CHANGE_ERROR);
+  },
+
+  handleConfigureUpdateError: function (data) {
+    this.emit(EventTypes.CONFIGURE_UPDATE_ERROR);
+  },
+
+  processConfigureTypeResponse: function (data) {
+    this.set({
+      configType: data
+    });
+    this.emit(EventTypes.CONFIGURE_TYPE_CHANGE_SUCCESS);
+  },
+
+  processConfigureUpdateResponse: function (data) {
+    if (data.errors) {
+      this.set({
+        completed: false,
+        errors: data.errors
+      });
+    } else {
+      this.set({
+        completed: true,
+        errors: null
+      });
+    }
+
+    this.emit(EventTypes.CONFIGURE_UPDATE_SUCCESS);
   },
 
   dispatcherIndex: AppDispatcher.register(function (payload) {
     let {action} = payload;
 
     switch (action.type) {
-      case ActionTypes.SETUP_RECEIVE_USER_INPUT:
-        SetupStore.validateUserInput(action.data);
+      case ActionTypes.CONFIGURE_CHANGE_ERROR:
+        SetupStore.handleConfigureChangeError(action.data);
         break;
       case ActionTypes.CONFIGURE_CHANGE_SUCCESS:
-        // Handle fetch configure success
+        SetupStore.handleConfigureChangeSuccess(action.data);
         break;
-      case ActionTypes.CONFIGURE_CHANGE_ERROR:
-        // Handle fetch configure failed
+      case ActionTypes.CONFIGURE_STATUS_CHANGE_ERROR:
+        SetupStore.handleConfigureStatusChangeError(action.data);
         break;
-      case ActionTypes.CONFIGURE_UPDATE_SUCCESS:
-        // Handle post configure success
+      case ActionTypes.CONFIGURE_STATUS_CHANGE_SUCCESS:
+        SetupStore.processConfigureUpdateResponse(action.data);
+        break;
+      case ActionTypes.CONFIGURE_TYPE_CHANGE_ERROR:
+        SetupStore.handleConfigureTypeError(action.data);
+        break;
+      case ActionTypes.CONFIGURE_TYPE_CHANGE_SUCCESS:
+        SetupStore.processConfigureTypeResponse(action.data);
         break;
       case ActionTypes.CONFIGURE_UPDATE_ERROR:
-        // Handle post configure failed
+        SetupStore.handleConfigureUpdateError(action.data);
+        break;
+      case ActionTypes.CONFIGURE_UPDATE_SUCCESS:
+        SetupStore.processConfigureUpdateResponse(action.data);
         break;
     }
 
