@@ -25,6 +25,10 @@ class StageLinks extends React.Component {
   }
 
   getEditSetupLink() {
+    if (this.props.disableEditSetup) {
+      return null;
+    }
+
     return (
       <button className="button button-link stage-link"
         key="editSetup"
@@ -56,14 +60,14 @@ class StageLinks extends React.Component {
       links = this.getDownloadLink(true)
     }
 
-    if (completed && totalErrors === 0) {
+    if (completed && totalErrors > 0) {
       links = [
         this.getEditSetupLink(),
         this.getDownloadLink()
       ];
     }
 
-    if (completed && totalErrors > 0) {
+    if (completed && totalErrors === 0) {
       links = this.getDownloadLink();
     }
 
@@ -79,9 +83,14 @@ class StageLinks extends React.Component {
   }
 }
 
+StageLinks.defaultProps = {
+  disableEditSetup: false
+}
+
 StageLinks.propTypes = {
   completed: React.PropTypes.bool,
   disabledDisplay: React.PropTypes.bool,
+  disableEditSetup: React.PropTypes.bool,
   failed: React.PropTypes.bool,
   stage: React.PropTypes.string,
   totalErrors: React.PropTypes.number
