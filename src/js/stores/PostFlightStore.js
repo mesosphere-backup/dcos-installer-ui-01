@@ -10,7 +10,7 @@ const stageID = 'postflight';
 let requestInterval = null;
 
 function startPolling() {
-  requestInterval = setInterval(PreFlightStore.fetchStageStatus, 2000);
+  requestInterval = setInterval(PostFlightStore.fetchStageStatus, 2000);
 }
 
 function stopPolling() {
@@ -40,49 +40,7 @@ let PostFlightStore = Store.createStore({
     this.set(initialState);
     this.emit(EventTypes.POSTFLIGHT_STATE_CHANGE, initialState);
 
-    // startPolling();
-    var x = setInterval(() => {
-      let currentSlaves = this.get('slaves');
-      let currentMasters = this.get('masters');
-      var fakeData = {
-        slaves: {
-          errors: 0,
-          totalStarted: currentSlaves.totalStarted + 1,
-          completed: false,
-          totalSlaves: 10
-        },
-        errorDetails: [{host: '123.521.54', message: 'command not found'}],
-        masters: {
-          errors: 0,
-          totalStarted: currentMasters.totalStarted + 1,
-          completed: false,
-          totalMasters: 10
-        },
-      };
-      this.set(fakeData);
-      this.emit(EventTypes.POSTFLIGHT_STATE_CHANGE, fakeData);
-    }, 2000);
-
-    setTimeout(() => {
-      clearInterval(x);
-      var fakeData = {
-        slaves: {
-          errors: 1,
-          totalStarted: 10,
-          completed: true,
-          totalSlaves: 10
-        },
-        errorDetails: [],
-        masters: {
-          errors: 0,
-          totalStarted: 10,
-          completed: true,
-          totalMasters: 10
-        },
-      };
-      this.set(fakeData);
-      this.emit(EventTypes.POSTFLIGHT_STATE_CHANGE, fakeData);
-    }, 20000);
+    startPolling();
   },
 
   beginStage: StageActions.beginStage.bind(null, stageID),

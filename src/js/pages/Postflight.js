@@ -145,6 +145,7 @@ module.exports = class Postflight extends mixin(StoreMixin) {
                 totalErrors={totalErrors} />
               <StageLinks
                 completed={completed}
+                disableEditSetup={true}
                 failed={failed}
                 stage="postflight"
                 totalErrors={totalErrors} />
