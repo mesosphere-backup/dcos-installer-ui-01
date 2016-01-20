@@ -53,7 +53,7 @@ class APIErrorModal extends mixin(StoreMixin) {
             {error.message}
           </p>
           <p className="emphasize flush-bottom">
-            {error.ip}
+            {error.host}
           </p>
         </div>
       );

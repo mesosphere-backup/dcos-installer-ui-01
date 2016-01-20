@@ -3,8 +3,16 @@ import React from 'react';
 /* eslint-enable no-unused-vars */
 
 import APIErrorModal from './APIErrorModal';
+import PreFlightStore from '../stores/PreFlightStore';
+import DeployStore from '../stores/DeployStore';
+import PostFlightStore from '../stores/PostFlightStore';
 
 const METHODS_TO_BIND = ['handleErrorClose', 'handleErrorClick'];
+const STORE_MAP = {
+  preflight: PreFlightStore,
+  deploy: DeployStore,
+  postflight: PostFlightStore
+};
 
 class ErrorLabel extends React.Component {
   constructor() {
@@ -40,7 +48,7 @@ class ErrorLabel extends React.Component {
   }
 
   render() {
-    let errors = []; // DeployStore.getErrors();
+    let errors = STORE_MAP[this.props.step].get('errorDetails');
 
     return (
       <div>
