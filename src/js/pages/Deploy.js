@@ -7,7 +7,6 @@ import React from 'react';
 import DeployStore from '../stores/DeployStore';
 import ErrorLabel from '../components/ErrorLabel';
 import IconCircleCheckmark from '../components/icons/IconCircleCheckmark';
-import IconRetry from '../components/icons/IconRetry';
 import IconSpinner from '../components/icons/IconSpinner';
 import IconWarning from '../components/icons/IconWarning';
 import InstallerStore from '../stores/InstallerStore';
@@ -21,6 +20,8 @@ import SectionHeaderIcon from '../components/SectionHeaderIcon';
 import SectionHeaderPrimary from '../components/SectionHeaderPrimary';
 import SectionHeaderSecondary from '../components/SectionHeaderSecondary';
 import SectionFooter from '../components/SectionFooter';
+import StageActionButtons from '../components/StageActionButtons';
+import StageLinks from '../components/StageLinks';
 
 module.exports = class Deploy extends mixin(StoreMixin) {
   constructor() {
@@ -103,53 +104,6 @@ module.exports = class Deploy extends mixin(StoreMixin) {
     );
   }
 
-  getActions(completed, failed, totalErrors) {
-    let buttons;
-
-    if (completed && totalErrors === 0) {
-      buttons = (
-        <button className="button button-stroke button-success button-rounded">
-          Run Post-Flight
-        </button>
-      );
-    }
-
-    if (completed && totalErrors > 0) {
-      buttons = [
-        <button
-          key="retry"
-          onClick={DeployStore.init.bind(DeployStore)}
-          className="button button-large button-stroke button-rounded">
-          <IconRetry />
-          Retry
-        </button>,
-        <button
-          key="deploy"
-          className="button button-large button-stroke button-success
-          button-rounded">
-          Run Post-Flight
-        </button>
-      ];
-    }
-
-    if (failed) {
-      buttons = (
-        <button
-          onClick={DeployStore.init.bind(DeployStore)}
-          className="button button-stroke button-rounded">
-          <IconRetry />
-          Retry
-        </button>
-      );
-    }
-
-    return (
-      <div className="button-collection">
-        {buttons}
-      </div>
-    );
-  }
-
   render() {
     let masterStatus = DeployStore.get('masters');
     let slaveStatus = DeployStore.get('slaves');
@@ -182,7 +136,17 @@ module.exports = class Deploy extends mixin(StoreMixin) {
           </PageSection>
           <PageSection>
             <SectionFooter>
-              {this.getActions(completed, failed, totalErrors)}
+              <StageActionButtons
+                completed={completed}
+                failed={failed}
+                nextText="Run Post-Flight"
+                onRetryClick={DeployStore.init.bind(DeployStore)}
+                totalErrors={totalErrors} />
+              <StageLinks
+                completed={completed}
+                failed={failed}
+                stage="deploy"
+                totalErrors={totalErrors} />
             </SectionFooter>
           </PageSection>
         </PageContent>
