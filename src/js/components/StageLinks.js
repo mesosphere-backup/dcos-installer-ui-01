@@ -5,7 +5,17 @@ import IconDownload from './icons/IconDownload';
 import IconEdit from './icons/IconEdit';
 import StageActions from '../events/StageActions';
 
+const METHODS_TO_BIND = ['handleDownloadClick', 'handleEditSetupClick'];
+
 class StageLinks extends React.Component {
+  constructor() {
+    super();
+
+    METHODS_TO_BIND.forEach((method) => {
+      this[method] = this[method].bind(this);
+    });
+  }
+
   handleEditSetupClick() {
     // TODO
   }
