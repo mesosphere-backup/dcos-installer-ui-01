@@ -14,6 +14,7 @@
     "flux": "^2.1.1",
     "history": "^1.17.0",
     "less-color-lighten": "0.0.1",
+    "lodash": "^4.0.0",
     "mesosphere-shared-reactjs": "0.0.8",
     "react": "^0.13.3",
     "react-gemini-scrollbar": "^1.1.1",
@@ -21,7 +22,6 @@
     "reactjs-components": "0.0.37",
     "reactjs-mixin": "0.0.2",
     "statics": "^0.1.0",
-    "underscore": "^1.7.0",
     "zxcvbn": "^4.2.0"
   },
   "devDependencies": {

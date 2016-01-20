@@ -1,4 +1,4 @@
-import _ from 'underscore';
+import _ from 'lodash';
 import {Form} from 'reactjs-components';
 import mixin from 'reactjs-mixin';
 /* eslint-disable no-unused-vars */
@@ -6,6 +6,8 @@ import React from 'react';
 /* eslint-enable no-unused-vars */
 import {StoreMixin} from 'mesosphere-shared-reactjs';
 
+import Config from '../config/Config';
+import ConfigActions from '../events/ConfigActions';
 import FormLabel from '../components/FormLabel';
 import FormLabelContent from '../components/FormLabelContent';
 import Page from '../components/Page';
@@ -23,8 +25,11 @@ import Tooltip from '../components/Tooltip';
 import Upload from '../components/Upload';
 
 const METHODS_TO_BIND = [
+  'getErrors',
+  'getValidationFn',
   'handleFormChange',
   'handleUploadSuccess',
+  'isLastFormField',
   'submitFormData'
 ];
 
@@ -33,19 +38,24 @@ module.exports = class Setup extends mixin(StoreMixin) {
     super();
 
     this.state = {
-      configType: 'minimal',
+      errors: {},
+      configType: {
+        type: 'minimal',
+        message: null
+      },
+      formStatus: {},
       formData: {
-        master_ips: null,
-        agent_ips: null,
+        master_list: null,
+        agent_list: null,
         ip_detect_script: null,
-        ssh_username: null,
-        ssh_port: null,
+        ssh_user: null,
+        ssh_port: '22',
         ssh_key: null,
         username: null,
         password: '',
         zk_exhibitor_hosts: null,
         zk_exhibitor_port: null,
-        upstream_dns_servers: null
+        resolvers: null
       },
       isComplete: false,
       passwordFieldType: 'password'
@@ -73,42 +83,27 @@ module.exports = class Setup extends mixin(StoreMixin) {
   }
 
   componentWillMount() {
-    SetupStore.fetchConfigType();
-    SetupStore.fetchConfig();
-  }
-
-  onSetupStoreConfigStatusChangeError() {
-    // Display server error.
-  }
-
-  onSetupStoreConfigStatusChangeSuccess() {
-    // Display validation response. If successful, enable "Run Pre-Flight" button
-  }
-
-  onSetupStoreConfigTypeChangeError() {
-    // Display server error
-  }
-
-  onSetupStoreConfigTypeChangeSuccess() {
-    // Set state with new config type.
+    this.submitFormData = _.throttle(
+      this.submitFormData, Config.apiRequestThrottle
+    );
   }
 
   onSetupStoreConfigUpdateError() {
-    // Display server error
+    this.setState({errors: SetupStore.get('errors')});
   }
 
   onSetupStoreConfigUpdateSuccess() {
-    // Display validation response. If successful, enable "Run Pre-Flight" button
+    this.setState({isComplete: true});
   }
 
-  onSetupStoreCurrentConfigChangeError() {
-    let formData = this.getNewFormData(SetupStore.get('currentConfig'));
+  getErrors(key) {
+    let error = null;
 
-    this.setState({formData});
-  }
+    if (this.state.errors[key]) {
+      error = this.state.errors[key];
+    }
 
-  onSetupStoreCurrentConfigChangeSuccess() {
-    // Populate form data with response
+    return error;
   }
 
   getFormDefinition() {
@@ -116,7 +111,7 @@ module.exports = class Setup extends mixin(StoreMixin) {
       [
         {
           fieldType: 'textarea',
-          name: 'master_ips',
+          name: 'master_list',
           placeholder: 'Please provide 1, 3, or 5 IPv4 addresses.',
           showLabel: (
             <FormLabel>
@@ -125,15 +120,17 @@ module.exports = class Setup extends mixin(StoreMixin) {
               </FormLabelContent>
               <FormLabelContent position="right">
                 <Upload displayText="Upload .csv"
-                  onUploadFinish={this.handleUploadSuccess('master_ips')} />
+                  onUploadFinish={this.handleUploadSuccess('master_list')} />
               </FormLabelContent>
             </FormLabel>
           ),
-          value: this.state.formData.master_ips
+          validationErrorText: this.getErrors('master_list'),
+          validation: this.getValidationFn('master_list'),
+          value: this.state.formData.master_list
         },
         {
           fieldType: 'textarea',
-          name: 'agent_ips',
+          name: 'agent_list',
           placeholder: 'Please provide 1 to n IPv4 addresses to serve as your' +
             ' datacenter\'s Agents.',
           showLabel: (
@@ -143,26 +140,31 @@ module.exports = class Setup extends mixin(StoreMixin) {
               </FormLabelContent>
               <FormLabelContent position="right">
                 <Upload displayText="Upload .csv"
-                  onUploadFinish={this.handleUploadSuccess('agent_ips')} />
+                  onUploadFinish={this.handleUploadSuccess('agent_list')} />
               </FormLabelContent>
             </FormLabel>
           ),
-          value: this.state.formData.agent_ips
+          validationErrorText: this.getErrors('agent_list'),
+          validation: this.getValidationFn('agent_list'),
+          value: this.state.formData.agent_list
         }
       ],
       [
         {
           fieldType: 'text',
-          name: 'ssh_username',
+          name: 'ssh_user',
           placeholder: 'e.g. root',
           showLabel: 'SSH Username',
-          value: this.state.formData.ssh_username
+          validationErrorText: this.getErrors('ssh_user'),
+          validation: this.getValidationFn('ssh_user'),
+          value: this.state.formData.ssh_user
         },
         {
           fieldType: 'text',
           name: 'ssh_port',
           showLabel: 'SSH Listening Port',
-          value: '22',
+          validationErrorText: this.getErrors('ssh_port'),
+          validation: this.getValidationFn('ssh_port'),
           value: this.state.formData.ssh_port
         }
       ],
@@ -170,6 +172,8 @@ module.exports = class Setup extends mixin(StoreMixin) {
         fieldType: 'text',
         name: 'ssh_key',
         showLabel: 'SSH Key',
+        validationErrorText: this.getErrors('ssh_key'),
+        validation: this.getValidationFn('ssh_key'),
         value: this.state.formData.ssh_key
       },
       <SectionHeaderPrimary align="left">
@@ -185,6 +189,8 @@ module.exports = class Setup extends mixin(StoreMixin) {
           name: 'username',
           placeholder: 'e.g. root',
           showLabel: 'Username',
+          validationErrorText: this.getErrors('username'),
+          validation: this.getValidationFn('username'),
           value: this.state.formData.username
         },
         {
@@ -199,6 +205,8 @@ module.exports = class Setup extends mixin(StoreMixin) {
             );
           },
           showLabel: 'Password',
+          validationErrorText: this.getErrors('password'),
+          validation: this.getValidationFn('password'),
           value: this.state.formData.password
         },
         {
@@ -219,41 +227,77 @@ module.exports = class Setup extends mixin(StoreMixin) {
           name: 'zk_exhibitor_hosts',
           placeholder: 'Please provide 1, 3, or 5 IPv4 addresses.',
           showLabel: 'Bootstrapping Zookeeper IP Address(es)',
+          validationErrorText: this.getErrors('zk_exhibitor_hosts'),
+          validation: this.getValidationFn('zk_exhibitor_hosts'),
           value: this.state.formData.zk_exhibitor_hosts
         },
         {
           fieldType: 'text',
           name: 'zk_exhibitor_port',
           showLabel: 'Bootstrapping Zookeeper Port',
+          validation: this.getValidationFn('zk_exhibitor_port'),
+          validationErrorText: this.getErrors('zk_exhibitor_port'),
           value: this.state.formData.zk_exhibitor_port
         }
       ],
       {
         fieldType: 'text',
-        name: 'upstream_dns_servers',
+        name: 'resolvers',
         showLabel: 'Upstream DNS Servers',
-        value: this.state.formData.upstream_dns_servers
+        validation: this.getValidationFn('resolvers'),
+        validationErrorText: this.getErrors('resolvers'),
+        value: this.state.formData.resolvers
       }
     ];
   }
 
   getNewFormData(newFormData) {
+    newFormData = this.stringifyArrays(newFormData);
     return _.extend({}, this.state.formData, newFormData);
   }
 
-  handleFormChange(formData) {
-    let newFormData = this.getNewFormData(formData);
+  getValidationFn(key) {
+    let {state} = this;
 
-    let passwordFieldType = this.state.passwordFieldType;
+    return function () {
+      if (state.errors[key]) {
+        return false;
+      }
+      return true;
+    }
+  }
 
-    if (formData.reveal_password[0].checked) {
-      passwordFieldType = 'text';
-    } else {
-      passwordFieldType = 'password';
+  handleFormChange(formData, eventDetails) {
+    let {eventType, fieldName, fieldValue} = eventDetails;
+
+    if (eventType === 'focus') {
+      return;
     }
 
-    this.submitFormData(formData);
-    this.setState({formData: newFormData, passwordFieldType});
+    if (eventType === 'blur'
+      || eventType === 'change' && this.isLastFormField(fieldName)) {
+      let newFormData = this.getNewFormData(formData);
+
+      this.submitFormData({[fieldName]: formData[fieldName]});
+      this.setState({formData: newFormData});
+    }
+
+    if (eventType === 'blur') {
+      // Submit form data immediately on blur events.
+      this.submitFormData.flush();
+    }
+
+    if (eventType === 'change' && fieldName === 'reveal_password') {
+      let passwordFieldType = this.state.passwordFieldType;
+
+      if (formData.reveal_password[0].checked) {
+        passwordFieldType = 'text';
+      } else {
+        passwordFieldType = 'password';
+      }
+
+      this.setState({passwordFieldType});
+    }
   }
 
   handleUploadSuccess(destination) {
@@ -266,8 +310,56 @@ module.exports = class Setup extends mixin(StoreMixin) {
     }
   }
 
-  submitFormData() {
+  isLastFormField(fieldName) {
+    let lastRemainingField = false;
 
+    Object.keys(this.state.formData).forEach((key) => {
+      if (key !== fieldName && this.state.formData[key] !== ''
+        && this.state.formData[key] != null) {
+        lastRemainingField = true;
+      }
+    });
+
+    // If errors exist, we don't want to send the form data on value change.
+    if (lastRemainingField && Object.keys(this.state.errors).length) {
+      lastRemainingField = false;
+    }
+
+    return lastRemainingField;
+  }
+
+  stringifyArrays(formData) {
+    let stringifiedData = {};
+
+    Object.keys(formData).forEach(function (key) {
+      if (_.isArray(formData[key])) {
+        stringifiedData[key] = formData[key].join(', ');
+      } else {
+        stringifiedData[key] = formData[key];
+      }
+    });
+
+    return stringifiedData;
+  }
+
+  submitFormData(formData) {
+    ConfigActions.updateConfig(this.unstringifyArrays(formData));
+  }
+
+  unstringifyArrays(formData) {
+    let unstringifiedData = {};
+
+    Object.keys(formData).forEach(function (key) {
+      if (formData[key] != null) {
+        if (key === 'master_list' || key === 'agent_list') {
+          unstringifiedData[key] = formData[key].replace(/\s/g, '').split(',');
+        } else {
+          unstringifiedData[key] = formData[key];
+        }
+      }
+    });
+
+    return unstringifiedData;
   }
 
   render() {
@@ -291,7 +383,7 @@ module.exports = class Setup extends mixin(StoreMixin) {
           </PageSection>
           <PageSection>
             <SectionFooter>
-              <SectionAction enabled={true} linkTo="/pre-flight"
+              <SectionAction enabled={this.state.isComplete} linkTo="/pre-flight"
                 onClick={this.handleSubmitClick} type="primary">
                 Run Pre-Flight
               </SectionAction>

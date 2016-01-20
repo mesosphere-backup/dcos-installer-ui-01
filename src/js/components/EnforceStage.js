@@ -4,15 +4,21 @@ import {StoreMixin} from 'mesosphere-shared-reactjs';
 
 import IconSpinner from './icons/IconSpinner';
 import InstallerStore from '../stores/InstallerStore';
+import SetupStore from '../stores/SetupStore';
 
 class EnforceStage extends mixin(StoreMixin) {
   constructor() {
     super();
 
     this.state = {
+      configType: {
+        type: null,
+        message: null
+      },
       currentStage: null,
       receivedTotalSlaves: false,
-      receivedTotalMasters: false
+      receivedTotalMasters: false,
+      serverError: false
     };
 
     this.store_listeners = [
@@ -23,6 +29,13 @@ class EnforceStage extends mixin(StoreMixin) {
           'totalSlavesChange',
           'totalMastersChange'
         ]
+      },
+      {
+        name: 'setup',
+        events: [
+          'configTypeChangeSuccess',
+          'currentConfigChangeError'
+        ]
       }
     ];
   }
@@ -31,6 +44,7 @@ class EnforceStage extends mixin(StoreMixin) {
     super.componentDidMount();
 
     InstallerStore.init();
+    SetupStore.init();
   }
 
   // Uncomment this to force user to be on current stage.
@@ -49,6 +63,18 @@ class EnforceStage extends mixin(StoreMixin) {
     this.setState({currentStage});
   }
 
+  onSetupStoreConfigTypeChangeSuccess() {
+    this.setState({configType: SetupStore.get('configType')});
+  }
+
+  onSetupStoreCurrentConfigChangeError() {
+    this.setState({serverError: true});
+  }
+
+  getAdvancedConfigurationWarning() {
+    return 'You cannot modify this configuration.';
+  }
+
   getLoadingScreen() {
     return (
       <div className="spinner-wrapper flex-box flex-box-align-vertical-center
@@ -58,7 +84,19 @@ class EnforceStage extends mixin(StoreMixin) {
     );
   }
 
+  getServerError() {
+    return 'Server error.'
+  }
+
   render() {
+    if (this.state.serverError) {
+      return this.getServerError();
+    }
+
+    if (this.state.configType.type === 'advanced') {
+      return this.getAdvancedConfigurationWarning();
+    }
+
     // Uncomment this to force user to be on current stage.
     // let state = this.state;
     // if (state.currentStage == null || !state.receivedTotalSlaves
