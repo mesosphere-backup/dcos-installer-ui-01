@@ -1,5 +1,6 @@
 @tooltip-background: @neutral;
 @tooltip-foreground: #D6D7DA;
+@tooltip-link-foreground: @white;
 
 @tooltip-border-radius: 3px;
 @tooltip-font-size: @body-text-font-size * 1.125;
@@ -11,8 +12,11 @@
 @tooltip-arrow-border-width: 7px;
 @tooltip-arrow-offset: 8px;
 
+@tooltip-trigger-margin: @base-spacing-unit * 1/4;
+
 .tooltip-wrapper {
   display: inline-block;
+  margin-left: @tooltip-trigger-margin;
   position: relative;
 }
 
@@ -26,8 +30,9 @@
   padding: @tooltip-padding-vertical @tooltip-padding-horizontal;
   position: absolute;
   transition: opacity 0.3s, visibility 0.3s;
-  white-space: nowrap;
   visibility: hidden;
+  white-space: nowrap;
+  z-index: 100;
 
   &:after {
     border-color: @tooltip-background;
@@ -147,6 +152,19 @@
       border-left: none;
       border-top-color: transparent;
       right: 100%;
+    }
+  }
+
+  a {
+    color: @tooltip-link-foreground;
+    text-decoration: underline;
+
+    &:active {
+      text-decoration: underline;
+    }
+
+    &:hover {
+      color: @tooltip-link-foreground;
     }
   }
 }
