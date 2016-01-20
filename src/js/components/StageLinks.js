@@ -16,33 +16,37 @@ class StageLinks extends React.Component {
 
   getEditSetupLink() {
     return (
-      <a key="editSetup" onClick={this.handleEditSetupClick}>
+      <button className="button button-link stage-link"
+        key="editSetup"
+        onClick={this.handleEditSetupClick}>
         <IconEdit />Edit Setup
-      </a>
+      </button>
     );
   }
 
   getDownloadLink(disabled) {
-    let classes = classnames({
+    let classes = classnames('button button-link stage-link', {
       disabled: disabled
     });
 
     return (
-      <a className={classes} key="download" onClick={this.handleDownloadClick}>
+      <button className={classes}
+        key="download"
+        onClick={this.handleDownloadClick}>
         <IconDownload />Download Logs
-      </a>
+      </button>
     );
   }
 
   render() {
     let links;
-    let {completed, disabledDisplay, totalErrors, failed} = this.props;
+    let {completed, disabledDisplay, failed} = this.props;
 
     if (disabledDisplay) {
       links = this.getDownloadLink(true)
     }
 
-    if (completed && totalErrors === 0) {
+    if (completed) {
       links = [
         this.getEditSetupLink(),
         this.getDownloadLink()
@@ -65,8 +69,7 @@ StageLinks.propTypes = {
   completed: React.PropTypes.bool,
   disabledDisplay: React.PropTypes.bool,
   failed: React.PropTypes.bool,
-  stage: React.PropTypes.string,
-  totalErrors: React.PropTypes.number
+  stage: React.PropTypes.string
 };
 
 module.exports = StageLinks;
