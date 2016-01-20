@@ -40,17 +40,21 @@ class StageLinks extends React.Component {
 
   render() {
     let links;
-    let {completed, disabledDisplay, failed} = this.props;
+    let {completed, disabledDisplay, failed, totalErrors} = this.props;
 
     if (disabledDisplay) {
       links = this.getDownloadLink(true)
     }
 
-    if (completed) {
+    if (completed && totalErrors === 0) {
       links = [
         this.getEditSetupLink(),
         this.getDownloadLink()
       ];
+    }
+
+    if (completed && totalErrors > 0) {
+      links = this.getDownloadLink();
     }
 
     if (failed) {
@@ -69,7 +73,8 @@ StageLinks.propTypes = {
   completed: React.PropTypes.bool,
   disabledDisplay: React.PropTypes.bool,
   failed: React.PropTypes.bool,
-  stage: React.PropTypes.string
+  stage: React.PropTypes.string,
+  totalErrors: React.PropTypes.number
 };
 
 module.exports = StageLinks;

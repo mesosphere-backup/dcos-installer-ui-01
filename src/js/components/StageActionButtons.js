@@ -19,7 +19,7 @@ class StageActionButtons extends React.Component {
   getNextButton(disabled) {
     let classes = classnames(
       'button button-rounded button-large', {
-        disabled: disabled,
+        'disabled button-stroke': disabled,
         'button-success': !disabled
       }
     );
