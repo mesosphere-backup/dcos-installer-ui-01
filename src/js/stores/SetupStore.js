@@ -21,6 +21,9 @@ let SetupStore = Store.createStore({
       currentConfigError: null,
       errors: null
     });
+
+    this.fetchConfigType();
+    this.fetchConfig();
   },
 
   fetchConfig: ConfigActions.fetchConfig,

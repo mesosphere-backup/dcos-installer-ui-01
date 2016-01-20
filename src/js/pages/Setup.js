@@ -83,9 +83,9 @@ module.exports = class Setup extends mixin(StoreMixin) {
   }
 
   componentWillMount() {
-    this.submitFormData = _.throttle(this.submitFormData,
-      Config.apiRequestThrottle);
-    SetupStore.init();
+    this.submitFormData = _.throttle(
+      this.submitFormData, Config.apiRequestThrottle
+    );
   }
 
   onSetupStoreConfigUpdateError() {

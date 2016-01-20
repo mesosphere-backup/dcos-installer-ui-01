@@ -44,8 +44,7 @@ class EnforceStage extends mixin(StoreMixin) {
     super.componentDidMount();
 
     InstallerStore.init();
-    SetupStore.fetchConfigType();
-    SetupStore.fetchConfig();
+    SetupStore.init();
   }
 
   // Uncomment this to force user to be on current stage.
