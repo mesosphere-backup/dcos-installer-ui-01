@@ -2,6 +2,7 @@ import {GetSetMixin, Store} from 'mesosphere-shared-reactjs';
 
 import ActionTypes from '../constants/ActionTypes';
 import AppDispatcher from '../events/AppDispatcher';
+import HostActions from '../events/HostActions';
 import EventTypes from '../constants/EventTypes';
 import StageActions from '../events/StageActions';
 import SuccessActions from '../events/SuccessActions';
@@ -24,13 +25,23 @@ let InstallerStore = Store.createStore({
         label: null,
         link: null,
         visible: false
-      }
+      },
+      totalSlaves: 0,
+      totalMasters: 0
     });
+
+    this.fetchCurrentStage();
+    this.fetchTotalSlaves();
+    this.fetchTotalMasters();
   },
 
   fetchDCOSURL: SuccessActions.fetchDCOSURL,
 
   fetchCurrentStage: StageActions.fetchCurrentStage,
+
+  fetchTotalSlaves: HostActions.fetchTotalSlaves,
+
+  fetchTotalMasters: HostActions.fetchTotalMasters,
 
   addChangeListener: function (eventName, callback) {
     this.on(eventName, callback);
@@ -68,6 +79,20 @@ let InstallerStore = Store.createStore({
     switch (action.type) {
       case ActionTypes.CURRENT_STAGE_CHANGE_SUCCESS:
         InstallerStore.processCurrentStage(action.data);
+        break;
+      case ActionTypes.TOTAL_SLAVES_SUCCESS:
+        this.set({totalSlaves: action.data});
+        this.emit(TOTAL_SLAVES_SUCCESS, action.data);
+        break;
+      case ActionTypes.TOTAL_SLAVES_ERROR:
+        this.emit(TOTAL_SLAVES_ERROR);
+        break;
+      case ActionTypes.TOTAL_MASTERS_SUCCESS:
+        this.set({totalMasters: action.data});
+        this.emit(TOTAL_MASTERS_SUCCESS, action.data);
+        break;
+      case ActionTypes.TOTAL_MASTERS_ERROR:
+        this.emit(TOTAL_MASTERS_ERROR);
         break;
     }
 

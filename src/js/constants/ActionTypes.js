@@ -28,7 +28,11 @@ let ActionTypes = {};
   'PREFLIGHT_UPDATE_ERROR',
   'PREFLIGHT_UPDATE_SUCCESS',
   'PREFLIGHT_LOGS_ERROR',
-  'PREFLIGHT_LOGS_SUCCESS'
+  'PREFLIGHT_LOGS_SUCCESS',
+  'TOTAL_SLAVES_ERROR',
+  'TOTAL_SLAVES_SUCCESS',
+  'TOTAL_MASTERS_ERROR',
+  'TOTAL_MASTERS_SUCCESS',
 ].forEach(function (actionType) {
   ActionTypes[actionType] = actionType;
 });

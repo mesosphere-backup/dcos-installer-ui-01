@@ -10,18 +10,27 @@ class EnforceStage extends mixin(StoreMixin) {
     super();
 
     this.state = {
-      currentStage: null
+      currentStage: null,
+      receivedTotalSlaves: false,
+      receivedTotalMasters: false
     };
 
     this.store_listeners = [
-      {name: 'installer', events: ['currentStageChange']}
+      {
+        name: 'installer',
+        events: [
+          'currentStageChange',
+          'totalSlavesChange',
+          'totalMastersChange'
+        ]
+      }
     ];
   }
 
   componentDidMount() {
     super.componentDidMount();
 
-    InstallerStore.fetchCurrentStage();
+    InstallerStore.init();
   }
 
   // Uncomment this to force user to be on current stage.
@@ -51,7 +60,9 @@ class EnforceStage extends mixin(StoreMixin) {
 
   render() {
     // Uncomment this to force user to be on current stage.
-    // if (this.state.currentStage == null) {
+    // let state = this.state;
+    // if (state.currentStage == null || !state.receivedTotalSlaves
+    //   || !state.receivedTotalMasters) {
     //   return this.getLoadingScreen();
     // }
 
