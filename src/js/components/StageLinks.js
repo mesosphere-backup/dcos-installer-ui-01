@@ -1,8 +1,8 @@
 import classnames from 'classnames';
 import React from 'react';
 
-import IconEdit from './icons/IconEdit';
 import IconDownload from './icons/IconDownload';
+import IconEdit from './icons/IconEdit';
 import StageActions from '../events/StageActions';
 
 class StageLinks extends React.Component {
