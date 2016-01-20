@@ -122,6 +122,7 @@ module.exports = class Preflight extends mixin(StoreMixin) {
       buttons = [
         <button
           key="retry"
+          onClick={PreFlightStore.init.bind(PreFlightStore)}
           className="button button-large button-stroke button-rounded">
           <IconRetry />
           Retry
@@ -137,7 +138,10 @@ module.exports = class Preflight extends mixin(StoreMixin) {
 
     if (failed) {
       buttons = (
-        <button className="button button-stroke button-rounded">
+        <button
+          onClick={PreFlightStore.init.bind(PreFlightStore)}
+          className="button button-stroke button-rounded">
+          <IconRetry />
           Retry
         </button>
       );

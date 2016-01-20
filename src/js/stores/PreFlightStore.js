@@ -24,7 +24,7 @@ let PreFlightStore = Store.createStore({
   mixins: [GetSetMixin],
 
   init: function () {
-    this.set({
+    let initialState = {
       slaves: {
         errors: 0,
         totalStarted: 0,
@@ -36,7 +36,9 @@ let PreFlightStore = Store.createStore({
         totalStarted: 0,
         completed: false
       }
-    });
+    };
+    this.set(initialState);
+    this.emit(EventTypes.PREFLIGHT_STATE_CHANGE, initialState);
 
     startPolling();
   },
