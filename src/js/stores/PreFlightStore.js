@@ -7,6 +7,16 @@ import ProcessStageUtil from '../utils/ProcessStageUtil';
 import StageActions from '../events/StageActions';
 
 const stageID = 'preflight';
+let requestInterval = null;
+
+function startPolling() {
+  requestInterval = setInterval(PreFlightStore.fetchStageStatus, 2000);
+}
+
+function stopPolling() {
+  clearInterval(requestInterval);
+  requestInterval = null;
+}
 
 let PreFlighStore = Store.createStore({
   storeID: 'preFlight',
@@ -27,6 +37,8 @@ let PreFlighStore = Store.createStore({
         completed: false
       }
     });
+
+    startPolling();
   },
 
   beginStage: StageActions.beginStage.bind(null, stageID),
@@ -43,12 +55,21 @@ let PreFlighStore = Store.createStore({
     this.removeListener(eventName, callback);
   },
 
+  isCompleted: function (data) {
+    return data.slaves.completed && data.masters.completed;
+  },
+
   processUpdateError: function () {
     this.emit(EventTypes.PREFLIGHT_STATE_CHANGE);
   },
 
   processUpdateSuccess: function (data) {
     var processedState = ProcessStageUtil.processState(data);
+
+    if (this.isCompleted(processedState)) {
+      stopPolling();
+    }
+
     this.set(processedState);
     this.emit(EventTypes.PREFLIGHT_STATE_CHANGE, processedState);
   },
