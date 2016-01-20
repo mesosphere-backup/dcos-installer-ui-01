@@ -18,7 +18,7 @@ function stopPolling() {
   requestInterval = null;
 }
 
-let PreFlighStore = Store.createStore({
+let PreFlightStore = Store.createStore({
   storeID: 'preFlight',
 
   mixins: [GetSetMixin],
@@ -95,4 +95,4 @@ let PreFlighStore = Store.createStore({
 
 });
 
-module.exports = PreFlighStore;
+module.exports = PreFlightStore;

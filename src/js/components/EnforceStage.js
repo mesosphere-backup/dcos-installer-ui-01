@@ -40,9 +40,8 @@ class EnforceStage extends mixin(StoreMixin) {
     ];
   }
 
-  componentDidMount() {
-    super.componentDidMount();
-
+  componentWillMount() {
+    super.componentWillMount();
     InstallerStore.init();
     SetupStore.init();
   }
