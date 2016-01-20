@@ -19,14 +19,12 @@ const ProcessStageUtil = {
       slaves: {
         completed: true,
         errors: 0,
-        totalSlaves: response.total_slaves,
         totalStarted: 0
       },
       errorDetails: [],
       masters: {
         completed: true,
         errors: 0,
-        totalMasters: response.total_masters,
         totalStarted: 0
       }
     };
