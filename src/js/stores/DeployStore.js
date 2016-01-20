@@ -3,9 +3,20 @@ import {GetSetMixin, Store} from 'mesosphere-shared-reactjs';
 import ActionTypes from '../constants/ActionTypes';
 import AppDispatcher from '../events/AppDispatcher';
 import EventTypes from '../constants/EventTypes';
+import ProcessStageUtil from '../utils/ProcessStageUtil';
 import StageActions from '../events/StageActions';
 
 const stageID = 'deploy';
+let requestInterval = null;
+
+function startPolling() {
+  requestInterval = setInterval(DeployStore.fetchStageStatus, 4000);
+}
+
+function stopPolling() {
+  clearInterval(requestInterval);
+  requestInterval = null;
+}
 
 let DeployStore = Store.createStore({
   storeID: stageID,
@@ -13,7 +24,7 @@ let DeployStore = Store.createStore({
   mixins: [GetSetMixin],
 
   init: function () {
-    this.set({
+    let initialState = {
       slaves: {
         errors: 0,
         totalStarted: 0,
@@ -25,7 +36,11 @@ let DeployStore = Store.createStore({
         totalStarted: 0,
         completed: false
       }
-    });
+    }
+    this.set(initialState);
+    this.emit(EventTypes.DEPLOY_STATE_CHANGE, initialState);
+
+    startPolling();
   },
 
   beginStage: StageActions.beginStage.bind(null, stageID),
@@ -42,12 +57,22 @@ let DeployStore = Store.createStore({
     this.removeListener(eventName, callback);
   },
 
+  isCompleted: function (data) {
+    return data.slaves.completed && data.masters.completed;
+  },
+
   processUpdateError: function () {
     this.emit(EventTypes.DEPLOY_STATE_CHANGE);
   },
 
-  processUpdateSuccess: function () {
-    // TODO: Process update for masters and agents.
+  processUpdateSuccess: function (data) {
+    var processedState = ProcessStageUtil.processState(data);
+
+    if (this.isCompleted(processedState)) {
+      stopPolling();
+    }
+
+    this.set(processedState);
     this.emit(EventTypes.DEPLOY_STATE_CHANGE);
   },
 
