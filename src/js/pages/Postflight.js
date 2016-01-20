@@ -5,6 +5,7 @@ import IconWarning from '../components/icons/IconWarning';
 import Page from '../components/Page';
 import PageContent from '../components/PageContent';
 import PageSection from '../components/PageSection';
+import PostFlightStore from '../stores/PostFlightStore';
 import ProgressBar from '../components/ProgressBar';
 import SectionBody from '../components/SectionBody';
 import SectionHeader from '../components/SectionHeader';
@@ -14,6 +15,11 @@ import SectionHeaderSecondary from '../components/SectionHeaderSecondary';
 import SectionFooter from '../components/SectionFooter';
 
 module.exports = class Postflight extends React.Component {
+
+  componentWillMount() {
+    PostFlightStore.init();
+  }
+
   render() {
     return (
       <Page hasNavigationBar={true}>

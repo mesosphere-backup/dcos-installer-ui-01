@@ -1,5 +1,6 @@
 import React from 'react';
 
+import DeployStore from '../stores/DeployStore';
 import ErrorLabel from '../components/ErrorLabel';
 import IconCircleCheckmark from '../components/icons/IconCircleCheckmark';
 import Page from '../components/Page';
@@ -14,6 +15,11 @@ import SectionHeaderSecondary from '../components/SectionHeaderSecondary';
 import SectionFooter from '../components/SectionFooter';
 
 module.exports = class Deploy extends React.Component {
+
+  componentWillMount() {
+    DeployStore.init();
+  }
+
   render() {
     return (
       <Page hasNavigationBar={true}>

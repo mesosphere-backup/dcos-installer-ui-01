@@ -14,18 +14,17 @@ let PreFlighStore = Store.createStore({
 
   init: function () {
     this.set({
-      agents: {
-        error: false,
-        status: 'Checking Agents',
-        detail: null
+      slaves: {
+        errors: 0,
+        totalStarted: 0,
+        completed: false
       },
-      completed: false,
+      errorDetails: [],
       masters: {
-        error: false,
-        status: 'Checking Masters',
-        detail: null
-      },
-      status: 'Running Pre-Flight...'
+        errors: 0,
+        totalStarted: 0,
+        completed: false
+      }
     });
   },
 

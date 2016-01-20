@@ -5,6 +5,7 @@ import IconSpinner from '../components/icons/IconSpinner';
 import Page from '../components/Page';
 import PageContent from '../components/PageContent';
 import PageSection from '../components/PageSection';
+import PreFlightStore from '../stores/PreFlightStore';
 import ProgressBar from '../components/ProgressBar';
 import SectionBody from '../components/SectionBody';
 import SectionHeader from '../components/SectionHeader';
@@ -14,6 +15,11 @@ import SectionHeaderSecondary from '../components/SectionHeaderSecondary';
 import SectionFooter from '../components/SectionFooter';
 
 module.exports = class Preflight extends React.Component {
+
+  componentWillMount() {
+    PreFlightStore.init();
+  }
+
   render() {
     return (
       <Page hasNavigationBar={true}>
