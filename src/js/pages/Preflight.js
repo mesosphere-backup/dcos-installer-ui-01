@@ -137,14 +137,14 @@ module.exports = class Preflight extends mixin(StoreMixin) {
           <PageSection>
             <SectionFooter>
               <StageActionButtons
-                completed={true}
+                completed={completed}
                 failed={failed}
                 nextText="Deploy"
                 onRetryClick={PreFlightStore.init.bind(PreFlightStore)}
                 showDisabled={true}
                 totalErrors={totalErrors} />
               <StageLinks
-                completed={true}
+                completed={completed}
                 disabledDisplay={true}
                 failed={failed}
                 stage="preflight"
