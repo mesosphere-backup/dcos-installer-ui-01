@@ -32,11 +32,10 @@ class StageActionButtons extends React.Component {
   }
 
   render() {
-    let {completed, failed, totalErrors} = this.props;
-
     let buttons;
+    let {completed, failed, showDisabled, totalErrors} = this.props;
 
-    if (this.props.showDisabled) {
+    if (showDisabled) {
       buttons = this.getNextButton(true);
     }
 
