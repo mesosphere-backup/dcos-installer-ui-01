@@ -8,7 +8,6 @@ import ErrorLabel from '../components/ErrorLabel';
 import IconCircleCheckmark from '../components/icons/IconCircleCheckmark';
 import IconSpinner from '../components/icons/IconSpinner';
 import IconWarning from '../components/icons/IconWarning';
-import IconRetry from '../components/icons/IconRetry';
 import InstallerStore from '../stores/InstallerStore';
 import Page from '../components/Page';
 import PageContent from '../components/PageContent';
@@ -21,6 +20,8 @@ import SectionHeaderIcon from '../components/SectionHeaderIcon';
 import SectionHeaderPrimary from '../components/SectionHeaderPrimary';
 import SectionHeaderSecondary from '../components/SectionHeaderSecondary';
 import SectionFooter from '../components/SectionFooter';
+import StageActionButtons from '../components/StageActionButtons';
+import StageLinks from '../components/StageLinks';
 
 module.exports = class Preflight extends mixin(StoreMixin) {
   constructor() {
@@ -103,57 +104,6 @@ module.exports = class Preflight extends mixin(StoreMixin) {
     );
   }
 
-  getActions(completed, failed, totalErrors) {
-    let buttons = (
-      <button className="disabled button button-stroke button-rounded">
-        Deploy
-      </button>
-    );
-
-    if (completed && totalErrors === 0) {
-      buttons = (
-        <button className="button button-stroke button-success button-rounded">
-          Deploy
-        </button>
-      );
-    }
-
-    if (completed && totalErrors > 0) {
-      buttons = [
-        <button
-          key="retry"
-          onClick={PreFlightStore.init.bind(PreFlightStore)}
-          className="button button-large button-stroke button-rounded">
-          <IconRetry />
-          Retry
-        </button>,
-        <button
-          key="deploy"
-          className="button button-large button-stroke button-success
-          button-rounded">
-          Deploy
-        </button>
-      ];
-    }
-
-    if (failed) {
-      buttons = (
-        <button
-          onClick={PreFlightStore.init.bind(PreFlightStore)}
-          className="button button-stroke button-rounded">
-          <IconRetry />
-          Retry
-        </button>
-      );
-    }
-
-    return (
-      <div className="button-collection">
-        {buttons}
-      </div>
-    );
-  }
-
   render() {
     let masterStatus = PreFlightStore.get('masters');
     let slaveStatus = PreFlightStore.get('slaves');
@@ -186,7 +136,19 @@ module.exports = class Preflight extends mixin(StoreMixin) {
           </PageSection>
           <PageSection>
             <SectionFooter>
-              {this.getActions(completed, failed, totalErrors)}
+              <StageActionButtons
+                completed={true}
+                failed={failed}
+                nextText="Deploy"
+                onRetryClick={PreFlightStore.init.bind(PreFlightStore)}
+                showDisabled={true}
+                totalErrors={totalErrors} />
+              <StageLinks
+                completed={true}
+                disabledDisplay={true}
+                failed={failed}
+                stage="preflight"
+                totalErrors={totalErrors} />
             </SectionFooter>
           </PageSection>
         </PageContent>

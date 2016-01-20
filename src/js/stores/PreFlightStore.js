@@ -81,10 +81,10 @@ let PreFlightStore = Store.createStore({
 
     switch (action.type) {
       case ActionTypes.PREFLIGHT_UPDATE_ERROR:
-        PreFlighStore.processUpdateError(action.data);
+        PreFlightStore.processUpdateError(action.data);
         break;
       case ActionTypes.PREFLIGHT_UPDATE_SUCCESS:
-        PreFlighStore.processUpdateSuccess(action.data);
+        PreFlightStore.processUpdateSuccess(action.data);
         break;
       case ActionTypes.PREFLIGHT_BEGIN_SUCCESS:
         this.emit(EventTypes.PREFLIGHT_BEGIN_SUCCESS);
