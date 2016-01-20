@@ -3,6 +3,7 @@ import {GetSetMixin, Store} from 'mesosphere-shared-reactjs';
 import ActionTypes from '../constants/ActionTypes';
 import AppDispatcher from '../events/AppDispatcher';
 import EventTypes from '../constants/EventTypes';
+import ProcessStageUtil from '../utils/ProcessStageUtil';
 import StageActions from '../events/StageActions';
 
 const stageID = 'preflight';
@@ -46,9 +47,10 @@ let PreFlighStore = Store.createStore({
     this.emit(EventTypes.PREFLIGHT_STATE_CHANGE);
   },
 
-  processUpdateSuccess: function () {
-    // TODO: Process update for masters and agents.
-    this.emit(EventTypes.PREFLIGHT_STATE_CHANGE);
+  processUpdateSuccess: function (data) {
+    var processedState = ProcessStageUtil.processState(data);
+    this.set(processedState);
+    this.emit(EventTypes.PREFLIGHT_STATE_CHANGE, processedState);
   },
 
   dispatcherIndex: AppDispatcher.register(function (payload) {
