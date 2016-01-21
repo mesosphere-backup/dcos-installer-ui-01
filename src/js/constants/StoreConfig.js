@@ -35,7 +35,8 @@ const ListenersDescription = {
   postFlight: {
     store: PostFlightStore,
     events: {
-      stateChange: EventTypes.POSTFLIGHT_STATE_CHANGE
+      stateChange: EventTypes.POSTFLIGHT_STATE_CHANGE,
+      beginSuccess: EventTypes.POSTFLIGHT_BEGIN_SUCCESS
     },
     unmountWhen: function () {
       return true;

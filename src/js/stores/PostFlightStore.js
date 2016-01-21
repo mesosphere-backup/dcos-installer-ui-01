@@ -51,7 +51,7 @@ let PostFlightStore = Store.createStore({
     this.emit(EventTypes.POSTFLIGHT_STATE_CHANGE);
   },
 
-  dispatcherIndex: AppDispatcher.register(function (payload) {
+  dispatcherIndex: AppDispatcher.register((payload) => {
     let {action} = payload;
 
     switch (action.type) {
@@ -62,9 +62,9 @@ let PostFlightStore = Store.createStore({
         PostFlightStore.processUpdateSuccess(action.data);
         break;
       case ActionTypes.POSTFLIGHT_BEGIN_SUCCESS:
-        this.emit(EventTypes.POSTFLIGHT_BEGIN_SUCCESS);
+        PostFlightStore.emit(EventTypes.POSTFLIGHT_BEGIN_SUCCESS);
       case ActionTypes.POSTFLIGHT_BEGIN_ERROR:
-        this.emit(EventTypes.POSTFLIGHT_BEGIN_ERROR, action.data);
+        PostFlightStore.emit(EventTypes.POSTFLIGHT_BEGIN_ERROR, action.data);
     }
 
     return true;

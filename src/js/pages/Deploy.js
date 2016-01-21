@@ -14,6 +14,7 @@ import Page from '../components/Page';
 import PageContent from '../components/PageContent';
 import PageSection from '../components/PageSection';
 import ProgressBar from '../components/ProgressBar';
+import PostFlightStore from '../stores/PostFlightStore';
 import SectionBody from '../components/SectionBody';
 import SectionHeader from '../components/SectionHeader';
 import SectionHeaderIcon from '../components/SectionHeaderIcon';
@@ -28,12 +29,17 @@ module.exports = class Deploy extends mixin(StoreMixin) {
     super();
 
     this.store_listeners = [
-      {name: 'deploy', events: ['stateChange']}
+      {name: 'deploy', events: ['stateChange']},
+      {name: 'postFlight', events: ['beginSuccess']}
     ];
   }
 
   componentWillMount() {
     DeployStore.init();
+  }
+
+  onPostFlightStoreBeginSuccess() {
+    this.props.history.pushState(null, '/post-flight');
   }
 
   getHeaderIcon(completed, failed, totalErrors) {
@@ -111,8 +117,8 @@ module.exports = class Deploy extends mixin(StoreMixin) {
     let completed = masterStatus.completed && slaveStatus.completed;
     let failed = masterStatus.errors > 0;
     let totalErrors = masterStatus.errors + slaveStatus.errors;
-    let totalSlaves = 5// InstallerStore.get('totalSlaves');
-    let totalMasters = 5//InstallerStore.get('totalMasters');
+    let totalSlaves = InstallerStore.get('totalSlaves');
+    let totalMasters = InstallerStore.get('totalMasters');
 
     return (
       <Page hasNavigationBar={true}>
@@ -140,6 +146,7 @@ module.exports = class Deploy extends mixin(StoreMixin) {
                 completed={completed}
                 failed={failed}
                 nextText="Run Post-Flight"
+                onNextClick={PostFlightStore.beginStage.bind(PostFlightStore)}
                 onRetryClick={DeployStore.init.bind(DeployStore)}
                 totalErrors={totalErrors} />
               <StageLinks
