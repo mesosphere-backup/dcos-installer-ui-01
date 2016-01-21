@@ -7,7 +7,7 @@ function processHostState(hostState, host, role, state) {
     stateType.completed = false;
   }
 
-  if (hostStatus === 'error') {
+  if (hostStatus === 'failed') {
     stateType.errors += 1;
     state.errorDetails.push({host, errors: hostState.stderr});
   }
@@ -31,6 +31,11 @@ const ProcessStageUtil = {
 
     Object.keys(response.hosts).forEach(function (host) {
       let hostStatus = response[host];
+
+      if (typeof hostStatus !== 'object') {
+        return;
+      }
+
       processHostState(hostStatus, host, hostStatus.tags.role, state);
     });
 
