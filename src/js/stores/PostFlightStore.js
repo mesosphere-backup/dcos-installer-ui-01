@@ -72,6 +72,9 @@ let PostFlightStore = Store.createStore({
 
     if (this.isCompleted(processedState)) {
       stopPolling();
+      this.set(processedState);
+      this.emit(EventTypes.DEPLOY_STATE_FINISH, processedState);
+      return;
     }
 
     this.set(processedState);
