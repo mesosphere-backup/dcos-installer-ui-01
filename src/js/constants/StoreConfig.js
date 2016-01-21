@@ -52,7 +52,8 @@ const ListenersDescription = {
     events: {
       stateChange: EventTypes.PREFLIGHT_STATE_CHANGE,
       stateFinish: EventTypes.PREFLIGHT_STATE_FINISH,
-      beginSuccess: EventTypes.PREFLIGHT_BEGIN_SUCCESS
+      beginSuccess: EventTypes.PREFLIGHT_BEGIN_SUCCESS,
+      beginError: EventTypes.PREFLIGHT_BEGIN_ERROR
     },
     unmountWhen: function () {
       return true;

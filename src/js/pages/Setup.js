@@ -14,6 +14,7 @@ import Page from '../components/Page';
 import PageContent from '../components/PageContent';
 import PageSection from '../components/PageSection';
 import PasswordStrengthMeter from '../components/PasswordStrengthMeter';
+import PreFlightStore from '../stores/PreFlightStore';
 import SectionAction from '../components/SectionAction';
 import SectionBody from '../components/SectionBody';
 import SectionHeader from '../components/SectionHeader';
@@ -28,6 +29,7 @@ const METHODS_TO_BIND = [
   'getErrors',
   'getValidationFn',
   'handleFormChange',
+  'handleSubmitClick',
   'handleUploadSuccess',
   'isLastFormField',
   'prepareDataForAPI',
@@ -75,6 +77,10 @@ module.exports = class Setup extends mixin(StoreMixin) {
           'currentConfigChangeError',
           'currentConfigChangeSuccess'
         ]
+      },
+      {
+        name: 'preFlight',
+        events: ['beginSuccess', 'beginError']
       }
     ];
 
@@ -95,6 +101,15 @@ module.exports = class Setup extends mixin(StoreMixin) {
 
   onSetupStoreConfigUpdateSuccess() {
     this.setState({isComplete: true});
+  }
+
+  onPreFlightStoreBeginSuccess() {
+    this.props.history.pushState(null, '/pre-flight');
+  }
+
+  onPreFlightStoreBeginError(data) {
+    return data;
+    // Handle pre-flight error.
   }
 
   getArrayFromHostsString(string) {
@@ -409,6 +424,14 @@ module.exports = class Setup extends mixin(StoreMixin) {
 
       this.setState({formData});
     }
+  }
+
+  handleSubmitClick() {
+    // Do submit click stuff here
+  }
+
+  beginPreFlight() {
+    PreFlightStore.beginStage();
   }
 
   isLastFormField(fieldName) {
