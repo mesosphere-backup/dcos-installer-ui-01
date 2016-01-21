@@ -7,7 +7,7 @@ import Config from '../config/Config';
 const HostActions = {
   fetchTotalSlaves: function () {
     RequestUtil.json({
-      url: `${Config.rootUrl}${Config.apiPrefix}/total_slaves`,
+      url: `${Config.rootUrl}${Config.apiPrefix}total_slaves`,
       success: function (response) {
         AppDispatcher.handleServerAction({
           type: ActionTypes.TOTAL_SLAVES_SUCCESS,
@@ -25,7 +25,7 @@ const HostActions = {
 
   fetchTotalMasters: function () {
     RequestUtil.json({
-      url: `${Config.rootUrl}${Config.apiPrefix}/total_masters`,
+      url: `${Config.rootUrl}${Config.apiPrefix}total_masters`,
       success: function (response) {
         AppDispatcher.handleServerAction({
           type: ActionTypes.TOTAL_MASTERS_SUCCESS,

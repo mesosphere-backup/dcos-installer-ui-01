@@ -72,7 +72,8 @@ const ConfigActions = {
       data,
       success: function () {
         AppDispatcher.handleServerAction({
-          type: ActionTypes.CONFIGURE_UPDATE_SUCCESS
+          type: ActionTypes.CONFIGURE_UPDATE_SUCCESS,
+          data
         });
       },
       error: function (xhr) {

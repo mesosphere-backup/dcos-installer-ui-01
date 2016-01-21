@@ -8,7 +8,7 @@ const StageActions = {
   fetchStageStatus: function (stage) {
     let capitalizedStage = stage.toUpperCase();
     RequestUtil.json({
-      url: `${Config.rootUrl}${Config.apiPrefix}actions/${stage}`,
+      url: `${Config.rootUrl}${Config.apiPrefix}action/${stage}`,
       success: function (response) {
         AppDispatcher.handleServerAction({
           type: ActionTypes[`${capitalizedStage}_UPDATE_SUCCESS`],
@@ -27,7 +27,7 @@ const StageActions = {
   beginStage: function (stage) {
     let capitalizedStage = stage.toUpperCase();
     RequestUtil.json({
-      url: `${Config.rootUrl}${Config.apiPrefix}actions/${stage}`,
+      url: `${Config.rootUrl}${Config.apiPrefix}action/${stage}`,
       method: 'post',
       success: function () {
         AppDispatcher.handleServerAction({
@@ -46,7 +46,7 @@ const StageActions = {
   fetchLogs: function (stage) {
     let capitalizedStage = stage.toUpperCase();
     RequestUtil.json({
-      url: `${Config.rootUrl}${Config.apiPrefix}actions/${stage}/logs`,
+      url: `${Config.rootUrl}${Config.apiPrefix}action/${stage}/logs`,
       success: function (response) {
         AppDispatcher.handleServerAction({
           type: ActionTypes[`${capitalizedStage}_LOGS_SUCCESS`],
@@ -64,7 +64,7 @@ const StageActions = {
 
   fetchCurrentStage: function () {
     RequestUtil.json({
-      url: `${Config.rootUrl}${Config.apiPrefix}actions/current`,
+      url: `${Config.rootUrl}${Config.apiPrefix}action/current`,
       success: function (response) {
         AppDispatcher.handleServerAction({
           type: ActionTypes.CURRENT_STAGE_CHANGE_SUCCESS,
