@@ -1,0 +1,29 @@
+@error-alert-background: #FFE3E7;
+@error-alert-foreground: #F01A31;
+
+@error-alert-margin-bottom: @base-spacing-unit;
+@error-alert-padding-horizontal: @base-spacing-unit;
+@error-alert-padding-vertical: @base-spacing-unit * 1/3;
+
+.error-alert {
+  background: @error-alert-background;
+  border-radius: 4px;
+  color: @error-alert-foreground;
+  display: block;
+  margin-bottom: @error-alert-margin-bottom;
+  padding: @error-alert-padding-vertical @error-alert-padding-horizontal * 1.75;
+  position: relative;
+
+  .icon {
+    position: absolute;
+    top: @error-alert-padding-vertical;
+  }
+
+  .icon-alert {
+    left: @error-alert-padding-horizontal;
+  }
+
+  .icon-close {
+    right: @error-alert-padding-horizontal;
+  }
+}
