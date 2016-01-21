@@ -3,17 +3,30 @@ import {GetSetMixin, Store} from 'mesosphere-shared-reactjs';
 import ActionTypes from '../constants/ActionTypes';
 import AppDispatcher from '../events/AppDispatcher';
 import EventTypes from '../constants/EventTypes';
+import ProcessStageUtil from '../utils/ProcessStageUtil';
 import StageActions from '../events/StageActions';
 
 const stageID = 'preflight';
+let requestInterval = null;
 
-let PreFlighStore = Store.createStore({
+function startPolling() {
+  if (requestInterval == null) {
+    requestInterval = setInterval(PreFlightStore.fetchStageStatus, 2000);
+  }
+}
+
+function stopPolling() {
+  clearInterval(requestInterval);
+  requestInterval = null;
+}
+
+let PreFlightStore = Store.createStore({
   storeID: 'preFlight',
 
   mixins: [GetSetMixin],
 
   init: function () {
-    this.set({
+    let initialState = {
       slaves: {
         errors: 0,
         totalStarted: 0,
@@ -25,7 +38,11 @@ let PreFlighStore = Store.createStore({
         totalStarted: 0,
         completed: false
       }
-    });
+    };
+    this.set(initialState);
+    this.emit(EventTypes.PREFLIGHT_STATE_CHANGE, initialState);
+
+    startPolling();
   },
 
   beginStage: StageActions.beginStage.bind(null, stageID),
@@ -42,13 +59,23 @@ let PreFlighStore = Store.createStore({
     this.removeListener(eventName, callback);
   },
 
+  isCompleted: function (data) {
+    return data.slaves.completed && data.masters.completed;
+  },
+
   processUpdateError: function () {
     this.emit(EventTypes.PREFLIGHT_STATE_CHANGE);
   },
 
-  processUpdateSuccess: function () {
-    // TODO: Process update for masters and agents.
-    this.emit(EventTypes.PREFLIGHT_STATE_CHANGE);
+  processUpdateSuccess: function (data) {
+    var processedState = ProcessStageUtil.processState(data);
+
+    if (this.isCompleted(processedState)) {
+      stopPolling();
+    }
+
+    this.set(processedState);
+    this.emit(EventTypes.PREFLIGHT_STATE_CHANGE, processedState);
   },
 
   dispatcherIndex: AppDispatcher.register(function (payload) {
@@ -56,10 +83,10 @@ let PreFlighStore = Store.createStore({
 
     switch (action.type) {
       case ActionTypes.PREFLIGHT_UPDATE_ERROR:
-        PreFlighStore.processUpdateError(action.data);
+        PreFlightStore.processUpdateError(action.data);
         break;
       case ActionTypes.PREFLIGHT_UPDATE_SUCCESS:
-        PreFlighStore.processUpdateSuccess(action.data);
+        PreFlightStore.processUpdateSuccess(action.data);
         break;
       case ActionTypes.PREFLIGHT_BEGIN_SUCCESS:
         this.emit(EventTypes.PREFLIGHT_BEGIN_SUCCESS);
@@ -72,4 +99,4 @@ let PreFlighStore = Store.createStore({
 
 });
 
-module.exports = PreFlighStore;
+module.exports = PreFlightStore;
