@@ -298,8 +298,8 @@ module.exports = class Setup extends mixin(StoreMixin) {
             <FormLabel>
               <FormLabelContent>
                 Bootstrapping Zookeeper Port
-                <Tooltip content={'We recommend leaving this at the default, ' +
-                  '2181.'} width={200} wrapText={true} />
+                <Tooltip content={'We recommend leaving this set to the ' +
+                  'default port, 2181.'} width={200} wrapText={true} />
               </FormLabelContent>
             </FormLabel>
           ),
