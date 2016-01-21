@@ -11,6 +11,7 @@ let requestInterval = null;
 
 function startPolling() {
   if (requestInterval == null) {
+    DeployStore.fetchStageStatus();
     requestInterval = setInterval(DeployStore.fetchStageStatus, 4000);
   }
 }

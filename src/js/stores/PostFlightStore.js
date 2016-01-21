@@ -11,6 +11,7 @@ let requestInterval = null;
 
 function startPolling() {
   if (requestInterval == null) {
+    PostFlightStore.fetchStageStatus();
     requestInterval = setInterval(PostFlightStore.fetchStageStatus, 2000);
   }
 }
