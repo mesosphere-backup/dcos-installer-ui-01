@@ -453,7 +453,7 @@ module.exports = class Setup extends mixin(StoreMixin) {
 
   render() {
     return (
-      <Page hasNavigationBar={true} size="large">
+      <Page hasNavigationBar={true} size="large" pageName="setup">
         <PageContent>
           <PageSection>
             <SectionHeader>

@@ -4,15 +4,33 @@
 @page-section-margin-vertical: @base-spacing-unit * 2;
 
 .page {
-  align-self: stretch;
-  flex: 1;
+  min-height: 100%;
+  margin-top: @fixed-navigation-bar-height;
   padding: @page-padding-vertical @page-padding-horizontal;
+  width: 100%;
 
   &.is-inverted {
     background: @neutral;
   }
 
+  &.has-gemini {
+    margin-top: 0;
+  }
+
+  &.page-setup {
+    align-items: flex-start;
+    align-self: flex-start;
+
+    &.has-gemini {
+      align-self: center;
+    }
+  }
+}
+
+.page-scroll-wrapper {
+
   &.has-navigation-bar {
+    height: ~"calc(100% - @{fixed-navigation-bar-height})";
     margin-top: @fixed-navigation-bar-height;
   }
 }
