@@ -357,7 +357,7 @@ module.exports = class Setup extends mixin(StoreMixin) {
   }
 
   handleFormChange(formData, eventDetails) {
-    let {eventType, fieldName, fieldValue} = eventDetails;
+    let {eventType, fieldName} = eventDetails;
 
     if (eventType === 'focus') {
       return;

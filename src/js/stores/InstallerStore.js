@@ -82,17 +82,17 @@ let InstallerStore = Store.createStore({
         break;
       case ActionTypes.TOTAL_SLAVES_SUCCESS:
         this.set({totalSlaves: action.data});
-        this.emit(TOTAL_SLAVES_SUCCESS, action.data);
+        this.emit(EventTypes.TOTAL_SLAVES_SUCCESS, action.data);
         break;
       case ActionTypes.TOTAL_SLAVES_ERROR:
-        this.emit(TOTAL_SLAVES_ERROR);
+        this.emit(EventTypes.TOTAL_SLAVES_ERROR);
         break;
       case ActionTypes.TOTAL_MASTERS_SUCCESS:
         this.set({totalMasters: action.data});
-        this.emit(TOTAL_MASTERS_SUCCESS, action.data);
+        this.emit(EventTypes.TOTAL_MASTERS_SUCCESS, action.data);
         break;
       case ActionTypes.TOTAL_MASTERS_ERROR:
-        this.emit(TOTAL_MASTERS_ERROR);
+        this.emit(EventTypes.TOTAL_MASTERS_ERROR);
         break;
     }
 

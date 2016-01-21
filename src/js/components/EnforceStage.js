@@ -88,15 +88,15 @@ class EnforceStage extends mixin(StoreMixin) {
   }
 
   render() {
-    if (this.state.serverError) {
-      return this.getServerError();
-    }
+    // TODO: Uncomment all of this.
+    // if (this.state.serverError) {
+    //   return this.getServerError();
+    // }
 
-    if (this.state.configType.type === 'advanced') {
-      return this.getAdvancedConfigurationWarning();
-    }
+    // if (this.state.configType.type === 'advanced') {
+    //   return this.getAdvancedConfigurationWarning();
+    // }
 
-    // Uncomment this to force user to be on current stage.
     // let state = this.state;
     // if (state.currentStage == null || !state.receivedTotalSlaves
     //   || !state.receivedTotalMasters) {
