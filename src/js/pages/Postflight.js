@@ -37,6 +37,22 @@ module.exports = class Postflight extends mixin(StoreMixin) {
     PostFlightStore.init();
   }
 
+  componentDidUpdate() {
+    let masterStatus = PostFlightStore.get('masters');
+    let slaveStatus = PostFlightStore.get('slaves');
+
+    let completed = masterStatus.completed && slaveStatus.completed;
+    let totalErrors = masterStatus.errors + slaveStatus.errors;
+
+    if (completed && totalErrors === 0) {
+      this.goToSuccess();
+    }
+  }
+
+  goToSuccess() {
+    this.props.history.pushState(null, '/success');
+  }
+
   getHeaderIcon(completed, failed, totalErrors) {
     if (completed && totalErrors === 0) {
       return <IconCircleCheckmark />;
@@ -112,8 +128,8 @@ module.exports = class Postflight extends mixin(StoreMixin) {
     let completed = masterStatus.completed && slaveStatus.completed;
     let failed = masterStatus.errors > 0;
     let totalErrors = masterStatus.errors + slaveStatus.errors;
-    let totalSlaves = 10//InstallerStore.get('totalSlaves');
-    let totalMasters = 10//InstallerStore.get('totalMasters');
+    let totalSlaves = InstallerStore.get('totalSlaves');
+    let totalMasters = InstallerStore.get('totalMasters');
 
     return (
       <Page hasNavigationBar={true}>
@@ -141,6 +157,7 @@ module.exports = class Postflight extends mixin(StoreMixin) {
                 completed={completed}
                 failed={failed}
                 nextText="Continue"
+                onNextClick={this.goToSuccess.bind(this)}
                 onRetryClick={PostFlightStore.init.bind(PostFlightStore)}
                 totalErrors={totalErrors} />
               <StageLinks
