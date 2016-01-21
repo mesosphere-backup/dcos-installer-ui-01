@@ -18,7 +18,7 @@ class Page extends React.Component {
   }
 
   componentDidMount() {
-    setTimeout(this.enableGemini, 500);
+    this.enableGemini();
   }
 
   enableGemini() {
