@@ -10,7 +10,9 @@ const stageID = 'postflight';
 let requestInterval = null;
 
 function startPolling() {
-  requestInterval = setInterval(PostFlightStore.fetchStageStatus, 2000);
+  if (requestInterval == null) {
+    requestInterval = setInterval(PostFlightStore.fetchStageStatus, 2000);
+  }
 }
 
 function stopPolling() {
