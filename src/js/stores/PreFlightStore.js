@@ -10,7 +10,9 @@ const stageID = 'preflight';
 let requestInterval = null;
 
 function startPolling() {
-  requestInterval = setInterval(PreFlightStore.fetchStageStatus, 2000);
+  if (requestInterval == null) {
+    requestInterval = setInterval(PreFlightStore.fetchStageStatus, 2000);
+  }
 }
 
 function stopPolling() {
