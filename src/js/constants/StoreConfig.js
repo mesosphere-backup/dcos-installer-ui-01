@@ -10,6 +10,7 @@ const ListenersDescription = {
     store: DeployStore,
     events: {
       stateChange: EventTypes.DEPLOY_STATE_CHANGE,
+      stateFinish: EventTypes.DEPLOY_STATE_FINISH,
       beginSuccess: EventTypes.DEPLOY_BEGIN_SUCCESS
     },
     unmountWhen: function () {
@@ -37,6 +38,7 @@ const ListenersDescription = {
     store: PostFlightStore,
     events: {
       stateChange: EventTypes.POSTFLIGHT_STATE_CHANGE,
+      stateFinish: EventTypes.POSTFLIGHT_STATE_FINISH,
       beginSuccess: EventTypes.POSTFLIGHT_BEGIN_SUCCESS
     },
     unmountWhen: function () {
@@ -48,7 +50,9 @@ const ListenersDescription = {
   preFlight: {
     store: PreFlightStore,
     events: {
-      stateChange: EventTypes.PREFLIGHT_STATE_CHANGE
+      stateChange: EventTypes.PREFLIGHT_STATE_CHANGE,
+      stateFinish: EventTypes.PREFLIGHT_STATE_FINISH,
+      beginSuccess: EventTypes.PREFLIGHT_BEGIN_SUCCESS
     },
     unmountWhen: function () {
       return true;
