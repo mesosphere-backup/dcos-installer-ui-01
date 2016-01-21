@@ -49,18 +49,20 @@ class Tooltip extends React.Component {
       // Change the anchor if the tooltip will be rendered off the screen.
       if (position === 'right' || position === 'left') {
         if (tooltipPosition.top < FIXED_BAR_HEIGHT) {
-          anchor = 'top';
+          anchor = 'start';
         } else if (tooltipPosition.bottom > viewportHeight) {
-          anchor = 'bottom';
+          anchor = 'end';
         }
       } else if (position === 'top' || position === 'bottom') {
         if (tooltipPosition.right > viewportWidth) {
-          anchor = 'right';
+          anchor = 'end';
         } else if (tooltipPosition.left < 0) {
-          anchor = 'left';
+          anchor = 'start';
         }
       }
     }
+
+    console.log(anchor, position);
 
     return {anchor, position};
   }
