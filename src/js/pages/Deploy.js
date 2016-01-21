@@ -37,6 +37,16 @@ class Deploy extends mixin(StoreMixin) {
     DeployStore.init();
   }
 
+  componentDidMount() {
+    super.componentDidMount();
+    InstallerStore.setNextStep({
+      enabled: false,
+      label: 'Post-Flight',
+      link: '/post-flight',
+      visible: true
+    });
+  }
+
   onPostFlightStoreBeginSuccess() {
     this.context.router.push('/post-flight');
   }

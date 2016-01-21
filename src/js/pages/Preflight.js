@@ -37,6 +37,16 @@ class Preflight extends mixin(StoreMixin) {
     PreFlightStore.init();
   }
 
+  componentDidMount() {
+    super.componentDidMount();
+    InstallerStore.setNextStep({
+      enabled: false,
+      label: 'Deploy',
+      link: '/deploy',
+      visible: true
+    });
+  }
+
   onDeployStoreBeginSuccess() {
     this.context.router.push('/deploy');
   }

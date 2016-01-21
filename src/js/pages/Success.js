@@ -11,6 +11,13 @@ import SectionHeaderPrimary from '../components/SectionHeaderPrimary';
 import SectionFooter from '../components/SectionFooter';
 
 module.exports = class Success extends React.Component {
+  componentDidMount() {
+    InstallerStore.setNextStep({
+      enabled: false,
+      visible: false
+    });
+  }
+
   render() {
     let totalMasters = PostFlightStore.get('masters').totalMasters;
     let totalAgents = PostFlightStore.get('agents').totalAgents;

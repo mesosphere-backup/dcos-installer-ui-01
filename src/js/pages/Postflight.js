@@ -36,6 +36,16 @@ class Postflight extends mixin(StoreMixin) {
     PostFlightStore.init();
   }
 
+  componentDidMount() {
+    super.componentDidMount();
+    InstallerStore.setNextStep({
+      enabled: false,
+      label: 'Success',
+      link: '/success',
+      visible: true
+    });
+  }
+
   goToSuccess() {
     this.context.router.push('/success');
   }

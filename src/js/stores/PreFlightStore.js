@@ -85,6 +85,7 @@ let PreFlightStore = Store.createStore({
       this.set(processedState);
       this.emit(EventTypes.PREFLIGHT_STATE_CHANGE, processedState);
       this.emit(EventTypes.PREFLIGHT_STATE_FINISH, processedState);
+      AppDispatcher.handleUIAction({type: ActionTypes.PREFLIGHT_COMPLETE});
       return;
     }
 

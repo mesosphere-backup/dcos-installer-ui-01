@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import {GetSetMixin, Store} from 'mesosphere-shared-reactjs';
 
 import ActionTypes from '../constants/ActionTypes';
@@ -55,12 +56,9 @@ let InstallerStore = Store.createStore({
   },
 
   setNextStep: function (stepData) {
-    this.set({
-      enabled: stepData.enabled,
-      label: stepData.label,
-      link: stepData.link,
-      visible: stepData.visible
-    });
+    let nextStep = _.extend({}, this.nextStep, stepData);
+
+    this.set({nextStep});
     this.emit(EventTypes.GLOBAL_NEXT_STEP_CHANGE);
   },
 
@@ -84,6 +82,14 @@ let InstallerStore = Store.createStore({
         break;
       case ActionTypes.TOTAL_MASTERS_ERROR:
         InstallerStore.emit(EventTypes.TOTAL_MASTERS_ERROR);
+        break;
+      case ActionTypes.SETUP_COMPLETE:
+      case ActionTypes.PREFLIGHT_COMPLETE:
+      case ActionTypes.DEPLOY_COMPLETE:
+      case ActionTypes.POSTFLIGHT_COMPLETE:
+        InstallerStore.setNextStep({
+          enabled: true
+        });
         break;
     }
 

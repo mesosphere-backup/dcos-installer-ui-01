@@ -5,7 +5,6 @@ import IconChevron from '../components/icons/IconChevron';
 import NavigationItem from '../components/NavigationItem';
 import NavigationItems from '../components/NavigationItems';
 import NavigationNextStep from './NavigationNextStep';
-import NavigationPreviousStep from './NavigationPreviousStep';
 
 class NavigationBar extends React.Component {
   getNavigationItems(routes, activeRoute) {
@@ -44,7 +43,6 @@ class NavigationBar extends React.Component {
   render() {
     return (
       <FixedBar className="navigation-bar">
-        <NavigationPreviousStep />
         <NavigationItems>
           {this.getNavigationItems(this.props.routes, this.props.activeRoute)}
         </NavigationItems>

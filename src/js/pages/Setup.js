@@ -12,6 +12,7 @@ import ConfigFormFields from '../constants/ConfigFormFields';
 import ErrorAlert from '../components/ErrorAlert';
 import FormLabel from '../components/FormLabel';
 import FormLabelContent from '../components/FormLabelContent';
+import InstallerStore from '../stores/InstallerStore';
 import Page from '../components/Page';
 import PageContent from '../components/PageContent';
 import PageSection from '../components/PageSection';
@@ -92,8 +93,14 @@ class Setup extends mixin(StoreMixin) {
     );
   }
 
-  onSetupStoreConfigStatusChangeError() {
-    // Show errors with current stored config.
+  componentDidMount() {
+    super.componentDidMount();
+    InstallerStore.setNextStep({
+      enabled: false,
+      label: 'Pre-Flight',
+      link: '/pre-flight',
+      visible: true
+    });
   }
 
   onSetupStoreCurrentConfigChangeSuccess() {

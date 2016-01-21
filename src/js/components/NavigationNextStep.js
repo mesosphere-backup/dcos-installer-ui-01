@@ -6,11 +6,8 @@ import React from 'react';
 import {StoreMixin} from 'mesosphere-shared-reactjs'
 
 import IconChevron from '../components/icons/IconChevron';
+import InstallerStore from '../stores/InstallerStore';
 import NavigationItem from '../components/NavigationItem';
-
-const METHODS_TO_BIND = [
-  'onInstallerStoreNextStepChange'
-];
 
 module.exports = class NavigationNextStep extends mixin(StoreMixin) {
   constructor() {
@@ -20,7 +17,7 @@ module.exports = class NavigationNextStep extends mixin(StoreMixin) {
       disabled: true,
       label: null,
       link: null,
-      visible: true
+      visible: false
     };
 
     this.store_listeners = [
@@ -29,30 +26,27 @@ module.exports = class NavigationNextStep extends mixin(StoreMixin) {
         events: ['nextStepChange']
       }
     ];
-
-    METHODS_TO_BIND.forEach((method) => {
-      this[method] = this[method].bind(this);
-    });
-  }
-
-  onInstallerStoreNextStepChange() {
-    // Get the next step button info...
-    // Set the next step button info...
   }
 
   render() {
-    if (!this.state.visible) {
+    let {enabled, label, link, visible} = InstallerStore.get('nextStep');
+
+    if (!visible) {
       return null;
     }
 
+    if (!enabled) {
+      link = null;
+    }
+
     let classes = classnames('navigation-item', 'navigation-item-next', {
-      'is-disabled': this.state.disabled
+      'is-disabled': !enabled
     });
 
     return (
-      <NavigationItem className={classes} link={this.state.link}>
+      <NavigationItem className={classes} link={link}>
         <span className="navigation-item-mobile">
-          Next: {this.state.label}
+          Next: {label}
         </span>
         <span className="navigation-item-desktop">
           Continue

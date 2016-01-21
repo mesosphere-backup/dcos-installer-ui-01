@@ -10,7 +10,18 @@ let AppDispatcher = _.extend(new Dispatcher(), {
     }
 
     this.dispatch({
-      source: ActionTypes.GLOBAL_ACTION,
+      source: ActionTypes.SERVER_ACTION,
+      action: action
+    });
+  },
+
+  handleUIAction: function (action) {
+    if (!action.type) {
+      console.warn('Empty action.type: you likely mistyped the action.');
+    }
+
+    this.dispatch({
+      source: ActionTypes.UI_ACTION,
       action: action
     });
   }
