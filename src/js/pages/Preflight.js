@@ -4,6 +4,7 @@ import {StoreMixin} from 'mesosphere-shared-reactjs';
 import React from 'react';
 /* eslint-enable no-unused-vars */
 
+import DeployStore from '../stores/DeployStore';
 import ErrorLabel from '../components/ErrorLabel';
 import IconCircleCheckmark from '../components/icons/IconCircleCheckmark';
 import IconSpinner from '../components/icons/IconSpinner';
@@ -28,12 +29,17 @@ module.exports = class Preflight extends mixin(StoreMixin) {
     super();
 
     this.store_listeners = [
-      {name: 'preFlight', events: ['stateChange']}
+      {name: 'preFlight', events: ['stateChange']},
+      {name: 'deploy', events: ['beginSuccess']},
     ];
   }
 
   componentWillMount() {
     PreFlightStore.init();
+  }
+
+  onDeployStoreBeginSuccess() {
+    this.props.history.pushState(null, '/deploy');
   }
 
   getHeaderIcon(completed, failed, totalErrors) {
@@ -140,6 +146,7 @@ module.exports = class Preflight extends mixin(StoreMixin) {
                 completed={completed}
                 failed={failed}
                 nextText="Deploy"
+                onNextClick={DeployStore.beginStage.bind(DeployStore)}
                 onRetryClick={PreFlightStore.init.bind(PreFlightStore)}
                 showDisabled={true}
                 totalErrors={totalErrors} />

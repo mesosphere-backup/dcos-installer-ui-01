@@ -9,7 +9,8 @@ const ListenersDescription = {
   deploy: {
     store: DeployStore,
     events: {
-      stateChange: EventTypes.DEPLOY_STATE_CHANGE
+      stateChange: EventTypes.DEPLOY_STATE_CHANGE,
+      beginSuccess: EventTypes.DEPLOY_BEGIN_SUCCESS
     },
     unmountWhen: function () {
       return true;
