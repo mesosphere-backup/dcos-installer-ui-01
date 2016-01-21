@@ -3,6 +3,8 @@ import React from 'react';
 
 import IconArrow from '../components/icons/IconArrow';
 import IconLogomark from '../components/icons/IconLogomark';
+import InstallerStore from '../stores/InstallerStore';
+import InstallationStages from '../constants/InstallationStages';
 import Page from '../components/Page';
 import PageContent from '../components/PageContent';
 import PageFooter from '../components/PageFooter';
@@ -14,7 +16,32 @@ import SectionHeaderSecondary from '../components/SectionHeaderSecondary';
 import SectionFooter from '../components/SectionFooter';
 
 module.exports = class Begin extends React.Component {
+  getNextButton(currentStage) {
+    if (InstallationStages.indexOf(currentStage) !== -1) {
+      return (
+        <div>
+          <Link to={`/${currentStage}`} className="button button-large button-rounded button-primary">
+            Resume Installation
+            <IconArrow />
+          </Link>
+          <Link to="/setup" className="stage-link button button-link button-inverse">
+            or, Begin New Installation
+          </Link>
+        </div>
+      );
+    }
+
+    return (
+      <Link to="/setup" className="button button-large button-rounded button-primary">
+        Begin Installation
+        <IconArrow />
+      </Link>
+    );
+  }
+
   render() {
+    let currentStage = InstallerStore.get('currentStage');
+
     return (
       <Page inverse={true} size="medium" pageName="begin">
         <PageContent>
@@ -33,10 +60,7 @@ module.exports = class Begin extends React.Component {
               </SectionHeaderSecondary>
             </SectionHeader>
             <SectionFooter>
-              <Link to="/setup" className="button button-large button-rounded button-primary">
-                Begin Installation
-                <IconArrow />
-              </Link>
+              {this.getNextButton(currentStage)}
             </SectionFooter>
           </PageSection>
         </PageContent>
