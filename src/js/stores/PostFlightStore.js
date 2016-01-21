@@ -3,9 +3,22 @@ import {GetSetMixin, Store} from 'mesosphere-shared-reactjs';
 import ActionTypes from '../constants/ActionTypes';
 import AppDispatcher from '../events/AppDispatcher';
 import EventTypes from '../constants/EventTypes';
+import ProcessStageUtil from '../utils/ProcessStageUtil';
 import StageActions from '../events/StageActions';
 
 const stageID = 'postflight';
+let requestInterval = null;
+
+function startPolling() {
+  if (requestInterval == null) {
+    requestInterval = setInterval(PostFlightStore.fetchStageStatus, 2000);
+  }
+}
+
+function stopPolling() {
+  clearInterval(requestInterval);
+  requestInterval = null;
+}
 
 let PostFlightStore = Store.createStore({
   storeID: 'postFlight',
@@ -13,7 +26,7 @@ let PostFlightStore = Store.createStore({
   mixins: [GetSetMixin],
 
   init: function () {
-    this.set({
+    let initialState = {
       slaves: {
         errors: 0,
         totalStarted: 0,
@@ -25,7 +38,11 @@ let PostFlightStore = Store.createStore({
         totalStarted: 0,
         completed: false
       }
-    });
+    };
+    this.set(initialState);
+    this.emit(EventTypes.POSTFLIGHT_STATE_CHANGE, initialState);
+
+    startPolling();
   },
 
   beginStage: StageActions.beginStage.bind(null, stageID),
@@ -42,12 +59,22 @@ let PostFlightStore = Store.createStore({
     this.removeListener(eventName, callback);
   },
 
+  isCompleted: function (data) {
+    return data.slaves.completed && data.masters.completed;
+  },
+
   processUpdateError: function () {
     this.emit(EventTypes.POSTFLIGHT_STATE_CHANGE);
   },
 
-  processUpdateSuccess: function () {
-    // TODO: Process update for masters and agents.
+  processUpdateSuccess: function (data) {
+    var processedState = ProcessStageUtil.processState(data);
+
+    if (this.isCompleted(processedState)) {
+      stopPolling();
+    }
+
+    this.set(processedState);
     this.emit(EventTypes.POSTFLIGHT_STATE_CHANGE);
   },
 
