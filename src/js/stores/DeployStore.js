@@ -10,7 +10,9 @@ const stageID = 'deploy';
 let requestInterval = null;
 
 function startPolling() {
-  requestInterval = setInterval(DeployStore.fetchStageStatus, 4000);
+  if (requestInterval == null) {
+    requestInterval = setInterval(DeployStore.fetchStageStatus, 4000);
+  }
 }
 
 function stopPolling() {
