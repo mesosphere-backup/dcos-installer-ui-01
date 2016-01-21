@@ -97,10 +97,14 @@ module.exports = class Setup extends mixin(StoreMixin) {
     this.setState({isComplete: true});
   }
 
+  getArrayFromHostsString(string) {
+    return string.replace(/\s/g, '').split(',');
+  }
+
   getCombinedZKHosts(hosts, port) {
     // Remove all whitespace, split into array, create new array in format of
     // host:port, and convert back to string.
-    return hosts.replace(/\s/g, '').split(',').map(function (host) {
+    return this.getArrayFromHostsString(hosts).map(function (host) {
       return `${host}:${port}`;
     }).join(', ');
   }
@@ -453,7 +457,7 @@ module.exports = class Setup extends mixin(StoreMixin) {
             this.state.formData.zk_exhibitor_hosts, data[key]
           );
         } else if (key === 'master_list' || key === 'agent_list') {
-          preparedData[key] = data[key].replace(/\s/g, '').split(',');
+          preparedData[key] = this.getArrayFromHostsString(data[key]);
         } else {
           preparedData = data;
         }
