@@ -117,7 +117,7 @@ Tooltip.defaultProps = {
   anchor: 'center',
   className: 'tooltip',
   position: 'top',
-  tooltipWrapperClassName: 'tooltip-wrapper',
+  tooltipWrapperClassName: 'tooltip-wrapper text-align-center',
   wrapText: false
 };
 

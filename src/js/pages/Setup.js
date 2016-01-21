@@ -54,7 +54,7 @@ module.exports = class Setup extends mixin(StoreMixin) {
         username: null,
         password: '',
         zk_exhibitor_hosts: null,
-        zk_exhibitor_port: null,
+        zk_exhibitor_port: '2181',
         resolvers: null
       },
       isComplete: false,
@@ -112,11 +112,16 @@ module.exports = class Setup extends mixin(StoreMixin) {
         {
           fieldType: 'textarea',
           name: 'master_list',
-          placeholder: 'Please provide 1, 3, or 5 IPv4 addresses.',
+          placeholder: 'Please provide a comma-separated list of 1, 3, or 5 ' +
+            'IPv4 addresses.',
           showLabel: (
             <FormLabel>
               <FormLabelContent position="left">
-                Master IP Address(es) <Tooltip content="I'm a tooltip!" />
+                Master IP Address List
+                <Tooltip content={'You can choose any target hosts as ' +
+                  'masters and agents. We recommend 3 masters for production ' +
+                  'environments, though 1 master is suitable for POC ' +
+                  'applications.'} width={200} wrapText={true} />
               </FormLabelContent>
               <FormLabelContent position="right">
                 <Upload displayText="Upload .csv"
@@ -131,12 +136,14 @@ module.exports = class Setup extends mixin(StoreMixin) {
         {
           fieldType: 'textarea',
           name: 'agent_list',
-          placeholder: 'Please provide 1 to n IPv4 addresses to serve as your' +
-            ' datacenter\'s Agents.',
+          placeholder: 'Please provide a comma-separated list of 1 to n ' +
+            'IPv4 addresses.',
           showLabel: (
             <FormLabel>
               <FormLabelContent>
-                Agent IP Address(es) <Tooltip content="I'm a tooltip!" />
+                Agent IP Address List
+                <Tooltip content={'You can choose any target hosts as agents.'}
+                  width={200} wrapText={true} />
               </FormLabelContent>
               <FormLabelContent position="right">
                 <Upload displayText="Upload .csv"
@@ -153,8 +160,17 @@ module.exports = class Setup extends mixin(StoreMixin) {
         {
           fieldType: 'text',
           name: 'ssh_user',
-          placeholder: 'e.g. root',
-          showLabel: 'SSH Username',
+          placeholder: 'Examples: root, admin, core',
+          showLabel: (
+            <FormLabel>
+              <FormLabelContent>
+                SSH Username
+                <Tooltip content={'The SSH username must be the same for all ' +
+                  'target hosts. The only unacceptable username is None.'}
+                  width={200} wrapText={true} />
+              </FormLabelContent>
+            </FormLabel>
+          ),
           validationErrorText: this.getErrors('ssh_user'),
           validation: this.getValidationFn('ssh_user'),
           value: this.state.formData.ssh_user
@@ -162,7 +178,15 @@ module.exports = class Setup extends mixin(StoreMixin) {
         {
           fieldType: 'text',
           name: 'ssh_port',
-          showLabel: 'SSH Listening Port',
+          showLabel: (
+            <FormLabel>
+              <FormLabelContent>
+                SSH Listening Port
+                <Tooltip content={'The SSH port must be the same on all ' +
+                  'target hosts.'} width={200} wrapText={true} />
+              </FormLabelContent>
+            </FormLabel>
+          ),
           validationErrorText: this.getErrors('ssh_port'),
           validation: this.getValidationFn('ssh_port'),
           value: this.state.formData.ssh_port
@@ -171,7 +195,15 @@ module.exports = class Setup extends mixin(StoreMixin) {
       {
         fieldType: 'text',
         name: 'ssh_key',
-        showLabel: 'SSH Key',
+        showLabel: (
+          <FormLabel>
+            <FormLabelContent>
+              SSH Key
+              <Tooltip content={'The SSH key must be the same on all target ' +
+                'hosts.'} width={200} wrapText={true} />
+            </FormLabelContent>
+          </FormLabel>
+        ),
         validationErrorText: this.getErrors('ssh_key'),
         validation: this.getValidationFn('ssh_key'),
         value: this.state.formData.ssh_key
@@ -179,7 +211,7 @@ module.exports = class Setup extends mixin(StoreMixin) {
       <SectionHeaderPrimary align="left">
         DCOS Environment Settings
         <SectionHeaderPrimarySubheading>
-          Enter the admin information for the primary DCOS user. This user
+          Choose a username and password for the DCOS administrator. This user
           will be able to manage and add other users.
         </SectionHeaderPrimarySubheading>
       </SectionHeaderPrimary>,
@@ -187,8 +219,16 @@ module.exports = class Setup extends mixin(StoreMixin) {
         {
           fieldType: 'text',
           name: 'username',
-          placeholder: 'e.g. root',
-          showLabel: 'Username',
+          placeholder: 'For example, johnappleseed',
+          showLabel: (
+            <FormLabel>
+              <FormLabelContent>
+                Username
+                <Tooltip content={'The only unacceptable username is "None".'}
+                  width={200} wrapText={true} />
+              </FormLabelContent>
+            </FormLabel>
+          ),
           validationErrorText: this.getErrors('username'),
           validation: this.getValidationFn('username'),
           value: this.state.formData.username
@@ -225,8 +265,28 @@ module.exports = class Setup extends mixin(StoreMixin) {
         {
           fieldType: 'textarea',
           name: 'zk_exhibitor_hosts',
-          placeholder: 'Please provide 1, 3, or 5 IPv4 addresses.',
-          showLabel: 'Bootstrapping Zookeeper IP Address(es)',
+          placeholder: 'Please provide an IPv4 address or a comma-separated ' +
+            'list of 3 addresses.',
+          showLabel: (
+            <FormLabel>
+              <FormLabelContent>
+                Bootstrapping Zookeeper IP Address(es)
+                <Tooltip content={
+                    <span>
+                      Exhibitor uses this Zookeeper cluster to orchestrate its
+                      configuration and to recover the master hosts if they
+                      fail. The Zookeeper cluster should be separate from your
+                      target cluster to enable disaster recovery. If HA is
+                      critical, specify three hosts. <a
+                        href="http://zookeeper.apache.org/doc/r3.1.2/zookeeperAdmin.html"
+                        target="_blank">
+                      Learn more about Zookeeper</a>.
+                    </span>
+                  }
+                  width={300} wrapText={true} />
+              </FormLabelContent>
+            </FormLabel>
+          ),
           validationErrorText: this.getErrors('zk_exhibitor_hosts'),
           validation: this.getValidationFn('zk_exhibitor_hosts'),
           value: this.state.formData.zk_exhibitor_hosts
@@ -234,16 +294,45 @@ module.exports = class Setup extends mixin(StoreMixin) {
         {
           fieldType: 'text',
           name: 'zk_exhibitor_port',
-          showLabel: 'Bootstrapping Zookeeper Port',
+          showLabel: (
+            <FormLabel>
+              <FormLabelContent>
+                Bootstrapping Zookeeper Port
+                <Tooltip content={'We recommend leaving this set to the ' +
+                  'default port, 2181.'} width={200} wrapText={true} />
+              </FormLabelContent>
+            </FormLabel>
+          ),
           validation: this.getValidationFn('zk_exhibitor_port'),
           validationErrorText: this.getErrors('zk_exhibitor_port'),
           value: this.state.formData.zk_exhibitor_port
         }
       ],
       {
-        fieldType: 'text',
+        fieldType: 'textarea',
         name: 'resolvers',
-        showLabel: 'Upstream DNS Servers',
+        placeholder: 'Please provide a single address or a comma-separated ' +
+          'list, e.g., 192.168.10.10, 10.0.0.1',
+        showLabel: (
+          <FormLabel>
+            <FormLabelContent>
+              Upstream DNS Servers
+              <Tooltip content={
+                  <span>
+                    These can be DNS servers on your private network or on the
+                    public internet, depending on your needs. Caution: If you set
+                    this parameter incorrectly, you will have to reinstall
+                    DCOS. <a
+                      href="https://docs.mesosphere.com/administration/service-discovery/"
+                      target="_blank">
+                      Learn more about DNS and DCOS
+                    </a>.
+                  </span>
+                }
+                width={300} wrapText={true} />
+            </FormLabelContent>
+          </FormLabel>
+        ),
         validation: this.getValidationFn('resolvers'),
         validationErrorText: this.getErrors('resolvers'),
         value: this.state.formData.resolvers
@@ -371,8 +460,8 @@ module.exports = class Setup extends mixin(StoreMixin) {
               <SectionHeaderPrimary align="left">
                 Deployment Settings
                 <SectionHeaderPrimarySubheading>
-                  Enter the IP Addresses where you'd like the DCOS to be deployed,
-                  and the SSH settings for the deployment.
+                  Enter the IP addresses of your target hosts and their SSH
+                  settings.
                 </SectionHeaderPrimarySubheading>
               </SectionHeaderPrimary>
             </SectionHeader>
