@@ -388,9 +388,8 @@ module.exports = class Setup extends mixin(StoreMixin) {
       this.submitFormData.flush();
     }
 
-    if (eventType === 'change' && fieldName === 'reveal_password') {
+    if (eventType === 'multipleChange' && fieldName === 'reveal_password') {
       let passwordFieldType = this.state.passwordFieldType;
-
       if (formData.reveal_password[0].checked) {
         passwordFieldType = 'text';
       } else {
@@ -412,12 +411,12 @@ module.exports = class Setup extends mixin(StoreMixin) {
   }
 
   isLastFormField(fieldName) {
-    let lastRemainingField = false;
+    let lastRemainingField = true;
 
     Object.keys(this.state.formData).forEach((key) => {
-      if (key !== fieldName && this.state.formData[key] !== ''
-        && this.state.formData[key] != null) {
-        lastRemainingField = true;
+      if (key !== fieldName && this.state.formData[key] === ''
+        || this.state.formData[key] == null) {
+        lastRemainingField = false;
       }
     });
 
