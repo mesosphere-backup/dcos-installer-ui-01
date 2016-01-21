@@ -16,6 +16,9 @@ class EnforceStage extends mixin(StoreMixin) {
         message: null
       },
       currentStage: null,
+      receivedConfigType: false,
+      receivedCurrentConfig: false,
+      receivedCurrentConfigStatus: false,
       receivedTotalAgents: false,
       receivedTotalMasters: false,
       serverError: false
@@ -33,7 +36,10 @@ class EnforceStage extends mixin(StoreMixin) {
       {
         name: 'setup',
         events: [
+          'configStatusChangeError',
+          'configStatusChangeSuccess',
           'configTypeChangeSuccess',
+          'currentConfigChangeSuccess',
           'currentConfigChangeError'
         ]
       }
@@ -62,12 +68,27 @@ class EnforceStage extends mixin(StoreMixin) {
     this.setState({currentStage});
   }
 
+  onSetupStoreConfigStatusChangeError() {
+    this.setState({receivedCurrentConfigStatus: true});
+  }
+
+  onSetupStoreConfigStatusChangeSuccess() {
+    this.setState({receivedCurrentConfigStatus: true});
+  }
+
   onSetupStoreConfigTypeChangeSuccess() {
-    this.setState({configType: SetupStore.get('configType')});
+    this.setState({
+      configType: SetupStore.get('configType'),
+      receivedConfigType: true
+    });
   }
 
   onSetupStoreCurrentConfigChangeError() {
     this.setState({serverError: true});
+  }
+
+  onSetupStoreCurrentConfigChangeSuccess() {
+    this.setState({receivedCurrentConfig: true});
   }
 
   getAdvancedConfigurationWarning() {
@@ -99,7 +120,8 @@ class EnforceStage extends mixin(StoreMixin) {
 
     // let state = this.state;
     // if (state.currentStage == null || !state.receivedTotalAgents
-    //   || !state.receivedTotalMasters) {
+    //   || !state.receivedTotalMasters || !state.receivedCurrentConfig
+    //   || !state.receivedCurrentConfigStatus || !state.receivedConfigType) {
     //   return this.getLoadingScreen();
     // }
 

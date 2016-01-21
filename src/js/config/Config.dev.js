@@ -1,5 +1,5 @@
 const ConfigDev = {
-  rootUrl: 'http://localhost:9000'
+  rootUrl: ''
 };
 
 module.exports = ConfigDev;

@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import {GetSetMixin, Store} from 'mesosphere-shared-reactjs';
 
 import ActionTypes from '../constants/ActionTypes';
@@ -19,11 +20,12 @@ let SetupStore = Store.createStore({
       },
       currentConfig: null,
       currentConfigError: null,
-      errors: null
+      errors: {}
     });
 
-    this.fetchConfigType();
     this.fetchConfig();
+    this.fetchConfigState();
+    this.fetchConfigType();
   },
 
   fetchConfig: ConfigActions.fetchConfig,
@@ -42,6 +44,15 @@ let SetupStore = Store.createStore({
     this.removeListener(eventName, callback);
   },
 
+  checkFormCompletion() {
+    if (Object.keys(this.get('errors')).length) {
+      this.set({completed: false});
+    } else {
+      this.set({completed: true});
+    }
+    this.emit(EventTypes.CONFIGURE_FORM_COMPLETION_CHANGE);
+  },
+
   handleConfigureChangeSuccess: function (data) {
     this.set({currentConfig: data});
     this.emit(EventTypes.CONFIGURE_CHANGE_SUCCESS);
@@ -53,7 +64,8 @@ let SetupStore = Store.createStore({
   },
 
   handleConfigureStatusChangeError: function (data) {
-    this.set({errors: data.response});
+    let errors = _.extend(this.get('errors'), data.response);
+    this.set({errors});
     this.emit(EventTypes.CONFIGURE_STATUS_CHANGE_ERROR);
   },
 
@@ -61,30 +73,33 @@ let SetupStore = Store.createStore({
     this.emit(EventTypes.CONFIGURE_TYPE_CHANGE_ERROR);
   },
 
-  handleConfigureUpdateError: function (data) {
-    this.set({errors: data.response});
-    this.emit(EventTypes.CONFIGURE_UPDATE_ERROR);
+  handleConfigureUpdateFieldError: function (data) {
+    let errors = _.extend(this.get('errors'), data.response);
+    this.set({errors});
+    this.emit(EventTypes.CONFIGURE_UPDATE_FIELD_ERROR);
   },
 
-  processConfigureTypeResponse: function (data) {
+  handleConfigureTypeResponse: function (data) {
     this.set({configType: data});
     this.emit(EventTypes.CONFIGURE_TYPE_CHANGE_SUCCESS);
   },
 
-  processConfigureUpdateResponse: function (data) {
-    if (data.errors) {
-      this.set({
-        completed: false,
-        errors: data.errors
-      });
-    } else {
-      this.set({
-        completed: true,
-        errors: null
-      });
-    }
+  handleConfigureStatusSuccess: function () {
+    this.set({errors: {}});
+    this.emit(EventTypes.CONFIGURE_UPDATE_FIELD_SUCCESS);
+  },
 
-    this.emit(EventTypes.CONFIGURE_UPDATE_SUCCESS);
+  handleConfigureUpdateFieldSuccess: function (data) {
+    let errors = this.get('errors');
+
+    Object.keys(data).forEach((key) => {
+      if (errors[key]) {
+        delete(errors[key]);
+      }
+    });
+
+    this.set({errors});
+    this.emit(EventTypes.CONFIGURE_UPDATE_FIELD_SUCCESS);
   },
 
   dispatcherIndex: AppDispatcher.register(function (payload) {
@@ -99,21 +114,25 @@ let SetupStore = Store.createStore({
         break;
       case ActionTypes.CONFIGURE_STATUS_CHANGE_ERROR:
         SetupStore.handleConfigureStatusChangeError(action.data);
+        SetupStore.checkFormCompletion();
         break;
       case ActionTypes.CONFIGURE_STATUS_CHANGE_SUCCESS:
-        SetupStore.processConfigureUpdateResponse(action.data);
+        SetupStore.handleConfigureStatusSuccess(action.data);
+        SetupStore.checkFormCompletion();
         break;
       case ActionTypes.CONFIGURE_TYPE_CHANGE_ERROR:
         SetupStore.handleConfigureTypeError(action.data);
         break;
       case ActionTypes.CONFIGURE_TYPE_CHANGE_SUCCESS:
-        SetupStore.processConfigureTypeResponse(action.data);
+        SetupStore.handleConfigureTypeResponse(action.data);
         break;
-      case ActionTypes.CONFIGURE_UPDATE_ERROR:
-        SetupStore.handleConfigureUpdateError(action.data);
+      case ActionTypes.CONFIGURE_UPDATE_FIELD_ERROR:
+        SetupStore.handleConfigureUpdateFieldError(action.data);
+        SetupStore.checkFormCompletion();
         break;
-      case ActionTypes.CONFIGURE_UPDATE_SUCCESS:
-        SetupStore.processConfigureUpdateResponse(action.data);
+      case ActionTypes.CONFIGURE_UPDATE_FIELD_SUCCESS:
+        SetupStore.handleConfigureUpdateFieldSuccess(action.data);
+        SetupStore.checkFormCompletion();
         break;
     }
 

@@ -2,7 +2,7 @@ let Config = {
   apiPrefix: '/api/v1/',
   apiRequestThrottle: 1000,
   environment: '@@ENV',
-  rootUrl: 'http://localhost:9000'
+  rootUrl: ''
 };
 
 if (Config.environment === 'development') {

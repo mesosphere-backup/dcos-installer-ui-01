@@ -64,12 +64,13 @@ const ListenersDescription = {
   setup: {
     store: SetupStore,
     events: {
+      configFormCompletionChange: EventTypes.CONFIGURE_FORM_COMPLETION_CHANGE,
       configStatusChangeError: EventTypes.CONFIGURE_STATUS_CHANGE_ERROR,
       configStatusChangeSuccess: EventTypes.CONFIGURE_STATUS_CHANGE_SUCCESS,
       configTypeChangeError: EventTypes.CONFIGURE_TYPE_CHANGE_ERROR,
       configTypeChangeSuccess: EventTypes.CONFIGURE_TYPE_CHANGE_SUCCESS,
-      configUpdateError: EventTypes.CONFIGURE_UPDATE_ERROR,
-      configUpdateSuccess: EventTypes.CONFIGURE_UPDATE_SUCCESS,
+      configUpdateError: EventTypes.CONFIGURE_UPDATE_FIELD_ERROR,
+      configUpdateSuccess: EventTypes.CONFIGURE_UPDATE_FIELD_SUCCESS,
       currentConfigChangeError: EventTypes.CONFIGURE_CHANGE_ERROR,
       currentConfigChangeSuccess: EventTypes.CONFIGURE_CHANGE_SUCCESS,
       validateUserInput: EventTypes.SETUP_USER_INPUT_VALIDATED

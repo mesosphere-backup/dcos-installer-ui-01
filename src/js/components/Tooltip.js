@@ -62,8 +62,6 @@ class Tooltip extends React.Component {
       }
     }
 
-    console.log(anchor, position);
-
     return {anchor, position};
   }
 

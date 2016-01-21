@@ -18,7 +18,7 @@ const ConfigActions = {
         AppDispatcher.handleServerAction({
           type: ActionTypes.CONFIGURE_CHANGE_ERROR,
           data: {
-            response:RequestUtil.parseResponseBody(xhr)
+            response: RequestUtil.parseResponseBody(xhr)
           }
         });
       }
@@ -38,7 +38,7 @@ const ConfigActions = {
         AppDispatcher.handleServerAction({
           type: ActionTypes.CONFIGURE_STATUS_CHANGE_ERROR,
           data: {
-            response:RequestUtil.parseResponseBody(xhr)
+            response: RequestUtil.parseResponseBody(xhr)
           }
         });
       }
@@ -58,7 +58,7 @@ const ConfigActions = {
         AppDispatcher.handleServerAction({
           type: ActionTypes.CONFIGURE_TYPE_CHANGE_ERROR,
           data: {
-            response:RequestUtil.parseResponseBody(xhr)
+            response: RequestUtil.parseResponseBody(xhr)
           }
         });
       }
@@ -72,13 +72,13 @@ const ConfigActions = {
       data,
       success: function () {
         AppDispatcher.handleServerAction({
-          type: ActionTypes.CONFIGURE_UPDATE_SUCCESS,
+          type: ActionTypes.CONFIGURE_UPDATE_FIELD_SUCCESS,
           data
         });
       },
       error: function (xhr) {
         AppDispatcher.handleServerAction({
-          type: ActionTypes.CONFIGURE_UPDATE_ERROR,
+          type: ActionTypes.CONFIGURE_UPDATE_FIELD_ERROR,
           data: {
             response: RequestUtil.parseResponseBody(xhr),
             request: data
