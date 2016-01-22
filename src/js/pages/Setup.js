@@ -8,6 +8,7 @@ import {StoreMixin} from 'mesosphere-shared-reactjs';
 
 import Config from '../config/Config';
 import ConfigActions from '../events/ConfigActions';
+import ConfigFormFields from '../constants/ConfigFormFields';
 import FormLabel from '../components/FormLabel';
 import FormLabelContent from '../components/FormLabelContent';
 import Page from '../components/Page';
@@ -37,20 +38,6 @@ const METHODS_TO_BIND = [
   'submitFormData'
 ];
 
-const REQUIRED_FORM_DATA = [
-  'master_list',
-  'agent_list',
-  'ip_detect_script',
-  'ssh_user',
-  'ssh_port',
-  'ssh_key',
-  'username',
-  'password',
-  'zk_exhibitor_hosts',
-  'zk_exhibitor_port',
-  'zk_exhibitor_port'
-];
-
 module.exports = class Setup extends mixin(StoreMixin) {
   constructor() {
     super();
@@ -66,7 +53,6 @@ module.exports = class Setup extends mixin(StoreMixin) {
         username: null,
         password: '',
         zk_exhibitor_hosts: null,
-        zk_exhibitor_port: null,
         zk_exhibitor_port: null
       },
       passwordFieldType: 'password'
@@ -202,7 +188,7 @@ module.exports = class Setup extends mixin(StoreMixin) {
           ),
           showError: this.getErrors('master_list'),
           validationErrorText: this.getErrors('master_list'),
-          validation: this.getErrors('master_list'),
+          validation: this.getValidationFn('master_list'),
           value: this.state.formData.master_list
         },
         {
@@ -530,7 +516,11 @@ module.exports = class Setup extends mixin(StoreMixin) {
     let errors = SetupStore.get('errors');
     let lastRemainingField = true;
 
-    REQUIRED_FORM_DATA.forEach((key) => {
+    ConfigFormFields.forEach((key) => {
+      if (key === 'ssh_key' || key === 'ip_detect_script') {
+        return;
+      }
+
       if (key !== fieldName && (this.state.formData[key] === ''
         || this.state.formData[key] == null)) {
         lastRemainingField = false;

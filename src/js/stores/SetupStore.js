@@ -3,8 +3,9 @@ import {GetSetMixin, Store} from 'mesosphere-shared-reactjs';
 
 import ActionTypes from '../constants/ActionTypes';
 import AppDispatcher from '../events/AppDispatcher';
-import EventTypes from '../constants/EventTypes';
 import ConfigActions from '../events/ConfigActions';
+import EventTypes from '../constants/EventTypes';
+import ConfigFormFields from '../constants/ConfigFormFields';
 
 let SetupStore = Store.createStore({
   storeID: 'setup',
@@ -54,7 +55,9 @@ let SetupStore = Store.createStore({
   },
 
   handleConfigureChangeSuccess: function (data) {
-    this.set({currentConfig: data});
+    let currentConfig = _.pick(data, ConfigFormFields);
+
+    this.set({currentConfig});
     this.emit(EventTypes.CONFIGURE_CHANGE_SUCCESS);
   },
 
