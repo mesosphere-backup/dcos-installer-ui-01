@@ -8,7 +8,6 @@ import ErrorLabel from '../components/ErrorLabel';
 import IconCircleCheckmark from '../components/icons/IconCircleCheckmark';
 import IconSpinner from '../components/icons/IconSpinner';
 import IconWarning from '../components/icons/IconWarning';
-import InstallerStore from '../stores/InstallerStore';
 import Page from '../components/Page';
 import PageContent from '../components/PageContent';
 import PageSection from '../components/PageSection';
@@ -128,8 +127,8 @@ module.exports = class Postflight extends mixin(StoreMixin) {
     let completed = masterStatus.completed && slaveStatus.completed;
     let failed = masterStatus.errors > 0;
     let totalErrors = masterStatus.errors + slaveStatus.errors;
-    let totalSlaves = InstallerStore.get('totalSlaves');
-    let totalMasters = InstallerStore.get('totalMasters');
+    let totalSlaves = slaveStatus.totalSlaves;
+    let totalMasters = masterStatus.totalMasters;
 
     return (
       <Page hasNavigationBar={true}>

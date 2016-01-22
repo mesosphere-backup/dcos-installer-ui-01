@@ -25,9 +25,7 @@ let InstallerStore = Store.createStore({
         label: null,
         link: null,
         visible: false
-      },
-      totalSlaves: 0,
-      totalMasters: 0
+      }
     });
 
     this.fetchCurrentStage();
@@ -38,10 +36,6 @@ let InstallerStore = Store.createStore({
   fetchDCOSURL: SuccessActions.fetchDCOSURL,
 
   fetchCurrentStage: StageActions.fetchCurrentStage,
-
-  fetchTotalSlaves: HostActions.fetchTotalSlaves,
-
-  fetchTotalMasters: HostActions.fetchTotalMasters,
 
   addChangeListener: function (eventName, callback) {
     this.on(eventName, callback);
