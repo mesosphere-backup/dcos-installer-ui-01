@@ -494,7 +494,7 @@ module.exports = class Setup extends mixin(StoreMixin) {
 
     if (eventType === 'multipleChange' && fieldName === 'reveal_password') {
       let passwordFieldType = this.state.passwordFieldType;
-      if (fieldValue[0].checked) {
+      if (fieldValue.checked) {
         passwordFieldType = 'text';
       } else {
         passwordFieldType = 'password';
