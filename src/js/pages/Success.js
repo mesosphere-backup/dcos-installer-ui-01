@@ -1,5 +1,6 @@
 import React from 'react';
 
+import InstallerStore from '../stores/InstallerStore';
 import Page from '../components/Page';
 import PageContent from '../components/PageContent';
 import PageSection from '../components/PageSection';
@@ -11,6 +12,9 @@ import SectionFooter from '../components/SectionFooter';
 
 module.exports = class Success extends React.Component {
   render() {
+    let totalMasters = InstallerStore.get('totalMasters');
+    let totalSlaves = InstallerStore.get('totalSlaves');
+
     return (
       <Page hasNavigationBar={true}>
         <PageContent>
@@ -18,7 +22,10 @@ module.exports = class Success extends React.Component {
             <SectionHeader>
               <SectionHeaderIcon/>
               <SectionHeaderPrimary>
-                Successfully installed on 382 Nodes
+                {`Successfully installed on ${totalMasters} Masters`}
+              </SectionHeaderPrimary>
+              <SectionHeaderPrimary>
+                {`Successfully installed on ${totalSlaves} Slaves`}
               </SectionHeaderPrimary>
             </SectionHeader>
             <SectionBody>
