@@ -23,6 +23,7 @@ import SectionHeaderPrimary from '../components/SectionHeaderPrimary';
 import SectionHeaderPrimarySubheading from '../components/SectionHeaderPrimarySubheading';
 import SectionFooter from '../components/SectionFooter';
 import SetupStore from '../stores/SetupStore';
+import SetupUtil from '../utils/SetupUtil';
 import Tooltip from '../components/Tooltip';
 import Upload from '../components/Upload';
 
@@ -34,7 +35,6 @@ const METHODS_TO_BIND = [
   'handleSubmitClick',
   'handleUploadSuccess',
   'isLastFormField',
-  'prepareDataForAPI',
   'submitFormData'
 ];
 
@@ -106,34 +106,13 @@ module.exports = class Setup extends mixin(StoreMixin) {
     // Handle pre-flight error.
   }
 
-  getArrayFromHostsString(string) {
-    if (string === '' || string == null) {
-      return string;
-    }
-
-    return string.replace(/\s/g, '').split(',');
-  }
-
-  getStringFromHostsArray(array) {
-    return array.join(', ');
-  }
-
-  // Deconstruct this on load as well.
-  getCombinedZKHosts(hosts, port) {
-    // Remove all whitespace, split into array, create new array in format of
-    // host:port, and convert back to string.
-    return this.getArrayFromHostsString(hosts).map(function (host) {
-      return `${host}:${port}`;
-    }).join(', ');
-  }
-
   getCurrentConfig() {
     let mergedData = this.getNewFormData(SetupStore.get('currentConfig'));
     let displayedConfig = {};
 
     Object.keys(mergedData).forEach((key) => {
       if (_.isArray(mergedData[key])) {
-        displayedConfig[key] = this.getStringFromHostsArray(mergedData[key]);
+        displayedConfig[key] = SetupUtil.getStringFromHostsArray(mergedData[key]);
       } else if (_.isNumber(mergedData[key])) {
         displayedConfig[key] = mergedData[key].toString();
       } else {
@@ -142,7 +121,7 @@ module.exports = class Setup extends mixin(StoreMixin) {
 
       if (key === 'exhibitor_zk_hosts') {
         let {zkExhibitorHosts, zkExhibitorPort} =
-          this.getSeparatedZKHostData(mergedData[key]);
+          SetupUtil.getSeparatedZKHostData(mergedData[key]);
 
         displayedConfig.zk_exhibitor_hosts = zkExhibitorHosts;
         displayedConfig.zk_exhibitor_port = zkExhibitorPort;
@@ -429,27 +408,6 @@ module.exports = class Setup extends mixin(StoreMixin) {
     return _.extend({}, this.state.formData, newFormData);
   }
 
-  getSeparatedZKHostData(hostData) {
-    if (hostData == null) {
-      return {
-        zkExhibitorHosts: null,
-        zkExhibitorPort: null
-      };
-    }
-
-    let hosts = this.getArrayFromHostsString(hostData);
-    let port = hosts[0].split(':')[1];
-
-    hosts.forEach(function (host, index) {
-      hosts[index] = host.split(':')[0];
-    });
-
-    return {
-      zkExhibitorHosts: this.getStringFromHostsArray(hosts),
-      zkExhibitorPort: port
-    };
-  }
-
   getValidationFn(key) {
     return function () {
       let errors = SetupStore.get('errors');
@@ -536,44 +494,13 @@ module.exports = class Setup extends mixin(StoreMixin) {
   }
 
   submitFormData(formData) {
-    let preparedData = this.prepareDataForAPI(formData);
+    let preparedData = SetupUtil.prepareDataForAPI(
+      formData, this.state.formData
+    );
 
     if (preparedData) {
       ConfigActions.updateConfig(preparedData);
     }
-  }
-
-  prepareDataForAPI(data) {
-    let preparedData = {};
-
-    Object.keys(data).forEach((key) => {
-      // For zk_exhibitor_hosts and zk_exhibitor_port, we need to send a
-      // string with comma-separated host:port values.
-      // For master_list and agent_list, we need to send an array of the IPs.
-      // Everything else can be sent as entered by the user.
-      if (key === 'zk_exhibitor_hosts') {
-        if (this.state.formData.zk_exhibitor_hosts != null) {
-          preparedData.exhibitor_zk_hosts = this.getCombinedZKHosts(
-            data[key], this.state.formData.zk_exhibitor_port
-          );
-        }
-      } else if (key === 'zk_exhibitor_port') {
-        if (this.state.formData.zk_exhibitor_hosts != null) {
-          preparedData.exhibitor_zk_hosts = this.getCombinedZKHosts(
-            this.state.formData.zk_exhibitor_hosts, data[key]
-          );
-        }
-      } else if (key === 'master_list' || key === 'agent_list'
-        || key === 'resolvers') {
-        preparedData[key] = this.getArrayFromHostsString(data[key]);
-      } else if (key === 'ssh_port') {
-        preparedData[key] = parseInt(data[key]);
-      } else {
-        preparedData[key] = data[key];
-      }
-    });
-
-    return preparedData;
   }
 
   render() {
