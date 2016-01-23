@@ -9,6 +9,7 @@ import {StoreMixin} from 'mesosphere-shared-reactjs';
 import Config from '../config/Config';
 import ConfigActions from '../events/ConfigActions';
 import ConfigFormFields from '../constants/ConfigFormFields';
+import ErrorAlert from '../components/ErrorAlert';
 import FormLabel from '../components/FormLabel';
 import FormLabelContent from '../components/FormLabelContent';
 import Page from '../components/Page';
@@ -43,6 +44,8 @@ module.exports = class Setup extends mixin(StoreMixin) {
     super();
 
     this.state = {
+      buttonText: 'Run Pre-Flight',
+      errorAlert: null,
       formData: {
         master_list: null,
         agent_list: null,
@@ -102,8 +105,7 @@ module.exports = class Setup extends mixin(StoreMixin) {
   }
 
   onPreFlightStoreBeginError(data) {
-    return data;
-    // Handle pre-flight error.
+    this.setState({errorAlert: data});
   }
 
   getCurrentConfig() {
@@ -129,6 +131,14 @@ module.exports = class Setup extends mixin(StoreMixin) {
     });
 
     this.setState({formData: displayedConfig});
+  }
+
+  getErrorAlert() {
+    if (this.state.errorAlert) {
+      return <ErrorAlert content={this.state.errorAlert} />;
+    }
+
+    return null;
   }
 
   getErrors(key) {
@@ -448,22 +458,19 @@ module.exports = class Setup extends mixin(StoreMixin) {
     }
 
     let newFormData = this.getNewFormData({[fieldName]: fieldValue});
-
     this.setState({formData: newFormData});
   }
 
   handleUploadSuccess(destination) {
     return (fileContents) => {
-      let formData = this.getNewFormData({
-        [destination]: fileContents
-      });
-
+      let formData = this.getNewFormData({[destination]: fileContents});
       this.setState({formData});
     }
   }
 
   handleSubmitClick() {
-    // Do submit click stuff here
+    this.setState({buttonText: 'Verifying Configuration...'});
+    this.beginPreFlight();
   }
 
   beginPreFlight() {
@@ -508,6 +515,7 @@ module.exports = class Setup extends mixin(StoreMixin) {
       <Page hasNavigationBar={true} size="large" pageName="setup">
         <PageContent>
           <PageSection>
+            {this.getErrorAlert()}
             <SectionHeader>
               <SectionHeaderPrimary align="left">
                 Deployment Settings
@@ -526,7 +534,7 @@ module.exports = class Setup extends mixin(StoreMixin) {
             <SectionFooter>
               <SectionAction enabled={SetupStore.get('completed')} linkTo="/pre-flight"
                 onClick={this.handleSubmitClick} type="primary">
-                Run Pre-Flight
+                {this.state.buttonText}
               </SectionAction>
             </SectionFooter>
           </PageSection>

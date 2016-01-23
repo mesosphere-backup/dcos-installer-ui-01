@@ -67,8 +67,7 @@ let SetupStore = Store.createStore({
   },
 
   handleConfigureStatusChangeError: function (data) {
-    let errors = _.extend(this.get('errors'), data.response);
-    this.set({errors});
+    this.set({errors: data.response});
     this.emit(EventTypes.CONFIGURE_STATUS_CHANGE_ERROR);
   },
 
@@ -77,8 +76,7 @@ let SetupStore = Store.createStore({
   },
 
   handleConfigureUpdateFieldError: function (data) {
-    let errors = _.extend(this.get('errors'), data.response);
-    this.set({errors});
+    this.set({errors: data.response});
     this.emit(EventTypes.CONFIGURE_UPDATE_FIELD_ERROR);
   },
 
