@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 import StringUtil from './StringUtil';
 
 function processDeployHostState(hostState, host, role, state) {
@@ -27,7 +29,13 @@ function processFlightHostState(hostState, host, role, state) {
 
   if (hostStatus === 'failed') {
     stateType.errors += 1;
-    state.errorDetails.push({host, errors: hostState.stderr});
+    var errors = hostState.commands.reduce(function (total, cmd) {
+      return total.concat(cmd.stdout.filter(function (line) { return line.includes('FAIL')}));
+    }, []);
+    errors = errors.map(function (error) {
+      return {host, message: error};
+    });
+    state.errorDetails.push({host, errors});
   }
 
   if (hostStatus === 'running') {
@@ -39,6 +47,12 @@ function processFlightHostState(hostState, host, role, state) {
 
 const ProcessStageUtil = {
   processState(response) {
+    console.log('resp', response, response == {});
+    if (Object.keys(response).length === 0) {
+      console.log('yoyo');
+      return response;
+    }
+
     let chainName = response.chain_name;
 
     let totalAgents = 0;
@@ -71,11 +85,18 @@ const ProcessStageUtil = {
       // if (typeof hostStatus !== 'object') {
       //   return;
       // }
-      var role = 'agent';
-      if (chainName === 'deploy') {
-        processDeployHostState(hostStatus, host, hostStatus.tags.role, state);
+      var role;
+
+      if (!hostStatus.tags) {
+        role = 'agent';
       } else {
-        processFlightHostState(hostStatus, host, hostStatus.tags.role, state);
+        role = hostStatus.tags.role;
+      }
+
+      if (chainName === 'deploy') {
+        processDeployHostState(hostStatus, host, role, state);
+      } else {
+        processFlightHostState(hostStatus, host, role, state);
       }
     });
     console.log(state);

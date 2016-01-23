@@ -11,8 +11,11 @@ let requestInterval = null;
 
 function startPolling() {
   if (requestInterval == null) {
-    PreFlightStore.fetchStageStatus();
-    requestInterval = setInterval(PreFlightStore.fetchStageStatus, 2000);
+    // setTimeout(function () {
+      PreFlightStore.fetchStageStatus();
+      requestInterval = setInterval(PreFlightStore.fetchStageStatus, 2000);
+    // }, 1000);
+
   }
 }
 
@@ -61,6 +64,11 @@ let PreFlightStore = Store.createStore({
   },
 
   isCompleted: function (data) {
+    console.log(data);
+    if (data == {}) {
+        return false;
+    }
+
     return data.agents.completed && data.masters.completed;
   },
 
