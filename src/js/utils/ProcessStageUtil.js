@@ -63,7 +63,7 @@ const ProcessStageUtil = {
       }
     };
 
-    Object.keys(response.hosts).forEach(function (host) {
+    Object.keys(response.hosts || {}).forEach(function (host) {
       let hostStatus = response[host];
 
       if (typeof hostStatus !== 'object') {

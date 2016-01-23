@@ -22,12 +22,12 @@ import SectionFooter from '../components/SectionFooter';
 import StageActionButtons from '../components/StageActionButtons';
 import StageLinks from '../components/StageLinks';
 
-module.exports = class Postflight extends mixin(StoreMixin) {
+class Postflight extends mixin(StoreMixin) {
   constructor() {
     super();
 
     this.store_listeners = [
-      {name: 'postFlight', events: ['stateChange']}
+      {name: 'postFlight', events: ['stateChange', 'stateFinish']}
     ];
   }
 
@@ -36,20 +36,8 @@ module.exports = class Postflight extends mixin(StoreMixin) {
     PostFlightStore.init();
   }
 
-  componentDidUpdate() {
-    let masterStatus = PostFlightStore.get('masters');
-    let agentStatus = PostFlightStore.get('agents');
-
-    let completed = masterStatus.completed && agentStatus.completed;
-    let totalErrors = masterStatus.errors + agentStatus.errors;
-
-    if (completed && totalErrors === 0) {
-      this.goToSuccess();
-    }
-  }
-
   goToSuccess() {
-    this.props.history.pushState(null, '/success');
+    this.context.router.push('/success');
   }
 
   getHeaderIcon(completed, failed, totalErrors) {
@@ -120,6 +108,10 @@ module.exports = class Postflight extends mixin(StoreMixin) {
     );
   }
 
+  onPostflightStoreStateFinish() {
+    this.goToSuccess();
+  }
+
   render() {
     let masterStatus = PostFlightStore.get('masters');
     let agentStatus = PostFlightStore.get('agents');
@@ -172,3 +164,9 @@ module.exports = class Postflight extends mixin(StoreMixin) {
     );
   }
 }
+
+Postflight.contextTypes = {
+  router: React.PropTypes.object
+};
+
+module.exports = Postflight;

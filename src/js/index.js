@@ -1,6 +1,9 @@
-import createHistory from 'history/lib/createHashHistory';
+import {createHashHistory} from 'history';
+/* eslint-disable no-unused-vars */
 import React from 'react';
-import {Route, Router} from 'react-router';
+/* eslint-enable no-unused-vars */
+import ReactDOM from 'react-dom';
+import {Route, Router, useRouterHistory} from 'react-router';
 
 require('./utils/StoreMixinConfig');
 
@@ -14,12 +17,10 @@ import Preflight from './pages/Preflight';
 import Setup from './pages/Setup';
 import Success from './pages/Success';
 
-let history = createHistory({
-  queryKey: false
-});
+const appHistory = useRouterHistory(createHashHistory)({queryKey: false});
 
-React.render((
-  <Router history={history}>
+ReactDOM.render((
+  <Router history={appHistory}>
     <Route component={EnforceStage}>
       <Route path="/" component={Begin} />
       <Route path="/" component={Application}>

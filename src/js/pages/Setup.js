@@ -39,7 +39,7 @@ const METHODS_TO_BIND = [
   'submitFormData'
 ];
 
-module.exports = class Setup extends mixin(StoreMixin) {
+class Setup extends mixin(StoreMixin) {
   constructor() {
     super();
 
@@ -102,7 +102,7 @@ module.exports = class Setup extends mixin(StoreMixin) {
 
   onPreFlightStoreBeginSuccess() {
     this.setState({buttonText: 'Continuing to Pre-Flight'});
-    this.props.history.pushState(null, '/pre-flight');
+    this.context.router.push('/pre-flight');
   }
 
   onPreFlightStoreBeginError(data) {
@@ -544,3 +544,9 @@ module.exports = class Setup extends mixin(StoreMixin) {
     );
   }
 }
+
+Setup.contextTypes = {
+  router: React.PropTypes.object
+};
+
+module.exports = Setup;

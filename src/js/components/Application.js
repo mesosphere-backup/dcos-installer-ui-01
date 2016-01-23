@@ -1,6 +1,5 @@
-import React from 'react/addons';
-
-const CSSTransitionGroup = React.addons.CSSTransitionGroup;
+import React from 'react';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 import NavigationBar from './NavigationBar';
 
@@ -59,16 +58,19 @@ class Application extends React.Component {
       <div className="application-wrapper flex-box flex-box-fit-height">
         <NavigationBar activeRoute={this.props.location.pathname}
           routes={this.props.route.childRoutes} />
-        <CSSTransitionGroup
+        <ReactCSSTransitionGroup
+          transitionAppearTimeout={500}
+          transitionEnterTimeout={500}
+          transitionLeaveTimeout={500}
           transitionName={`page-transition-${this.state.transitionDirection}`}
-          component="div" className={'page-transition-wrapper flex-box ' +
+          className={'page-transition-wrapper flex-box ' +
           'flex-box-align-vertical-center flex-box-align-horizontal-center'}>
           <div className={'page-transition-container flex-box ' +
             'flex-box-align-vertical-center flex-box-align-horizontal-center ' +
             'page-transition-container'} key={this.props.location.pathname}>
             {this.props.children}
           </div>
-        </CSSTransitionGroup>
+        </ReactCSSTransitionGroup>
       </div>
     );
   }

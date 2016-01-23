@@ -23,7 +23,7 @@ import SectionFooter from '../components/SectionFooter';
 import StageActionButtons from '../components/StageActionButtons';
 import StageLinks from '../components/StageLinks';
 
-module.exports = class Deploy extends mixin(StoreMixin) {
+class Deploy extends mixin(StoreMixin) {
   constructor() {
     super();
 
@@ -38,7 +38,7 @@ module.exports = class Deploy extends mixin(StoreMixin) {
   }
 
   onPostFlightStoreBeginSuccess() {
-    this.props.history.pushState(null, '/post-flight');
+    this.context.router.push('/post-flight');
   }
 
   getHeaderIcon(completed, failed, totalErrors) {
@@ -160,3 +160,9 @@ module.exports = class Deploy extends mixin(StoreMixin) {
     );
   }
 }
+
+Deploy.contextTypes = {
+  router: React.PropTypes.object
+};
+
+module.exports = Deploy;

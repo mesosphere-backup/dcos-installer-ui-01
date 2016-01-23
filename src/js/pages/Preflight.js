@@ -23,7 +23,7 @@ import SectionFooter from '../components/SectionFooter';
 import StageActionButtons from '../components/StageActionButtons';
 import StageLinks from '../components/StageLinks';
 
-module.exports = class Preflight extends mixin(StoreMixin) {
+class Preflight extends mixin(StoreMixin) {
   constructor() {
     super();
 
@@ -38,7 +38,7 @@ module.exports = class Preflight extends mixin(StoreMixin) {
   }
 
   onDeployStoreBeginSuccess() {
-    this.props.history.pushState(null, '/deploy');
+    this.context.router.push('/deploy');
   }
 
   getHeaderIcon(completed, failed, totalErrors) {
@@ -162,3 +162,9 @@ module.exports = class Preflight extends mixin(StoreMixin) {
     );
   }
 }
+
+Preflight.contextTypes = {
+  router: React.PropTypes.object
+};
+
+module.exports = Preflight;

@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 const METHODS_TO_BIND = [
   'handleUploadClick',
@@ -21,7 +22,7 @@ class Upload extends React.Component {
 
   handleUploadClick(event) {
     event.preventDefault();
-    React.findDOMNode(this.refs.uploadInput).click();
+    ReactDOM.findDOMNode(this.refs.uploadInput).click();
   }
 
   handleUpload(e) {
