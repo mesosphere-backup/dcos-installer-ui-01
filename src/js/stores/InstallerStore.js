@@ -29,8 +29,6 @@ let InstallerStore = Store.createStore({
     });
 
     this.fetchCurrentStage();
-    this.fetchTotalAgents();
-    this.fetchTotalMasters();
   },
 
   fetchDCOSURL: SuccessActions.fetchDCOSURL,
