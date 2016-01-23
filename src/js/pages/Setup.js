@@ -95,12 +95,31 @@ class Setup extends mixin(StoreMixin) {
 
   componentDidMount() {
     super.componentDidMount();
+
+    let clickHandler = null;
+    let continueButtonEnabled = false;
+
+    if (SetupStore.get('completed')) {
+      clickHandler = this.handleSubmitClick;
+      continueButtonEnabled = true;
+    }
+
     InstallerStore.setNextStep({
-      enabled: false,
+      clickHandler,
+      enabled: continueButtonEnabled,
       label: 'Pre-Flight',
-      link: '/pre-flight',
+      link: null,
       visible: true
     });
+  }
+
+  onSetupStoreConfigFormCompletionChange() {
+    InstallerStore.setNextStep({
+      clickHandler: this.handleSubmitClick,
+      enabled: true,
+      link: null
+    });
+    this.forceUpdate();
   }
 
   onSetupStoreCurrentConfigChangeSuccess() {
@@ -267,13 +286,15 @@ class Setup extends mixin(StoreMixin) {
         validation: this.getValidationFn('ssh_key'),
         value: this.state.formData.ssh_key
       },
-      <SectionHeaderPrimary align="left">
-        DCOS Environment Settings
-        <SectionHeaderPrimarySubheading>
-          Choose a username and password for the DCOS administrator. This user
-          will be able to manage and add other users.
-        </SectionHeaderPrimarySubheading>
-      </SectionHeaderPrimary>,
+      <SectionHeader>
+        <SectionHeaderPrimary align="left" layoutClassName="short short-top">
+          DCOS Environment Settings
+          <SectionHeaderPrimarySubheading>
+            Choose a username and password for the DCOS administrator. This user
+            will be able to manage and add other users.
+          </SectionHeaderPrimarySubheading>
+        </SectionHeaderPrimary>
+      </SectionHeader>,
       [
         {
           fieldType: 'text',
@@ -477,6 +498,7 @@ class Setup extends mixin(StoreMixin) {
   }
 
   handleSubmitClick() {
+    console.log('handle submit click');
     this.setState({buttonText: 'Verifying Configuration...'});
     this.beginPreFlight();
   }

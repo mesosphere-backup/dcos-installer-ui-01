@@ -1,5 +1,6 @@
 import React from 'react';
 
+import InstallerStore from '../stores/InstallerStore';
 import PostFlightStore from '../stores/PostFlightStore';
 import Page from '../components/Page';
 import PageContent from '../components/PageContent';
