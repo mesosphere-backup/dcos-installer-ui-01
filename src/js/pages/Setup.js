@@ -114,11 +114,19 @@ class Setup extends mixin(StoreMixin) {
   }
 
   onSetupStoreConfigFormCompletionChange() {
-    InstallerStore.setNextStep({
-      clickHandler: this.handleSubmitClick,
-      enabled: true,
-      link: null
-    });
+    if (SetupStore.get('completed')) {
+      InstallerStore.setNextStep({
+        clickHandler: this.handleSubmitClick,
+        enabled: true,
+        link: null
+      });
+    } else {
+      InstallerStore.setNextStep({
+        clickHandler: null,
+        enabled: false,
+        link: null
+      });
+    }
     this.forceUpdate();
   }
 
