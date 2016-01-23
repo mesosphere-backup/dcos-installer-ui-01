@@ -12,7 +12,16 @@
 
 .error-label {
   color: @red;
+  cursor: pointer;
   text-decoration: underline;
+
+  &:hover {
+    color: @red;
+  }
+
+  &:active {
+    text-decoration: underline;
+  }
 }
 
 .form {

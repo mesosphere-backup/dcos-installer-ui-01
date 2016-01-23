@@ -7,7 +7,7 @@ class SectionAction extends React.Component {
     let enabled = props.enabled;
 
     let classes = classnames(props.className, {
-      'button-primary': props.type === 'primary' && enabled,
+      'button-success': props.type === 'primary' && enabled,
       'button-default button-stroke disabled': !enabled,
       'button-default button-stroke': props.type === 'secondary'
     });

@@ -36,7 +36,7 @@ class ErrorLabel extends React.Component {
   }
 
   getErrorLabel(errors) {
-    if (errors.length === 0) {
+    if (!errors || errors.length === 0) {
       return <span>No Errors Found</span>;
     }
 
