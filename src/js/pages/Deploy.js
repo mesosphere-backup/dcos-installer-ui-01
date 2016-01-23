@@ -111,12 +111,12 @@ module.exports = class Deploy extends mixin(StoreMixin) {
 
   render() {
     let masterStatus = DeployStore.get('masters');
-    let slaveStatus = DeployStore.get('slaves');
+    let agentStatus = DeployStore.get('agents');
 
-    let completed = masterStatus.completed && slaveStatus.completed;
+    let completed = masterStatus.completed && agentStatus.completed;
     let failed = masterStatus.errors > 0;
-    let totalErrors = masterStatus.errors + slaveStatus.errors;
-    let totalSlaves = slaveStatus.totalSlaves;
+    let totalErrors = masterStatus.errors + agentStatus.errors;
+    let totalAgents = agentStatus.totalAgents;
     let totalMasters = masterStatus.totalMasters;
 
     return (
@@ -136,7 +136,7 @@ module.exports = class Deploy extends mixin(StoreMixin) {
             </SectionHeader>
             <SectionBody>
               {this.getProgressBar('Masters', masterStatus, totalMasters)}
-              {this.getProgressBar('Agents', slaveStatus, totalSlaves)}
+              {this.getProgressBar('Agents', agentStatus, totalAgents)}
             </SectionBody>
           </PageSection>
           <PageSection>

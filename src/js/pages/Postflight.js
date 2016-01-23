@@ -38,10 +38,10 @@ module.exports = class Postflight extends mixin(StoreMixin) {
 
   componentDidUpdate() {
     let masterStatus = PostFlightStore.get('masters');
-    let slaveStatus = PostFlightStore.get('slaves');
+    let agentStatus = PostFlightStore.get('agents');
 
-    let completed = masterStatus.completed && slaveStatus.completed;
-    let totalErrors = masterStatus.errors + slaveStatus.errors;
+    let completed = masterStatus.completed && agentStatus.completed;
+    let totalErrors = masterStatus.errors + agentStatus.errors;
 
     if (completed && totalErrors === 0) {
       this.goToSuccess();
@@ -122,12 +122,12 @@ module.exports = class Postflight extends mixin(StoreMixin) {
 
   render() {
     let masterStatus = PostFlightStore.get('masters');
-    let slaveStatus = PostFlightStore.get('slaves');
+    let agentStatus = PostFlightStore.get('agents');
 
-    let completed = masterStatus.completed && slaveStatus.completed;
+    let completed = masterStatus.completed && agentStatus.completed;
     let failed = masterStatus.errors > 0;
-    let totalErrors = masterStatus.errors + slaveStatus.errors;
-    let totalSlaves = slaveStatus.totalSlaves;
+    let totalErrors = masterStatus.errors + agentStatus.errors;
+    let totalAgents = agentStatus.totalAgents;
     let totalMasters = masterStatus.totalMasters;
 
     return (
@@ -147,7 +147,7 @@ module.exports = class Postflight extends mixin(StoreMixin) {
             </SectionHeader>
             <SectionBody>
               {this.getProgressBar('Masters', masterStatus, totalMasters)}
-              {this.getProgressBar('Agents', slaveStatus, totalSlaves)}
+              {this.getProgressBar('Agents', agentStatus, totalAgents)}
             </SectionBody>
           </PageSection>
           <PageSection>

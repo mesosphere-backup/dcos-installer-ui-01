@@ -25,7 +25,7 @@ const ListenersDescription = {
       currentStageChange: EventTypes.CURRENT_STAGE_CHANGE,
       installInProgressChange: EventTypes.GLOBAL_INSTALL_IN_PROGRESS_CHANGE,
       nextStepChange: EventTypes.GLOBAL_NEXT_STEP_CHANGE,
-      totalSlavesChange: EventTypes.TOTAL_SLAVES_SUCCESS,
+      totalAgentsChange: EventTypes.TOTAL_AGENTS_SUCCESS,
       totalMastersChange: EventTypes.TOTAL_MASTERS_SUCCESS,
     },
     unmountWhen: function () {

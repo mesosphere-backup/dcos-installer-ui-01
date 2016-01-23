@@ -111,13 +111,13 @@ module.exports = class Preflight extends mixin(StoreMixin) {
 
   render() {
     let masterStatus = PreFlightStore.get('masters');
-    let slaveStatus = PreFlightStore.get('slaves');
+    let agentStatus = PreFlightStore.get('agents');
 
-    let completed = masterStatus.completed && slaveStatus.completed;
+    let completed = masterStatus.completed && agentStatus.completed;
     let failed = masterStatus.errors > 0;
-    let totalErrors = masterStatus.errors + slaveStatus.errors;
+    let totalErrors = masterStatus.errors + agentStatus.errors;
     let totalMasters = masterStatus.totalMasters;
-    let totalSlaves = slaveStatus.totalSlaves;
+    let totalAgents = agentStatus.totalAgents;
 
     return (
       <Page hasNavigationBar={true}>
@@ -136,7 +136,7 @@ module.exports = class Preflight extends mixin(StoreMixin) {
             </SectionHeader>
             <SectionBody>
               {this.getProgressBar('Masters', masterStatus, totalMasters)}
-              {this.getProgressBar('Agents', slaveStatus, totalSlaves)}
+              {this.getProgressBar('Agents', agentStatus, totalAgents)}
             </SectionBody>
           </PageSection>
           <PageSection>

@@ -28,7 +28,7 @@ let PostFlightStore = Store.createStore({
 
   init: function () {
     let initialState = {
-      slaves: {
+      agents: {
         errors: 0,
         totalStarted: 0,
         completed: false
@@ -61,7 +61,7 @@ let PostFlightStore = Store.createStore({
   },
 
   isCompleted: function (data) {
-    return data.slaves.completed && data.masters.completed;
+    return data.agents.completed && data.masters.completed;
   },
 
   processUpdateError: function () {

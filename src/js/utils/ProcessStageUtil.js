@@ -39,20 +39,20 @@ const ProcessStageUtil = {
   processState(response) {
     let chainName = response.chain_name;
 
-    let totalSlaves = 0;
+    let totalAgents = 0;
     let totalMasters = 0;
 
     if (chainName === 'deploy') {
-      totalSlaves = response.total_agents;
+      totalAgents = response.total_agents;
       totalMasters = response.total_masters;
     }
 
     let state = {
-      slaves: {
+      agents: {
         completed: true,
         errors: 0,
         totalStarted: 0,
-        totalSlaves
+        totalAgents
       },
       errorDetails: [],
       masters: {

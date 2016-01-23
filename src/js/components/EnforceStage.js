@@ -16,7 +16,7 @@ class EnforceStage extends mixin(StoreMixin) {
         message: null
       },
       currentStage: null,
-      receivedTotalSlaves: false,
+      receivedTotalAgents: false,
       receivedTotalMasters: false,
       serverError: false
     };
@@ -26,7 +26,7 @@ class EnforceStage extends mixin(StoreMixin) {
         name: 'installer',
         events: [
           'currentStageChange',
-          'totalSlavesChange',
+          'totalAgentsChange',
           'totalMastersChange'
         ]
       },
@@ -98,7 +98,7 @@ class EnforceStage extends mixin(StoreMixin) {
     // }
 
     // let state = this.state;
-    // if (state.currentStage == null || !state.receivedTotalSlaves
+    // if (state.currentStage == null || !state.receivedTotalAgents
     //   || !state.receivedTotalMasters) {
     //   return this.getLoadingScreen();
     // }

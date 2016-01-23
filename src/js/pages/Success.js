@@ -13,7 +13,7 @@ import SectionFooter from '../components/SectionFooter';
 module.exports = class Success extends React.Component {
   render() {
     let totalMasters = PostFlightStore.get('masters').totalMasters;
-    let totalSlaves = PostFlightStore.get('slaves').totalSlaves;
+    let totalAgents = PostFlightStore.get('agents').totalAgents;
 
     return (
       <Page hasNavigationBar={true}>
@@ -25,7 +25,7 @@ module.exports = class Success extends React.Component {
                 {`Successfully installed on ${totalMasters} Masters`}
               </SectionHeaderPrimary>
               <SectionHeaderPrimary>
-                {`Successfully installed on ${totalSlaves} Slaves`}
+                {`Successfully installed on ${totalAgents} Agents`}
               </SectionHeaderPrimary>
             </SectionHeader>
             <SectionBody>
