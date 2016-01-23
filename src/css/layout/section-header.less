@@ -1,7 +1,8 @@
 @section-header-icon-margin-bottom: @base-spacing-unit * 5/7;
 
-@section-header-margin-bottom: @base-spacing-unit * 1.5;
+@section-header-margin-bottom: @base-spacing-unit;
 @section-header-primary-margin-bottom: @base-spacing-unit * 2/7;
+@section-header-primary-margin-top: @base-spacing-unit;
 
 .section-header {
   margin-bottom: @section-header-margin-bottom;
@@ -9,6 +10,10 @@
 
 .section-header-primary {
   margin-bottom: @section-header-primary-margin-bottom;
+
+  .form & {
+    margin-top: @section-header-primary-margin-top;
+  }
 }
 
 .section-header-icon {

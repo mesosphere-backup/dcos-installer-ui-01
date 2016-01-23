@@ -29,7 +29,13 @@ module.exports = class NavigationNextStep extends mixin(StoreMixin) {
   }
 
   render() {
-    let {enabled, label, link, visible} = InstallerStore.get('nextStep');
+    let {
+      enabled,
+      label,
+      link,
+      clickHandler,
+      visible
+    } = InstallerStore.get('nextStep');
 
     if (!visible) {
       return null;
@@ -44,7 +50,7 @@ module.exports = class NavigationNextStep extends mixin(StoreMixin) {
     });
 
     return (
-      <NavigationItem className={classes} link={link}>
+      <NavigationItem className={classes} link={link} clickHandler={clickHandler}>
         <span className="navigation-item-mobile">
           Next: {label}
         </span>

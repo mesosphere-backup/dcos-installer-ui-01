@@ -41,7 +41,7 @@ class ErrorLabel extends React.Component {
     }
 
     return (
-      <a onClick={this.handleErrorClick}>
+      <a className={this.props.className} onClick={this.handleErrorClick}>
         {`${errors.length} Errors Found`}
       </a>
     );
@@ -68,7 +68,12 @@ class ErrorLabel extends React.Component {
   }
 }
 
+ErrorLabel.defaultProps = {
+  className: 'error-label'
+};
+
 ErrorLabel.propTypes = {
+  className: React.PropTypes.string,
   step: React.PropTypes.string // preflight, deploy, postflight
 };
 

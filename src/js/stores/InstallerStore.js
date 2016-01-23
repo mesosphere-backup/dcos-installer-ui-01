@@ -24,6 +24,7 @@ let InstallerStore = Store.createStore({
         enabled: false,
         label: null,
         link: null,
+        clickHandler: null,
         visible: false
       }
     });
@@ -56,7 +57,7 @@ let InstallerStore = Store.createStore({
   },
 
   setNextStep: function (stepData) {
-    let nextStep = _.extend({}, this.nextStep, stepData);
+    let nextStep = _.extend({}, this.get('nextStep'), stepData);
 
     this.set({nextStep});
     this.emit(EventTypes.GLOBAL_NEXT_STEP_CHANGE);

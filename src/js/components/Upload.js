@@ -52,8 +52,8 @@ class Upload extends React.Component {
     }
 
     return (
-      <span>
-        <a className="clickable" onClick={this.handleUploadClick}>
+      <span className="upload-link">
+        <a className="is-clickable" onClick={this.handleUploadClick}>
           {displayText}
         </a>
         <input

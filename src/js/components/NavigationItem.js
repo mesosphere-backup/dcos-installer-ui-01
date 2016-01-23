@@ -9,7 +9,8 @@ class NavigationItem extends React.Component {
     });
 
     let navigationItem = (
-      <div className={classes} activeClassName={this.props.activeClassName}>
+      <div className={classes} activeClassName={this.props.activeClassName}
+        onClick={this.props.clickHandler}>
         {this.props.children}
       </div>
     );
@@ -29,6 +30,7 @@ class NavigationItem extends React.Component {
 NavigationItem.defaultProps = {
   activeClassName: 'is-active',
   className: 'navigation-item',
+  clickHandler: null,
   layoutClassName: ''
 };
 
@@ -36,6 +38,7 @@ NavigationItem.propTypes = {
   activeClassName: React.PropTypes.string,
   children: React.PropTypes.node,
   className: React.PropTypes.string,
+  clickHandler: React.PropTypes.func,
   isActive: React.PropTypes.bool,
   layoutClassName: React.PropTypes.string,
   link: React.PropTypes.string
