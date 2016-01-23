@@ -101,6 +101,7 @@ module.exports = class Setup extends mixin(StoreMixin) {
   }
 
   onPreFlightStoreBeginSuccess() {
+    this.setState({buttonText: 'Continuing to Pre-Flight'});
     this.props.history.pushState(null, '/pre-flight');
   }
 
