@@ -72,14 +72,15 @@ let PreFlightStore = Store.createStore({
     var processedState = ProcessStageUtil.processState(data);
 
     if (this.isCompleted(processedState)) {
+      console.log("Sup yo")
       stopPolling();
       this.set(processedState);
+      this.emit(EventTypes.PREFLIGHT_STATE_CHANGE, processedState);
       this.emit(EventTypes.PREFLIGHT_STATE_FINISH, processedState);
       return;
     }
 
     this.set(processedState);
-    this.emit(EventTypes.PREFLIGHT_STATE_CHANGE, processedState);
   },
 
   dispatcherIndex: AppDispatcher.register(function (payload) {
@@ -94,8 +95,10 @@ let PreFlightStore = Store.createStore({
         break;
       case ActionTypes.PREFLIGHT_BEGIN_SUCCESS:
         PreFlightStore.emit(EventTypes.PREFLIGHT_BEGIN_SUCCESS);
+        break;
       case ActionTypes.PREFLIGHT_BEGIN_ERROR:
         PreFlightStore.emit(EventTypes.PREFLIGHT_BEGIN_ERROR, action.data);
+        break;
     }
 
     return true;

@@ -18,7 +18,7 @@ const StageActions = {
       error: function (xhr) {
         AppDispatcher.handleServerAction({
           type: ActionTypes[`${capitalizedStage}_UPDATE_ERROR`],
-          data: xhr
+          data: RequestUtil.parseResponseBody(xhr)
         });
       }
     });
@@ -37,7 +37,7 @@ const StageActions = {
       error: function (xhr) {
         AppDispatcher.handleServerAction({
           type: ActionTypes[`${capitalizedStage}_BEGIN_ERROR`],
-          data: xhr
+          data: RequestUtil.parseResponseBody(xhr)
         });
       }
     });
@@ -56,7 +56,7 @@ const StageActions = {
       error: function (xhr) {
         AppDispatcher.handleServerAction({
           type: ActionTypes[`${capitalizedStage}_LOGS_ERROR`],
-          data: xhr
+          data: RequestUtil.parseResponseBody(xhr)
         });
       }
     });
@@ -74,7 +74,7 @@ const StageActions = {
       error: function (xhr) {
         AppDispatcher.handleServerAction({
           type: ActionTypes.CURRENT_STAGE_CHANGE_ERROR,
-          data: xhr
+          data: RequestUtil.parseResponseBody(xhr)
         });
       }
     });

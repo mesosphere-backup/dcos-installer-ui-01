@@ -1,8 +1,10 @@
 import StringUtil from './StringUtil';
 
 function processDeployHostState(hostState, host, role, state) {
+
   let stateType = state[`${role}s`];
   let hostStatus = hostState.host_status;
+  console.log('in here', stateType, hostStatus);
   stateType.totalStarted += 1;
 
   if (hostStatus === 'running') {
@@ -64,19 +66,19 @@ const ProcessStageUtil = {
     };
 
     Object.keys(response.hosts || {}).forEach(function (host) {
-      let hostStatus = response[host];
+      let hostStatus = response.hosts[host];
 
-      if (typeof hostStatus !== 'object') {
-        return;
-      }
-
+      // if (typeof hostStatus !== 'object') {
+      //   return;
+      // }
+      var role = 'agent';
       if (chainName === 'deploy') {
         processDeployHostState(hostStatus, host, hostStatus.tags.role, state);
       } else {
         processFlightHostState(hostStatus, host, hostStatus.tags.role, state);
       }
     });
-
+    console.log(state);
     return state;
   }
 };

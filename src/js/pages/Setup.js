@@ -106,7 +106,7 @@ class Setup extends mixin(StoreMixin) {
   }
 
   onPreFlightStoreBeginError(data) {
-    this.setState({errorAlert: data});
+    this.setState({errorAlert: data.errors});
   }
 
   getCurrentConfig() {
