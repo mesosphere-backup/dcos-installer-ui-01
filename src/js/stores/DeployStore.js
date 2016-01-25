@@ -60,7 +60,13 @@ let DeployStore = Store.createStore({
     this.removeListener(eventName, callback);
   },
 
-  isCompleted: function (data) {
+  isCompleted: function () {
+    let data = this.getSet_data;
+
+    if (Object.keys(data).length === 0) {
+      return false;
+    }
+
     return data.agents.completed && data.masters.completed;
   },
 
@@ -71,16 +77,15 @@ let DeployStore = Store.createStore({
   processUpdateSuccess: function (data) {
     var processedState = ProcessStageUtil.processState(data);
 
-    if (this.isCompleted(processedState)) {
+    this.set(processedState);
+    this.emit(EventTypes.DEPLOY_STATE_CHANGE, processedState);
+
+    if (this.isCompleted()) {
       stopPolling();
-      this.set(processedState);
-      this.emit(EventTypes.DEPLOY_STATE_CHANGE, processedState);
       this.emit(EventTypes.POSTFLIGHT_STATE_FINISH, processedState);
-      // AppDispatcher.handleUIAction({type: ActionTypes.DEPLOY_COMPLETE});
       return;
     }
 
-    this.set(processedState);
     this.emit(EventTypes.DEPLOY_STATE_CHANGE);
   },
 

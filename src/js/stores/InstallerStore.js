@@ -3,7 +3,10 @@ import {GetSetMixin, Store} from 'mesosphere-shared-reactjs';
 
 import ActionTypes from '../constants/ActionTypes';
 import AppDispatcher from '../events/AppDispatcher';
+import DeployStore from './DeployStore';
 import EventTypes from '../constants/EventTypes';
+import PostFlightStore from './PostFlightStore';
+import PreFlightStore from './PreFlightStore';
 import StageActions from '../events/StageActions';
 import SuccessActions from '../events/SuccessActions';
 
@@ -84,13 +87,29 @@ let InstallerStore = Store.createStore({
       case ActionTypes.TOTAL_MASTERS_ERROR:
         InstallerStore.emit(EventTypes.TOTAL_MASTERS_ERROR);
         break;
-      case ActionTypes.SETUP_COMPLETE:
-      case ActionTypes.PREFLIGHT_COMPLETE:
-      case ActionTypes.DEPLOY_COMPLETE:
-      case ActionTypes.POSTFLIGHT_COMPLETE:
-        InstallerStore.setNextStep({
-          enabled: true
-        });
+      case ActionTypes.PREFLIGHT_UPDATE_SUCCESS:
+        AppDispatcher.waitFor([PreFlightStore.dispatcherIndex]);
+        if (PreFlightStore.isCompleted()) {
+          InstallerStore.setNextStep({
+            enabled: true
+          });
+        }
+        break;
+      case ActionTypes.POSTFLIGHT_UPDATE_SUCCESS:
+        AppDispatcher.waitFor([PostFlightStore.dispatcherIndex]);
+        if (PostFlightStore.isCompleted()) {
+          InstallerStore.setNextStep({
+            enabled: true
+          });
+        }
+        break;
+      case ActionTypes.DEPLOY_UPDATE_SUCCESS:
+        AppDispatcher.waitFor([DeployStore.dispatcherIndex]);
+        if (DeployStore.isCompleted()) {
+          InstallerStore.setNextStep({
+            enabled: true
+          });
+        }
         break;
     }
 

@@ -60,7 +60,13 @@ let PostFlightStore = Store.createStore({
     this.removeListener(eventName, callback);
   },
 
-  isCompleted: function (data) {
+  isCompleted: function () {
+    let data = this.getSet_data;
+
+    if (Object.keys(data).length === 0) {
+      return false;
+    }
+
     return data.agents.completed && data.masters.completed;
   },
 
@@ -71,16 +77,14 @@ let PostFlightStore = Store.createStore({
   processUpdateSuccess: function (data) {
     var processedState = ProcessStageUtil.processState(data);
 
-    if (this.isCompleted(processedState)) {
-      stopPolling();
-      this.set(processedState);
-      this.emit(EventTypes.DEPLOY_STATE_FINISH, processedState);
-      AppDispatcher.handleUIAction({type: ActionTypes.POSTFLIGHT_COMPLETE});
-      return;
-    }
-
     this.set(processedState);
     this.emit(EventTypes.POSTFLIGHT_STATE_CHANGE);
+
+    if (this.isCompleted()) {
+      stopPolling();
+      this.emit(EventTypes.DEPLOY_STATE_FINISH, processedState);
+      return;
+    }
   },
 
   dispatcherIndex: AppDispatcher.register((payload) => {
