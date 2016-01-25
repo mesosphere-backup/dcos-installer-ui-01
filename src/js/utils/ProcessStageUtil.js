@@ -49,35 +49,32 @@ function processFlightHostState(hostState, host, role, state) {
 
 const ProcessStageUtil = {
   processState(response) {
-    if (Object.keys(response).length === 0) {
-      return response;
-    }
-
-    let chainName = response.chain_name;
-
-    let totalAgents = 0;
-    let totalMasters = 0;
-
-    if (chainName === 'deploy') {
-      totalAgents = response.total_agents;
-      totalMasters = response.total_masters;
-    }
-
     let state = {
       agents: {
         completed: true,
         errors: 0,
         totalStarted: 0,
-        totalAgents
+        totalAgents: 0
       },
       errorDetails: [],
       masters: {
         completed: true,
         errors: 0,
         totalStarted: 0,
-        totalMasters
+        totalMasters: 0
       }
     };
+
+    if (Object.keys(response).length === 0) {
+      return state;
+    }
+
+    let chainName = response.chain_name;
+
+    if (chainName === 'deploy') {
+      state.agents.totalAgents = response.total_agents;
+      state.masters.totalMasters = response.total_masters;
+    }
 
     Object.keys(response.hosts || {}).forEach(function (host) {
       let hostStatus = response.hosts[host];
