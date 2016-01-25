@@ -3,6 +3,7 @@ import {GetSetMixin, Store} from 'mesosphere-shared-reactjs';
 import ActionTypes from '../constants/ActionTypes';
 import AppDispatcher from '../events/AppDispatcher';
 import EventTypes from '../constants/EventTypes';
+import getActionMixin from '../mixins/getActionMixin';
 import ProcessStageUtil from '../utils/ProcessStageUtil';
 import StageActions from '../events/StageActions';
 
@@ -24,7 +25,7 @@ function stopPolling() {
 let PostFlightStore = Store.createStore({
   storeID: 'postFlight',
 
-  mixins: [GetSetMixin],
+  mixins: [GetSetMixin, getActionMixin('postflight')],
 
   init: function () {
     let initialState = {

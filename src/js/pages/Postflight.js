@@ -79,8 +79,8 @@ class Postflight extends mixin(StoreMixin) {
     return 'Running Post-Flight...';
   }
 
-  getProgressBarDetail(status, total) {
-    if (status.completed) {
+  getProgressBarDetail(status, completed, total) {
+    if (completed) {
       return '';
     }
 
@@ -100,8 +100,7 @@ class Postflight extends mixin(StoreMixin) {
     return `Checking ${type}`;
   }
 
-  getProgressBar(type, status, totalOfType) {
-    let completed = status.completed;
+  getProgressBar(type, completed, status, totalOfType) {
     let progress = ((status.totalStarted / totalOfType) * 100) || 0;
     let state = 'ongoing';
 
@@ -113,8 +112,8 @@ class Postflight extends mixin(StoreMixin) {
 
     return (
       <ProgressBar
-        detail={this.getProgressBarDetail(status, totalOfType)}
-        label={this.getProgressBarLabel(type, status.completed, status.errors)}
+        detail={this.getProgressBarDetail(status, completed, totalOfType)}
+        label={this.getProgressBarLabel(type, completed, status.errors)}
         progress={progress} state={state} />
     );
   }
@@ -149,8 +148,22 @@ class Postflight extends mixin(StoreMixin) {
               </SectionHeaderSecondary>
             </SectionHeader>
             <SectionBody>
-              {this.getProgressBar('Masters', masterStatus, totalMasters)}
-              {this.getProgressBar('Agents', agentStatus, totalAgents)}
+              {
+                this.getProgressBar(
+                  'Masters',
+                  PostFlightStore.isMasterCompleted(),
+                  masterStatus,
+                  totalMasters
+                )
+              }
+              {
+                this.getProgressBar(
+                  'Agents',
+                  PostFlightStore.isAgentCompleted(),
+                  agentStatus,
+                  totalAgents
+                )
+              }
             </SectionBody>
           </PageSection>
           <PageSection>

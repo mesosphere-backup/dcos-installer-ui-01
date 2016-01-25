@@ -2,11 +2,10 @@ import {GetSetMixin, Store} from 'mesosphere-shared-reactjs';
 
 import ActionTypes from '../constants/ActionTypes';
 import AppDispatcher from '../events/AppDispatcher';
+import getActionMixin from '../mixins/getActionMixin';
 import EventTypes from '../constants/EventTypes';
 import ProcessStageUtil from '../utils/ProcessStageUtil';
-import StageActions from '../events/StageActions';
 
-const stageID = 'preflight';
 let requestInterval = null;
 
 function startPolling() {
@@ -24,35 +23,15 @@ function stopPolling() {
 let PreFlightStore = Store.createStore({
   storeID: 'preFlight',
 
-  mixins: [GetSetMixin],
+  mixins: [GetSetMixin, getActionMixin('preflight')],
 
   init: function () {
-    let initialState = {
-      agents: {
-        completed: true,
-        errors: 0,
-        totalStarted: 0,
-        totalAgents: 0
-      },
-      errorDetails: [],
-      masters: {
-        completed: true,
-        errors: 0,
-        totalStarted: 0,
-        totalMasters: 0
-      }
-    };
+    let initialState = this.getInitialState();
     this.set(initialState);
     this.emit(EventTypes.PREFLIGHT_STATE_CHANGE, initialState);
 
     startPolling();
   },
-
-  beginStage: StageActions.beginStage.bind(null, stageID),
-
-  fetchLogs: StageActions.fetchLogs.bind(null, stageID),
-
-  fetchStageStatus: StageActions.fetchStageStatus.bind(null, stageID),
 
   addChangeListener: function (eventName, callback) {
     this.on(eventName, callback);
@@ -60,17 +39,6 @@ let PreFlightStore = Store.createStore({
 
   removeChangeListener: function (eventName, callback) {
     this.removeListener(eventName, callback);
-  },
-
-  isCompleted: function () {
-    let data = this.getSet_data || {};
-
-    if (Object.keys(data).length === 0) {
-      return false;
-    }
-
-    return data.agents.completed && data.masters.completed
-      && (data.agents.totalAgents > 0 || data.masters.totalMasters > 0);
   },
 
   processUpdateError: function () {
