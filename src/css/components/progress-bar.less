@@ -34,7 +34,6 @@
 .progress-bar-label {
   color: @progress-bar-label-foreground;
   flex: 1 1 auto;
-  vertical-align: middle;
 
   .is-erroneous & {
     color: @progress-bar-label-foreground-error;
@@ -47,6 +46,11 @@
   .icon {
     margin-bottom: @progress-bar-label-icon-margin-bottom;
     margin-right: @progress-bar-label-icon-margin-right;
+    vertical-align: middle;
+  }
+
+  .progress-bar-label-content {
+    vertical-align: middle;
   }
 }
 

@@ -26,7 +26,8 @@ class ProgressBar extends React.Component {
       <div className={classes}>
         <div className={props.headerClassName}>
           <span className={props.labelClassName}>
-            {icon}{props.label}
+            {icon}
+            <span className={props.labelContentClassName}>{props.label}</span>
           </span>
           <span className={props.progressClassName}>
             {`${progress}%`}
@@ -53,6 +54,7 @@ ProgressBar.defaultProps = {
   fillClassName: 'progress-bar-fill',
   fillWrapperClassName: 'progress-bar-fill-wrapper',
   labelClassName: 'progress-bar-label',
+  labelContentClassName: 'progress-bar-label-content',
   layoutClassName: '',
   progress: 0,
   progressClassName: 'progress-bar-progress'
@@ -68,6 +70,7 @@ ProgressBar.propTypes = {
   fillWrapperClassName: React.PropTypes.string,
   label: React.PropTypes.node.isRequired,
   labelClassName: React.PropTypes.string,
+  labelContentClassName: React.PropTypes.string,
   layoutClassName: React.PropTypes.string,
   progress: React.PropTypes.number.isRequired,
   progressClassName: React.PropTypes.string,
