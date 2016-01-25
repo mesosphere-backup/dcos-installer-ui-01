@@ -29,17 +29,19 @@ let DeployStore = Store.createStore({
   init: function () {
     let initialState = {
       agents: {
+        completed: true,
         errors: 0,
         totalStarted: 0,
-        completed: false
+        totalAgents: 0
       },
       errorDetails: [],
       masters: {
+        completed: true,
         errors: 0,
         totalStarted: 0,
-        completed: false
+        totalMasters: 0
       }
-    }
+    };
     this.set(initialState);
     this.emit(EventTypes.DEPLOY_STATE_CHANGE, initialState);
 
@@ -67,7 +69,8 @@ let DeployStore = Store.createStore({
       return false;
     }
 
-    return data.agents.completed && data.masters.completed;
+    return data.agents.completed && data.masters.completed
+      && (data.agents.totalAgents > 0 || data.masters.totalMasters > 0);
   },
 
   processUpdateError: function () {

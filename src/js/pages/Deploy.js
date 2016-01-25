@@ -124,7 +124,7 @@ class Deploy extends mixin(StoreMixin) {
     let masterStatus = DeployStore.get('masters');
     let agentStatus = DeployStore.get('agents');
 
-    let completed = masterStatus.completed && agentStatus.completed;
+    let completed = DeployStore.isCompleted();
     let failed = masterStatus.errors > 0;
     let totalErrors = masterStatus.errors + agentStatus.errors;
     let totalAgents = agentStatus.totalAgents;

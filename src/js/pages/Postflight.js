@@ -127,7 +127,7 @@ class Postflight extends mixin(StoreMixin) {
     let masterStatus = PostFlightStore.get('masters');
     let agentStatus = PostFlightStore.get('agents');
 
-    let completed = masterStatus.completed && agentStatus.completed;
+    let completed = PostFlightStore.isCompleted();
     let failed = masterStatus.errors > 0;
     let totalErrors = masterStatus.errors + agentStatus.errors;
     let totalAgents = agentStatus.totalAgents;
