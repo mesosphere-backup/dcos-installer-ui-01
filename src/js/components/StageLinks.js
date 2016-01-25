@@ -17,7 +17,7 @@ class StageLinks extends React.Component {
   }
 
   handleEditSetupClick() {
-    // TODO
+    this.context.router.push('/setup');
   }
 
   handleDownloadClick() {
@@ -82,6 +82,10 @@ class StageLinks extends React.Component {
     );
   }
 }
+
+StageLinks.contextTypes = {
+  router: React.PropTypes.object
+};
 
 StageLinks.defaultProps = {
   disableEditSetup: false
