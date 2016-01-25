@@ -74,9 +74,9 @@ let DeployStore = Store.createStore({
     if (this.isCompleted(processedState)) {
       stopPolling();
       this.set(processedState);
-      this.emit(EventTypes.DEPLOY_STATE_CHANGE);
+      this.emit(EventTypes.DEPLOY_STATE_CHANGE, processedState);
       this.emit(EventTypes.POSTFLIGHT_STATE_FINISH, processedState);
-      AppDispatcher.handleUIAction({type: ActionTypes.DEPLOY_COMPLETE});
+      // AppDispatcher.handleUIAction({type: ActionTypes.DEPLOY_COMPLETE});
       return;
     }
 

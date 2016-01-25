@@ -85,6 +85,10 @@ class APIErrorModal extends mixin(StoreMixin) {
   }
 }
 
+APIErrorModal.defaultProps = {
+  errors: []
+};
+
 APIErrorModal.propTypes = {
   errors: React.PropTypes.array,
   open: React.PropTypes.bool

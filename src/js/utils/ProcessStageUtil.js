@@ -11,7 +11,13 @@ function processDeployHostState(hostState, host, role, state) {
 
   if (hostStatus === 'failed') {
     stateType.errors += 1;
-    state.errorDetails.push({host, errors: hostState.stderr});
+    var errors = hostState.commands.reduce(function (total, cmd) {
+      return total.concat(cmd.stderr);
+    }, []);
+    errors = errors.map(function (error) {
+      return {host, message: error};
+    });
+    state.errorDetails.push({host, errors});
   }
 }
 
