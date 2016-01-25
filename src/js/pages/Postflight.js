@@ -47,6 +47,11 @@ class Postflight extends mixin(StoreMixin) {
     });
   }
 
+  handleRetryClick() {
+    PostFlightStore.beginStage();
+    PostFlightStore.init();
+  }
+
   goToSuccess() {
     this.context.router.push('/success');
   }
@@ -173,7 +178,7 @@ class Postflight extends mixin(StoreMixin) {
                 failed={failed}
                 nextText="Continue"
                 onNextClick={this.goToSuccess.bind(this)}
-                onRetryClick={PostFlightStore.init.bind(PostFlightStore)}
+                onRetryClick={this.handleRetryClick.bind(this)}
                 totalErrors={totalErrors} />
               <StageLinks
                 completed={completed}
