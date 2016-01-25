@@ -51,11 +51,9 @@ class ErrorLabel extends React.Component {
     let errors = STORE_MAP[this.props.step].get('errorDetails');
 
     if (errors[0]) {
-      console.log(errors[0]);
       errors = errors[0].errors;
     }
 
-    console.log('ty', errors);
     return (
       <div>
         {this.getErrorLabel(errors)}

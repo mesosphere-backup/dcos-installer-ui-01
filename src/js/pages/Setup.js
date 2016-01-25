@@ -506,7 +506,6 @@ class Setup extends mixin(StoreMixin) {
   }
 
   handleSubmitClick() {
-    console.log('handle submit click');
     this.setState({buttonText: 'Verifying Configuration...'});
     this.beginPreFlight();
   }

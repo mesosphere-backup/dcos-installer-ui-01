@@ -1,12 +1,8 @@
-import _ from 'lodash';
-
 import StringUtil from './StringUtil';
 
 function processDeployHostState(hostState, host, role, state) {
-
   let stateType = state[`${role}s`];
   let hostStatus = hostState.host_status;
-  console.log('in here', stateType, hostStatus);
   stateType.totalStarted += 1;
 
   if (hostStatus === 'running') {
@@ -47,9 +43,7 @@ function processFlightHostState(hostState, host, role, state) {
 
 const ProcessStageUtil = {
   processState(response) {
-    console.log('resp', response, response == {});
     if (Object.keys(response).length === 0) {
-      console.log('yoyo');
       return response;
     }
 
@@ -82,9 +76,9 @@ const ProcessStageUtil = {
     Object.keys(response.hosts || {}).forEach(function (host) {
       let hostStatus = response.hosts[host];
 
-      // if (typeof hostStatus !== 'object') {
-      //   return;
-      // }
+      if (typeof hostStatus !== 'object') {
+        return;
+      }
       var role;
 
       if (!hostStatus.tags) {
@@ -99,7 +93,7 @@ const ProcessStageUtil = {
         processFlightHostState(hostStatus, host, role, state);
       }
     });
-    console.log(state);
+
     return state;
   }
 };

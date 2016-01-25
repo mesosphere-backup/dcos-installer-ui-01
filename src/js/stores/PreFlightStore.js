@@ -11,11 +11,8 @@ let requestInterval = null;
 
 function startPolling() {
   if (requestInterval == null) {
-    // setTimeout(function () {
-      PreFlightStore.fetchStageStatus();
-      requestInterval = setInterval(PreFlightStore.fetchStageStatus, 2000);
-    // }, 1000);
-
+    PreFlightStore.fetchStageStatus();
+    requestInterval = setInterval(PreFlightStore.fetchStageStatus, 2000);
   }
 }
 
@@ -64,9 +61,8 @@ let PreFlightStore = Store.createStore({
   },
 
   isCompleted: function (data) {
-    console.log(data);
-    if (data == {}) {
-        return false;
+    if (Object.keys(data).length === 0) {
+      return false;
     }
 
     return data.agents.completed && data.masters.completed;
@@ -80,7 +76,6 @@ let PreFlightStore = Store.createStore({
     var processedState = ProcessStageUtil.processState(data);
 
     if (this.isCompleted(processedState)) {
-      console.log("Sup yo")
       stopPolling();
       this.set(processedState);
       this.emit(EventTypes.PREFLIGHT_STATE_CHANGE, processedState);
