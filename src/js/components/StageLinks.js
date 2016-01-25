@@ -30,25 +30,25 @@ class StageLinks extends React.Component {
     }
 
     return (
-      <button className="button button-link stage-link"
+      <a className="stage-link"
         key="editSetup"
         onClick={this.handleEditSetupClick}>
         <IconEdit />Edit Setup
-      </button>
+      </a>
     );
   }
 
   getDownloadLink(disabled) {
-    let classes = classnames('button button-link stage-link', {
+    let classes = classnames('stage-link', {
       disabled: disabled
     });
 
     return (
-      <button className={classes}
+      <a className={classes}
         key="download"
         onClick={this.handleDownloadClick}>
         <IconDownload />Download Logs
-      </button>
+      </a>
     );
   }
 
