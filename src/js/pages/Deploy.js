@@ -52,6 +52,11 @@ class Deploy extends mixin(StoreMixin) {
     this.context.router.push('/post-flight');
   }
 
+  handleRetryClick() {
+    DeployStore.beginStage();
+    DeployStore.init.bind(DeployStore)
+  }
+
   getHeaderIcon(completed, failed, totalErrors) {
     if (completed && totalErrors === 0) {
       return <IconCircleCheckmark />;
@@ -157,7 +162,7 @@ class Deploy extends mixin(StoreMixin) {
                 failed={failed}
                 nextText="Run Post-Flight"
                 onNextClick={PostFlightStore.beginStage.bind(PostFlightStore)}
-                onRetryClick={DeployStore.init.bind(DeployStore)}
+                onRetryClick={this.handleRetryClick.bind(this)}
                 totalErrors={totalErrors} />
               <StageLinks
                 completed={completed}

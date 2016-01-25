@@ -52,6 +52,11 @@ class Preflight extends mixin(StoreMixin) {
     this.context.router.push('/deploy');
   }
 
+  handleRetryClick() {
+    PreFlightStore.beginStage();
+    PreFlightStore.init.bind(PreFlightStore)
+  }
+
   getHeaderIcon(completed, failed, totalErrors) {
     if (completed && totalErrors === 0) {
       return <IconCircleCheckmark />;
@@ -157,7 +162,7 @@ class Preflight extends mixin(StoreMixin) {
                 failed={failed}
                 nextText="Deploy"
                 onNextClick={DeployStore.beginStage.bind(DeployStore)}
-                onRetryClick={PreFlightStore.init.bind(PreFlightStore)}
+                onRetryClick={this.handleRetryClick.bind(this)}
                 showDisabled={true}
                 totalErrors={totalErrors} />
               <StageLinks
