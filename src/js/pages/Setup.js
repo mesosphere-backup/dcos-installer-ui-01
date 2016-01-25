@@ -140,7 +140,7 @@ class Setup extends mixin(StoreMixin) {
   }
 
   onPreFlightStoreBeginError(data) {
-    this.setState({errorAlert: data.errors});
+    this.setState({buttonText: 'Run Pre-Flight', errorAlert: data.errors});
   }
 
   getCurrentConfig() {
