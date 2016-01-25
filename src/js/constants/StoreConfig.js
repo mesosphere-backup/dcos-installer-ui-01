@@ -27,6 +27,7 @@ const ListenersDescription = {
       nextStepChange: EventTypes.GLOBAL_NEXT_STEP_CHANGE,
       totalAgentsChange: EventTypes.TOTAL_AGENTS_SUCCESS,
       totalMastersChange: EventTypes.TOTAL_MASTERS_SUCCESS,
+      DCOSUrlChange: EventTypes.DCOS_URL_CHANGE
     },
     unmountWhen: function () {
       return true;

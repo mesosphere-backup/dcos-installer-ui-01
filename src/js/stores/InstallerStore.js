@@ -87,6 +87,10 @@ let InstallerStore = Store.createStore({
       case ActionTypes.TOTAL_MASTERS_ERROR:
         InstallerStore.emit(EventTypes.TOTAL_MASTERS_ERROR);
         break;
+      case ActionTypes.DCOS_UI_URL_CHANGE:
+        InstallerStore.set({dcosURL: action.data});
+        InstallerStore.emit(EventTypes.DCOS_URL_CHANGE, action.data);
+        break;
       case ActionTypes.PREFLIGHT_UPDATE_SUCCESS:
         AppDispatcher.waitFor([PreFlightStore.dispatcherIndex]);
         if (PreFlightStore.isCompleted()) {
