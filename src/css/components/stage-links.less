@@ -1,5 +1,18 @@
+@stage-link-color: #262B3D;
+
 .stage-link {
+  color: @stage-link-color;
+  cursor: pointer;
+  margin-left: @base-spacing-unit;
   text-decoration: underline;
+
+  &:hover {
+    color: @stage-link-color;
+  }
+
+  &:first-child {
+    margin-left: 0;
+  }
 
   .icon {
     margin-right: @base-spacing-unit * 0.2;
