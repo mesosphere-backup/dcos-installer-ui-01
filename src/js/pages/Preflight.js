@@ -80,8 +80,8 @@ class Preflight extends mixin(StoreMixin) {
     return 'Running Pre-Flight';
   }
 
-  getProgressBarDetail(status, total) {
-    if (status.completed) {
+  getProgressBarDetail(status, completed, total) {
+    if (completed) {
       return '';
     }
 
@@ -101,8 +101,7 @@ class Preflight extends mixin(StoreMixin) {
     return `Checking ${type}`;
   }
 
-  getProgressBar(type, status, totalOfType) {
-    let completed = status.completed;
+  getProgressBar(type, completed, status, totalOfType) {
     let progress = ((status.totalStarted / totalOfType) * 100) || 0;
     let state = 'ongoing';
 
@@ -114,8 +113,8 @@ class Preflight extends mixin(StoreMixin) {
 
     return (
       <ProgressBar
-        detail={this.getProgressBarDetail(status, totalOfType)}
-        label={this.getProgressBarLabel(type, status.completed, status.errors)}
+        detail={this.getProgressBarDetail(status, completed, totalOfType)}
+        label={this.getProgressBarLabel(type, completed, status.errors)}
         progress={progress} state={state} />
     );
   }
@@ -124,7 +123,7 @@ class Preflight extends mixin(StoreMixin) {
     let masterStatus = PreFlightStore.get('masters');
     let agentStatus = PreFlightStore.get('agents');
 
-    let completed = masterStatus.completed && agentStatus.completed;
+    let completed = PreFlightStore.isCompleted();
     let failed = masterStatus.errors > 0;
     let totalErrors = masterStatus.errors + agentStatus.errors;
     let totalMasters = masterStatus.totalMasters;
@@ -146,8 +145,22 @@ class Preflight extends mixin(StoreMixin) {
               </SectionHeaderSecondary>
             </SectionHeader>
             <SectionBody>
-              {this.getProgressBar('Masters', masterStatus, totalMasters)}
-              {this.getProgressBar('Agents', agentStatus, totalAgents)}
+              {
+                this.getProgressBar(
+                  'Masters',
+                  PreFlightStore.isMasterCompleted(),
+                  masterStatus,
+                  totalMasters
+                )
+              }
+              {
+                this.getProgressBar(
+                  'Agents',
+                  PreFlightStore.isAgentCompleted(),
+                  agentStatus,
+                  totalAgents
+                )
+              }
             </SectionBody>
           </PageSection>
           <PageSection>

@@ -80,8 +80,8 @@ class Deploy extends mixin(StoreMixin) {
     return 'Deploying DCOS...';
   }
 
-  getProgressBarDetail(status, total) {
-    if (status.completed) {
+  getProgressBarDetail(status, completed, total) {
+    if (completed) {
       return '';
     }
 
@@ -101,8 +101,7 @@ class Deploy extends mixin(StoreMixin) {
     return `Deploying to ${type}`;
   }
 
-  getProgressBar(type, status, totalOfType) {
-    let completed = status.completed;
+  getProgressBar(type, completed, status, totalOfType) {
     let progress = ((status.totalStarted / totalOfType) * 100) || 0;
     let state = 'ongoing';
 
@@ -114,8 +113,8 @@ class Deploy extends mixin(StoreMixin) {
 
     return (
       <ProgressBar
-        detail={this.getProgressBarDetail(status, totalOfType)}
-        label={this.getProgressBarLabel(type, status.completed, status.errors)}
+        detail={this.getProgressBarDetail(status, completed, totalOfType)}
+        label={this.getProgressBarLabel(type, completed, status.errors)}
         progress={progress} state={state} />
     );
   }
@@ -124,7 +123,7 @@ class Deploy extends mixin(StoreMixin) {
     let masterStatus = DeployStore.get('masters');
     let agentStatus = DeployStore.get('agents');
 
-    let completed = masterStatus.completed && agentStatus.completed;
+    let completed = DeployStore.isCompleted();
     let failed = masterStatus.errors > 0;
     let totalErrors = masterStatus.errors + agentStatus.errors;
     let totalAgents = agentStatus.totalAgents;
@@ -146,8 +145,22 @@ class Deploy extends mixin(StoreMixin) {
               </SectionHeaderSecondary>
             </SectionHeader>
             <SectionBody>
-              {this.getProgressBar('Masters', masterStatus, totalMasters)}
-              {this.getProgressBar('Agents', agentStatus, totalAgents)}
+              {
+                this.getProgressBar(
+                  'Masters',
+                  DeployStore.isMasterCompleted(),
+                  masterStatus,
+                  totalMasters
+                )
+              }
+              {
+                this.getProgressBar(
+                  'Agents',
+                  DeployStore.isAgentCompleted(),
+                  agentStatus,
+                  totalAgents
+                )
+              }
             </SectionBody>
           </PageSection>
           <PageSection>

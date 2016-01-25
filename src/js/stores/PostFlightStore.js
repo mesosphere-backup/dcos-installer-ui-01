@@ -3,6 +3,7 @@ import {GetSetMixin, Store} from 'mesosphere-shared-reactjs';
 import ActionTypes from '../constants/ActionTypes';
 import AppDispatcher from '../events/AppDispatcher';
 import EventTypes from '../constants/EventTypes';
+import getActionMixin from '../mixins/getActionMixin';
 import ProcessStageUtil from '../utils/ProcessStageUtil';
 import StageActions from '../events/StageActions';
 
@@ -24,20 +25,22 @@ function stopPolling() {
 let PostFlightStore = Store.createStore({
   storeID: 'postFlight',
 
-  mixins: [GetSetMixin],
+  mixins: [GetSetMixin, getActionMixin('postflight')],
 
   init: function () {
     let initialState = {
       agents: {
+        completed: true,
         errors: 0,
         totalStarted: 0,
-        completed: false
+        totalAgents: 0
       },
       errorDetails: [],
       masters: {
+        completed: true,
         errors: 0,
         totalStarted: 0,
-        completed: false
+        totalMasters: 0
       }
     };
     this.set(initialState);
@@ -67,7 +70,8 @@ let PostFlightStore = Store.createStore({
       return false;
     }
 
-    return data.agents.completed && data.masters.completed;
+    return data.agents.completed && data.masters.completed
+      && (data.agents.totalAgents > 0 || data.masters.totalMasters > 0);
   },
 
   processUpdateError: function () {
