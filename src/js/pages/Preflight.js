@@ -54,7 +54,7 @@ class Preflight extends mixin(StoreMixin) {
 
   handleRetryClick() {
     PreFlightStore.beginStage();
-    PreFlightStore.init.bind(PreFlightStore)
+    PreFlightStore.init();
   }
 
   getHeaderIcon(completed, failed, totalErrors) {

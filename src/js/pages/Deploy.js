@@ -54,7 +54,7 @@ class Deploy extends mixin(StoreMixin) {
 
   handleRetryClick() {
     DeployStore.beginStage();
-    DeployStore.init.bind(DeployStore)
+    DeployStore.init();
   }
 
   getHeaderIcon(completed, failed, totalErrors) {
