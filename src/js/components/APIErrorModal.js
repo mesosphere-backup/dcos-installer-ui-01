@@ -6,6 +6,7 @@ import React from 'react';
 import {StoreMixin} from 'mesosphere-shared-reactjs';
 
 import IconDownload from './icons/IconDownload';
+import StoreMap from '../constants/StoreMap';
 
 const METHODS_TO_BIND = [
   'handleDownloadLogs'
@@ -23,7 +24,7 @@ class APIErrorModal extends mixin(StoreMixin) {
   }
 
   handleDownloadLogs() {
-    // Handle the download of logs here.
+    StoreMap[this.props.step].fetchLogs(this.props.step);
   }
 
   getFooter() {

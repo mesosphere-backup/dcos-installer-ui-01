@@ -10,6 +10,7 @@ import SectionHeader from '../components/SectionHeader';
 import SectionHeaderIcon from '../components/SectionHeaderIcon';
 import SectionHeaderPrimary from '../components/SectionHeaderPrimary';
 import SectionFooter from '../components/SectionFooter';
+import StageLinks from '../components/StageLinks';
 
 module.exports = class Success extends React.Component {
   componentDidMount() {
@@ -40,7 +41,12 @@ module.exports = class Success extends React.Component {
               Some content...
             </SectionBody>
             <SectionFooter>
-              Actions
+              <StageLinks
+                completed={true}
+                disabledDisplay={false}
+                failed={false}
+                stage="postflight"
+                totalErrors={0} />
             </SectionFooter>
           </PageSection>
         </PageContent>
