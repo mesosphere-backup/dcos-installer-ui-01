@@ -3,6 +3,7 @@ import React from 'react';
 
 import IconDownload from './icons/IconDownload';
 import IconEdit from './icons/IconEdit';
+import ProcessStageUtil from '../utils/ProcessStageUtil';
 import StageActions from '../events/StageActions';
 
 const METHODS_TO_BIND = ['handleDownloadClick', 'handleEditSetupClick'];
@@ -45,7 +46,9 @@ class StageLinks extends React.Component {
 
     return (
       <a className={classes}
+        href={ProcessStageUtil.getLogsURL()}
         key="download"
+        target="_blank"
         onClick={this.handleDownloadClick}>
         <IconDownload />Download Logs
       </a>

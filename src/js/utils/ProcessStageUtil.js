@@ -1,3 +1,4 @@
+import Config from '../config/Config';
 import StringUtil from './StringUtil';
 
 function processDeployHostState(hostState, host, role, state) {
@@ -98,6 +99,10 @@ const ProcessStageUtil = {
     });
 
     return state;
+  },
+
+  getLogsURL() {
+    return `${Config.rootUrl}${Config.apiPrefix}logs`;
   }
 };
 

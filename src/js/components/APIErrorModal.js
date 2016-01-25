@@ -6,6 +6,7 @@ import React from 'react';
 import {StoreMixin} from 'mesosphere-shared-reactjs';
 
 import IconDownload from './icons/IconDownload';
+import ProcessStageUtil from '../utils/ProcessStageUtil';
 import StoreMap from '../constants/StoreMap';
 
 const METHODS_TO_BIND = [
@@ -30,8 +31,10 @@ class APIErrorModal extends mixin(StoreMixin) {
   getFooter() {
     return (
       <div className="text-align-center">
-        <button
+        <a
           className="button button-stroke button-rounded button-large"
+          href={ProcessStageUtil.getLogsURL()}
+          target="_blank"
           onClick={this.handleDownloadLogs} >
           <ul className="list-inline">
             <li>
@@ -41,7 +44,7 @@ class APIErrorModal extends mixin(StoreMixin) {
               Download Logs
             </li>
           </ul>
-        </button>
+        </a>
       </div>
     );
   }
