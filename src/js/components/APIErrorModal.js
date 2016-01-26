@@ -7,6 +7,7 @@ import {StoreMixin} from 'mesosphere-shared-reactjs';
 
 import IconDownload from './icons/IconDownload';
 import ProcessStageUtil from '../utils/ProcessStageUtil';
+import {removeANSI} from '../utils/StringUtil';
 import StoreMap from '../constants/StoreMap';
 
 const METHODS_TO_BIND = [
@@ -56,7 +57,7 @@ class APIErrorModal extends mixin(StoreMixin) {
       }
 
       return (
-        <p key={i}>{line}</p>
+        <p key={i}>{removeANSI(line)}</p>
       );
     })
   }
