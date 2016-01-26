@@ -6,9 +6,9 @@ class FormLabel extends React.Component {
     let classes = classnames(this.props.className, this.props.layoutClassName);
 
     return (
-      <label className={classes}>
+      <span className={classes}>
         {this.props.children}
-      </label>
+      </span>
     );
   }
 }
