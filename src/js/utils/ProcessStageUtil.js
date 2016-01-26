@@ -35,7 +35,7 @@ function processFlightHostState(hostState, host, role, state) {
 
   if (hostStatus === 'failed') {
     stateType.errors += 1;
-    var errors = getErrors(hostStatus.commands, host);
+    var errors = getErrors(hostState.commands, host);
     state.errorDetails.push({host, message: errors});
   }
 
