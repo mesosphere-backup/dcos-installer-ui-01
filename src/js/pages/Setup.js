@@ -59,6 +59,7 @@ class Setup extends mixin(StoreMixin) {
         zk_exhibitor_hosts: null,
         zk_exhibitor_port: null
       },
+      localValidationErrors: {},
       passwordFieldType: 'password'
     };
 
@@ -179,12 +180,15 @@ class Setup extends mixin(StoreMixin) {
   getErrors(key) {
     let error = null;
     let errors = SetupStore.get('errors');
+    let localValidationErrors = this.state.localValidationErrors;
 
-    if (errors == null) {
+    if (errors == null && Object.keys(localValidationErrors).length === 0) {
       return null;
     }
 
-    if (errors[key]) {
+    if (localValidationErrors[key]) {
+      error = localValidationErrors[key];
+    } else if (errors[key]) {
       error = errors[key];
     }
 
@@ -209,14 +213,14 @@ class Setup extends mixin(StoreMixin) {
                   'applications.'} width={200} wrapText={true} />
               </FormLabelContent>
               <FormLabelContent position="right">
-                <Upload displayText="Upload .csv"
+                <Upload displayText="Upload .csv" extensions=".csv"
                   onUploadFinish={this.handleUploadSuccess('master_list')} />
               </FormLabelContent>
             </FormLabel>
           ),
           showError: this.getErrors('master_list'),
           validationErrorText: this.getErrors('master_list'),
-          validation: this.getValidationFn('master_list'),
+          validation: this.getValidationFn('master_list', 'list'),
           value: this.state.formData.master_list
         },
         {
@@ -232,14 +236,14 @@ class Setup extends mixin(StoreMixin) {
                   width={200} wrapText={true} />
               </FormLabelContent>
               <FormLabelContent position="right">
-                <Upload displayText="Upload .csv"
+                <Upload displayText="Upload .csv" extensions=".csv"
                   onUploadFinish={this.handleUploadSuccess('agent_list')} />
               </FormLabelContent>
             </FormLabel>
           ),
           showError: this.getErrors('agent_list'),
           validationErrorText: this.getErrors('agent_list'),
-          validation: this.getValidationFn('agent_list'),
+          validation: this.getValidationFn('agent_list', 'list'),
           value: this.state.formData.agent_list
         }
       ],
@@ -478,13 +482,36 @@ class Setup extends mixin(StoreMixin) {
     return _.extend({}, this.state.formData, newFormData);
   }
 
-  getValidationFn(key) {
-    return function () {
+  getValidationFn(key, type) {
+    return (fieldValue) => {
       let errors = SetupStore.get('errors');
+
+      if (type === 'list' && fieldValue != null && fieldValue !== '') {
+        // Remove whitespace, commas, periods, and digits.
+        let unwantedChars = fieldValue.replace(/\s|\.|,|\d/g, '');
+
+        if (unwantedChars.length) {
+          this.setState({
+            localValidationErrors: {
+              [key]: 'Invalid IP address list.'
+            }
+          });
+
+          return false;
+        } else {
+          let localValidationErrors = this.state.localValidationErrors;
+
+          if (localValidationErrors[key] != null) {
+            delete localValidationErrors[key];
+            this.setState({localValidationErrors});
+          }
+        }
+      }
 
       if (errors[key]) {
         return false;
       }
+
       return true;
     }
   }
@@ -496,11 +523,12 @@ class Setup extends mixin(StoreMixin) {
       return;
     }
 
-    if (eventType === 'blur'
-      || (eventType === 'change' && this.isLastFormField(fieldName))) {
+    if (this.state.localValidationErrors[fieldName] == null
+      && (eventType === 'blur' || (eventType === 'change'
+      && this.isLastFormField(fieldName)))) {
       this.submitFormData({[fieldName]: fieldValue});
     }
-
+    
     if (eventType === 'blur') {
       // Submit form data immediately on blur events.
       this.submitFormData.flush();
@@ -524,6 +552,14 @@ class Setup extends mixin(StoreMixin) {
   handleUploadSuccess(destination) {
     return (fileContents) => {
       let formData = this.getNewFormData({[destination]: fileContents});
+      let validateInput = null;
+
+      if (destination === 'master_list' || destination === 'agent_list') {
+        validateInput = this.getValidationFn(destination, 'list');
+        validateInput(fileContents);
+      }
+
+      this.submitFormData({[destination]: fileContents});
       this.setState({formData});
     }
   }

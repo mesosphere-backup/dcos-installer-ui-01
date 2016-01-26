@@ -57,6 +57,7 @@ class Upload extends React.Component {
           {displayText}
         </a>
         <input
+          accept={this.props.extensions}
           ref="uploadInput"
           className="hidden"
           type="file"
@@ -73,6 +74,7 @@ Upload.defaultProps = {
 
 Upload.propTypes = {
   displayText: React.PropTypes.string,
+  extensions: React.PropTypes.string,
   onUploadFinish: React.PropTypes.func
 };
 
