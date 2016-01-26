@@ -1,10 +1,14 @@
+import classnames from 'classnames';
 import React from 'react';
 
-module.exports = class IconCircleCheckmark extends React.Component {
+class IconCircleCheckmark extends React.Component {
   render() {
+    let classes = classnames('icon icon-circle-checkmark',
+      `icon-${this.props.size}`);
+
     return (
       <svg
-        className="icon icon-circle-checkmark"
+        className={classes}
         height="64px"
         viewBox="0 0 64 64"
         width="64px"
@@ -15,3 +19,13 @@ module.exports = class IconCircleCheckmark extends React.Component {
     );
   }
 }
+
+IconCircleCheckmark.defaultProps = {
+  size: 'small'
+};
+
+IconCircleCheckmark.propTypes = {
+  size: React.PropTypes.oneOf(['small', 'medium', 'large'])
+};
+
+module.exports = IconCircleCheckmark;
