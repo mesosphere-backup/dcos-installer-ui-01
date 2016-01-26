@@ -552,11 +552,9 @@ class Setup extends mixin(StoreMixin) {
   handleUploadSuccess(destination) {
     return (fileContents) => {
       let formData = this.getNewFormData({[destination]: fileContents});
-      let validateInput = null;
 
       if (destination === 'master_list' || destination === 'agent_list') {
-        validateInput = this.getValidationFn(destination, 'list');
-        validateInput(fileContents);
+        this.getValidationFn(destination, 'list')(fileContents);
       }
 
       this.submitFormData({[destination]: fileContents});
