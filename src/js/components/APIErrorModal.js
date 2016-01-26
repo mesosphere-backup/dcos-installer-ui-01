@@ -56,7 +56,7 @@ class APIErrorModal extends mixin(StoreMixin) {
       }
 
       return (
-        <p key={i}>line</p>
+        <p key={i}>{line}</p>
       );
     })
   }
