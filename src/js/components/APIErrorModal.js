@@ -49,12 +49,24 @@ class APIErrorModal extends mixin(StoreMixin) {
     );
   }
 
+  getMessage(message) {
+    return message.split('\n').map(function (line, i) {
+      if (line === '') {
+        return null;
+      }
+
+      return (
+        <p key={i}>line</p>
+      );
+    })
+  }
+
   getContent() {
-    let errors = this.props.errors.map(function (error, i) {
+    let errors = this.props.errors.map((error, i) => {
       return (
         <div key={i} className="error-message-container">
           <p>
-            {error.message}
+            {this.getMessage(error.message)}
           </p>
           <p className="emphasize flush-bottom">
             {error.host}

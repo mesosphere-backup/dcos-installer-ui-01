@@ -16,10 +16,16 @@ function getStdout(stdout) {
 function getErrors(commands) {
   var errors = commands.reduce(function (total, cmd) {
     let stdout = getStdout(cmd.stdout);
-    let output = stdout.concat(stderr);
+    let output = stdout.concat(cmd.stderr);
     return total.concat(output.filter(function (line) { return line !== ''}));
   }, []);
-  return errors.join('\n');
+
+  var errorMap = {};
+
+  errors.forEach(function (line) {
+    errorMap[line] = true;
+  });
+  return Object.keys(errorMap).join('\n');
 }
 
 function processDeployHostState(hostState, host, role, state) {
