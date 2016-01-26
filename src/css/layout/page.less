@@ -28,10 +28,17 @@
 }
 
 .page-scroll-wrapper {
+  height: 100%;
+  overflow: auto;
+  width: 100%;
 
   &.has-navigation-bar {
     height: ~"calc(100% - @{fixed-navigation-bar-height})";
     margin-top: @fixed-navigation-bar-height;
+  }
+
+  .gm-scroll-view {
+    height: 100%;
   }
 }
 
