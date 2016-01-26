@@ -1,6 +1,13 @@
 import Config from '../config/Config';
 import StringUtil from './StringUtil';
 
+function getErrors(commands) {
+  var errors = commands.reduce(function (total, cmd) {
+    return total.concat(cmd.stderr.filter(function (line) { return line !== ''}));
+  }, []);
+  return errors.join('\n');
+}
+
 function processDeployHostState(hostState, host, role, state) {
   let stateType = state[`${role}s`];
   let hostStatus = hostState.host_status;
@@ -12,13 +19,9 @@ function processDeployHostState(hostState, host, role, state) {
 
   if (hostStatus === 'failed') {
     stateType.errors += 1;
-    var errors = hostState.commands.reduce(function (total, cmd) {
-      return total.concat(cmd.stderr);
-    }, []);
-    errors = errors.map(function (error) {
-      return {host, message: error};
-    });
-    state.errorDetails.push({host, errors});
+
+    var errors = getErrors(hostState.commands, host);
+    state.errorDetails.push({host, message: errors});
   }
 }
 
@@ -32,13 +35,8 @@ function processFlightHostState(hostState, host, role, state) {
 
   if (hostStatus === 'failed') {
     stateType.errors += 1;
-    var errors = hostState.commands.reduce(function (total, cmd) {
-      return total.concat(cmd.stdout.filter(function (line) { return line.includes('FAIL')}));
-    }, []);
-    errors = errors.map(function (error) {
-      return {host, message: error};
-    });
-    state.errorDetails.push({host, errors});
+    var errors = getErrors(hostStatus.commands, host);
+    state.errorDetails.push({host, message: errors});
   }
 
   if (hostStatus === 'running') {
