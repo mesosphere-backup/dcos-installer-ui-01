@@ -287,6 +287,10 @@ class Setup extends mixin(StoreMixin) {
               <Tooltip content={'The SSH key must be the same on all target ' +
                 'hosts.'} width={200} wrapText={true} />
             </FormLabelContent>
+            <FormLabelContent position="right">
+              <Upload displayText="Upload"
+                onUploadFinish={this.handleUploadSuccess('ssh_key')} />
+            </FormLabelContent>
           </FormLabel>
         ),
         showError: this.getErrors('ssh_key'),
@@ -439,6 +443,10 @@ class Setup extends mixin(StoreMixin) {
             <FormLabel>
               <FormLabelContent>
                 IP Detect Script
+              </FormLabelContent>
+              <FormLabelContent position="right">
+                <Upload displayText="Upload"
+                  onUploadFinish={this.handleUploadSuccess('ip_detect_script')} />
               </FormLabelContent>
             </FormLabel>
           ),
