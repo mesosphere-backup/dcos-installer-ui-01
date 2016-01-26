@@ -53,7 +53,7 @@ class Preflight extends mixin(StoreMixin) {
   }
 
   handleRetryClick() {
-    PreFlightStore.beginStage();
+    PreFlightStore.beginStage({retry: true});
     PreFlightStore.init();
   }
 

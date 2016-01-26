@@ -24,11 +24,13 @@ const StageActions = {
     });
   },
 
-  beginStage: function (stage) {
+  beginStage: function (stage, data) {
+    data = data || {};
     let capitalizedStage = stage.toUpperCase();
     RequestUtil.json({
       url: `${Config.rootUrl}${Config.apiPrefix}action/${stage}`,
       method: 'post',
+      data,
       success: function () {
         AppDispatcher.handleServerAction({
           type: ActionTypes[`${capitalizedStage}_BEGIN_SUCCESS`]
