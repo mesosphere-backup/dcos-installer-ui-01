@@ -443,6 +443,17 @@ class Setup extends mixin(StoreMixin) {
             <FormLabel>
               <FormLabelContent>
                 IP Detect Script
+                <Tooltip content={
+                    <span>
+                      Enter or upload a script that runs on each node in the
+                      cluster and outputs the node’s local IP address. <a
+                        href="https://docs.mesosphere.com/getting-started/installing/installing-enterprise-edition/#scrollNav-3"
+                        target="_blank">
+                        Learn more
+                      </a>.
+                    </span>
+                  }
+                  width={300} wrapText={true} />
               </FormLabelContent>
               <FormLabelContent position="right">
                 <Upload displayText="Upload"
