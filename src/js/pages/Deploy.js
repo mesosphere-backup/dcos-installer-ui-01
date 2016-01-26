@@ -53,7 +53,7 @@ class Deploy extends mixin(StoreMixin) {
   }
 
   handleRetryClick() {
-    DeployStore.beginStage();
+    DeployStore.beginStage({retry: true});
     DeployStore.init();
   }
 

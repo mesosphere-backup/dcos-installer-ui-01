@@ -48,7 +48,7 @@ class Postflight extends mixin(StoreMixin) {
   }
 
   handleRetryClick() {
-    PostFlightStore.beginStage();
+    PostFlightStore.beginStage({retry: true});
     PostFlightStore.init();
   }
 
