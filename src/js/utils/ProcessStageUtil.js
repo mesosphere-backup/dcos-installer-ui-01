@@ -1,9 +1,23 @@
 import Config from '../config/Config';
 import StringUtil from './StringUtil';
 
+function getStdout(stdout) {
+  let failedLines = stdout.filter(function (line) {
+    return line.indexOf('FAIL') > -1;
+  });
+
+  if (failedLines.length === 0) {
+    return stdout;
+  }
+
+  return failedLines;
+}
+
 function getErrors(commands) {
   var errors = commands.reduce(function (total, cmd) {
-    return total.concat(cmd.stderr.filter(function (line) { return line !== ''}));
+    let stdout = getStdout(cmd.stdout);
+    let output = stdout.concat(stderr);
+    return total.concat(output.filter(function (line) { return line !== ''}));
   }, []);
   return errors.join('\n');
 }
