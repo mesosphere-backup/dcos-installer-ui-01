@@ -7,20 +7,17 @@ import React from 'react';
 import IconArrow from '../components/icons/IconArrow';
 import IconSpinner from '../components/icons/IconSpinner';
 import IconCircleCheckmark from '../components/icons/IconCircleCheckmark';
-import IconDownload from '../components/icons/IconDownload';
 import InstallerStore from '../stores/InstallerStore';
 import PostFlightStore from '../stores/PostFlightStore';
 import Page from '../components/Page';
 import PageContent from '../components/PageContent';
 import PageSection from '../components/PageSection';
-import SectionBody from '../components/SectionBody';
 import SectionHeader from '../components/SectionHeader';
 import SectionHeaderIcon from '../components/SectionHeaderIcon';
 import SectionHeaderPrimary from '../components/SectionHeaderPrimary';
 import SectionHeaderSecondary from '../components/SectionHeaderSecondary';
 import SectionFooter from '../components/SectionFooter';
 import StageLinks from '../components/StageLinks';
-import StageActionButtons from '../components/StageActionButtons';
 
 module.exports = class Success extends mixin(StoreMixin) {
   constructor() {
@@ -58,11 +55,16 @@ module.exports = class Success extends mixin(StoreMixin) {
   }
 
   render() {
-    // let totalMasters = PostFlightStore.get('masters').totalMasters;
-    // let totalAgents = PostFlightStore.get('agents').totalAgents;
-    let totalMasters = 382;
+    let totalMasters = 0;
     let totalAgents = 0;
-    let durationMinutes = 22;
+
+    let masterStatus = PostFlightStore.get('masters');
+    let agentStatus = PostFlightStore.get('agents');
+
+    if (masterStatus != null && agentStatus != null) {
+      totalMasters = masterStatus.totalMasters;
+      totalAgents = agentStatus.totalAgents;
+    }
 
     let totalNodes = totalMasters + totalAgents;
 
@@ -75,12 +77,11 @@ module.exports = class Success extends mixin(StoreMixin) {
                 <IconCircleCheckmark size="large" />
               </SectionHeaderIcon>
               <SectionHeaderPrimary>
-                Successfully Installed on <span className="success-node-count">{totalMasters}</span> Nodes
+                Successfully Installed on <span className="success-node-count">{totalNodes}</span> Nodes
               </SectionHeaderPrimary>
               <SectionHeaderSecondary>
                 Congratulations! The DCOS was successfully installed
-                on {totalNodes} nodes in {durationMinutes} minutes and is ready
-                to be launched.
+                on {totalNodes} nodes and is ready to be launched.
               </SectionHeaderSecondary>
             </SectionHeader>
           </PageSection>
