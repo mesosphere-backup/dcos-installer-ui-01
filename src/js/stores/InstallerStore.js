@@ -115,6 +115,18 @@ let InstallerStore = Store.createStore({
           });
         }
         break;
+      case ActionTypes.PREFLIGHT_BEGIN_SUCCESS:
+        AppDispatcher.waitFor([PreFlightStore.dispatcherIndex]);
+        InstallerStore.processCurrentStage('pre-flight');
+        break;
+      case ActionTypes.POSTFLIGHT_BEGIN_SUCCESS:
+        AppDispatcher.waitFor([PostFlightStore.dispatcherIndex]);
+        InstallerStore.processCurrentStage('post-flight');
+        break;
+      case ActionTypes.DEPLOY_BEGIN_SUCCESS:
+        AppDispatcher.waitFor([DeployStore.dispatcherIndex]);
+        InstallerStore.processCurrentStage('deploy');
+        break;
     }
 
     return true;

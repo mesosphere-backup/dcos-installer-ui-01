@@ -44,27 +44,37 @@ class EnforceStage extends mixin(StoreMixin) {
         ]
       }
     ];
+
+    this.firstMount = true;
+    this.currentStageChanges = 0;
   }
 
-  componentWillMount() {
-    super.componentWillMount();
+  componentDidMount() {
+    super.componentDidMount();
     InstallerStore.init();
     SetupStore.init();
   }
 
-  // Uncomment this to force user to be on current stage.
-  // shouldComponentUpdate(nextProps) {
-  //   let nextStage = nextProps.routes[nextProps.routes.length - 1].path;
-  //   let sameStage = nextStage === this.state.currentStage;
+  shouldComponentUpdate(nextProps) {
+    if (this.firstMount) {
+      this.firstMount = false;
+      this.context.router.push('/');
+    }
 
-  //   if (!sameStage) {
-  //     global.window.location.hash = this.state.currentStage;
-  //   }
+    if (this.currentStageChanges >= 2) {
+      let nextStage = nextProps.routes[nextProps.routes.length - 1].path;
+      let currentStage = InstallerStore.get('currentStage') || null;
+      if (nextStage !== currentStage) {
+        this.context.router.push(`/${currentStage}`);
+        return false;
+      }
+    }
 
-  //   return sameStage;
-  // }
+    return true;
+  }
 
   onInstallerStoreCurrentStageChange(currentStage) {
+    this.currentStageChanges += 1;
     this.setState({currentStage});
   }
 
@@ -89,6 +99,14 @@ class EnforceStage extends mixin(StoreMixin) {
 
   onSetupStoreCurrentConfigChangeSuccess() {
     this.setState({receivedCurrentConfig: true});
+  }
+
+  isLoading() {
+    let state = this.state;
+
+    return state.currentStage == null || !state.receivedTotalAgents
+      || !state.receivedTotalMasters || !state.receivedCurrentConfig
+      || !state.receivedCurrentConfigStatus || !state.receivedConfigType;
   }
 
   getAdvancedConfigurationWarning() {
@@ -119,15 +137,17 @@ class EnforceStage extends mixin(StoreMixin) {
     // }
 
     // let state = this.state;
-    // if (state.currentStage == null || !state.receivedTotalAgents
-    //   || !state.receivedTotalMasters || !state.receivedCurrentConfig
-    //   || !state.receivedCurrentConfigStatus || !state.receivedConfigType) {
+    // if (this.isLoading()) {
     //   return this.getLoadingScreen();
     // }
 
     return this.props.children;
   }
 }
+
+EnforceStage.contextTypes = {
+  router: React.PropTypes.object
+};
 
 EnforceStage.propTypes = {
   children: React.PropTypes.node

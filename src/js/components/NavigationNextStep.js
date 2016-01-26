@@ -29,13 +29,11 @@ module.exports = class NavigationNextStep extends mixin(StoreMixin) {
   }
 
   render() {
-    let {
-      enabled,
-      label,
-      link,
-      clickHandler,
-      visible
-    } = InstallerStore.get('nextStep');
+    let nextStep = InstallerStore.get('nextStep');
+    if (nextStep == null) {
+      return null;
+    }
+    let {enabled, label, link, clickHandler, visible} = nextStep;
 
     if (!visible) {
       return null;
