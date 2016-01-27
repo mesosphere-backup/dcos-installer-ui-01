@@ -47,6 +47,12 @@ function eslintFn () {
 };
 gulp.task('eslint', eslintFn);
 
+gulp.task('fonts', function () {
+  console.log(config.files.srcFonts);
+  return gulp.src([config.files.srcFonts])
+    .pipe(gulp.dest(config.dirs.distFonts));
+});
+
 gulp.task('images', function () {
   return gulp.src([
       config.dirs.srcImg + '/**/*.*',
@@ -137,7 +143,7 @@ gulp.task('webpack', ['eslint'], function () {
   });
 });
 
-gulp.task('default', ['webpack', 'eslint', 'replace-js-strings', 'less', 'images', 'html']);
+gulp.task('default', ['webpack', 'eslint', 'replace-js-strings', 'less', 'fonts', 'images', 'html']);
 
 gulp.task('dist', ['default', 'minify-css', 'minify-js']);
 
