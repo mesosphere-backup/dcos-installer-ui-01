@@ -1,0 +1,93 @@
+@panel-background-color: color-lighten(@neutral, -20);
+
+.panel {
+  background-color: @panel-background-color;
+  display: flex;
+  height: 300px;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 0;
+  max-height: 100%;
+
+  .panel-heading {
+    padding: @base-spacing-unit / 2;
+    line-height: @heading-h3-text-line-height;
+
+    &.panel-heading-large {
+      padding: @base-spacing-unit @base-spacing-unit 0;
+      border: 0;
+    }
+  }
+
+  .panel-content {
+    padding: @base-spacing-unit @base-spacing-unit * 1.5;
+  }
+}
+
+& when (@screen-mini-enabled) {
+
+  @media (min-width: @screen-mini) {
+
+    .panel {
+
+      .panel-heading {
+        padding: @base-spacing-unit-screen-mini * 0.5 @base-spacing-unit-screen-mini;
+      }
+
+      .panel-content {
+        padding: @base-spacing-unit-screen-mini @base-spacing-unit-screen-mini * 1.5;
+      }
+    }
+  }
+}
+
+& when (@screen-small-enabled) {
+
+  @media (min-width: @screen-small) {
+
+    .panel {
+
+      .panel-heading {
+        padding: @base-spacing-unit-screen-small * 0.25 @base-spacing-unit-screen-small * 0.5;
+      }
+
+      .panel-content {
+        padding: @base-spacing-unit-screen-small @base-spacing-unit-screen-small * 1.5;
+      }
+    }
+  }
+}
+
+& when (@screen-medium-enabled) {
+
+  @media (min-width: @screen-medium) {
+
+    .panel {
+
+      .panel-heading {
+        padding: @base-spacing-unit-screen-medium * 0.25 @base-spacing-unit-screen-medium * 0.5;
+      }
+
+      .panel-content {
+        padding: @base-spacing-unit-screen-medium * 0.5 @base-spacing-unit-screen-medium;
+      }
+    }
+  }
+}
+
+& when (@screen-large-enabled) {
+
+  @media (min-width: @screen-large) {
+
+    .panel {
+
+      .panel-heading {
+        padding: @base-spacing-unit-screen-large * 0.25 @base-spacing-unit-screen-large * 0.5;
+      }
+
+      .panel-content {
+        padding: @base-spacing-unit-screen-large * 0.5 @base-spacing-unit-screen-large;
+      }
+    }
+  }
+}
