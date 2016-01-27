@@ -44,6 +44,7 @@ const StageActions = {
 
     if (data && data.retry && Object.keys(data).length === 1) {
       options.data = 'retry=true';
+      options.contentType = 'application/x-www-form-urlencoded';
     }
 
     RequestUtil.json(options);
