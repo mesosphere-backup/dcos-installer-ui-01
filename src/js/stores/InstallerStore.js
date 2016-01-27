@@ -93,7 +93,7 @@ let InstallerStore = Store.createStore({
         break;
       case ActionTypes.PREFLIGHT_UPDATE_SUCCESS:
         AppDispatcher.waitFor([PreFlightStore.dispatcherIndex]);
-        if (PreFlightStore.isCompleted()) {
+        if (!PreFlightStore.isFailed()) {
           InstallerStore.setNextStep({
             enabled: true
           });
@@ -101,7 +101,7 @@ let InstallerStore = Store.createStore({
         break;
       case ActionTypes.POSTFLIGHT_UPDATE_SUCCESS:
         AppDispatcher.waitFor([PostFlightStore.dispatcherIndex]);
-        if (PostFlightStore.isCompleted()) {
+        if (!PostFlightStore.isFailed()) {
           InstallerStore.setNextStep({
             enabled: true
           });
@@ -109,7 +109,7 @@ let InstallerStore = Store.createStore({
         break;
       case ActionTypes.DEPLOY_UPDATE_SUCCESS:
         AppDispatcher.waitFor([DeployStore.dispatcherIndex]);
-        if (DeployStore.isCompleted()) {
+        if (!DeployStore.isFailed()) {
           InstallerStore.setNextStep({
             enabled: true
           });
