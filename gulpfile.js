@@ -48,7 +48,6 @@ function eslintFn () {
 gulp.task('eslint', eslintFn);
 
 gulp.task('fonts', function () {
-  console.log(config.files.srcFonts);
   return gulp.src([config.files.srcFonts])
     .pipe(gulp.dest(config.dirs.distFonts));
 });
