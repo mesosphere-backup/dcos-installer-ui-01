@@ -3,8 +3,9 @@ import React from 'react';
 
 class IconCircleCheckmark extends React.Component {
   render() {
-    let classes = classnames('icon icon-circle-checkmark',
-      `icon-${this.props.size}`);
+    let classes = classnames('icon icon-circle-checkmark', {
+      [`icon-${this.props.size}`]: this.props.size
+    });
 
     return (
       <svg
@@ -19,10 +20,6 @@ class IconCircleCheckmark extends React.Component {
     );
   }
 }
-
-IconCircleCheckmark.defaultProps = {
-  size: 'small'
-};
 
 IconCircleCheckmark.propTypes = {
   size: React.PropTypes.oneOf(['small', 'medium', 'large'])
