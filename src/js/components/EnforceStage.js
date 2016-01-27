@@ -3,7 +3,7 @@ import React from 'react';
 import {StoreMixin} from 'mesosphere-shared-reactjs';
 
 import AlertPanel from './AlertPanel';
-import IconSpinner from './icons/IconSpinner';
+import IconLoadingIndicator from './icons/IconLoadingIndicator';
 import InstallerStore from '../stores/InstallerStore';
 import SetupStore from '../stores/SetupStore';
 
@@ -121,7 +121,7 @@ class EnforceStage extends mixin(StoreMixin) {
     return (
       <div className="spinner-wrapper flex-box flex-box-align-vertical-center
         flex-box-align-horizontal-center">
-        <IconSpinner />
+        <IconLoadingIndicator />
       </div>
     );
   }

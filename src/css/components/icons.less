@@ -4,7 +4,17 @@
   }
 
   100% {
-    transform: rotate(360deg);
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes icon-loading-indicator-pulse {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.5;
   }
 }
 
@@ -34,6 +44,10 @@
 
 .icon-error {
   fill: @red;
+}
+
+.icon-loading-indicator {
+  animation: icon-loading-indicator-pulse 1s linear 1.5s infinite alternate;
 }
 
 .icon-password-strength {
