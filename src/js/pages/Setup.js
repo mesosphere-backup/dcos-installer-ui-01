@@ -141,6 +141,7 @@ class Setup extends mixin(StoreMixin) {
   }
 
   onPreFlightStoreBeginError(data) {
+    this.refs.page.scrollToTop();
     this.setState({buttonText: 'Run Pre-Flight', errorAlert: data.errors});
   }
 
@@ -605,7 +606,7 @@ class Setup extends mixin(StoreMixin) {
 
   render() {
     return (
-      <Page hasNavigationBar={true} size="large" pageName="setup">
+      <Page hasNavigationBar={true} size="large" pageName="setup" ref="page">
         <PageContent>
           <PageSection>
             {this.getErrorAlert()}
