@@ -42,8 +42,8 @@ const StageActions = {
       }
     };
 
-    if (data && data.retry && Object.keys(data) === 1) {
-      options.data = 'retry=true';
+    if (data && data.retry && Object.keys(data).length === 1) {
+      options.url = `${options.url}?retry=true`;
     }
 
     RequestUtil.json(options);
