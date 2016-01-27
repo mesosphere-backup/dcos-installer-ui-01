@@ -30,6 +30,16 @@ function getActionMixin(stageID) {
       return this.isMasterCompleted() && this.isAgentCompleted();
     },
 
+    isFailed: function () {
+      let data = this.getSet_data || {};
+
+      if (Object.keys(data).length === 0) {
+        return false;
+      }
+
+      return data.masters.errors > 0;
+    },
+
     isMasterCompleted: function () {
       let data = this.getSet_data || {};
 

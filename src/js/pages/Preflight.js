@@ -130,7 +130,7 @@ class Preflight extends mixin(StoreMixin) {
     let agentStatus = PreFlightStore.get('agents');
 
     let completed = PreFlightStore.isCompleted();
-    let failed = masterStatus.errors > 0;
+    let failed = PreFlightStore.isFailed();
     let totalErrors = masterStatus.errors + agentStatus.errors;
     let totalMasters = masterStatus.totalMasters;
     let totalAgents = agentStatus.totalAgents;
