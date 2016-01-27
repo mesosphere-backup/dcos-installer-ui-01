@@ -1,5 +1,8 @@
 import React from 'react';
 
+import IconCloseSmall from './icons/IconCloseSmall';
+import IconWarningSmallInverse from './icons/IconWarningSmallInverse';
+
 const METHODS_TO_BIND = ['dismissError'];
 
 class ErrorAlert extends React.Component {
@@ -23,9 +26,9 @@ class ErrorAlert extends React.Component {
     if (this.state.isVisible) {
       return (
         <div className="error-alert">
-          <span className="icon icon-alert">!</span>
+          <IconWarningSmallInverse />
           {this.props.content}
-          <span className="icon icon-close" onClick={this.dismissError}>x</span>
+          <IconCloseSmall onClick={this.dismissError} />
         </div>
       );
     }
