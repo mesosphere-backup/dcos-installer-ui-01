@@ -180,6 +180,10 @@ class Setup extends mixin(StoreMixin) {
     let error = null;
     let errors = SetupStore.get('errors');
 
+    if (errors == null) {
+      return null;
+    }
+
     if (errors[key]) {
       error = errors[key];
     }

@@ -1,1 +1,1 @@
-module.exports = ['preflight', 'deploy', 'postflight'];
+module.exports = ['pre-flight', 'deploy', 'post-flight'];

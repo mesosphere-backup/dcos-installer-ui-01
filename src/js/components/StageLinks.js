@@ -3,6 +3,7 @@ import React from 'react';
 
 import IconDownload from './icons/IconDownload';
 import IconEdit from './icons/IconEdit';
+import InstallerStore from '../stores/InstallerStore';
 import ProcessStageUtil from '../utils/ProcessStageUtil';
 import StageActions from '../events/StageActions';
 
@@ -18,6 +19,7 @@ class StageLinks extends React.Component {
   }
 
   handleEditSetupClick() {
+    InstallerStore.processCurrentStage(null);
     this.context.router.push('/setup');
   }
 
