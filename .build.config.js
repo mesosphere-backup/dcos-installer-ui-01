@@ -9,6 +9,8 @@ var dirs = {
   distJS: distFolderAssets,
   srcCSS: srcFolder + '/css',
   distCSS: distFolderAssets,
+  srcFonts: srcFolder + '/fonts',
+  distFonts: distFolderAssets + '/fonts',
   srcImg: srcFolder + '/img',
   distImg: distFolderAssets + '/img',
   distHTML: distFolderHTML
@@ -19,6 +21,8 @@ var files = {
   distJS: dirs.distJS + '/index.js',
   srcCSS: dirs.srcCSS + '/index.less',
   distCSS: dirs.distCSS + '/index.css',
+  srcFonts: dirs.srcFonts + '/**/*.ttf',
+  distFonts: dirs.distFonts,
   srcHTML: dirs.src + '/index.html',
   distHTML: dirs.distHTML + '/index.html'
 };
