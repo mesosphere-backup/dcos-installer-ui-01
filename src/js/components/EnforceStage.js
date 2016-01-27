@@ -129,7 +129,7 @@ class EnforceStage extends mixin(StoreMixin) {
   getServerError() {
     return (
       <AlertPanel content="Please try again later."
-        heading="Cannot connect with the server." />
+        heading="Cannot Connect to Server" />
     );
   }
 
