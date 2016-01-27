@@ -53,6 +53,7 @@ class Postflight extends mixin(StoreMixin) {
   }
 
   goToSuccess() {
+    InstallerStore.processCurrentStage(null);
     this.context.router.push('/success');
   }
 
@@ -124,7 +125,9 @@ class Postflight extends mixin(StoreMixin) {
   }
 
   onPostflightStoreStateFinish() {
-    this.goToSuccess();
+    if (!PostFlightStore.isFailed()) {
+      this.goToSuccess();
+    }
   }
 
   render() {
