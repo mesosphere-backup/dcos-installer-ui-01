@@ -528,7 +528,7 @@ class Setup extends mixin(StoreMixin) {
       && this.isLastFormField(fieldName)))) {
       this.submitFormData({[fieldName]: fieldValue});
     }
-    
+
     if (eventType === 'blur') {
       // Submit form data immediately on blur events.
       this.submitFormData.flush();
@@ -552,7 +552,6 @@ class Setup extends mixin(StoreMixin) {
   handleUploadSuccess(destination) {
     return (fileContents) => {
       let formData = this.getNewFormData({[destination]: fileContents});
-
       if (destination === 'master_list' || destination === 'agent_list') {
         this.getValidationFn(destination, 'list')(fileContents);
       }
