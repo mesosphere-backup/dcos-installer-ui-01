@@ -183,6 +183,8 @@ class Postflight extends mixin(StoreMixin) {
                 onNextClick={this.goToSuccess.bind(this)}
                 onRetryClick={this.handleRetryClick.bind(this)}
                 totalErrors={totalErrors} />
+            </SectionFooter>
+            <SectionFooter>
               <StageLinks
                 completed={completed}
                 disableEditSetup={true}
