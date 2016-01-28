@@ -54,8 +54,8 @@ class Setup extends mixin(StoreMixin) {
         ssh_user: null,
         ssh_port: null,
         ssh_key: null,
-        username: null,
-        password: '',
+        superuser_username: null,
+        superuser_password: '',
         zk_exhibitor_hosts: null,
         zk_exhibitor_port: null
       },
@@ -319,7 +319,7 @@ class Setup extends mixin(StoreMixin) {
       [
         {
           fieldType: 'text',
-          name: 'username',
+          name: 'superuser_username',
           placeholder: 'For example, johnappleseed',
           showLabel: (
             <FormLabel>
@@ -330,27 +330,27 @@ class Setup extends mixin(StoreMixin) {
               </FormLabelContent>
             </FormLabel>
           ),
-          showError: this.getErrors('username'),
-          validationErrorText: this.getErrors('username'),
-          validation: this.getValidationFn('username'),
-          value: this.state.formData.username
+          showError: this.getErrors('superuser_username'),
+          validationErrorText: this.getErrors('superuser_username'),
+          validation: this.getValidationFn('superuser_username'),
+          value: this.state.formData.superuser_username
         },
         {
           fieldType: this.state.passwordFieldType,
-          name: 'password',
+          name: 'superuser_password',
           renderer: (inputField) => {
             return (
               <div className="password-strength-wrapper">
                 {inputField}
-                <PasswordStrengthMeter password={this.state.formData.password}/>
+                <PasswordStrengthMeter password={this.state.formData.superuser_password}/>
               </div>
             );
           },
           showLabel: 'Password',
-          showError: this.getErrors('password'),
-          validationErrorText: this.getErrors('password'),
-          validation: this.getValidationFn('password'),
-          value: this.state.formData.password
+          showError: this.getErrors('superuser_password'),
+          validationErrorText: this.getErrors('superuser_password'),
+          validation: this.getValidationFn('superuser_password'),
+          value: this.state.formData.superuser_password
         },
         {
           fieldType: 'checkbox',
