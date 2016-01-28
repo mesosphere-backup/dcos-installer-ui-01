@@ -165,6 +165,10 @@ class Setup extends mixin(StoreMixin) {
         displayedConfig.zk_exhibitor_hosts = zkExhibitorHosts;
         displayedConfig.zk_exhibitor_port = zkExhibitorPort;
       }
+
+      if (key === 'superuser_password') {
+        displayedConfig.superuser_password = '';
+      }
     });
 
     this.setState({formData: displayedConfig});
