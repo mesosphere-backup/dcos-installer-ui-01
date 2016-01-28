@@ -14,7 +14,6 @@ import PageContent from '../components/PageContent';
 import PageSection from '../components/PageSection';
 import SectionHeader from '../components/SectionHeader';
 import SectionHeaderIcon from '../components/SectionHeaderIcon';
-import SectionHeaderPrimary from '../components/SectionHeaderPrimary';
 import SectionHeaderSecondary from '../components/SectionHeaderSecondary';
 import SectionHeaderTertiary from '../components/SectionHeaderTertiary';
 import SectionFooter from '../components/SectionFooter';
@@ -66,8 +65,6 @@ module.exports = class Success extends mixin(StoreMixin) {
       totalMasters = masterStatus.totalMasters;
       totalAgents = agentStatus.totalAgents;
     }
-
-    let totalNodes = totalMasters + totalAgents;
 
     return (
       <Page hasNavigationBar={true} pageName="success" size="medium">
