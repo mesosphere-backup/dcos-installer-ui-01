@@ -37,7 +37,8 @@ function getActionMixin(stageID) {
         return false;
       }
 
-      return data.masters.completed && data.masters.totalMasters > 0;
+      return data.masters.completed && data.masters.totalMasters > 0
+        && data.masters.totalStarted === data.masters.totalMasters;
     },
 
     isAgentCompleted: function () {
@@ -47,7 +48,8 @@ function getActionMixin(stageID) {
         return false;
       }
 
-      return data.agents.completed && data.agents.totalAgents > 0;
+      return data.agents.completed && data.agents.totalAgents > 0
+        && data.agents.totalStarted === data.agents.totalAgents;
     }
   };
 }
