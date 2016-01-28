@@ -1,8 +1,9 @@
 import classnames from 'classnames';
 import GeminiScrollbar from 'react-gemini-scrollbar';
 import React from 'react';
+import ReactDOM from 'react-dom';
 
-const METHODS_TO_BIND = ['enableGemini'];
+const METHODS_TO_BIND = ['enableGemini', 'scrollToTop'];
 
 class Page extends React.Component {
   constructor() {
@@ -25,6 +26,12 @@ class Page extends React.Component {
     this.setState({geminiRendered: true});
   }
 
+  scrollToTop() {
+    if (this.state.geminiRendered) {
+      ReactDOM.findDOMNode(this.refs.gemini.refs['scroll-view']).scrollTop = 0;
+    }
+  }
+
   render() {
     let scrollWrapperClasses = classnames(this.props.scrollWrapperClasses, {
       'has-navigation-bar': this.props.hasNavigationBar
@@ -41,7 +48,8 @@ class Page extends React.Component {
 
     if (this.state.geminiRendered) {
       return (
-        <GeminiScrollbar autoshow={true} className={scrollWrapperClasses}>
+        <GeminiScrollbar autoshow={true} className={scrollWrapperClasses}
+          ref="gemini">
           <div className={pageClasses}>
             {this.props.children}
           </div>
