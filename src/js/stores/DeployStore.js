@@ -9,10 +9,9 @@ import ProcessStageUtil from '../utils/ProcessStageUtil';
 let requestInterval = null;
 
 function startPolling() {
-  if (requestInterval == null) {
-    DeployStore.fetchStageStatus();
-    requestInterval = setInterval(DeployStore.fetchStageStatus, 2000);
-  }
+  stopPolling();
+  DeployStore.fetchStageStatus();
+  requestInterval = setInterval(DeployStore.fetchStageStatus, 2000);
 }
 
 function stopPolling() {
