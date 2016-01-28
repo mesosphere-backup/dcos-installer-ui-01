@@ -66,9 +66,7 @@ class APIErrorModal extends mixin(StoreMixin) {
     let errors = this.props.errors.map((error, i) => {
       return (
         <div key={i} className="error-message-container">
-          <p>
-            {this.getMessage(error.message)}
-          </p>
+          {this.getMessage(error.message)}
           <p className="emphasize flush-bottom">
             {error.host}
           </p>
