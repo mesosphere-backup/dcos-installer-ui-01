@@ -31,6 +31,7 @@
   align-self: stretch;
   align-items: center;
   color: @navigation-item-inactive-foreground;
+  cursor: default;
   display: inline-flex;
   font-size: @navigation-item-font-size;
   padding: @navigation-item-padding-vertical @navigation-item-padding-horizontal;
@@ -42,11 +43,6 @@
   &.button {
     border-radius: 0;
     height: auto;
-  }
-
-  &:hover {
-    color: color-lighten(@navigation-item-inactive-foreground, 20%);
-    text-decoration: none;
   }
 }
 
