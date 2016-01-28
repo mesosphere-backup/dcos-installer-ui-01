@@ -14,6 +14,7 @@ import PageContent from '../components/PageContent';
 import PageSection from '../components/PageSection';
 import PostFlightStore from '../stores/PostFlightStore';
 import ProgressBar from '../components/ProgressBar';
+import ProgressBarUtil from '../utils/ProgressBarUtil';
 import SectionBody from '../components/SectionBody';
 import SectionHeader from '../components/SectionHeader';
 import SectionHeaderIcon from '../components/SectionHeaderIcon';
@@ -42,7 +43,8 @@ class Postflight extends mixin(StoreMixin) {
     InstallerStore.setNextStep({
       enabled: false,
       label: 'Success',
-      link: '/success',
+      link: null,
+      clickHandler: this.goToSuccess.bind(this),
       visible: true
     });
   }
@@ -53,7 +55,7 @@ class Postflight extends mixin(StoreMixin) {
   }
 
   goToSuccess() {
-    InstallerStore.processCurrentStage(null);
+    InstallerStore.processCurrentStage('success');
     this.context.router.push('/success');
   }
 
@@ -103,11 +105,13 @@ class Postflight extends mixin(StoreMixin) {
       return `${type} Check Complete`;
     }
 
-    return `Checking ${type}`;
+    return `Checking ${type}s`;
   }
 
   getProgressBar(type, completed, status, totalOfType) {
-    let progress = ((status.totalStarted / totalOfType) * 100) || 0;
+    let progress = ProgressBarUtil.getPercentage(
+      status.totalStarted, totalOfType, type, PostFlightStore
+    );
     let state = 'ongoing';
 
     if (completed && status.errors > 0) {
@@ -158,7 +162,7 @@ class Postflight extends mixin(StoreMixin) {
             <SectionBody>
               {
                 this.getProgressBar(
-                  'Masters',
+                  'Master',
                   PostFlightStore.isMasterCompleted(),
                   masterStatus,
                   totalMasters
@@ -166,7 +170,7 @@ class Postflight extends mixin(StoreMixin) {
               }
               {
                 this.getProgressBar(
-                  'Agents',
+                  'Agent',
                   PostFlightStore.isAgentCompleted(),
                   agentStatus,
                   totalAgents

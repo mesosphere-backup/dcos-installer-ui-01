@@ -28,45 +28,26 @@ function getErrors(commands) {
   return Object.keys(errorMap).join('\n');
 }
 
-function processDeployHostState(hostState, host, role, state) {
+function processHostState(hostState, host, role, state, isDeploy) {
   let stateType = state[`${role}s`];
   let hostStatus = hostState.host_status;
 
-  if (hostStatus === 'failed' || hostStatus === 'success') {
-    stateType.totalStarted += 1;
-  }
+  stateType.totalStarted += 1;
 
   if (hostStatus === 'running') {
     stateType.completed = false;
   }
 
-  if (hostStatus === 'failed') {
+  if (hostStatus === 'failed' || hostStatus === 'terminated') {
     stateType.errors += 1;
 
     var errors = getErrors(hostState.commands, host);
     state.errorDetails.push({host, message: errors});
   }
-}
 
-function processFlightHostState(hostState, host, role, state) {
-  let stateType = state[`${role}s`];
-  let hostStatus = hostState.host_status;
-
-  if (hostStatus === 'failed' || hostStatus === 'success') {
-    stateType.totalStarted += 1;
+  if (!isDeploy) {
+    stateType[`total${StringUtil.capitalize(role)}s`] += 1;
   }
-
-  if (hostStatus === 'failed') {
-    stateType.errors += 1;
-    var errors = getErrors(hostState.commands, host);
-    state.errorDetails.push({host, message: errors});
-  }
-
-  if (hostStatus === 'running') {
-    stateType.completed = false;
-  }
-
-  stateType[`total${StringUtil.capitalize(role)}s`] += 1;
 }
 
 const ProcessStageUtil = {
@@ -91,9 +72,9 @@ const ProcessStageUtil = {
       return state;
     }
 
-    let chainName = response.chain_name;
+    let isDeploy = response.chain_name === 'deploy';
 
-    if (chainName === 'deploy') {
+    if (isDeploy) {
       state.agents.totalAgents = response.total_agents;
       state.masters.totalMasters = response.total_masters;
     }
@@ -112,11 +93,7 @@ const ProcessStageUtil = {
         role = hostStatus.tags.role;
       }
 
-      if (chainName === 'deploy') {
-        processDeployHostState(hostStatus, host, role, state);
-      } else {
-        processFlightHostState(hostStatus, host, role, state);
-      }
+      processHostState(hostStatus, host, role, state, isDeploy);
     });
 
     return state;

@@ -9,10 +9,9 @@ import ProcessStageUtil from '../utils/ProcessStageUtil';
 let requestInterval = null;
 
 function startPolling() {
-  if (requestInterval == null) {
-    PreFlightStore.fetchStageStatus();
-    requestInterval = setInterval(PreFlightStore.fetchStageStatus, 2000);
-  }
+  stopPolling();
+  PreFlightStore.fetchStageStatus();
+  requestInterval = setInterval(PreFlightStore.fetchStageStatus, 2000);
 }
 
 function stopPolling() {

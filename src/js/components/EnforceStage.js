@@ -20,8 +20,6 @@ class EnforceStage extends mixin(StoreMixin) {
       receivedConfigType: false,
       receivedCurrentConfig: false,
       receivedCurrentConfigStatus: false,
-      receivedTotalAgents: false,
-      receivedTotalMasters: false,
       serverError: false
     };
 
@@ -65,7 +63,7 @@ class EnforceStage extends mixin(StoreMixin) {
     if (this.currentStageChanges >= 2) {
       let nextStage = nextProps.routes[nextProps.routes.length - 1].path;
       let currentStage = InstallerStore.get('currentStage') || null;
-      if (nextStage !== currentStage) {
+      if (nextStage !== currentStage && currentStage !== null) {
         this.context.router.push(`/${currentStage}`);
         return false;
       }
@@ -74,9 +72,9 @@ class EnforceStage extends mixin(StoreMixin) {
     return true;
   }
 
-  onInstallerStoreCurrentStageChange(currentStage) {
+  onInstallerStoreCurrentStageChange() {
     this.currentStageChanges += 1;
-    this.setState({currentStage});
+    this.setState({receivedCurrentStage: true});
   }
 
   onSetupStoreConfigStatusChangeError() {
@@ -105,8 +103,7 @@ class EnforceStage extends mixin(StoreMixin) {
   isLoading() {
     let state = this.state;
 
-    return state.currentStage == null || !state.receivedTotalAgents
-      || !state.receivedTotalMasters || !state.receivedCurrentConfig
+    return !state.receivedCurrentStage || !state.receivedCurrentConfig
       || !state.receivedCurrentConfigStatus || !state.receivedConfigType;
   }
 
@@ -134,19 +131,17 @@ class EnforceStage extends mixin(StoreMixin) {
   }
 
   render() {
-    // TODO: Uncomment all of this.
-    // if (this.state.serverError) {
-    //   return this.getServerError();
-    // }
+    if (this.state.serverError) {
+      return this.getServerError();
+    }
 
     if (this.state.configType.type === 'advanced') {
       return this.getAdvancedConfigurationWarning();
     }
 
-    // let state = this.state;
-    // if (this.isLoading()) {
-    //   return this.getLoadingScreen();
-    // }
+    if (this.isLoading()) {
+      return this.getLoadingScreen();
+    }
 
     return this.props.children;
   }

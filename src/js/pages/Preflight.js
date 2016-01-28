@@ -15,6 +15,7 @@ import PageContent from '../components/PageContent';
 import PageSection from '../components/PageSection';
 import PreFlightStore from '../stores/PreFlightStore';
 import ProgressBar from '../components/ProgressBar';
+import ProgressBarUtil from '../utils/ProgressBarUtil';
 import SectionBody from '../components/SectionBody';
 import SectionHeader from '../components/SectionHeader';
 import SectionHeaderIcon from '../components/SectionHeaderIcon';
@@ -104,11 +105,13 @@ class Preflight extends mixin(StoreMixin) {
       return `${type} Check Complete`;
     }
 
-    return `Checking ${type}`;
+    return `Checking ${type}s`;
   }
 
   getProgressBar(type, completed, status, totalOfType) {
-    let progress = ((status.totalStarted / totalOfType) * 100) || 0;
+    let progress = ProgressBarUtil.getPercentage(
+      status.totalStarted, totalOfType, type, PreFlightStore
+    );
     let state = 'ongoing';
 
     if (completed && status.errors > 0) {
@@ -134,7 +137,6 @@ class Preflight extends mixin(StoreMixin) {
     let totalErrors = masterStatus.errors + agentStatus.errors;
     let totalMasters = masterStatus.totalMasters;
     let totalAgents = agentStatus.totalAgents;
-
     return (
       <Page hasNavigationBar={true}>
         <PageContent>
@@ -153,7 +155,7 @@ class Preflight extends mixin(StoreMixin) {
             <SectionBody>
               {
                 this.getProgressBar(
-                  'Masters',
+                  'Master',
                   PreFlightStore.isMasterCompleted(),
                   masterStatus,
                   totalMasters
@@ -161,7 +163,7 @@ class Preflight extends mixin(StoreMixin) {
               }
               {
                 this.getProgressBar(
-                  'Agents',
+                  'Agent',
                   PreFlightStore.isAgentCompleted(),
                   agentStatus,
                   totalAgents

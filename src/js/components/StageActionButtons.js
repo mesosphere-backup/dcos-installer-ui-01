@@ -50,7 +50,7 @@ class StageActionButtons extends React.Component {
       ];
     }
 
-    if (failed) {
+    if (completed && failed) {
       buttons = this.getRetryButton();
     }
 

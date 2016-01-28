@@ -13,8 +13,9 @@ import InstallerStore from '../stores/InstallerStore';
 import Page from '../components/Page';
 import PageContent from '../components/PageContent';
 import PageSection from '../components/PageSection';
-import ProgressBar from '../components/ProgressBar';
 import PostFlightStore from '../stores/PostFlightStore';
+import ProgressBar from '../components/ProgressBar';
+import ProgressBarUtil from '../utils/ProgressBarUtil';
 import SectionBody from '../components/SectionBody';
 import SectionHeader from '../components/SectionHeader';
 import SectionHeaderIcon from '../components/SectionHeaderIcon';
@@ -36,6 +37,7 @@ class Deploy extends mixin(StoreMixin) {
 
   componentWillMount() {
     DeployStore.init();
+    console.log('deploy init');
   }
 
   componentDidMount() {
@@ -104,11 +106,13 @@ class Deploy extends mixin(StoreMixin) {
       return `${type} Check Complete`;
     }
 
-    return `Deploying to ${type}`;
+    return `Deploying to ${type}s`;
   }
 
   getProgressBar(type, completed, status, totalOfType) {
-    let progress = ((status.totalStarted / totalOfType) * 100) || 0;
+    let progress = ProgressBarUtil.getPercentage(
+      status.totalStarted, totalOfType, type, DeployStore
+    );
     let state = 'ongoing';
 
     if (completed && status.errors > 0) {
@@ -153,7 +157,7 @@ class Deploy extends mixin(StoreMixin) {
             <SectionBody>
               {
                 this.getProgressBar(
-                  'Masters',
+                  'Master',
                   DeployStore.isMasterCompleted(),
                   masterStatus,
                   totalMasters
@@ -161,7 +165,7 @@ class Deploy extends mixin(StoreMixin) {
               }
               {
                 this.getProgressBar(
-                  'Agents',
+                  'Agent',
                   DeployStore.isAgentCompleted(),
                   agentStatus,
                   totalAgents
