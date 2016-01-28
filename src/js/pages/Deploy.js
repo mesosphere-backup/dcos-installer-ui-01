@@ -178,6 +178,8 @@ class Deploy extends mixin(StoreMixin) {
                 onNextClick={PostFlightStore.beginStage.bind(PostFlightStore)}
                 onRetryClick={this.handleRetryClick.bind(this)}
                 totalErrors={totalErrors} />
+            </SectionFooter>
+            <SectionFooter>
               <StageLinks
                 completed={completed}
                 failed={failed}

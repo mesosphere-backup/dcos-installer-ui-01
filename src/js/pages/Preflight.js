@@ -179,6 +179,8 @@ class Preflight extends mixin(StoreMixin) {
                 onRetryClick={this.handleRetryClick.bind(this)}
                 showDisabled={true}
                 totalErrors={totalErrors} />
+            </SectionFooter>
+            <SectionFooter>
               <StageLinks
                 completed={completed}
                 disabledDisplay={true}
