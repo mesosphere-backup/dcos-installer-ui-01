@@ -31,7 +31,10 @@ function getErrors(commands) {
 function processDeployHostState(hostState, host, role, state) {
   let stateType = state[`${role}s`];
   let hostStatus = hostState.host_status;
-  stateType.totalStarted += 1;
+
+  if (hostStatus === 'failed' || hostStatus === 'success') {
+    stateType.totalStarted += 1;
+  }
 
   if (hostStatus === 'running') {
     stateType.completed = false;
