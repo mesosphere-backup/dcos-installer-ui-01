@@ -41,6 +41,7 @@ module.exports = class NavigationNextStep extends mixin(StoreMixin) {
 
     if (!enabled) {
       link = null;
+      clickHandler = null;
     }
 
     let classes = classnames('navigation-item', 'navigation-item-next', {

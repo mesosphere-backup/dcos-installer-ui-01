@@ -25,10 +25,9 @@ class NavigationBar extends React.Component {
           isActive = true;
         }
 
-        // TODO: Remove the link property on this item for production.
         return (
           <span key={index}>
-            <NavigationItem isActive={isActive} link={`/${route.path}`}>
+            <NavigationItem isActive={isActive}>
               {route.display}
             </NavigationItem>
             {chevron}
