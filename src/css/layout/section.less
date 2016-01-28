@@ -4,6 +4,8 @@
 @section-header-primary-margin-bottom: @base-spacing-unit * 2/7;
 @section-header-primary-margin-top: @base-spacing-unit;
 
+@section-footer-margin-top: @base-spacing-unit * 3/4;
+
 .section-header {
   margin-bottom: @section-header-margin-bottom;
 }
@@ -22,5 +24,12 @@
   .icon {
     display: block;
     margin: 0 auto;
+  }
+}
+
+.section-footer {
+
+  & + .section-footer {
+    margin-top: @section-footer-margin-top;
   }
 }
