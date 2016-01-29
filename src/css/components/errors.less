@@ -1,12 +1,32 @@
 .error-message-container {
   border: 1px solid @grey;
-  border-left: 5px solid @red;
-  border-radius: 5px;
-  margin-bottom: @base-spacing-unit * 0.5;
-  padding: @base-spacing-unit * 0.5;
+  border-radius: 4px;
+  margin-bottom: @base-spacing-unit * 1/4;
+  padding: @base-spacing-unit * 1/4 @base-spacing-unit * 1/2;
+  position: relative;
+
+  &:after {
+    background: @red;
+    border-radius: 4px 0 0 4px;
+    bottom: -1px;
+    content: '';
+    left: -1px;
+    position: absolute;
+    top: -1px;
+    width: 5px;
+  }
 
   &:last-child {
     margin-bottom: 0;
+  }
+
+  p {
+    font-weight: 400;
+    margin-bottom: @base-spacing-unit * 1/6;
+
+    &.emphasize {
+      font-weight: 600;
+    }
   }
 }
 

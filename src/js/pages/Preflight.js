@@ -24,6 +24,7 @@ import SectionHeaderSecondary from '../components/SectionHeaderSecondary';
 import SectionFooter from '../components/SectionFooter';
 import StageActionButtons from '../components/StageActionButtons';
 import StageLinks from '../components/StageLinks';
+import StringUtil from '../utils/StringUtil';
 
 class Preflight extends mixin(StoreMixin) {
   constructor() {
@@ -98,7 +99,8 @@ class Preflight extends mixin(StoreMixin) {
 
   getProgressBarLabel(type, completed, errors) {
     if (errors > 0 && completed) {
-      return `Errors with ${errors} ${type}`;
+      let errorsText = StringUtil.pluralize('Error', errors);
+      return `${errorsText} with ${errors} ${type}`;
     }
 
     if (completed) {

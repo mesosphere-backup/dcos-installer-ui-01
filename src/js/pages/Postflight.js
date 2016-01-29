@@ -23,6 +23,7 @@ import SectionHeaderSecondary from '../components/SectionHeaderSecondary';
 import SectionFooter from '../components/SectionFooter';
 import StageActionButtons from '../components/StageActionButtons';
 import StageLinks from '../components/StageLinks';
+import StringUtil from '../utils/StringUtil';
 
 class Postflight extends mixin(StoreMixin) {
   constructor() {
@@ -98,7 +99,8 @@ class Postflight extends mixin(StoreMixin) {
 
   getProgressBarLabel(type, completed, errors) {
     if (errors > 0 && completed) {
-      return `Errors with ${errors} ${type}`;
+      let errorsText = StringUtil.pluralize('Error', errors);
+      return `${errorsText} with ${errors} ${type}`;
     }
 
     if (completed) {
@@ -128,8 +130,12 @@ class Postflight extends mixin(StoreMixin) {
     );
   }
 
-  onPostflightStoreStateFinish() {
-    if (!PostFlightStore.isFailed()) {
+  onPostFlightStoreStateFinish() {
+    let masterStatus = PostFlightStore.get('masters');
+    let agentStatus = PostFlightStore.get('agents');
+    let totalErrors = masterStatus.errors + agentStatus.errors;
+
+    if (PostFlightStore.isCompleted() && totalErrors === 0) {
       this.goToSuccess();
     }
   }

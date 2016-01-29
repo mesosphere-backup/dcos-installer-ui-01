@@ -1,3 +1,5 @@
+@form-control-variant-placeholder-text-color: #9A9A9A;
+
 .form-label {
   &:extend(label);
   display: flex;
@@ -8,5 +10,28 @@
 
   &-right {
     flex: 0 0 auto;
+  }
+}
+
+.form-control {
+  font-size: @body-text-font-size * 1.2;
+  font-weight: 300;
+
+  &::placeholder {
+    color: @form-control-variant-placeholder-text-color;
+  }
+}
+
+.form-row-element {
+
+  &.form-row-input + .checkbox {
+    padding-left: 0;
+  }
+}
+
+.button {
+
+  .icon {
+    vertical-align: middle;
   }
 }
