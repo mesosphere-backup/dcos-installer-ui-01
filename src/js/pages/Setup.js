@@ -630,7 +630,7 @@ class Setup extends mixin(StoreMixin) {
           </PageSection>
           <PageSection>
             <SectionFooter>
-              <SectionAction enabled={true} linkTo="/pre-flight"
+              <SectionAction enabled={SetupStore.get('completed')} linkTo="/pre-flight"
                 onClick={this.handleSubmitClick} type="primary">
                 {this.state.buttonText}
               </SectionAction>
