@@ -100,7 +100,8 @@ class Postflight extends mixin(StoreMixin) {
   getProgressBarLabel(type, completed, errors) {
     if (errors > 0 && completed) {
       let errorsText = StringUtil.pluralize('Error', errors);
-      return `${errorsText} with ${errors} ${type}`;
+      let typeText = StringUtil.pluralize(type, errors);
+      return `${errorsText} with ${errors} ${typeText}`;
     }
 
     if (completed) {
