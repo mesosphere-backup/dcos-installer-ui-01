@@ -26,11 +26,11 @@ module.exports = class Success extends mixin(StoreMixin) {
     this.store_listeners = [
       {name: 'installer', events: ['DCOSUrlChange']}
     ];
-    InstallerStore.fetchDCOSURL();
   }
 
   componentDidMount() {
     super.componentDidMount();
+    InstallerStore.fetchDCOSURL();
     InstallerStore.setNextStep({
       enabled: false,
       visible: false
