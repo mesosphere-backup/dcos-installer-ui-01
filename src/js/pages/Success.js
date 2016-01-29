@@ -18,6 +18,7 @@ import SectionHeaderSecondary from '../components/SectionHeaderSecondary';
 import SectionHeaderTertiary from '../components/SectionHeaderTertiary';
 import SectionFooter from '../components/SectionFooter';
 import StageLinks from '../components/StageLinks';
+import StringUtil from '../utils/StringUtil';
 
 module.exports = class Success extends mixin(StoreMixin) {
   constructor() {
@@ -67,6 +68,9 @@ module.exports = class Success extends mixin(StoreMixin) {
       totalAgents = agentStatus.totalAgents;
     }
 
+    let masterNodeText = StringUtil.pluralize('Node', totalMasters);
+    let agentNodeText = StringUtil.pluralize('Node', totalAgents);
+
     return (
       <Page hasNavigationBar={true} pageName="success" size="medium">
         <PageContent>
@@ -82,10 +86,10 @@ module.exports = class Success extends mixin(StoreMixin) {
               </SectionHeaderSecondary>
               <SectionHeaderTertiary>
                 <span className="successful-nodes">
-                  <strong>{totalMasters}</strong> Master Nodes
+                  <strong>{totalMasters}</strong> Master {masterNodeText}
                 </span>
                 <span className="successful-nodes">
-                  <strong>{totalAgents}</strong> Agent Nodes
+                  <strong>{totalAgents}</strong> Agent {agentNodeText}
                 </span>
               </SectionHeaderTertiary>
             </SectionHeader>
