@@ -18,6 +18,10 @@ class ErrorAlert extends React.Component {
     });
   }
 
+  componentWillReceiveProps() {
+    this.setState({isVisible: true});
+  }
+
   dismissError() {
     this.setState({isVisible: false});
   }
