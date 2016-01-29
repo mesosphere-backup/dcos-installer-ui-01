@@ -613,17 +613,17 @@ class Setup extends mixin(StoreMixin) {
       <Page hasNavigationBar={true} size="large" pageName="setup" ref="page">
         <PageContent>
           <PageSection>
-            {this.getErrorAlert()}
-            <SectionHeader>
-              <SectionHeaderPrimary align="left">
-                Deployment Settings
-                <SectionHeaderPrimarySubheading>
-                  Enter the IP addresses of your target hosts and their SSH
-                  settings.
-                </SectionHeaderPrimarySubheading>
-              </SectionHeaderPrimary>
-            </SectionHeader>
             <SectionBody>
+              {this.getErrorAlert()}
+              <SectionHeader>
+                <SectionHeaderPrimary align="left">
+                  Deployment Settings
+                  <SectionHeaderPrimarySubheading>
+                    Enter the IP addresses of your target hosts and their SSH
+                    settings.
+                  </SectionHeaderPrimarySubheading>
+                </SectionHeaderPrimary>
+              </SectionHeader>
               <Form definition={this.getFormDefinition()}
                 onChange={this.handleFormChange} />
             </SectionBody>
