@@ -4,6 +4,7 @@ import React from 'react';
 
 import APIErrorModal from './APIErrorModal';
 import StoreMap from '../constants/StoreMap';
+import StringUtil from '../utils/StringUtil';
 
 const METHODS_TO_BIND = ['handleErrorClose', 'handleErrorClick'];
 
@@ -33,9 +34,11 @@ class ErrorLabel extends React.Component {
       return <span>No Errors Found</span>;
     }
 
+    let errorsText = StringUtil.pluralize('Error', errors.length);
+
     return (
       <a className={this.props.className} onClick={this.handleErrorClick}>
-        {`${errors.length} Errors Found`}
+        {`${errors.length} ${errorsText} Found`}
       </a>
     );
   }
