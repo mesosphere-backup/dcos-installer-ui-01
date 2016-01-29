@@ -128,8 +128,12 @@ class Postflight extends mixin(StoreMixin) {
     );
   }
 
-  onPostflightStoreStateFinish() {
-    if (!PostFlightStore.isFailed()) {
+  onPostFlightStoreStateFinish() {
+    let masterStatus = PostFlightStore.get('masters');
+    let agentStatus = PostFlightStore.get('agents');
+    let totalErrors = masterStatus.errors + agentStatus.errors;
+
+    if (PostFlightStore.isCompleted() && totalErrors === 0) {
       this.goToSuccess();
     }
   }

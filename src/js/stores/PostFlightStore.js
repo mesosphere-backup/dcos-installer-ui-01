@@ -52,7 +52,7 @@ let PostFlightStore = Store.createStore({
 
     if (this.isCompleted()) {
       stopPolling();
-      this.emit(EventTypes.DEPLOY_STATE_FINISH, processedState);
+      this.emit(EventTypes.POSTFLIGHT_STATE_FINISH, processedState);
       return;
     }
   },
