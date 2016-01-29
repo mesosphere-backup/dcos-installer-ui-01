@@ -30,6 +30,7 @@ module.exports = class Success extends mixin(StoreMixin) {
   }
 
   componentDidMount() {
+    super.componentDidMount();
     InstallerStore.setNextStep({
       enabled: false,
       visible: false
