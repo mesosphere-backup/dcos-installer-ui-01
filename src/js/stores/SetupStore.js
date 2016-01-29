@@ -89,7 +89,7 @@ let SetupStore = Store.createStore({
 
   handleConfigureStatusSuccess: function () {
     this.set({errors: {}});
-    this.emit(EventTypes.CONFIGURE_UPDATE_FIELD_SUCCESS);
+    this.emit(EventTypes.CONFIGURE_STATUS_CHANGE_SUCCESS);
   },
 
   handleConfigureUpdateFieldSuccess: function (data) {
