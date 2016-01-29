@@ -14,8 +14,8 @@ import PageContent from '../components/PageContent';
 import PageSection from '../components/PageSection';
 import SectionHeader from '../components/SectionHeader';
 import SectionHeaderIcon from '../components/SectionHeaderIcon';
-import SectionHeaderPrimary from '../components/SectionHeaderPrimary';
 import SectionHeaderSecondary from '../components/SectionHeaderSecondary';
+import SectionHeaderTertiary from '../components/SectionHeaderTertiary';
 import SectionFooter from '../components/SectionFooter';
 import StageLinks from '../components/StageLinks';
 
@@ -66,8 +66,6 @@ module.exports = class Success extends mixin(StoreMixin) {
       totalAgents = agentStatus.totalAgents;
     }
 
-    let totalNodes = totalMasters + totalAgents;
-
     return (
       <Page hasNavigationBar={true} pageName="success" size="medium">
         <PageContent>
@@ -76,13 +74,19 @@ module.exports = class Success extends mixin(StoreMixin) {
               <SectionHeaderIcon>
                 <IconCircleCheckmark size="large" />
               </SectionHeaderIcon>
-              <SectionHeaderPrimary>
-                Successfully Installed on <span className="success-node-count">{totalNodes}</span> Nodes
-              </SectionHeaderPrimary>
-              <SectionHeaderSecondary>
-                Congratulations! The DCOS was successfully installed
-                on {totalNodes} nodes and is ready to be launched.
+              <SectionHeaderSecondary
+                layoutClassName="text-align-center short flush-top"
+                supplementalClassName="successful-heading">
+                DCOS 1.6 Successfully Installed
               </SectionHeaderSecondary>
+              <SectionHeaderTertiary>
+                <span className="successful-nodes">
+                  <strong>{totalMasters}</strong> Master Nodes
+                </span>
+                <span className="successful-nodes">
+                  <strong>{totalAgents}</strong> Agent Nodes
+                </span>
+              </SectionHeaderTertiary>
             </SectionHeader>
           </PageSection>
           <PageSection>

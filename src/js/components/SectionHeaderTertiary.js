@@ -4,20 +4,19 @@ import React from 'react';
 class SectionHeaderSecondary extends React.Component {
   render() {
     let classes = classnames(this.props.className, this.props.layoutClassName, {
-      'inverse': this.props.inverse,
-      [this.props.supplementalClassName]: this.props.supplementalClassName
+      'inverse': this.props.inverse
     });
 
     return (
-      <h2 className={classes}>
+      <h3 className={classes}>
         {this.props.children}
-      </h2>
+      </h3>
     );
   }
 }
 
 SectionHeaderSecondary.defaultProps = {
-  className: 'section-header-secondary',
+  className: 'section-header-tertiary',
   layoutClassName: 'flush text-align-center'
 };
 
@@ -25,8 +24,7 @@ SectionHeaderSecondary.propTypes = {
   children: React.PropTypes.node,
   className: React.PropTypes.string,
   inverse: React.PropTypes.bool,
-  layoutClassName: React.PropTypes.string,
-  supplementalClassName: React.PropTypes.string
+  layoutClassName: React.PropTypes.string
 };
 
 module.exports = SectionHeaderSecondary;

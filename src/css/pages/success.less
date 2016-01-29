@@ -1,6 +1,32 @@
+@successful-nodes-margin-left: @base-spacing-unit * 3/4;
+@successful-nodes-font-size: @body-text-font-size * 1.5;
+@successful-nodes-font-weight: 300;
+
 .page-success {
 
   .page-content {
     max-width: 500px;
+  }
+
+  .icon-circle-checkmark {
+
+    .icon-circle-checkmark-group {
+      fill: url('#gradient-pink-purple');
+    }
+  }
+
+  .successful-nodes {
+    font-size: @successful-nodes-font-size;
+    font-weight: @successful-nodes-font-weight;
+    margin-left: @successful-nodes-margin-left;
+
+    &:first-child {
+      margin-left: 0;
+    }
+
+    strong {
+      color: inherit;
+      font-size: @successful-nodes-font-size;
+    }
   }
 }
