@@ -256,7 +256,7 @@ class Setup extends mixin(StoreMixin) {
         {
           fieldType: 'text',
           name: 'ssh_user',
-          placeholder: 'Examples: root, admin, core',
+          placeholder: 'e.g. root, admin, core',
           showLabel: (
             <FormLabel>
               <FormLabelContent>
@@ -316,7 +316,7 @@ class Setup extends mixin(StoreMixin) {
           DCOS Environment Settings
           <SectionHeaderPrimarySubheading>
             Choose a username and password for the DCOS administrator. This user
-            will be able to manage and add other users.
+            will be able to manage and add users.
           </SectionHeaderPrimarySubheading>
         </SectionHeaderPrimary>
       </SectionHeader>,
@@ -324,7 +324,7 @@ class Setup extends mixin(StoreMixin) {
         {
           fieldType: 'text',
           name: 'superuser_username',
-          placeholder: 'For example, johnappleseed',
+          placeholder: 'e.g. johnappleseed',
           showLabel: (
             <FormLabel>
               <FormLabelContent>
@@ -387,7 +387,7 @@ class Setup extends mixin(StoreMixin) {
                       critical, specify three hosts. <a
                         href="http://zookeeper.apache.org/doc/r3.1.2/zookeeperAdmin.html"
                         target="_blank">
-                      Learn more about Zookeeper</a>.
+                      Learn more</a>.
                     </span>
                   }
                   width={300} wrapText={true} />
@@ -435,7 +435,7 @@ class Setup extends mixin(StoreMixin) {
                       DCOS. <a
                         href="https://docs.mesosphere.com/administration/service-discovery/"
                         target="_blank">
-                        Learn more about DNS and DCOS
+                        Learn more
                       </a>.
                     </span>
                   }
