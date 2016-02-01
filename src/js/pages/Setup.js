@@ -517,6 +517,23 @@ class Setup extends mixin(StoreMixin) {
             this.setState({localValidationErrors});
           }
         }
+      } else if (type === 'integer' && fieldValue != null && fieldValue !== '') {
+        if (parseInt(fieldValue) > 65535) {
+          this.setState({
+            localValidationErrors: {
+              [key]: 'Port cannot be greater than 65535.'
+            }
+          });
+
+          return false;
+        } else {
+          let localValidationErrors = this.state.localValidationErrors;
+
+          if (localValidationErrors[key] != null) {
+            delete localValidationErrors[key];
+            this.setState({localValidationErrors});
+          }
+        }
       }
 
       if (errors[key]) {

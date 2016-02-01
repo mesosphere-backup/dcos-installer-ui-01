@@ -46,11 +46,17 @@ let SetupStore = Store.createStore({
   },
 
   checkFormCompletion() {
-    if (Object.keys(this.get('errors')).length) {
-      this.set({completed: false});
-    } else {
-      this.set({completed: true});
-    }
+    let errors = this.get('errors') || {};
+
+    this.set({completed: true});
+
+    ConfigFormFields.forEach((key) => {
+      if (errors[key]) {
+        console.log(`error in ${key}`);
+        this.set({completed: false});
+      }
+    });
+
     this.emit(EventTypes.CONFIGURE_FORM_COMPLETION_CHANGE);
   },
 
@@ -111,9 +117,11 @@ let SetupStore = Store.createStore({
     switch (action.type) {
       case ActionTypes.CONFIGURE_CHANGE_ERROR:
         SetupStore.handleConfigureChangeError(action.data);
+        SetupStore.checkFormCompletion();
         break;
       case ActionTypes.CONFIGURE_CHANGE_SUCCESS:
         SetupStore.handleConfigureChangeSuccess(action.data);
+        SetupStore.checkFormCompletion();
         break;
       case ActionTypes.CONFIGURE_STATUS_CHANGE_ERROR:
         SetupStore.handleConfigureStatusChangeError(action.data);
