@@ -599,7 +599,6 @@ class Setup extends mixin(StoreMixin) {
   }
 
   isLastFormField(fieldName) {
-    let errors = SetupStore.get('errors');
     let lastRemainingField = true;
 
     ConfigFormFields.forEach((key) => {

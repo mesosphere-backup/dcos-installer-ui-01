@@ -57,6 +57,8 @@ let SetupStore = Store.createStore({
       }
     });
 
+    console.log(errors);
+
     this.emit(EventTypes.CONFIGURE_FORM_COMPLETION_CHANGE);
   },
 
@@ -102,6 +104,14 @@ let SetupStore = Store.createStore({
     let errors = this.get('errors');
 
     Object.keys(data).forEach((key) => {
+      if (key === 'zk_exhibitor_hosts' || key === 'zk_exhibitor_port') {
+        key === 'exhibitor_zk_hosts';
+      } else if (key === 'ip_detect_script') {
+        key === 'ip_detect_path';
+      } else if (key === 'ssh_key') {
+        key === 'ssh_key_path';
+      }
+
       if (errors[key]) {
         delete(errors[key]);
       }
