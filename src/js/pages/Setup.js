@@ -192,12 +192,14 @@ class Setup extends mixin(StoreMixin) {
     }
 
     if (key === 'zk_exhibitor_hosts') {
-      error = errors['exhibitor_zk_hosts'];
+      key = 'exhibitor_zk_hosts';
     } else if (key === 'ip_detect_script') {
-      error = errors['ip_detect_path'];
+      key = 'ip_detect_path';
     } else if (key === 'ssh_key') {
-      error = errors['ssh_key_path'];
-    } else if (localValidationErrors[key]) {
+      key = 'ssh_key_path';
+    }
+
+    if (localValidationErrors[key]) {
       error = localValidationErrors[key];
     } else if (errors[key]) {
       error = errors[key];
