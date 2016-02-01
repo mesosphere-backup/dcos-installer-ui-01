@@ -53,11 +53,8 @@ let SetupStore = Store.createStore({
     ConfigFormFields.forEach((key) => {
       if (errors[key]) {
         this.set({completed: false});
-        console.log(`error in key ${key}`);
       }
     });
-
-    console.log(`completed: ${this.get('completed')}`);
 
     this.emit(EventTypes.CONFIGURE_FORM_COMPLETION_CHANGE);
   },
@@ -105,11 +102,11 @@ let SetupStore = Store.createStore({
 
     Object.keys(data).forEach((key) => {
       if (key === 'zk_exhibitor_hosts' || key === 'zk_exhibitor_port') {
-        key === 'exhibitor_zk_hosts';
+        key = 'exhibitor_zk_hosts';
       } else if (key === 'ip_detect_script') {
-        key === 'ip_detect_path';
+        key = 'ip_detect_path';
       } else if (key === 'ssh_key') {
-        key === 'ssh_key_path';
+        key = 'ssh_key_path';
       }
 
       if (errors[key]) {

@@ -536,7 +536,7 @@ class Setup extends mixin(StoreMixin) {
         }
       }
 
-      if (errors[key]) {
+      if (this.getErrors(key, type)) {
         return false;
       }
 
