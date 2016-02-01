@@ -34,11 +34,11 @@ class ErrorLabel extends React.Component {
       return <span>No Errors Found</span>;
     }
 
-    let errorsText = StringUtil.pluralize('Error', errors.length);
+    let nodesText = StringUtil.pluralize('Node', errors.length);
 
     return (
       <a className={this.props.className} onClick={this.handleErrorClick}>
-        {`${errors.length} ${errorsText} Found`}
+        {`Errors Found on ${errors.length} ${nodesText}`}
       </a>
     );
   }
