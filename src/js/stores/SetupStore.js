@@ -53,8 +53,11 @@ let SetupStore = Store.createStore({
     ConfigFormFields.forEach((key) => {
       if (errors[key]) {
         this.set({completed: false});
+        console.log(`error in key ${key}`);
       }
     });
+
+    console.log(`completed: ${this.get('completed')}`);
 
     this.emit(EventTypes.CONFIGURE_FORM_COMPLETION_CHANGE);
   },
