@@ -519,7 +519,7 @@ class Setup extends mixin(StoreMixin) {
         if (parseInt(fieldValue) > 65535) {
           this.setState({
             localValidationErrors: {
-              [key]: 'Port cannot be greater than 65535.'
+              [key]: 'Ports must be less than or equal to 65535'
             }
           });
 
