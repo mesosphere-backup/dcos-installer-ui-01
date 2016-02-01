@@ -290,9 +290,9 @@ class Setup extends mixin(StoreMixin) {
               </FormLabelContent>
             </FormLabel>
           ),
-          showError: this.getErrors('ssh_port'),
-          validationErrorText: this.getErrors('ssh_port'),
-          validation: this.getValidationFn('ssh_port'),
+          showError: this.getErrors('ssh_port', 'port'),
+          validationErrorText: this.getErrors('ssh_port', 'port'),
+          validation: this.getValidationFn('ssh_port', 'port'),
           value: this.state.formData.ssh_port
         }
       ],
@@ -417,8 +417,8 @@ class Setup extends mixin(StoreMixin) {
               </FormLabelContent>
             </FormLabel>
           ),
-          showError: this.getErrors('zk_exhibitor_port'),
-          validation: this.getValidationFn('zk_exhibitor_port'),
+          showError: this.getErrors('zk_exhibitor_port', 'port'),
+          validation: this.getValidationFn('zk_exhibitor_port', 'port'),
           validationErrorText: this.getErrors('zk_exhibitor_port'),
           value: this.state.formData.zk_exhibitor_port
         }
@@ -515,7 +515,7 @@ class Setup extends mixin(StoreMixin) {
             this.setState({localValidationErrors});
           }
         }
-      } else if (type === 'integer' && fieldValue != null && fieldValue !== '') {
+      } else if (type === 'port' && fieldValue != null && fieldValue !== '') {
         if (parseInt(fieldValue) > 65535) {
           this.setState({
             localValidationErrors: {
@@ -534,7 +534,7 @@ class Setup extends mixin(StoreMixin) {
         }
       }
 
-      if (this.getErrors(key, type)) {
+      if (this.getErrors(key)) {
         return false;
       }
 
