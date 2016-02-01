@@ -74,18 +74,15 @@ class EnforceStage extends mixin(StoreMixin) {
 
   onInstallerStoreCurrentStageChange() {
     this.currentStageChanges += 1;
-    console.log('Current stage change');
     this.setState({receivedCurrentStage: true});
   }
 
   onSetupStoreConfigStatusChangeError() {
     this.setState({receivedCurrentConfigStatus: true});
-    console.log('Config status change');
   }
 
   onSetupStoreConfigStatusChangeSuccess() {
     this.setState({receivedCurrentConfigStatus: true});
-    console.log('Config status change success');
   }
 
   onSetupStoreConfigTypeChangeSuccess() {
@@ -93,7 +90,6 @@ class EnforceStage extends mixin(StoreMixin) {
       configType: SetupStore.get('configType'),
       receivedConfigType: true
     });
-    console.log('config type')
   }
 
   onSetupStoreCurrentConfigChangeError() {

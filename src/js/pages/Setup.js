@@ -191,7 +191,13 @@ class Setup extends mixin(StoreMixin) {
       return null;
     }
 
-    if (localValidationErrors[key]) {
+    if (key === 'zk_exhibitor_hosts') {
+      error = errors['exhibitor_zk_hosts'];
+    } else if (key === 'ip_detect_script') {
+      error = errors['ip_detect_path'];
+    } else if (key === 'ssh_key') {
+      error = errors['ssh_key_path'];
+    } else if (localValidationErrors[key]) {
       error = localValidationErrors[key];
     } else if (errors[key]) {
       error = errors[key];
@@ -580,7 +586,7 @@ class Setup extends mixin(StoreMixin) {
     let lastRemainingField = true;
 
     ConfigFormFields.forEach((key) => {
-      if (key === 'ssh_key' || key === 'ip_detect_script') {
+      if (key === 'ssh_key' || key === 'ip_detect_script' || key === 'ip_detect_path') {
         return;
       }
 
@@ -589,11 +595,6 @@ class Setup extends mixin(StoreMixin) {
         lastRemainingField = false;
       }
     });
-
-    // If errors exist, we don't want to send the form data on value change.
-    if (lastRemainingField && Object.keys(errors).length) {
-      lastRemainingField = false;
-    }
 
     return lastRemainingField;
   }
