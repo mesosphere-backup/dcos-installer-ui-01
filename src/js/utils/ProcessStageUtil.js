@@ -35,6 +35,7 @@ function processHostState(hostState, host, role, state, isDeploy) {
   stateType.totalStarted += 1;
 
   if (hostStatus === 'running') {
+    stateType.totalRunning += 1;
     stateType.completed = false;
   }
 
@@ -56,6 +57,7 @@ const ProcessStageUtil = {
       agents: {
         completed: true,
         errors: 0,
+        totalRunning: 0,
         totalStarted: 0,
         totalAgents: 0
       },
@@ -63,6 +65,7 @@ const ProcessStageUtil = {
       masters: {
         completed: true,
         errors: 0,
+        totalRunning: 0,
         totalStarted: 0,
         totalMasters: 0
       }

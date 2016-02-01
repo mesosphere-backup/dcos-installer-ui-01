@@ -13,6 +13,7 @@ function getActionMixin(stageID) {
         agents: {
           completed: false,
           errors: 0,
+          totalRunning: 0,
           totalStarted: 0,
           totalAgents: 0
         },
@@ -20,6 +21,7 @@ function getActionMixin(stageID) {
         masters: {
           completed: false,
           errors: 0,
+          totalRunning: 0,
           totalStarted: 0,
           totalMasters: 0
         }
