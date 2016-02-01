@@ -495,8 +495,6 @@ class Setup extends mixin(StoreMixin) {
 
   getValidationFn(key, type) {
     return (fieldValue) => {
-      let errors = SetupStore.get('errors');
-
       if (type === 'list' && fieldValue != null && fieldValue !== '') {
         // Remove whitespace, commas, periods, and digits.
         let unwantedChars = fieldValue.replace(/\s|\.|,|\d/g, '');
