@@ -105,7 +105,16 @@ class Deploy extends mixin(StoreMixin) {
     }
 
     if (completed) {
-      return `${type} Check Complete`;
+      let {errors, totalStarted} = DeployStore.get(type);
+      let nodeCount = totalStarted - errors;
+
+      if (nodeCount < 0) {
+        nodeCount = 0;
+      }
+
+      let typeText = StringUtil.pluralize(type, nodeCount);
+
+      return `${nodeCount} ${typeText} Check Complete`;
     }
 
     return `Deploying to ${type}s`;

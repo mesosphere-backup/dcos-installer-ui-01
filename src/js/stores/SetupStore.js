@@ -19,13 +19,14 @@ let SetupStore = Store.createStore({
         type: null,
         message: null
       },
-      currentConfig: null,
+      currentConfig: {},
       currentConfigError: null,
-      errors: {}
+      displayedErrors: {},
+      errors: {},
+      initialLoad: true
     });
 
     this.fetchConfig();
-    this.fetchConfigState();
     this.fetchConfigType();
   },
 
@@ -64,6 +65,8 @@ let SetupStore = Store.createStore({
 
     this.set({currentConfig});
     this.emit(EventTypes.CONFIGURE_CHANGE_SUCCESS);
+
+    this.fetchConfigState();
   },
 
   handleConfigureChangeError: function (data) {
@@ -73,6 +76,21 @@ let SetupStore = Store.createStore({
 
   handleConfigureStatusChangeError: function (data) {
     let errors = _.extend({}, this.get('errors'), data.response);
+    let displayedErrors = _.extend({}, errors);
+
+    if (this.get('initialLoad')) {
+      let currentConfig = this.get('currentConfig');
+
+      Object.keys(displayedErrors).forEach((key) => {
+        if (this.isValueEmpty(currentConfig[key])) {
+          delete(displayedErrors[key]);
+        }
+      });
+
+      this.set({initialLoad: false});
+    }
+
+    this.set({displayedErrors});
     this.set({errors});
     this.emit(EventTypes.CONFIGURE_STATUS_CHANGE_ERROR);
   },
@@ -83,6 +101,11 @@ let SetupStore = Store.createStore({
 
   handleConfigureUpdateFieldError: function (data) {
     let errors = _.extend({}, this.get('errors'), data.response);
+    let displayedErrors = _.extend(
+      {}, this.get('displayedErrors'), data.response
+    );
+
+    this.set({displayedErrors});
     this.set({errors});
     this.emit(EventTypes.CONFIGURE_UPDATE_FIELD_ERROR);
   },
@@ -93,11 +116,13 @@ let SetupStore = Store.createStore({
   },
 
   handleConfigureStatusSuccess: function () {
+    this.set({displayedErrors: {}});
     this.set({errors: {}});
     this.emit(EventTypes.CONFIGURE_STATUS_CHANGE_SUCCESS);
   },
 
   handleConfigureUpdateFieldSuccess: function (data) {
+    let displayedErrors = this.get('displayedErrors');
     let errors = this.get('errors');
 
     Object.keys(data).forEach((key) => {
@@ -105,17 +130,39 @@ let SetupStore = Store.createStore({
         key = 'exhibitor_zk_hosts';
       } else if (key === 'ip_detect_script') {
         // Clear the error on both ip_detect_script and ip_detect_path
+        delete(displayedErrors['ip_detect_path']);
         delete(errors['ip_detect_path']);
       } else if (key === 'ssh_key') {
         // Clear the error on both ssh_key and ssh_key_path
+        delete(displayedErrors['ssh_key_path']);
         delete(errors['ssh_key_path']);
       }
 
+      delete(displayedErrors[key]);
       delete(errors[key]);
     });
 
+    this.set({displayedErrors});
     this.set({errors});
     this.emit(EventTypes.CONFIGURE_UPDATE_FIELD_SUCCESS);
+  },
+
+  isValueEmpty(values) {
+    let isEmptyValue = false;
+
+    if (_.isArray(values)) {
+      let isEmptyArray = true;
+      values.forEach(function (value) {
+        if (value != null) {
+          isEmptyArray = false;
+        }
+      });
+      isEmptyValue = isEmptyArray;
+    } else {
+      isEmptyValue = values === '' || values == null;
+    }
+
+    return isEmptyValue;
   },
 
   dispatcherIndex: AppDispatcher.register(function (payload) {

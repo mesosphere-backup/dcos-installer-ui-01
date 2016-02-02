@@ -11,7 +11,7 @@ let requestInterval = null;
 function startPolling() {
   stopPolling();
   DeployStore.fetchStageStatus();
-  requestInterval = setInterval(DeployStore.fetchStageStatus, 2000);
+  requestInterval = setInterval(DeployStore.fetchStageStatus, 4000);
 }
 
 function stopPolling() {
