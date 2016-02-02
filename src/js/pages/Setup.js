@@ -201,21 +201,6 @@ class Setup extends mixin(StoreMixin) {
       error = errors[key];
     }
 
-    // Favor the path error over the field error.
-    if (key === 'ip_detect_script') {
-      if (errors['ip_detect_path']) {
-        error = errors['ip_detect_path'];
-      } else {
-        error = errors['ip_detect_script'];
-      }
-    } else if (key === 'ssh_key') {
-      if (errors['ssh_key_path']) {
-        error = errors['ssh_key_path'];
-      } else {
-        error = errors['ssh_key'];
-      }
-    }
-
     return error;
   }
 
