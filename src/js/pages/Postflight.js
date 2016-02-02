@@ -104,16 +104,16 @@ class Postflight extends mixin(StoreMixin) {
       return `${errorsText} with ${errors} ${typeText}`;
     }
 
-    let {errors, totalStarted} = PostflightStore.get(type);
-    let nodeCount = totalStarted - errors;
-
-    if (nodeCount < 0) {
-      nodeCount = 0;
-    }
-
-    let typeText = StringUtil.pluralize(type, nodeCount);
-
     if (completed) {
+      let {errors, totalStarted} = PostflightStore.get(type);
+      let nodeCount = totalStarted - errors;
+
+      if (nodeCount < 0) {
+        nodeCount = 0;
+      }
+
+      let typeText = StringUtil.pluralize(type, nodeCount);
+
       return `${nodeCount} ${typeText} Check Complete`;
     }
 
