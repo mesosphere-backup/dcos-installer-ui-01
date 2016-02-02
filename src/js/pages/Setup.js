@@ -233,7 +233,7 @@ class Setup extends mixin(StoreMixin) {
           ),
           showError: this.getErrors('master_list'),
           validationErrorText: this.getErrors('master_list'),
-          validation: this.getValidationFn('master_list', 'list'),
+          validation: this.getValidationFn('master_list'),
           value: this.state.formData.master_list
         },
         {
@@ -256,7 +256,7 @@ class Setup extends mixin(StoreMixin) {
           ),
           showError: this.getErrors('agent_list'),
           validationErrorText: this.getErrors('agent_list'),
-          validation: this.getValidationFn('agent_list', 'list'),
+          validation: this.getValidationFn('agent_list'),
           value: this.state.formData.agent_list
         }
       ],
@@ -497,27 +497,7 @@ class Setup extends mixin(StoreMixin) {
 
   getValidationFn(key, type) {
     return (fieldValue) => {
-      if (type === 'list' && fieldValue != null && fieldValue !== '') {
-        // Remove whitespace, commas, periods, and digits.
-        let unwantedChars = fieldValue.replace(/\s|\.|,|\d/g, '');
-
-        if (unwantedChars.length) {
-          this.setState({
-            localValidationErrors: {
-              [key]: 'Invalid IP address list.'
-            }
-          });
-
-          return false;
-        } else {
-          let localValidationErrors = this.state.localValidationErrors;
-
-          if (localValidationErrors[key] != null) {
-            delete localValidationErrors[key];
-            this.setState({localValidationErrors});
-          }
-        }
-      } else if (type === 'port' && fieldValue != null && fieldValue !== '') {
+      if (type === 'port' && fieldValue != null && fieldValue !== '') {
         if (parseInt(fieldValue) > 65535) {
           this.setState({
             localValidationErrors: {
@@ -580,9 +560,6 @@ class Setup extends mixin(StoreMixin) {
   handleUploadSuccess(destination) {
     return (fileContents) => {
       let formData = this.getNewFormData({[destination]: fileContents});
-      if (destination === 'master_list' || destination === 'agent_list') {
-        this.getValidationFn(destination, 'list')(fileContents);
-      }
 
       this.submitFormData({[destination]: fileContents});
       this.setState({formData});
