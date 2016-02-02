@@ -18,6 +18,7 @@ function getActionMixin(stageID) {
           totalAgents: 0
         },
         errorDetails: [],
+        totalHosts: 0,
         masters: {
           completed: false,
           errors: 0,
@@ -29,7 +30,10 @@ function getActionMixin(stageID) {
     },
 
     isCompleted: function () {
-      return this.isMasterCompleted() && this.isAgentCompleted();
+      let totalStarted = this.get('masters').totalStarted
+        + this.get('agents').totalStarted;
+      return this.isMasterCompleted() && this.isAgentCompleted()
+       && totalStarted === this.get('totalHosts');
     },
 
     isFailed: function () {
