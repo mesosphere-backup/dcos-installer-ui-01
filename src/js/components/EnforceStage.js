@@ -2,6 +2,7 @@ import mixin from 'reactjs-mixin';
 import React from 'react';
 import {StoreMixin} from 'mesosphere-shared-reactjs';
 
+import AdvancedConfigurationWarning from './AdvancedConfigurationWarning';
 import AlertPanel from './AlertPanel';
 import IconLoadingIndicator from './icons/IconLoadingIndicator';
 import InstallerStore from '../stores/InstallerStore';
@@ -108,10 +109,7 @@ class EnforceStage extends mixin(StoreMixin) {
   }
 
   getAdvancedConfigurationWarning() {
-    return (
-      <AlertPanel content="Please use the command line to install DCOS."
-        heading="Advanced Configuration Detected" />
-    );
+    return <AdvancedConfigurationWarning />;
   }
 
   getLoadingScreen() {
