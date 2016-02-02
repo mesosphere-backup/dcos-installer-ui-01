@@ -104,14 +104,14 @@ let SetupStore = Store.createStore({
       if (key === 'zk_exhibitor_hosts' || key === 'zk_exhibitor_port') {
         key = 'exhibitor_zk_hosts';
       } else if (key === 'ip_detect_script') {
-        key = 'ip_detect_path';
+        // Clear the error on both ip_detect_script and ip_detect_path
+        delete(errors['ip_detect_path']);
       } else if (key === 'ssh_key') {
-        key = 'ssh_key_path';
+        // Clear the error on both ssh_key and ssh_key_path
+        delete(errors['ssh_key_path']);
       }
 
-      if (errors[key]) {
-        delete(errors[key]);
-      }
+      delete(errors[key]);
     });
 
     this.set({errors});
