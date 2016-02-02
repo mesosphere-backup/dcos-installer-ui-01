@@ -9,6 +9,8 @@ import {StoreMixin} from 'mesosphere-shared-reactjs';
 import Config from '../config/Config';
 import ConfigActions from '../events/ConfigActions';
 import ConfigFormFields from '../constants/ConfigFormFields';
+import ConfigFormFieldsRequiringInput from
+  '../constants/ConfigFormFieldsRequiringInput';
 import ErrorAlert from '../components/ErrorAlert';
 import FormLabel from '../components/FormLabel';
 import FormLabelContent from '../components/FormLabelContent';
@@ -55,7 +57,7 @@ class Setup extends mixin(StoreMixin) {
         ssh_port: null,
         ssh_key: null,
         superuser_username: null,
-        superuser_password: '',
+        superuser_password_hash: '',
         zk_exhibitor_hosts: null,
         zk_exhibitor_port: null
       },
@@ -141,8 +143,13 @@ class Setup extends mixin(StoreMixin) {
   }
 
   onPreFlightStoreBeginError(data) {
+    let error = data.errors || 'An unknown error occurred. Please check the command line for details.';
+    this.setState({buttonText: 'Run Pre-Flight', errorAlert: error});
     this.refs.page.scrollToTop();
-    this.setState({buttonText: 'Run Pre-Flight', errorAlert: data.errors});
+  }
+
+  beginPreFlight() {
+    PreFlightStore.beginStage();
   }
 
   getCurrentConfig() {
@@ -166,8 +173,8 @@ class Setup extends mixin(StoreMixin) {
         displayedConfig.zk_exhibitor_port = zkExhibitorPort;
       }
 
-      if (key === 'superuser_password') {
-        displayedConfig.superuser_password = '';
+      if (key === 'superuser_password_hash') {
+        displayedConfig.superuser_password_hash = '';
       }
     });
 
@@ -184,7 +191,7 @@ class Setup extends mixin(StoreMixin) {
 
   getErrors(key) {
     let error = null;
-    let errors = SetupStore.get('errors');
+    let errors = SetupStore.get('displayedErrors');
     let localValidationErrors = this.state.localValidationErrors;
 
     if (errors == null && Object.keys(localValidationErrors).length === 0) {
@@ -345,20 +352,21 @@ class Setup extends mixin(StoreMixin) {
         },
         {
           fieldType: this.state.passwordFieldType,
-          name: 'superuser_password',
+          name: 'superuser_password_hash',
           renderer: (inputField) => {
             return (
               <div className="password-strength-wrapper">
                 {inputField}
-                <PasswordStrengthMeter password={this.state.formData.superuser_password}/>
+                <PasswordStrengthMeter
+                  password={this.state.formData.superuser_password_hash}/>
               </div>
             );
           },
           showLabel: 'Password',
-          showError: this.getErrors('superuser_password'),
-          validationErrorText: this.getErrors('superuser_password'),
-          validation: this.getValidationFn('superuser_password'),
-          value: this.state.formData.superuser_password
+          showError: this.getErrors('superuser_password_hash'),
+          validationErrorText: this.getErrors('superuser_password_hash'),
+          validation: this.getValidationFn('superuser_password_hash'),
+          value: this.state.formData.superuser_password_hash
         },
         {
           fieldType: 'checkbox',
@@ -567,8 +575,16 @@ class Setup extends mixin(StoreMixin) {
     this.beginPreFlight();
   }
 
-  beginPreFlight() {
-    PreFlightStore.beginStage();
+  isFormReady() {
+    let emptyFormFields = false;
+
+    ConfigFormFieldsRequiringInput.forEach((key) => {
+      if (this.state.formData[key] === '' || this.state.formData[key] == null) {
+        emptyFormFields = true;
+      }
+    });
+
+    return !emptyFormFields && SetupStore.get('completed');
   }
 
   isLastFormField(fieldName) {
@@ -620,7 +636,7 @@ class Setup extends mixin(StoreMixin) {
           </PageSection>
           <PageSection>
             <SectionFooter>
-              <SectionAction enabled={SetupStore.get('completed')} linkTo="/pre-flight"
+              <SectionAction enabled={this.isFormReady()} linkTo="/pre-flight"
                 onClick={this.handleSubmitClick} type="primary">
                 {this.state.buttonText}
               </SectionAction>
