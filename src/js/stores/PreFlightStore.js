@@ -11,7 +11,7 @@ let requestInterval = null;
 function startPolling() {
   stopPolling();
   PreFlightStore.fetchStageStatus();
-  requestInterval = setInterval(PreFlightStore.fetchStageStatus, 2000);
+  requestInterval = setInterval(PreFlightStore.fetchStageStatus, 4000);
 }
 
 function stopPolling() {
