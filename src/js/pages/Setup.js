@@ -102,7 +102,7 @@ class Setup extends mixin(StoreMixin) {
     let clickHandler = null;
     let continueButtonEnabled = false;
 
-    if (SetupStore.get('completed')) {
+    if (this.isFormReady()) {
       clickHandler = this.handleSubmitClick;
       continueButtonEnabled = true;
     }
@@ -117,7 +117,7 @@ class Setup extends mixin(StoreMixin) {
   }
 
   onSetupStoreConfigFormCompletionChange() {
-    if (SetupStore.get('completed')) {
+    if (this.isFormReady()) {
       InstallerStore.setNextStep({
         clickHandler: this.handleSubmitClick,
         enabled: true,
