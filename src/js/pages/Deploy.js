@@ -105,7 +105,7 @@ class Deploy extends mixin(StoreMixin) {
     }
 
     if (completed) {
-      let {errors, totalStarted} = DeployStore.get(type);
+      let {errors, totalStarted} = DeployStore.get(`${type.toLowerCase()}s`);
       let nodeCount = totalStarted - errors;
 
       if (nodeCount < 0) {

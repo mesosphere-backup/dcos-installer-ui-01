@@ -105,7 +105,7 @@ class Preflight extends mixin(StoreMixin) {
     }
 
     if (completed) {
-      let {errors, totalStarted} = PreFlightStore.get(type);
+      let {errors, totalStarted} = PreFlightStore.get(`${type.toLowerCase()}s`);
       let nodeCount = totalStarted - errors;
 
       if (nodeCount < 0) {
