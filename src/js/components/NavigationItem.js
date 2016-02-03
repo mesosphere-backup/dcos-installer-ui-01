@@ -5,6 +5,7 @@ import React from 'react';
 class NavigationItem extends React.Component {
   render() {
     let classes = classnames(this.props.className, this.props.layoutClassName, {
+      'is-complete': this.props.isComplete,
       [this.props.activeClassName]: this.props.isActive
     });
 
@@ -31,6 +32,7 @@ NavigationItem.defaultProps = {
   activeClassName: 'is-active',
   className: 'navigation-item',
   clickHandler: null,
+  isComplete: false,
   layoutClassName: ''
 };
 
@@ -40,6 +42,7 @@ NavigationItem.propTypes = {
   className: React.PropTypes.string,
   clickHandler: React.PropTypes.func,
   isActive: React.PropTypes.bool,
+  isComplete: React.PropTypes.bool,
   layoutClassName: React.PropTypes.string,
   link: React.PropTypes.string
 };
