@@ -28,7 +28,7 @@ function getErrors(commands) {
   return Object.keys(errorMap).join('\n');
 }
 
-function processHostState(hostState, host, role, state, isDeploy) {
+function processHostState(hostState, host, role, state) {
   let stateType = state[`${role}s`];
   let hostStatus = hostState.host_status;
 
@@ -45,10 +45,6 @@ function processHostState(hostState, host, role, state, isDeploy) {
     var errors = getErrors(hostState.commands, host);
     state.errorDetails.push({host, message: errors});
   }
-
-  if (!isDeploy) {
-    stateType[`total${StringUtil.capitalize(role)}s`] += 1;
-  }
 }
 
 const ProcessStageUtil = {
@@ -59,7 +55,7 @@ const ProcessStageUtil = {
         errors: 0,
         totalRunning: 0,
         totalStarted: 0,
-        totalAgents: 0
+        totalAgents: response.total_agents || 0
       },
       errorDetails: [],
       totalHosts: response.total_hosts || 0,
@@ -68,19 +64,12 @@ const ProcessStageUtil = {
         errors: 0,
         totalRunning: 0,
         totalStarted: 0,
-        totalMasters: 0
+        totalMasters: response.total_masters || 0
       }
     };
 
     if (Object.keys(response).length === 0) {
       return state;
-    }
-
-    let isDeploy = response.chain_name === 'deploy';
-
-    if (isDeploy) {
-      state.agents.totalAgents = response.total_agents;
-      state.masters.totalMasters = response.total_masters;
     }
 
     Object.keys(response.hosts || {}).forEach(function (host) {
@@ -97,7 +86,7 @@ const ProcessStageUtil = {
         role = hostStatus.tags.role;
       }
 
-      processHostState(hostStatus, host, role, state, isDeploy);
+      processHostState(hostStatus, host, role, state);
     });
 
     return state;
