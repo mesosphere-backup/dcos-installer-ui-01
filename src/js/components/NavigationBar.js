@@ -7,12 +7,26 @@ import NavigationItems from '../components/NavigationItems';
 import NavigationNextStep from './NavigationNextStep';
 
 class NavigationBar extends React.Component {
-  getNavigationItems(routes, activeRoute) {
-    return routes.map(function (route, index) {
+  getActiveRouteIndex(routes, activeRoute) {
+    let activeRouteIndex = -1;
 
+    routes.forEach(function (route, index) {
+      // We need to remove the prefixed slash when comparing path names.
+      if (route.path === activeRoute.substr(1)) {
+        activeRouteIndex = index;
+      }
+    });
+
+    return activeRouteIndex;
+  }
+
+  getNavigationItems(routes = [], activeRoute = '') {
+    return routes.map((route, index) => {
       if (route.display) {
-        let chevron = <IconChevron />;
-        let isActive = false;
+        let activeRouteIndex = this.getActiveRouteIndex(routes, activeRoute);
+        let isActive = index === activeRouteIndex;
+        let isRouteComplete = index < activeRouteIndex;
+        let chevron = <IconChevron isComplete={isRouteComplete} />;
 
         // We don't want to render the chevron for the last menu item. We are
         // subtracting two from routes.length because the last route is *.
@@ -20,14 +34,9 @@ class NavigationBar extends React.Component {
           chevron = null;
         }
 
-        // We need to remove the prefixed slash when comparing path names.
-        if (activeRoute && route.path === activeRoute.substr(1)) {
-          isActive = true;
-        }
-
         return (
           <span key={index}>
-            <NavigationItem isActive={isActive}>
+            <NavigationItem isComplete={isRouteComplete} isActive={isActive}>
               {route.display}
             </NavigationItem>
             {chevron}

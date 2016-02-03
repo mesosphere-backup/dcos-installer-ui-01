@@ -4,6 +4,7 @@ import React from 'react';
 class IconChevron extends React.Component {
   render() {
     let classes = classnames('icon icon-chevron', {
+      'is-complete': this.props.isComplete,
       'reversed': this.props.reversed
     });
 
@@ -21,6 +22,7 @@ class IconChevron extends React.Component {
 }
 
 IconChevron.propTypes = {
+  isComplete: React.PropTypes.bool,
   reversed: React.PropTypes.bool
 };
 

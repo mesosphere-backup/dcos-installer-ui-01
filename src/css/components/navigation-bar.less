@@ -3,8 +3,10 @@
 @navigation-item-padding-horizontal: @base-spacing-unit * 1/2;
 
 @navigation-item-chevron-fill: @navigation-item-inactive-foreground;
+@navigation-item-chevron-complete-fill: @white;
 
 @navigation-item-active-foreground: @white;
+@navigation-item-complete-foreground: @white;
 @navigation-item-inactive-foreground: #80848F;
 
 @navigation-item-next-font-size: @navigation-item-font-size;
@@ -24,6 +26,11 @@
   .icon {
     fill: @navigation-item-chevron-fill;
     opacity: 0.8;
+
+    &.is-complete {
+      fill: @navigation-item-chevron-complete-fill;
+      opacity: 1;
+    }
   }
 }
 
@@ -38,6 +45,10 @@
 
   &.is-active {
     color: @navigation-item-active-foreground;
+  }
+
+  &.is-complete {
+    color: @navigation-item-complete-foreground;
   }
 
   &.button {
