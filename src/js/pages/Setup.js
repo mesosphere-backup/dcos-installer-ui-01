@@ -31,6 +31,7 @@ import SetupUtil from '../utils/SetupUtil';
 import Tooltip from '../components/Tooltip';
 import Upload from '../components/Upload';
 
+const PUBLIC_HOSTNAME_VALIDATION = /([0-9\.]+)|https?:\/\//;
 const METHODS_TO_BIND = [
   'getCurrentConfig',
   'getErrors',
@@ -110,7 +111,7 @@ class Setup extends mixin(StoreMixin) {
     InstallerStore.setNextStep({
       clickHandler,
       enabled: continueButtonEnabled,
-      label: 'Pre-Flight',
+      label: 'Run Pre-Flight',
       link: null,
       visible: true
     });
@@ -264,6 +265,25 @@ class Setup extends mixin(StoreMixin) {
         }
       ],
       [
+        {
+          fieldType: 'text',
+          name: 'public_ip_address',
+          placeholder: 'Specify one IPv4 address that you have access to.',
+          showLabel: (
+            <FormLabel>
+              <FormLabelContent>
+                Accessible Master IP Address
+                <Tooltip content={'A single master IP address that you can ' +
+                  'access. It can be the same as one of the master IP ' +
+                  'you have listed.'}
+                  width={200} wrapText={true} />
+              </FormLabelContent>
+            </FormLabel>
+          ),
+          validationErrorText: 'Must be a valid IP address or hostname.',
+          validation: PUBLIC_HOSTNAME_VALIDATION,
+          value: this.state.formData.public_ip_address
+        },
         {
           fieldType: 'text',
           name: 'ssh_user',
@@ -537,11 +557,11 @@ class Setup extends mixin(StoreMixin) {
 
     if (this.state.localValidationErrors[fieldName] == null
       && (eventType === 'blur' || (eventType === 'change'
-      && this.isLastFormField(fieldName)))) {
+      && this.isLastFormField(fieldName))) && fieldName !== 'public_ip_address') {
       this.submitFormData({[fieldName]: fieldValue});
     }
 
-    if (eventType === 'blur') {
+    if (eventType === 'blur' && fieldName !== 'public_ip_address') {
       // Submit form data immediately on blur events.
       this.submitFormData.flush();
     }
@@ -571,6 +591,13 @@ class Setup extends mixin(StoreMixin) {
   }
 
   handleSubmitClick() {
+    let url = this.state.formData.public_ip_address;
+
+    if (!/^https?:\/\//.test(url)) {
+      url = `http://${url}`;
+    }
+
+    global.localStorage.setItem('publicHostname', url);
     this.setState({buttonText: 'Verifying Configuration...'});
     this.beginPreFlight();
   }
@@ -583,6 +610,10 @@ class Setup extends mixin(StoreMixin) {
         emptyFormFields = true;
       }
     });
+
+    if (!PUBLIC_HOSTNAME_VALIDATION.test(this.state.formData.public_ip_address)) {
+      return false;
+    }
 
     return !emptyFormFields && SetupStore.get('completed');
   }

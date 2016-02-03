@@ -51,10 +51,10 @@ module.exports = class NavigationNextStep extends mixin(StoreMixin) {
     return (
       <NavigationItem className={classes} link={link} clickHandler={clickHandler}>
         <span className="navigation-item-mobile">
-          Next: {label}
+          {label}
         </span>
         <span className="navigation-item-desktop">
-          Continue
+          {label}
         </span>
         <IconChevron />
       </NavigationItem>

@@ -44,7 +44,7 @@ class Deploy extends mixin(StoreMixin) {
     super.componentDidMount();
     InstallerStore.setNextStep({
       enabled: false,
-      label: 'Post-Flight',
+      label: 'Run Post-Flight',
       link: null,
       clickHandler: PostFlightStore.beginStage,
       visible: true

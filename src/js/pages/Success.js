@@ -5,7 +5,6 @@ import React from 'react';
 /* eslint-enable no-unused-vars */
 
 import IconArrow from '../components/icons/IconArrow';
-import IconSpinner from '../components/icons/IconSpinner';
 import IconCircleCheckmark from '../components/icons/IconCircleCheckmark';
 import InstallerStore from '../stores/InstallerStore';
 import PostFlightStore from '../stores/PostFlightStore';
@@ -39,18 +38,16 @@ module.exports = class Success extends mixin(StoreMixin) {
   }
 
   getLaunchButton() {
-    let url = InstallerStore.get('dcosURL');
+    let url = global.localStorage.getItem('publicHostname');
 
     if (!url) {
-      return (
-        <IconSpinner />
-      );
+      url = InstallerStore.get('dcosURL');
     }
 
     return (
       <a href={url}
         className="button button-large button-rounded button-primary">
-        Launch DCOS
+        Log In to DCOS
         <IconArrow />
       </a>
     );

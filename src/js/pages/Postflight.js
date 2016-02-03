@@ -43,7 +43,7 @@ class Postflight extends mixin(StoreMixin) {
     super.componentDidMount();
     InstallerStore.setNextStep({
       enabled: false,
-      label: 'Success',
+      label: 'Continue',
       link: null,
       clickHandler: this.goToSuccess.bind(this),
       visible: true
