@@ -615,7 +615,11 @@ class Setup extends mixin(StoreMixin) {
       return false;
     }
 
-    return !emptyFormFields && SetupStore.get('completed');
+    let isFormReady = !emptyFormFields && SetupStore.get('completed');
+
+    InstallerStore.setNextStep({enabled: isFormReady});
+
+    return isFormReady;
   }
 
   isLastFormField(fieldName) {
