@@ -62,6 +62,7 @@ const ProcessStageUtil = {
         totalAgents: 0
       },
       errorDetails: [],
+      totalHosts: response.total_hosts || 0,
       masters: {
         completed: true,
         errors: 0,
