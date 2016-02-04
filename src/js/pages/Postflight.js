@@ -105,7 +105,7 @@ class Postflight extends mixin(StoreMixin) {
     }
 
     if (completed) {
-      let {errors, totalStarted} = PostflightStore.get(`${type.toLowerCase()}s`);
+      let {errors, totalStarted} = PostFlightStore.get(`${type.toLowerCase()}s`);
       let nodeCount = totalStarted - errors;
 
       if (nodeCount < 0) {
