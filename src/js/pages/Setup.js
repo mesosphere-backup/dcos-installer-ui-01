@@ -39,6 +39,7 @@ const METHODS_TO_BIND = [
   'handleFormChange',
   'handleSubmitClick',
   'handleUploadSuccess',
+  'isFormReady',
   'isLastFormField',
   'submitFormData'
 ];
@@ -617,7 +618,10 @@ class Setup extends mixin(StoreMixin) {
 
     let isFormReady = !emptyFormFields && SetupStore.get('completed');
 
-    InstallerStore.setNextStep({enabled: isFormReady});
+    InstallerStore.setNextStep({
+      clickHandler: this.handleSubmitClick,
+      enabled: isFormReady
+    });
 
     return isFormReady;
   }
