@@ -1,5 +1,4 @@
 import Config from '../config/Config';
-import StringUtil from './StringUtil';
 
 function getStdout(stdout) {
   let failedLines = stdout.filter(function (line) {
