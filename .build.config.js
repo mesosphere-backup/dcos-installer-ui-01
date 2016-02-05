@@ -11,6 +11,8 @@ var dirs = {
   distCSS: distFolderAssets,
   srcFonts: srcFolder + '/fonts',
   distFonts: distFolderAssets + '/fonts',
+  srcFavicon: srcFolder,
+  distFavicon: distFolderHTML,
   srcImg: srcFolder + '/img',
   distImg: distFolderAssets + '/img',
   distHTML: distFolderHTML
@@ -23,6 +25,8 @@ var files = {
   distCSS: dirs.distCSS + '/index.css',
   srcFonts: dirs.srcFonts + '/**/*.ttf',
   distFonts: dirs.distFonts,
+  srcFavicon: dirs.srcFavicon + '/favicon.ico',
+  distFavicon: dirs.distHTML + '/favicon.ico',
   srcHTML: dirs.src + '/index.html',
   distHTML: dirs.distHTML + '/index.html'
 };

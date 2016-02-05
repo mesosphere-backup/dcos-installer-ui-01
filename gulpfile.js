@@ -52,6 +52,11 @@ gulp.task('fonts', function () {
     .pipe(gulp.dest(config.dirs.distFonts));
 });
 
+gulp.task('favicon', function () {
+  return gulp.src([config.files.srcFavicon])
+    .pipe(gulp.dest(config.dirs.distFavicon));
+});
+
 gulp.task('images', function () {
   return gulp.src([
       config.dirs.srcImg + '/**/*.*',
@@ -142,7 +147,7 @@ gulp.task('webpack', ['eslint'], function () {
   });
 });
 
-gulp.task('default', ['webpack', 'eslint', 'replace-js-strings', 'less', 'fonts', 'images', 'html']);
+gulp.task('default', ['webpack', 'eslint', 'replace-js-strings', 'less', 'fonts', 'favicon', 'images', 'html']);
 
 gulp.task('dist', ['default', 'minify-css', 'minify-js']);
 
