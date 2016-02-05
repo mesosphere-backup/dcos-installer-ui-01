@@ -273,7 +273,7 @@ class Setup extends mixin(StoreMixin) {
           showLabel: (
             <FormLabel>
               <FormLabelContent>
-                Accessible Master IP Address
+                Public IP Address
                 <Tooltip content={'A single master IP address that you can ' +
                   'access. It can be the same as one of the master IP ' +
                   'you have listed.'}
