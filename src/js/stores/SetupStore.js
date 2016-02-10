@@ -78,17 +78,13 @@ let SetupStore = Store.createStore({
     let errors = _.extend({}, this.get('errors'), data.response);
     let displayedErrors = _.extend({}, errors);
 
-    if (this.get('initialLoad')) {
-      let currentConfig = this.get('currentConfig');
+    let currentConfig = this.get('currentConfig');
 
-      Object.keys(displayedErrors).forEach((key) => {
-        if (this.isValueEmpty(currentConfig[key])) {
-          delete(displayedErrors[key]);
-        }
-      });
-
-      this.set({initialLoad: false});
-    }
+    Object.keys(displayedErrors).forEach((key) => {
+      if (this.isValueEmpty(currentConfig[key])) {
+        delete(displayedErrors[key]);
+      }
+    });
 
     this.set({displayedErrors});
     this.set({errors});

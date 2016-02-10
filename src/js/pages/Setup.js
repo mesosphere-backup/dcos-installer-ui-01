@@ -55,6 +55,19 @@ class Setup extends mixin(StoreMixin) {
         master_list: null,
         agent_list: null,
         ip_detect_script: null,
+        public_ip_address: global.localStorage.getItem('publicHostname'),
+        ssh_user: null,
+        ssh_port: null,
+        ssh_key: null,
+        superuser_username: null,
+        superuser_password_hash: '',
+        zk_exhibitor_hosts: null,
+        zk_exhibitor_port: null
+      },
+      initialFormData: {
+        master_list: null,
+        agent_list: null,
+        ip_detect_script: null,
         ssh_user: null,
         ssh_port: null,
         ssh_key: null,
@@ -100,13 +113,13 @@ class Setup extends mixin(StoreMixin) {
 
   componentDidMount() {
     super.componentDidMount();
+    SetupStore.fetchConfig();
 
     let clickHandler = null;
-    let continueButtonEnabled = false;
+    let continueButtonEnabled = this.isFormReady();
 
-    if (this.isFormReady()) {
+    if (continueButtonEnabled) {
       clickHandler = this.handleSubmitClick;
-      continueButtonEnabled = true;
     }
 
     InstallerStore.setNextStep({
@@ -116,6 +129,15 @@ class Setup extends mixin(StoreMixin) {
       link: null,
       visible: true
     });
+  }
+
+  clearLocalValidationItem(key) {
+    let localValidationErrors = this.state.localValidationErrors;
+
+    if (localValidationErrors[key] != null) {
+      delete localValidationErrors[key];
+      this.setState({localValidationErrors});
+    }
   }
 
   onSetupStoreConfigFormCompletionChange() {
@@ -180,7 +202,10 @@ class Setup extends mixin(StoreMixin) {
       }
     });
 
-    this.setState({formData: displayedConfig});
+    this.setState({
+      formData: displayedConfig,
+      initialFormData: displayedConfig
+    });
   }
 
   getErrorAlert() {
@@ -196,7 +221,9 @@ class Setup extends mixin(StoreMixin) {
     let errors = SetupStore.get('displayedErrors');
     let localValidationErrors = this.state.localValidationErrors;
 
-    if (errors == null && Object.keys(localValidationErrors).length === 0) {
+    if (((this.state.formData[key] == null || this.state.formData[key] === '')
+      && (this.state.initialFormData[key] == null || this.state.initialFormData[key] === ''))
+      || (errors == null && Object.keys(localValidationErrors).length === 0)) {
       return null;
     }
 
@@ -281,8 +308,9 @@ class Setup extends mixin(StoreMixin) {
               </FormLabelContent>
             </FormLabel>
           ),
-          validationErrorText: 'Must be a valid IP address or hostname.',
-          validation: PUBLIC_HOSTNAME_VALIDATION,
+          showError: this.getErrors('public_ip_address'),
+          validationErrorText: this.getErrors('public_ip_address'),
+          validation: this.getValidationFn('public_ip_address'),
           value: this.state.formData.public_ip_address
         },
         {
@@ -522,23 +550,33 @@ class Setup extends mixin(StoreMixin) {
 
   getValidationFn(key, type) {
     return (fieldValue) => {
+      this.clearLocalValidationItem(key);
+
+      if ((this.state.formData[key] == null || this.state.formData[key] === '')
+        && (this.state.initialFormData[key] == null || this.state.initialFormData[key] === '')) {
+        return true;
+      }
+
       if (type === 'port' && fieldValue != null && fieldValue !== '') {
         if (parseInt(fieldValue) > 65535) {
-          this.setState({
-            localValidationErrors: {
-              [key]: 'Ports must be less than or equal to 65535'
-            }
-          });
+          let localValidationErrors = this.state.localValidationErrors;
+          localValidationErrors[key] = 'Ports must be less than or equal to 65535';
+          this.setState({localValidationErrors});
 
           return false;
-        } else {
-          let localValidationErrors = this.state.localValidationErrors;
-
-          if (localValidationErrors[key] != null) {
-            delete localValidationErrors[key];
-            this.setState({localValidationErrors});
-          }
         }
+
+        this.clearLocalValidationItem(key);
+      } else if (key === 'public_ip_address' && fieldValue != null && fieldValue !== '') {
+        if (PUBLIC_HOSTNAME_VALIDATION.test(fieldValue) || fieldValue === '' || fieldValue == null) {
+          return true;
+        }
+
+        let localValidationErrors = this.state.localValidationErrors;
+        localValidationErrors[key] = 'Invalid IP address.';
+        this.setState({localValidationErrors});
+
+        return false;
       }
 
       if (this.getErrors(key)) {
@@ -552,7 +590,7 @@ class Setup extends mixin(StoreMixin) {
   handleFormChange(formData, eventDetails) {
     let {eventType, fieldName, fieldValue} = eventDetails;
 
-    if (eventType === 'focus') {
+    if (eventType === 'focus' || fieldValue === '' || fieldValue == null) {
       return;
     }
 
@@ -580,6 +618,18 @@ class Setup extends mixin(StoreMixin) {
 
     let newFormData = this.getNewFormData({[fieldName]: fieldValue});
     this.setState({formData: newFormData});
+
+    if (this.isFormReady()) {
+      InstallerStore.setNextStep({
+        clickHandler: this.handleSubmitClick,
+        enabled: true
+      });
+    } else {
+      InstallerStore.setNextStep({
+        clickHandler: null,
+        enabled: false
+      });
+    }
   }
 
   handleUploadSuccess(destination) {
@@ -617,11 +667,6 @@ class Setup extends mixin(StoreMixin) {
     }
 
     let isFormReady = !emptyFormFields && SetupStore.get('completed');
-
-    InstallerStore.setNextStep({
-      clickHandler: this.handleSubmitClick,
-      enabled: isFormReady
-    });
 
     return isFormReady;
   }
