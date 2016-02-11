@@ -1,9 +1,10 @@
 import _ from 'lodash';
-import {Form} from 'reactjs-components';
+import {Dropdown, Form} from 'reactjs-components';
 import mixin from 'reactjs-mixin';
 /* eslint-disable no-unused-vars */
 import React from 'react';
 /* eslint-enable no-unused-vars */
+import ReactDOM from 'react-dom';
 import {StoreMixin} from 'mesosphere-shared-reactjs';
 
 import Config from '../config/Config';
@@ -15,6 +16,7 @@ import ErrorAlert from '../components/ErrorAlert';
 import FormLabel from '../components/FormLabel';
 import FormLabelContent from '../components/FormLabelContent';
 import InstallerStore from '../stores/InstallerStore';
+import IPDetectScripts from '../constants/IPDetectScripts';
 import Page from '../components/Page';
 import PageContent from '../components/PageContent';
 import PageSection from '../components/PageSection';
@@ -35,10 +37,11 @@ const PUBLIC_HOSTNAME_VALIDATION = /([0-9\.]+)|https?:\/\//;
 const METHODS_TO_BIND = [
   'getCurrentConfig',
   'getErrors',
+  'getUploadHandler',
   'getValidationFn',
   'handleFormChange',
+  'handleIPDetectSelection',
   'handleSubmitClick',
-  'handleUploadSuccess',
   'isFormReady',
   'isLastFormField',
   'submitFormData'
@@ -259,7 +262,7 @@ class Setup extends mixin(StoreMixin) {
               </FormLabelContent>
               <FormLabelContent position="right">
                 <Upload displayText="Upload .csv" extensions=".csv"
-                  onUploadFinish={this.handleUploadSuccess('master_list')} />
+                  onUploadFinish={this.getUploadHandler('master_list')} />
               </FormLabelContent>
             </FormLabel>
           ),
@@ -282,7 +285,7 @@ class Setup extends mixin(StoreMixin) {
               </FormLabelContent>
               <FormLabelContent position="right">
                 <Upload displayText="Upload .csv" extensions=".csv"
-                  onUploadFinish={this.handleUploadSuccess('agent_list')} />
+                  onUploadFinish={this.getUploadHandler('agent_list')} />
               </FormLabelContent>
             </FormLabel>
           ),
@@ -362,7 +365,7 @@ class Setup extends mixin(StoreMixin) {
             </FormLabelContent>
             <FormLabelContent position="right">
               <Upload displayText="Upload"
-                onUploadFinish={this.handleUploadSuccess('ssh_key')} />
+                onUploadFinish={this.getUploadHandler('ssh_key')} />
             </FormLabelContent>
           </FormLabel>
         ),
@@ -514,26 +517,37 @@ class Setup extends mixin(StoreMixin) {
           name: 'ip_detect_script',
           placeholder: 'IP Detect Script',
           showLabel: (
-            <FormLabel>
-              <FormLabelContent>
-                IP Detect Script
-                <Tooltip content={
-                    <span>
-                      Enter or upload a script that runs on each node in the
-                      cluster and outputs the node’s local IP address. <a
-                        href="https://docs.mesosphere.com/getting-started/installing/installing-enterprise-edition/#scrollNav-3"
-                        target="_blank">
-                        Learn more
-                      </a>.
-                    </span>
-                  }
-                  width={300} wrapText={true} />
-              </FormLabelContent>
-              <FormLabelContent position="right">
-                <Upload displayText="Upload"
-                  onUploadFinish={this.handleUploadSuccess('ip_detect_script')} />
-              </FormLabelContent>
-            </FormLabel>
+            <div>
+              <FormLabel>
+                <FormLabelContent position="left">
+                  IP Detect Script
+                  <Tooltip content={
+                      <span>
+                        Enter or upload a script that runs on each node in the
+                        cluster and outputs the node’s local IP address. <a
+                          href="https://docs.mesosphere.com/getting-started/installing/installing-enterprise-edition/#scrollNav-3"
+                          target="_blank">
+                          Learn more
+                        </a>.
+                      </span>
+                    }
+                    width={300} wrapText={true} />
+                </FormLabelContent>
+                <FormLabelContent position="right"
+                  supplementalClassName="hidden">
+                  <Upload displayText="Upload" ref="ipDetectUpload"
+                    onUploadFinish={this.getUploadHandler('ip_detect_script')} />
+                </FormLabelContent>
+              </FormLabel>
+              <Dropdown buttonClassName="button dropdown-toggle"
+                dropdownMenuClassName="dropdown-menu"
+                dropdownMenuListClassName="dropdown-menu-list"
+                items={this.getIPDetectOptions()}
+                onItemSelection={this.handleIPDetectSelection}
+                initialID="dropdown-label"
+                transition={false}
+                wrapperClassName="dropdown ip-detect-dropdown"/>
+            </div>
           ),
           showError: this.getErrors('ip_detect_script'),
           validation: this.getValidationFn('ip_detect_script'),
@@ -544,8 +558,43 @@ class Setup extends mixin(StoreMixin) {
     ];
   }
 
+  getIPDetectOptions() {
+    return [
+      {
+        className: 'hidden',
+        id: 'dropdown-label',
+        html: 'Select an IP detect script'
+      },
+      {
+        id: 'aws',
+        html: 'Amazon Web Services Script'
+      },
+      {
+        id: 'azure',
+        html: 'Azure Script'
+      },
+      {
+        id: 'gce',
+        html: 'GCE Script'
+      },
+      {
+        id: 'custom',
+        html: 'Custom Script'
+      }
+    ];
+  }
+
   getNewFormData(newFormData) {
     return _.extend({}, this.state.formData, newFormData);
+  }
+
+  getUploadHandler(destination) {
+    return (fileContents) => {
+      let formData = this.getNewFormData({[destination]: fileContents});
+
+      this.submitFormData({[destination]: fileContents});
+      this.setState({formData});
+    }
   }
 
   getValidationFn(key, type) {
@@ -632,11 +681,16 @@ class Setup extends mixin(StoreMixin) {
     }
   }
 
-  handleUploadSuccess(destination) {
-    return (fileContents) => {
-      let formData = this.getNewFormData({[destination]: fileContents});
+  handleIPDetectSelection(selection) {
+    let {id} = selection;
 
-      this.submitFormData({[destination]: fileContents});
+    if (id === 'custom') {
+      ReactDOM.findDOMNode(this.refs.ipDetectUpload.refs.uploadInput).click();
+    } else {
+      let formData = this.state.formData;
+      formData['ip_detect_script'] = IPDetectScripts[id];
+
+      this.submitFormData({'ip_detect_script': IPDetectScripts[id]});
       this.setState({formData});
     }
   }

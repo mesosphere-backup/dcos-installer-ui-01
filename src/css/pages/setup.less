@@ -1,0 +1,31 @@
+.ip-detect-dropdown {
+  display: block;
+
+  .dropdown-toggle {
+    &:extend(.form-control);
+    display: block;
+    padding-left: @base-spacing-unit * 1/2;
+    padding-right: @base-spacing-unit * 1/2;
+    position: relative;
+    text-align: left;
+    width: 100%;
+
+    .form-group-error & {
+      &:extend(.form-group.form-group-error .form-control);
+    }
+
+    &:after {
+      position: absolute;
+      top: 50%;
+      right: @base-spacing-unit * 1/2;
+    }
+  }
+
+  .dropdown-menu {
+    width: 100%;
+  }
+}
+
+.form-control[name="ip_detect_script"] {
+  display: none;
+}
