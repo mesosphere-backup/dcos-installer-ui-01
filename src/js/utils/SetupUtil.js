@@ -28,12 +28,12 @@ const SetupUtil = {
     if (hostData == null || hostData === '') {
       return {
         zkExhibitorHosts: null,
-        zkExhibitorPort: null
+        zkExhibitorPort: 2181
       };
     }
 
     let hosts = this.getArrayFromHostsString(hostData);
-    let port = hosts[0].split(':')[1];
+    let port = hosts[0].split(':')[1] || 2181;
 
     hosts.forEach(function (host, index) {
       hosts[index] = host.split(':')[0];
