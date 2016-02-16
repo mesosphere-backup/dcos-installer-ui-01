@@ -12,7 +12,7 @@
 @tooltip-arrow-border-width: 7px;
 @tooltip-arrow-offset: 8px;
 
-@tooltip-trigger-margin: @base-spacing-unit * 1/4;
+@tooltip-trigger-margin: @base-spacing-unit * 1/6;
 
 .tooltip-wrapper {
   display: inline-block;
@@ -68,7 +68,7 @@
       left: @tooltip-arrow-offset * -1px;
 
       &:after {
-        left: @tooltip-arrow-offset;
+        left: @tooltip-arrow-offset * 1.25;
       }
     }
 
@@ -76,7 +76,7 @@
       right: @tooltip-arrow-offset * -1px;
 
       &:after {
-        right: @tooltip-arrow-offset;
+        right: @tooltip-arrow-offset * 1.25;
       }
     }
   }
