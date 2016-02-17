@@ -256,8 +256,8 @@ class Setup extends mixin(StoreMixin) {
             <FormLabel>
               <FormLabelContent position="left">
                 Master IP Address List
-                <Tooltip content={'You can choose any target hosts as ' +
-                  'masters and agents. We recommend 3 masters for production ' +
+                <Tooltip content={'Choose any target hosts as masters and ' +
+                  'agents. We recommend 3 masters for production ' +
                   'environments, though 1 master is suitable for POC ' +
                   'applications.'} width={200} wrapText={true} />
               </FormLabelContent>
@@ -281,7 +281,7 @@ class Setup extends mixin(StoreMixin) {
             <FormLabel>
               <FormLabelContent>
                 Agent IP Address List
-                <Tooltip content={'You can choose any target hosts as agents.'}
+                <Tooltip content={'Choose any target hosts as agents.'}
                   width={200} wrapText={true} />
               </FormLabelContent>
               <FormLabelContent position="right">
@@ -326,7 +326,7 @@ class Setup extends mixin(StoreMixin) {
               <FormLabelContent>
                 SSH Username
                 <Tooltip content={'The SSH username must be the same for all ' +
-                  'target hosts. The only unacceptable username is None.'}
+                  'target hosts. The only unacceptable username is "None".'}
                   width={200} wrapText={true} />
               </FormLabelContent>
             </FormLabel>
@@ -610,7 +610,7 @@ class Setup extends mixin(StoreMixin) {
       if (type === 'port' && fieldValue != null && fieldValue !== '') {
         if (parseInt(fieldValue) > 65535) {
           let localValidationErrors = this.state.localValidationErrors;
-          localValidationErrors[key] = 'Ports must be less than or equal to 65535';
+          localValidationErrors[key] = 'Ports must be less than or equal to 65535.';
           this.setState({localValidationErrors});
 
           return false;
@@ -623,7 +623,7 @@ class Setup extends mixin(StoreMixin) {
         }
 
         let localValidationErrors = this.state.localValidationErrors;
-        localValidationErrors[key] = 'Invalid IP address.';
+        localValidationErrors[key] = 'Enter a valid IP address.';
         this.setState({localValidationErrors});
 
         return false;
