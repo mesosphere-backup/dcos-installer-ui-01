@@ -1,41 +1,23 @@
-import mixin from 'reactjs-mixin';
 import React from 'react';
-import {StoreMixin} from 'mesosphere-shared-reactjs';
 
 import FixedBar from '../components/FixedBar';
 import IconChevron from '../components/icons/IconChevron';
 import NavigationItem from '../components/NavigationItem';
 import NavigationItems from '../components/NavigationItems';
 import NavigationNextStep from './NavigationNextStep';
-import PreFlightStore from '../stores/PreFlightStore';
 
-class NavigationBar extends mixin(StoreMixin) {
-  constructor() {
-    super();
-
-    this.store_listeners = [
-      {
-        name: 'preFlight',
-        events: ['stateFinish']
-      }
-    ];
-  }
-
+class NavigationBar extends React.Component {
   getActiveRouteIndex(routes, activeRoute) {
     let activeRouteIndex = -1;
 
-    routes.forEach((route, index) => {
+    routes.forEach(function (route, index) {
       // We need to remove the prefixed slash when comparing path names.
-      if (route.path === this.getActiveRoutePath(activeRoute)) {
+      if (route.path === activeRoute.substr(1)) {
         activeRouteIndex = index;
       }
     });
 
     return activeRouteIndex;
-  }
-
-  getActiveRoutePath(route) {
-    return route.substr(1);
   }
 
   getNavigationItems(routes = [], activeRoute = '') {
@@ -45,7 +27,6 @@ class NavigationBar extends mixin(StoreMixin) {
         let isActive = index === activeRouteIndex;
         let isRouteComplete = index < activeRouteIndex;
         let chevron = <IconChevron isComplete={isRouteComplete} />;
-        let link = null;
 
         // We don't want to render the chevron for the last menu item. We are
         // subtracting two from routes.length because the last route is *.
@@ -53,16 +34,9 @@ class NavigationBar extends mixin(StoreMixin) {
           chevron = null;
         }
 
-        // Add a link back to the setup page when pre-flight is complete.
-        if (this.getActiveRoutePath(activeRoute) === 'pre-flight'
-          && route.path === 'setup' && PreFlightStore.isCompleted()) {
-          link = '/setup';
-        }
-
         return (
           <span key={index}>
-            <NavigationItem isComplete={isRouteComplete} isActive={isActive}
-              link={link}>
+            <NavigationItem isComplete={isRouteComplete} isActive={isActive}>
               {route.display}
             </NavigationItem>
             {chevron}
