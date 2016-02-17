@@ -6,6 +6,7 @@ import AdvancedConfigurationWarning from './AdvancedConfigurationWarning';
 import AlertPanel from './AlertPanel';
 import IconLoadingIndicator from './icons/IconLoadingIndicator';
 import InstallerStore from '../stores/InstallerStore';
+import PreFlightStore from '../stores/PreFlightStore';
 import SetupStore from '../stores/SetupStore';
 
 class EnforceStage extends mixin(StoreMixin) {
@@ -62,15 +63,31 @@ class EnforceStage extends mixin(StoreMixin) {
     }
 
     if (this.currentStageChanges >= 2) {
-      let nextStage = nextProps.routes[nextProps.routes.length - 1].path;
-      let currentStage = InstallerStore.get('currentStage') || null;
-      if (nextStage !== currentStage && currentStage !== null) {
-        this.context.router.push(`/${currentStage}`);
+      let stageState = {
+        nextStage: nextProps.routes[nextProps.routes.length - 1].path,
+        currentClientStage: this.props.routes[this.props.routes.length - 1].path,
+        currentStage: InstallerStore.get('currentStage') || null
+      };
+
+      if (this.isNavigationPrevented(stageState)) {
+        this.context.router.push(`/${stageState.currentStage}`);
         return false;
       }
     }
 
     return true;
+  }
+
+  isNavigationPrevented(stageState) {
+    if (stageState.currentClientStage === 'pre-flight'
+      && stageState.nextStage === 'setup' && PreFlightStore.isCompleted()) {
+      return false;
+    }
+
+    if (stageState.nextStage !== stageState.currentStage
+      && stageState.currentStage != null) {
+      return true;
+    }
   }
 
   onInstallerStoreCurrentStageChange() {
