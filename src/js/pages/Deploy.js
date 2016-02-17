@@ -192,6 +192,7 @@ class Deploy extends mixin(StoreMixin) {
                 nextText="Run Post-Flight"
                 onNextClick={PostFlightStore.beginStage.bind(PostFlightStore)}
                 onRetryClick={this.handleRetryClick.bind(this)}
+                showDisabled={true}
                 totalErrors={totalErrors} />
             </SectionFooter>
             <SectionFooter>
