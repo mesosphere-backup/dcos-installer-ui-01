@@ -44,7 +44,8 @@ const METHODS_TO_BIND = [
   'handleSubmitClick',
   'isFormReady',
   'isLastFormField',
-  'submitFormData'
+  'submitFormData',
+  'savePublicURL'
 ];
 
 class Setup extends mixin(StoreMixin) {
@@ -65,7 +66,7 @@ class Setup extends mixin(StoreMixin) {
         superuser_username: null,
         superuser_password_hash: '',
         zk_exhibitor_hosts: null,
-        zk_exhibitor_port: null
+        zk_exhibitor_port: 2181
       },
       initialFormData: {
         master_list: null,
@@ -626,6 +627,9 @@ class Setup extends mixin(StoreMixin) {
         this.setState({localValidationErrors});
 
         return false;
+      } else if (key === 'public_ip_address' && (fieldValue == null || fieldValue === '')) {
+        let newFormData = this.getNewFormData({public_ip_address: null});
+        this.setState({formData: newFormData});
       }
 
       if (this.getErrors(key)) {
@@ -638,6 +642,10 @@ class Setup extends mixin(StoreMixin) {
 
   handleFormChange(formData, eventDetails) {
     let {eventType, fieldName, fieldValue} = eventDetails;
+
+    if (eventType === 'blur' && fieldName === 'public_ip_address') {
+      this.savePublicURL(fieldValue);
+    }
 
     if (eventType === 'focus' || fieldValue === '' || fieldValue == null) {
       return;
@@ -696,13 +704,7 @@ class Setup extends mixin(StoreMixin) {
   }
 
   handleSubmitClick() {
-    let url = this.state.formData.public_ip_address;
-
-    if (!/^https?:\/\//.test(url)) {
-      url = `http://${url}`;
-    }
-
-    global.localStorage.setItem('publicHostname', url);
+    this.savePublicURL(this.state.formData.public_ip_address);
     this.setState({buttonText: 'Verifying Configuration...'});
     this.beginPreFlight();
   }
@@ -740,6 +742,14 @@ class Setup extends mixin(StoreMixin) {
     });
 
     return lastRemainingField;
+  }
+
+  savePublicURL(url) {
+    if (url != null && url !== '' && !/^https?:\/\//.test(url)) {
+      url = `http://${url}`;
+    }
+
+    global.localStorage.setItem('publicHostname', url);
   }
 
   submitFormData(formData) {
