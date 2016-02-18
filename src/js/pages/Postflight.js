@@ -97,11 +97,11 @@ class Postflight extends mixin(StoreMixin) {
     return `Checking ${hostCount} of ${total}`;
   }
 
-  getProgressBarLabel(type, completed, errors) {
+  getProgressBarLabel(type, completed, errors, totalOfType) {
     if (errors > 0 && completed) {
       let errorsText = StringUtil.pluralize('Error', errors);
-      let typeText = StringUtil.pluralize(type, errors);
-      return `${errorsText} with ${errors} ${typeText}`;
+      let typeText = StringUtil.pluralize(type, totalOfType);
+      return `${errorsText} with ${errors} of ${totalOfType} ${typeText}`;
     }
 
     if (completed) {

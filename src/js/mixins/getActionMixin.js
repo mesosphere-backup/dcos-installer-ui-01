@@ -30,6 +30,10 @@ function getActionMixin(stageID) {
     },
 
     isCompleted: function () {
+      if (!this.get('masters')) {
+        return false;
+      }
+
       let totalStarted = this.get('masters').totalStarted
         + this.get('agents').totalStarted;
       return this.isMasterCompleted() && this.isAgentCompleted()
