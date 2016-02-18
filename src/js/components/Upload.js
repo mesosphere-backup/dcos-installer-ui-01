@@ -31,12 +31,12 @@ class Upload extends React.Component {
   }
 
   handleUploadFinish(e) {
-    var result = e.target.result
+    var result = e.target.result;
     if (this.props.extensions === '.csv') {
       result = this.processCSVResult(result);
     }
 
-    this.props.onUploadFinish(e.target.result);
+    this.props.onUploadFinish(result);
     this.setState({uploading: false});
   }
 
@@ -44,6 +44,7 @@ class Upload extends React.Component {
     return result.replace(/[\n\r]+/mg, '')
       .split(',')
       .map(function (csvValue) { return csvValue.trim(); })
+      .filter(function (csvValue) { return csvValue.length > 0; })
       .join(', ');
   }
 
