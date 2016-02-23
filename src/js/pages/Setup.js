@@ -256,10 +256,9 @@ class Setup extends mixin(StoreMixin) {
             <FormLabel>
               <FormLabelContent position="left">
                 Master IP Address List
-                <Tooltip content={'Choose any target hosts as masters and ' +
-                  'agents. We recommend 3 masters for production ' +
-                  'environments, though 1 master is suitable for POC ' +
-                  'applications.'} width={200} wrapText={true} />
+                <Tooltip content={'The private IP addresses of the masters. ' +
+                  'We recommend a minimum of 3 masters.'} width={200}
+                  wrapText={true} />
               </FormLabelContent>
               <FormLabelContent position="right">
                 <Upload displayText="Upload .csv" extensions=".csv"
@@ -280,8 +279,8 @@ class Setup extends mixin(StoreMixin) {
           showLabel: (
             <FormLabel>
               <FormLabelContent>
-                Agent IP Address List
-                <Tooltip content={'Choose any target hosts as agents.'}
+                Agent Private IP List
+                <Tooltip content={'The private IP addresses of the agents.'}
                   width={200} wrapText={true} />
               </FormLabelContent>
               <FormLabelContent position="right">
