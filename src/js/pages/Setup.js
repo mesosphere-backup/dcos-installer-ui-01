@@ -306,8 +306,7 @@ class Setup extends mixin(StoreMixin) {
               <FormLabelContent>
                 Master Public IP
                 <Tooltip content={'The public IP address of a master that is ' +
-                  'accessible to the bootstrap node without a firewall. ' +
-                  'you have listed.'}
+                  'accessible to the bootstrap node without a firewall. '}
                   width={200} wrapText={true} />
               </FormLabelContent>
             </FormLabel>
