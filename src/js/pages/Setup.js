@@ -303,10 +303,9 @@ class Setup extends mixin(StoreMixin) {
           showLabel: (
             <FormLabel>
               <FormLabelContent>
-                Public IP Address
-                <Tooltip content={'A single master IP address that you can ' +
-                  'access. It can be the same as one of the master IP ' +
-                  'you have listed.'}
+                Master Public IP
+                <Tooltip content={'The public IP address of a master that is ' +
+                  'accessible to the bootstrap node without a firewall.'}
                   width={200} wrapText={true} />
               </FormLabelContent>
             </FormLabel>
@@ -436,8 +435,8 @@ class Setup extends mixin(StoreMixin) {
         {
           fieldType: 'textarea',
           name: 'zk_exhibitor_hosts',
-          placeholder: 'Please provide an IPv4 address or a comma-separated ' +
-            'list of 3 addresses.',
+          placeholder: 'Specify a comma-separated list of 1 to 3 ' +
+            'private IPv4 addresses.',
           showLabel: (
             <FormLabel>
               <FormLabelContent>
@@ -485,7 +484,7 @@ class Setup extends mixin(StoreMixin) {
         {
           fieldType: 'textarea',
           name: 'resolvers',
-          placeholder: 'Please provide a single address or a comma-separated ' +
+          placeholder: 'Provide a single address or a comma-separated ' +
             'list, e.g., 192.168.10.10, 10.0.0.1',
           showLabel: (
             <FormLabel>
