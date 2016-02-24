@@ -250,12 +250,12 @@ class Setup extends mixin(StoreMixin) {
         {
           fieldType: 'textarea',
           name: 'master_list',
-          placeholder: 'Please provide a comma-separated list of 1, 3, or 5 ' +
-            'IPv4 addresses.',
+          placeholder: 'Specify a comma-separated list of 1, 3, or 5 ' +
+            'private IPv4 addresses.',
           showLabel: (
             <FormLabel>
               <FormLabelContent position="left">
-                Master IP Address List
+                Master Private IP List
                 <Tooltip content={'The private IP addresses of the masters. ' +
                   'We recommend a minimum of 3 masters.'} width={200}
                   wrapText={true} />
@@ -274,8 +274,8 @@ class Setup extends mixin(StoreMixin) {
         {
           fieldType: 'textarea',
           name: 'agent_list',
-          placeholder: 'Please provide a comma-separated list of 1 to n ' +
-            'IPv4 addresses.',
+          placeholder: 'Specify a comma-separated list of 1 to n ' +
+            'private IPv4 addresses.',
           showLabel: (
             <FormLabel>
               <FormLabelContent>
@@ -299,7 +299,7 @@ class Setup extends mixin(StoreMixin) {
         {
           fieldType: 'text',
           name: 'public_ip_address',
-          placeholder: 'Specify one IPv4 address that you have access to.',
+          placeholder: 'Specify one IPv4 address.',
           showLabel: (
             <FormLabel>
               <FormLabelContent>
