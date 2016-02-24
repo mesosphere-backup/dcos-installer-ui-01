@@ -41,7 +41,7 @@ let PostFlightStore = Store.createStore({
   },
 
   processUpdateError: function () {
-    this.emit(EventTypes.POSTFLIGHT_STATE_CHANGE);
+    this.emit(EventTypes.POSTFLIGHT_STATE_ERROR);
   },
 
   processUpdateSuccess: function (data) {

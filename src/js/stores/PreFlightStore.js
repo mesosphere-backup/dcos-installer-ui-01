@@ -41,7 +41,7 @@ let PreFlightStore = Store.createStore({
   },
 
   processUpdateError: function () {
-    this.emit(EventTypes.PREFLIGHT_STATE_CHANGE);
+    this.emit(EventTypes.PREFLIGHT_STATE_ERROR);
   },
 
   processUpdateSuccess: function (data) {

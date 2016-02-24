@@ -41,7 +41,7 @@ let DeployStore = Store.createStore({
   },
 
   processUpdateError: function () {
-    this.emit(EventTypes.DEPLOY_STATE_CHANGE);
+    this.emit(EventTypes.DEPLOY_STATE_ERROR);
   },
 
   processUpdateSuccess: function (data) {

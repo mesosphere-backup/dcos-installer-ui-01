@@ -4,13 +4,33 @@ import React from 'react';
 import Page from './Page';
 
 class AlertPanel extends React.Component {
+  getIcon() {
+    if (this.props.icon) {
+      return this.props.icon;
+    }
+
+    return (
+      <i className={this.props.iconClassName}></i>
+    );
+  }
+
   render() {
     let classes = classnames(this.props.className, this.props.layoutClassName);
+    let icon = null;
+
+    if (this.props.icon || this.props.iconClassName) {
+      icon = (
+        <div className={this.props.iconWrapperClassName}>
+          {this.getIcon()}
+        </div>
+      );
+    }
 
     return (
       <Page inverse={this.props.inverse} size={this.props.pageSize}
         pageName={this.props.pageName}>
         <div className={classes}>
+          {icon}
           <div className={this.props.headingWrapperClassName}>
             <h2 className={this.props.headingClassName}>
               {this.props.heading}
@@ -27,9 +47,10 @@ class AlertPanel extends React.Component {
 
 AlertPanel.defaultProps = {
   className: 'alert-panel',
-  contentClassName: 'panel-content text-align-center',
+  contentClassName: 'panel-content text-align-center short-top',
   headingClassName: 'text-align-center inverse flush',
   headingWrapperClassName: 'panel-heading panel-heading-large text-align-center',
+  iconWrapperClassName: 'panel-heading panel-heading-icon text-align-center',
   inverse: true,
   layoutClassName: 'flex-box flex-box-fit-height fill-height panel',
   pageName: 'alert',
@@ -44,6 +65,9 @@ AlertPanel.propTypes = {
   heading: React.PropTypes.node,
   headingClassName: React.PropTypes.string,
   headingWrapperClassName: React.PropTypes.string,
+  icon: React.PropTypes.node,
+  iconClassName: React.PropTypes.string,
+  iconWrapperClassName: React.PropTypes.string,
   inverse: React.PropTypes.bool,
   layoutClassName: React.PropTypes.string,
   pageName: React.PropTypes.string,

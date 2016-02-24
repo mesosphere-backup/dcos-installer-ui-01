@@ -10,8 +10,10 @@ const ListenersDescription = {
     store: DeployStore,
     events: {
       stateChange: EventTypes.DEPLOY_STATE_CHANGE,
+      stateError: EventTypes.DEPLOY_STATE_ERROR,
       stateFinish: EventTypes.DEPLOY_STATE_FINISH,
-      beginSuccess: EventTypes.DEPLOY_BEGIN_SUCCESS
+      beginSuccess: EventTypes.DEPLOY_BEGIN_SUCCESS,
+      beginError: EventTypes.DEPLOY_BEGIN_ERROR
     },
     unmountWhen: function () {
       return true;
@@ -39,8 +41,10 @@ const ListenersDescription = {
     store: PostFlightStore,
     events: {
       stateChange: EventTypes.POSTFLIGHT_STATE_CHANGE,
+      stateError: EventTypes.POSTFLIGHT_STATE_ERROR,
       stateFinish: EventTypes.POSTFLIGHT_STATE_FINISH,
-      beginSuccess: EventTypes.POSTFLIGHT_BEGIN_SUCCESS
+      beginSuccess: EventTypes.POSTFLIGHT_BEGIN_SUCCESS,
+      beginError: EventTypes.POSTFLIGHT_BEGIN_ERROR
     },
     unmountWhen: function () {
       return true;
@@ -52,6 +56,7 @@ const ListenersDescription = {
     store: PreFlightStore,
     events: {
       stateChange: EventTypes.PREFLIGHT_STATE_CHANGE,
+      stateError: EventTypes.PREFLIGHT_STATE_ERROR,
       stateFinish: EventTypes.PREFLIGHT_STATE_FINISH,
       beginSuccess: EventTypes.PREFLIGHT_BEGIN_SUCCESS,
       beginError: EventTypes.PREFLIGHT_BEGIN_ERROR

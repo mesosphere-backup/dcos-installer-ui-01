@@ -5,9 +5,12 @@ import {StoreMixin} from 'mesosphere-shared-reactjs';
 import AdvancedConfigurationWarning from './AdvancedConfigurationWarning';
 import AlertPanel from './AlertPanel';
 import IconLoadingIndicator from './icons/IconLoadingIndicator';
+import IconLostPlanet from './icons/IconLostPlanet';
 import InstallerStore from '../stores/InstallerStore';
 import PreFlightStore from '../stores/PreFlightStore';
 import SetupStore from '../stores/SetupStore';
+
+const METHODS_TO_BIND = ['handleServerError', 'handleServerSuccess'];
 
 class EnforceStage extends mixin(StoreMixin) {
   constructor() {
@@ -21,8 +24,7 @@ class EnforceStage extends mixin(StoreMixin) {
       currentStage: null,
       receivedConfigType: false,
       receivedCurrentConfig: false,
-      receivedCurrentConfigStatus: false,
-      serverError: false
+      receivedCurrentConfigStatus: false
     };
 
     this.store_listeners = [
@@ -43,11 +45,39 @@ class EnforceStage extends mixin(StoreMixin) {
           'currentConfigChangeSuccess',
           'currentConfigChangeError'
         ]
+      },
+      {
+        name: 'deploy',
+        events: [
+          'beginSuccess',
+          'stateChange',
+          'stateError'
+        ]
+      },
+      {
+        name: 'preFlight',
+        events: [
+          'beginSuccess',
+          'stateChange',
+          'stateError'
+        ]
+      },
+      {
+        name: 'postFlight',
+        events: [
+          'beginSuccess',
+          'stateChange',
+          'stateError'
+        ]
       }
     ];
 
     this.firstMount = true;
     this.currentStageChanges = 0;
+
+    METHODS_TO_BIND.forEach((method) => {
+      this[method] = this[method].bind(this);
+    });
   }
 
   componentDidMount() {
@@ -111,11 +141,47 @@ class EnforceStage extends mixin(StoreMixin) {
   }
 
   onSetupStoreCurrentConfigChangeError() {
-    this.setState({serverError: true});
+    this.handleServerError();
   }
 
   onSetupStoreCurrentConfigChangeSuccess() {
     this.setState({receivedCurrentConfig: true});
+  }
+
+  onDeployStoreStateError() {
+    this.handleServerError();
+  }
+
+  onDeployStoreStateChange() {
+    this.handleServerSuccess();
+  }
+
+  onDeployStoreBeginSuccess() {
+    this.handleServerSuccess();
+  }
+
+  onPreFlightStoreStateError() {
+    this.handleServerError();
+  }
+
+  onPreFlightStoreStateChange() {
+    this.handleServerSuccess();
+  }
+
+  onPreFlightStoreBeginSuccess() {
+    this.handleServerSuccess();
+  }
+
+  onPostFlightStoreStateError() {
+    this.handleServerError();
+  }
+
+  onPostFlightStoreStateChange() {
+    this.handleServerSuccess();
+  }
+
+  onPostFlightStoreBeginSuccess() {
+    this.handleServerSuccess();
   }
 
   isLoading() {
@@ -141,12 +207,25 @@ class EnforceStage extends mixin(StoreMixin) {
   getServerError() {
     return (
       <AlertPanel content="Please try again later."
-        heading="Cannot Connect to Server" />
+        heading="Cannot Connect to Server"
+        icon={<IconLostPlanet />} />
     );
   }
 
+  handleServerSuccess() {
+    this.setState({serverErrorCount: 0});
+  }
+
+  handleServerError() {
+    this.setState({serverErrorCount: this.state.serverErrorCount + 1});
+  }
+
+  hasError() {
+    return this.state.serverErrorCount >= 3;
+  }
+
   render() {
-    if (this.state.serverError) {
+    if (this.hasError()) {
       return this.getServerError();
     }
 
