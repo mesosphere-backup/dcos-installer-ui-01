@@ -65,6 +65,30 @@ class EnforceStage extends mixin(StoreMixin) {
           'currentConfigChangeSuccess',
           'currentConfigChangeError'
         ]
+      },
+      {
+        name: 'deploy',
+        events: [
+          'stateError',
+          'beginSuccess',
+          'stateChange'
+        ]
+      },
+      {
+        name: 'postFlight',
+        events: [
+          'stateError',
+          'beginSuccess',
+          'stateChange'
+        ]
+      },
+      {
+        name: 'preFlight',
+        events: [
+          'stateError',
+          'beginSuccess',
+          'stateChange'
+        ]
       }
     ];
 
