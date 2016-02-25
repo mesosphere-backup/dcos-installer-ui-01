@@ -12,7 +12,6 @@ import ConfigActions from '../events/ConfigActions';
 import ConfigFormFields from '../constants/ConfigFormFields';
 import ConfigFormFieldsRequiringInput from
   '../constants/ConfigFormFieldsRequiringInput';
-import EnforceStage from '../components/EnforceStage';
 import ErrorAlert from '../components/ErrorAlert';
 import FormLabel from '../components/FormLabel';
 import FormLabelContent from '../components/FormLabelContent';

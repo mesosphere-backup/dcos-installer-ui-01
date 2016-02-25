@@ -11,6 +11,25 @@ import PreFlightStore from '../stores/PreFlightStore';
 import SetupStore from '../stores/SetupStore';
 
 const METHODS_TO_BIND = ['handleServerError', 'handleServerSuccess'];
+const MONITORED_STAGE_STORES = ['deploy', 'preFlight', 'postFlight'];
+const MONITORED_STAGE_ERROR_EVENTS = ['stateError'];
+const MONITORED_STAGE_SUCCESS_EVENTS = ['beginSuccess', 'stateChange'];
+
+function getEventsFromStoreListeners() {
+  let errorEventHandlers = [];
+  let successEventHandlers = [];
+
+  MONITORED_STAGE_STORES.forEach((store) => {
+    MONITORED_STAGE_ERROR_EVENTS.forEach((storeEvent) => {
+      errorEventHandlers.push(this.store_getChangeFunctionName(store, storeEvent));
+    });
+    MONITORED_STAGE_SUCCESS_EVENTS.forEach((storeEvent) => {
+      successEventHandlers.push(this.store_getChangeFunctionName(store, storeEvent));
+    });
+  });
+
+  return {errorEventHandlers, successEventHandlers};
+}
 
 class EnforceStage extends mixin(StoreMixin) {
   constructor() {
@@ -45,30 +64,6 @@ class EnforceStage extends mixin(StoreMixin) {
           'currentConfigChangeSuccess',
           'currentConfigChangeError'
         ]
-      },
-      {
-        name: 'deploy',
-        events: [
-          'beginSuccess',
-          'stateChange',
-          'stateError'
-        ]
-      },
-      {
-        name: 'preFlight',
-        events: [
-          'beginSuccess',
-          'stateChange',
-          'stateError'
-        ]
-      },
-      {
-        name: 'postFlight',
-        events: [
-          'beginSuccess',
-          'stateChange',
-          'stateError'
-        ]
       }
     ];
 
@@ -77,6 +72,17 @@ class EnforceStage extends mixin(StoreMixin) {
 
     METHODS_TO_BIND.forEach((method) => {
       this[method] = this[method].bind(this);
+    });
+
+    let {errorEventHandlers, successEventHandlers} =
+      getEventsFromStoreListeners.call(this);
+
+    errorEventHandlers.forEach((event) => {
+      this[event] = this.handleServerError;
+    });
+
+    successEventHandlers.forEach((event) => {
+      this[event] = this.handleServerSuccess;
     });
   }
 
@@ -146,42 +152,6 @@ class EnforceStage extends mixin(StoreMixin) {
 
   onSetupStoreCurrentConfigChangeSuccess() {
     this.setState({receivedCurrentConfig: true});
-  }
-
-  onDeployStoreStateError() {
-    this.handleServerError();
-  }
-
-  onDeployStoreStateChange() {
-    this.handleServerSuccess();
-  }
-
-  onDeployStoreBeginSuccess() {
-    this.handleServerSuccess();
-  }
-
-  onPreFlightStoreStateError() {
-    this.handleServerError();
-  }
-
-  onPreFlightStoreStateChange() {
-    this.handleServerSuccess();
-  }
-
-  onPreFlightStoreBeginSuccess() {
-    this.handleServerSuccess();
-  }
-
-  onPostFlightStoreStateError() {
-    this.handleServerError();
-  }
-
-  onPostFlightStoreStateChange() {
-    this.handleServerSuccess();
-  }
-
-  onPostFlightStoreBeginSuccess() {
-    this.handleServerSuccess();
   }
 
   isLoading() {
