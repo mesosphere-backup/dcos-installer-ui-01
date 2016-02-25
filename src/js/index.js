@@ -29,8 +29,8 @@ ReactDOM.render((
         <Route path="deploy" display="Deploy" component={Deploy} />
         <Route path="post-flight" display="Post-Flight" component={Postflight} />
         <Route path="success" display="Success" component={Success} />
-        <Route path="*" component={NotFound} />
       </Route>
+      <Route path="*" component={NotFound} />
     </Route>
   </Router>
 ), document.getElementById('application'));
