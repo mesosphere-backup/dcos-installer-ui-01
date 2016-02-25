@@ -187,11 +187,12 @@ class EnforceStage extends mixin(StoreMixin) {
 
   handleServerSuccess() {
     this.setState({serverErrorCount: 0});
+    console.log('success', this.state.serverErrorCount);
   }
 
   handleServerError() {
-    console.log(this.state.serverErrorCount);
     this.setState({serverErrorCount: this.state.serverErrorCount + 1});
+    console.log('error', this.state.serverErrorCount);
   }
 
   hasError() {
