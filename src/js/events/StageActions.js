@@ -16,10 +16,14 @@ const StageActions = {
         });
       },
       error: function (xhr) {
+        console.log('action error');
         AppDispatcher.handleServerAction({
           type: ActionTypes[`${capitalizedStage}_UPDATE_ERROR`],
           data: RequestUtil.parseResponseBody(xhr)
         });
+      },
+      complete: function (response, status) {
+        console.log('action complete', status);
       }
     });
   },
