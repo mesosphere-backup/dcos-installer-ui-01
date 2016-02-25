@@ -43,7 +43,8 @@ class EnforceStage extends mixin(StoreMixin) {
       currentStage: null,
       receivedConfigType: false,
       receivedCurrentConfig: false,
-      receivedCurrentConfigStatus: false
+      receivedCurrentConfigStatus: false,
+      serverErrorCount: 0
     };
 
     this.store_listeners = [
@@ -78,10 +79,12 @@ class EnforceStage extends mixin(StoreMixin) {
       getEventsFromStoreListeners.call(this);
 
     errorEventHandlers.forEach((event) => {
+      console.log(event);
       this[event] = this.handleServerError;
     });
 
     successEventHandlers.forEach((event) => {
+      console.log(event);
       this[event] = this.handleServerSuccess;
     });
   }
@@ -187,6 +190,7 @@ class EnforceStage extends mixin(StoreMixin) {
   }
 
   handleServerError() {
+    console.log(this.state.serverErrorCount);
     this.setState({serverErrorCount: this.state.serverErrorCount + 1});
   }
 
