@@ -1,27 +1,24 @@
 import React from 'react';
 
-import Page from '../components/Page';
-import PageContent from '../components/PageContent';
-import PageSection from '../components/PageSection';
-import SectionHeader from '../components/SectionHeader';
-import SectionHeaderIcon from '../components/SectionHeaderIcon';
-import SectionHeaderPrimary from '../components/SectionHeaderPrimary';
+import AlertPanel from '../components/AlertPanel';
+import IconLostPlanet from '../components/icons/IconLostPlanet';
 
 module.exports = class NotFound extends React.Component {
+  handleBackClick() {
+    window.history.back();
+  }
+
   render() {
+    let alertContent = (
+      <span>
+        <a onClick={this.handleBackClick} href="#">Go back</a> to the previous page.
+      </span>
+    );
+
     return (
-      <Page hasNavigationBar={true}>
-        <PageContent>
-          <PageSection>
-            <SectionHeader>
-              <SectionHeaderIcon/>
-              <SectionHeaderPrimary>
-                We couldn't find what you were looking for.
-              </SectionHeaderPrimary>
-            </SectionHeader>
-          </PageSection>
-        </PageContent>
-      </Page>
+      <AlertPanel content={alertContent}
+        heading="Page Not Found"
+        icon={<IconLostPlanet />} />
     );
   }
 }
