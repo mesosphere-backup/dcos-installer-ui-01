@@ -358,9 +358,9 @@ class Setup extends mixin(StoreMixin) {
         showLabel: (
           <FormLabel>
             <FormLabelContent>
-              SSH Key
-              <Tooltip content={'The SSH key must be the same on all target ' +
-                'hosts.'} width={200} wrapText={true} />
+              Private SSH Key
+              <Tooltip content={'Enter the private SSH key.'}
+                width={200} wrapText={true} />
             </FormLabelContent>
             <FormLabelContent position="right">
               <Upload displayText="Upload"

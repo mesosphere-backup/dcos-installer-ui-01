@@ -1,14 +1,17 @@
-import {Link} from 'react-router';
 import React from 'react';
 
 import AlertPanel from '../components/AlertPanel';
 import IconLostPlanet from '../components/icons/IconLostPlanet';
 
 module.exports = class NotFound extends React.Component {
+  handleBackClick() {
+    window.history.back();
+  }
+
   render() {
     let alertContent = (
       <span>
-        Please return to <Link to="/">the beginning</Link>.
+        <a onClick={this.handleBackClick} href="#">Go back</a> to the previous page.
       </span>
     );
 
