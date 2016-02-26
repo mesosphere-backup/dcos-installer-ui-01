@@ -440,7 +440,7 @@ class Setup extends mixin(StoreMixin) {
           showLabel: (
             <FormLabel>
               <FormLabelContent>
-                Bootstrapping Zookeeper IP Address(es)
+                ZooKeeper for Exhibitor Private IP
                 <Tooltip content={
                     <span>
                       Exhibitor uses this Zookeeper cluster to orchestrate its
@@ -468,7 +468,7 @@ class Setup extends mixin(StoreMixin) {
           showLabel: (
             <FormLabel>
               <FormLabelContent>
-                Bootstrapping Zookeeper Port
+                ZooKeeper for Exhibitor Port
                 <Tooltip content={'We recommend leaving this set to the ' +
                   'default port, 2181.'} width={200} wrapText={true} />
               </FormLabelContent>
