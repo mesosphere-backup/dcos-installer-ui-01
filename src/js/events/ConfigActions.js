@@ -21,9 +21,6 @@ const ConfigActions = {
             response: RequestUtil.parseResponseBody(xhr)
           }
         });
-      },
-      complete: function (response, status) {
-        console.log('config complete', status);
       }
     });
   },
