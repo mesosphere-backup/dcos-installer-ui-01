@@ -25,7 +25,7 @@
     "react-dom": "^0.14.6",
     "react-gemini-scrollbar": "^2.1.0",
     "react-router": "^2.0.0-rc5",
-    "reactjs-components": "^0.14.0",
+    "reactjs-components": "^0.14.0-beta.7",
     "reactjs-mixin": "0.0.2",
     "statics": "^0.1.0",
     "zxcvbn": "^4.2.0"
