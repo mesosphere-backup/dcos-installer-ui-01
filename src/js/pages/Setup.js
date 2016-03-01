@@ -26,7 +26,6 @@ import SectionAction from '../components/SectionAction';
 import SectionBody from '../components/SectionBody';
 import SectionHeader from '../components/SectionHeader';
 import SectionHeaderPrimary from '../components/SectionHeaderPrimary';
-import SectionHeaderPrimarySubheading from '../components/SectionHeaderPrimarySubheading';
 import SectionFooter from '../components/SectionFooter';
 import SetupStore from '../stores/SetupStore';
 import SetupUtil from '../utils/SetupUtil';
@@ -374,12 +373,8 @@ class Setup extends mixin(StoreMixin) {
         value: this.state.formData.ssh_key
       },
       <SectionHeader>
-        <SectionHeaderPrimary align="left" layoutClassName="short short-top">
+        <SectionHeaderPrimary align="left" layoutClassName="short-top flush-bottom">
           DCOS Environment Settings
-          <SectionHeaderPrimarySubheading>
-            Choose a username and password for the DCOS administrator. This user
-            will be able to manage and add users.
-          </SectionHeaderPrimarySubheading>
         </SectionHeaderPrimary>
       </SectionHeader>,
       [
@@ -768,12 +763,8 @@ class Setup extends mixin(StoreMixin) {
             <SectionBody>
               {this.getErrorAlert()}
               <SectionHeader>
-                <SectionHeaderPrimary align="left">
+                <SectionHeaderPrimary align="left" layoutClassName="flush">
                   Deployment Settings
-                  <SectionHeaderPrimarySubheading>
-                    Enter the IP addresses of your target hosts and their SSH
-                    settings.
-                  </SectionHeaderPrimarySubheading>
                 </SectionHeaderPrimary>
               </SectionHeader>
               <Form definition={this.getFormDefinition()}
