@@ -415,7 +415,7 @@ class Setup extends mixin(StoreMixin) {
           value: this.state.formData.superuser_password_hash
         },
         {
-          fieldType: 'checkbox',
+          fieldType: 'checkboxMultiple',
           name: 'reveal_password',
           showLabel: <p>&nbsp;</p>,
           value: [
