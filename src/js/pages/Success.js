@@ -62,7 +62,7 @@ module.exports = class Success extends mixin(StoreMixin) {
 
     if (masterStatus != null && agentStatus != null) {
       totalMasters = masterStatus.totalMasters;
-      totalAgents = agentStatus.totalAgents;
+      totalAgents = agentStatus.totalAgents - agentStatus.errors;
     }
 
     let masterNodeText = StringUtil.pluralize('Node', totalMasters);

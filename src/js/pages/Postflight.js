@@ -135,7 +135,7 @@ class Postflight extends mixin(StoreMixin) {
     return (
       <ProgressBar
         detail={this.getProgressBarDetail(status, completed, totalOfType)}
-        label={this.getProgressBarLabel(type, completed, status.errors)}
+        label={this.getProgressBarLabel(type, completed, status.errors, totalOfType)}
         progress={progress} state={state} />
     );
   }
