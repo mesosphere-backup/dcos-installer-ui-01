@@ -10,12 +10,16 @@ require('./utils/StoreMixinConfig');
 import Application from './components/Application';
 import EnforceStage from './components/EnforceStage';
 import Begin from './pages/Begin';
+import Config from './config/Config';
 import Deploy from './pages/Deploy';
 import NotFound from './pages/NotFound';
+import PluginSDK from 'PluginSDK';
 import Postflight from './pages/Postflight';
 import Preflight from './pages/Preflight';
 import Setup from './pages/Setup';
 import Success from './pages/Success';
+
+PluginSDK.initialize(Config.pluginsConfig);
 
 const appHistory = useRouterHistory(createHashHistory)({queryKey: false});
 

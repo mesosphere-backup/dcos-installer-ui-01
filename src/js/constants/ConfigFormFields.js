@@ -8,8 +8,6 @@ const REQUIRED_FORM_DATA = [
   'superuser_username',
   'superuser_password',
   'resolvers',
-  'zk_exhibitor_hosts',
-  'zk_exhibitor_port',
   'exhibitor_zk_hosts',
   'ip_detect_path',
   'ip_detect_script'

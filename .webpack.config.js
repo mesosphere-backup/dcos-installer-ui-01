@@ -1,12 +1,13 @@
 var config = require('./.build.config');
+var path = require('path');
 
-var webpackDevtool = 'source-map';
+var webpackDevtool = '#source-map';
 var webpackWatch = false;
 if (process.env.NODE_ENV === 'development' ||
   process.env.NODE_ENV === 'testing') {
   // eval-source-map is the same thing as source-map,
   // except with caching. Don't use in production.
-  webpackDevtool = 'eval-source-map';
+  webpackDevtool = '#eval-source-map';
   webpackWatch = true;
 }
 
@@ -17,11 +18,9 @@ module.exports = {
   module: {
     loaders: [{
       exclude: /node_modules/,
-      loader: 'babel',
+      loader: 'babel-loader',
       query: {
-        cacheDirectory: true,
-        plugins: ['transform-runtime'],
-        presets: ['es2015', 'react']
+        cacheDirectory: true
       },
       test: /\.js$/
     }],
@@ -35,7 +34,12 @@ module.exports = {
     }]
   },
   resolve: {
-    extensions: ['', '.js']
+    root: path.resolve(__dirname),
+    extensions: ['', '.js'],
+    alias: {
+      PluginSDK: 'src/js/plugin-bridge/PluginSDK',
+      PluginTestUtils: 'src/js/plugin-bridge/PluginTestUtils'
+    }
   },
   watch: webpackWatch
 };
