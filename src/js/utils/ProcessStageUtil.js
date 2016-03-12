@@ -38,6 +38,10 @@ function processHostState(hostState, host, role, state) {
     stateType.completed = false;
   }
 
+  if (hostStatus === 'not_running') {
+    stateType.completed = false;
+  }
+
   if (hostStatus === 'failed' || hostStatus === 'terminated') {
     stateType.errors += 1;
 

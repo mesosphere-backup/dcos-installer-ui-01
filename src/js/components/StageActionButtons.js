@@ -4,6 +4,14 @@ import React from 'react';
 import IconRetry from './icons/IconRetry';
 
 class StageActionButtons extends React.Component {
+  handleNextClick(disabled, event) {
+    if (disabled) {
+      return;
+    }
+
+    this.props.onNextClick(event);
+  }
+
   getRetryButton() {
     return (
       <button
@@ -25,7 +33,9 @@ class StageActionButtons extends React.Component {
     );
 
     return (
-      <button key="next" onClick={this.props.onNextClick} className={classes}>
+      <button key="next"
+        onClick={this.handleNextClick.bind(this, disabled)}
+        className={classes}>
         {this.props.nextText}
       </button>
     );

@@ -71,7 +71,7 @@ let InstallerStore = Store.createStore({
 
     switch (action.type) {
       case ActionTypes.CURRENT_STAGE_CHANGE_SUCCESS:
-        InstallerStore.processCurrentStage(action.data);
+        InstallerStore.processCurrentStage(action.data.current_action);
         break;
       case ActionTypes.TOTAL_AGENTS_SUCCESS:
         InstallerStore.set({totalAgents: action.data});
