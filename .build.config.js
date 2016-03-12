@@ -1,10 +1,12 @@
 var srcFolder = './src';
 var distFolderAssets = '../dcos_installer/templates/assets';
 var distFolderHTML = '../dcos_installer/templates';
+var externalPluginsTmpFolder = './.external_plugins';
 
 var dirs = {
   src: srcFolder,
   dist: distFolderAssets,
+  pluginsTmp: externalPluginsTmpFolder,
   srcJS: srcFolder + '/js',
   distJS: distFolderAssets,
   srcCSS: srcFolder + '/css',

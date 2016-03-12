@@ -20,7 +20,7 @@ import IPDetectScripts from '../constants/IPDetectScripts';
 import Page from '../components/Page';
 import PageContent from '../components/PageContent';
 import PageSection from '../components/PageSection';
-import PasswordStrengthMeter from '../components/PasswordStrengthMeter';
+import PluginSDK from 'PluginSDK';
 import PreFlightStore from '../stores/PreFlightStore';
 import SectionAction from '../components/SectionAction';
 import SectionBody from '../components/SectionBody';
@@ -31,6 +31,8 @@ import SetupStore from '../stores/SetupStore';
 import SetupUtil from '../utils/SetupUtil';
 import Tooltip from '../components/Tooltip';
 import Upload from '../components/Upload';
+
+let {Hooks} = PluginSDK;
 
 const PUBLIC_HOSTNAME_VALIDATION = /([0-9\.]+)|https?:\/\//;
 const METHODS_TO_BIND = [
@@ -51,7 +53,7 @@ class Setup extends mixin(StoreMixin) {
   constructor() {
     super();
 
-    this.state = {
+    let state = {
       buttonText: 'Run Pre-Flight',
       errorAlert: null,
       formData: {
@@ -61,11 +63,7 @@ class Setup extends mixin(StoreMixin) {
         public_ip_address: global.localStorage.getItem('publicHostname'),
         ssh_user: null,
         ssh_port: null,
-        ssh_key: null,
-        superuser_username: null,
-        superuser_password_hash: '',
-        zk_exhibitor_hosts: null,
-        zk_exhibitor_port: 2181
+        ssh_key: null
       },
       initialFormData: {
         master_list: null,
@@ -73,15 +71,12 @@ class Setup extends mixin(StoreMixin) {
         ip_detect_script: null,
         ssh_user: null,
         ssh_port: null,
-        ssh_key: null,
-        superuser_username: null,
-        superuser_password_hash: '',
-        zk_exhibitor_hosts: null,
-        zk_exhibitor_port: null
+        ssh_key: null
       },
-      localValidationErrors: {},
-      passwordFieldType: 'password'
+      localValidationErrors: {}
     };
+
+    this.state = Hooks.applyFilter('state', state);
 
     this.store_listeners = [
       {
@@ -104,6 +99,9 @@ class Setup extends mixin(StoreMixin) {
     METHODS_TO_BIND.forEach((method) => {
       this[method] = this[method].bind(this);
     });
+
+    Hooks.addAction('getErrors', this.getErrors.bind(this));
+    Hooks.addAction('getValidationFn', this.getValidationFn.bind(this));
   }
 
   componentWillMount() {
@@ -191,19 +189,11 @@ class Setup extends mixin(StoreMixin) {
       } else {
         displayedConfig[key] = mergedData[key];
       }
-
-      if (key === 'exhibitor_zk_hosts') {
-        let {zkExhibitorHosts, zkExhibitorPort} =
-          SetupUtil.getSeparatedZKHostData(mergedData[key]);
-
-        displayedConfig.zk_exhibitor_hosts = zkExhibitorHosts;
-        displayedConfig.zk_exhibitor_port = zkExhibitorPort;
-      }
-
-      if (key === 'superuser_password_hash') {
-        displayedConfig.superuser_password_hash = '';
-      }
     });
+
+    displayedConfig = Hooks.applyFilter('currentConfig',
+      displayedConfig,
+      mergedData);
 
     this.setState({
       formData: displayedConfig,
@@ -225,13 +215,10 @@ class Setup extends mixin(StoreMixin) {
     let localValidationErrors = this.state.localValidationErrors;
 
     if (((this.state.formData[key] == null || this.state.formData[key] === '')
-      && (this.state.initialFormData[key] == null || this.state.initialFormData[key] === ''))
+      && (this.state.initialFormData[key] == null
+      || this.state.initialFormData[key] === ''))
       || (errors == null && Object.keys(localValidationErrors).length === 0)) {
       return null;
-    }
-
-    if (key === 'zk_exhibitor_hosts') {
-      key = 'exhibitor_zk_hosts';
     }
 
     if (localValidationErrors[key]) {
@@ -244,7 +231,7 @@ class Setup extends mixin(StoreMixin) {
   }
 
   getFormDefinition() {
-    return [
+    let formDefintion = [
       [
         {
           fieldType: 'textarea',
@@ -379,104 +366,6 @@ class Setup extends mixin(StoreMixin) {
       </SectionHeader>,
       [
         {
-          fieldType: 'text',
-          name: 'superuser_username',
-          placeholder: 'e.g. johnappleseed',
-          showLabel: (
-            <FormLabel>
-              <FormLabelContent>
-                Username
-                <Tooltip content={'The only unacceptable username is "None".'}
-                  width={200} wrapText={true} />
-              </FormLabelContent>
-            </FormLabel>
-          ),
-          showError: this.getErrors('superuser_username'),
-          validationErrorText: this.getErrors('superuser_username'),
-          validation: this.getValidationFn('superuser_username'),
-          value: this.state.formData.superuser_username
-        },
-        {
-          fieldType: this.state.passwordFieldType,
-          name: 'superuser_password_hash',
-          renderer: (inputField) => {
-            return (
-              <div className="password-strength-wrapper">
-                {inputField}
-                <PasswordStrengthMeter
-                  password={this.state.formData.superuser_password_hash}/>
-              </div>
-            );
-          },
-          showLabel: 'Password',
-          showError: this.getErrors('superuser_password_hash'),
-          validationErrorText: this.getErrors('superuser_password_hash'),
-          validation: this.getValidationFn('superuser_password_hash'),
-          value: this.state.formData.superuser_password_hash
-        },
-        {
-          fieldType: 'checkboxMultiple',
-          name: 'reveal_password',
-          showLabel: <p>&nbsp;</p>,
-          value: [
-            {
-              name: 'reveal_password_checkbox',
-              label: 'Reveal Password'
-            }
-          ]
-        }
-      ],
-      [
-        {
-          fieldType: 'textarea',
-          name: 'zk_exhibitor_hosts',
-          placeholder: 'Specify a comma-separated list of 1 to 3 ' +
-            'private IPv4 addresses.',
-          showLabel: (
-            <FormLabel>
-              <FormLabelContent>
-                ZooKeeper for Exhibitor Private IP
-                <Tooltip content={
-                    <span>
-                      Exhibitor uses this Zookeeper cluster to orchestrate its
-                      configuration and to recover the master hosts if they
-                      fail. The Zookeeper cluster should be separate from your
-                      target cluster to enable disaster recovery. If HA is
-                      critical, specify three hosts. <a
-                        href="http://zookeeper.apache.org/doc/r3.1.2/zookeeperAdmin.html"
-                        target="_blank">
-                      Learn more</a>.
-                    </span>
-                  }
-                  width={300} wrapText={true} />
-              </FormLabelContent>
-            </FormLabel>
-          ),
-          showError: this.getErrors('zk_exhibitor_hosts'),
-          validationErrorText: this.getErrors('zk_exhibitor_hosts'),
-          validation: this.getValidationFn('zk_exhibitor_hosts'),
-          value: this.state.formData.zk_exhibitor_hosts
-        },
-        {
-          fieldType: 'text',
-          name: 'zk_exhibitor_port',
-          showLabel: (
-            <FormLabel>
-              <FormLabelContent>
-                ZooKeeper for Exhibitor Port
-                <Tooltip content={'We recommend leaving this set to the ' +
-                  'default port, 2181.'} width={200} wrapText={true} />
-              </FormLabelContent>
-            </FormLabel>
-          ),
-          showError: this.getErrors('zk_exhibitor_port', 'port'),
-          validation: this.getValidationFn('zk_exhibitor_port', 'port'),
-          validationErrorText: this.getErrors('zk_exhibitor_port'),
-          value: this.state.formData.zk_exhibitor_port
-        }
-      ],
-      [
-        {
           fieldType: 'textarea',
           name: 'resolvers',
           placeholder: 'Provide a single address or a comma-separated ' +
@@ -550,6 +439,8 @@ class Setup extends mixin(StoreMixin) {
         }
       ]
     ];
+
+    return Hooks.applyFilter('FormDefinition', formDefintion)
   }
 
   getIPDetectOptions() {
@@ -655,16 +546,10 @@ class Setup extends mixin(StoreMixin) {
       this.submitFormData.flush();
     }
 
-    if (eventType === 'multipleChange' && fieldName === 'reveal_password') {
-      let passwordFieldType = this.state.passwordFieldType;
-      if (fieldValue.checked) {
-        passwordFieldType = 'text';
-      } else {
-        passwordFieldType = 'password';
-      }
-
-      this.setState({passwordFieldType});
-    }
+    this.setState(Hooks.applyFilter('handleFormChange',
+      this.state,
+      formData,
+      eventDetails));
 
     let newFormData = this.getNewFormData({[fieldName]: fieldValue});
     this.setState({formData: newFormData});
@@ -746,9 +631,7 @@ class Setup extends mixin(StoreMixin) {
   }
 
   submitFormData(formData) {
-    let preparedData = SetupUtil.prepareDataForAPI(
-      formData, this.state.formData
-    );
+    let preparedData = SetupUtil.prepareDataForAPI(formData);
 
     if (preparedData) {
       ConfigActions.updateConfig(preparedData);

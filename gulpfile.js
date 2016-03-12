@@ -1,15 +1,19 @@
 var autoprefixer = require('gulp-autoprefixer');
 var browserSync = require('browser-sync');
 var colorLighten = require('less-color-lighten');
+var changed = require('gulp-changed');
 var connect = require('gulp-connect');
+var del = require('del');
 var eslint = require('gulp-eslint');
 var gulp = require('gulp');
 var gulpif = require('gulp-if');
 var gutil = require('gulp-util');
 var less = require('gulp-less');
+var mkdirp = require('mkdirp');
 var cssNano = require('gulp-cssnano');
+var path = require('path');
 var replace = require('gulp-replace');
-var spawn = require('child_process').spawn;
+var runSequence = require('run-sequence');
 var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
 var webpack = require('webpack');
@@ -20,11 +24,62 @@ var webpackConfig = require('./.webpack.config');
 
 var development = process.env.NODE_ENV === 'development';
 
-function browserSyncReload () {
+var devBuild = development || (process.env.NODE_ENV === 'testing');
+var appConfig = require('./src/js/config/Config');
+
+if (devBuild) {
+  try {
+    appConfig = require('./src/js/config/Config.dev');
+  } catch (err) {
+    // no-op
+  }
+}
+
+var pluginsGlob = [
+  appConfig.externalPluginsDirectory + '/**/*.*'
+];
+
+function browserSyncReload() {
   if (development) {
     browserSync.reload();
   }
 }
+// Watches for delete in external plugins directory and deletes counterpart in
+// DCOS-UI directory
+function deletePluginFile(event) {
+  if (event.type === 'deleted') {
+    var filePathFromPlugins = path.relative(
+      path.resolve(appConfig.externalPluginsDirectory), event.path);
+
+    var destFilePath = path.resolve(
+      config.dirs.pluginsTmp, filePathFromPlugins);
+
+    del.sync(destFilePath);
+    webpackFn(browserSyncReload);
+  }
+}
+
+// Make temp plugins directory if doesn't exist
+mkdirp(config.dirs.pluginsTmp, function () {
+  console.log('Created ' + config.dirs.pluginsTmp);
+});
+
+// Clean out plugins in destination folder
+gulp.task('clean:external-plugins', function () {
+  return del([config.dirs.pluginsTmp + '/**/*']);
+});
+// Copy over all
+gulp.task('copy:external-plugins', ['clean:external-plugins'], function () {
+  return gulp.src(pluginsGlob)
+    .pipe(gulp.dest(config.dirs.pluginsTmp));
+});
+
+// Copy over changed files
+gulp.task('copy:changed-external-plugins', function () {
+  return gulp.src(pluginsGlob)
+    .pipe(changed(config.dirs.pluginsTmp))
+    .pipe(gulp.dest(config.dirs.pluginsTmp));
+});
 
 gulp.task('browsersync', function () {
   browserSync.init({
@@ -40,10 +95,13 @@ gulp.task('browsersync', function () {
 });
 
 // Create a function so we can use it inside of webpack's watch function.
-function eslintFn () {
-  return gulp.src([config.dirs.srcJS + '/**/*.?(js|jsx)'])
-    .pipe(eslint())
-    .pipe(eslint.formatEach('stylish', process.stderr));
+function eslintFn() {
+  return gulp.src([
+    config.dirs.pluginsTmp + '/**/*.?(js|jsx)',
+    config.dirs.srcJS + '/**/*.?(js|jsx)'
+  ])
+  .pipe(eslint())
+  .pipe(eslint.formatEach('stylish', process.stderr));
 };
 gulp.task('eslint', eslintFn);
 
@@ -59,10 +117,10 @@ gulp.task('favicon', function () {
 
 gulp.task('images', function () {
   return gulp.src([
-      config.dirs.srcImg + '/**/*.*',
-      '!' + config.dirs.srcImg + '/**/_exports/**/*.*'
-    ])
-    .pipe(gulp.dest(config.dirs.distImg));
+    config.dirs.srcImg + '/**/*.*',
+    '!' + config.dirs.srcImg + '/**/_exports/**/*.*'
+  ])
+  .pipe(gulp.dest(config.dirs.distImg));
 });
 
 gulp.task('html', function () {
@@ -79,8 +137,8 @@ gulp.task('less', function () {
       plugins: [colorLighten]
     }))
     .on('error', function (err) {
-        gutil.log(err);
-        this.emit('end');
+      gutil.log(err);
+      this.emit('end');
     })
     .pipe(autoprefixer())
     .pipe(gulpif(development, sourcemaps.write()))
@@ -103,14 +161,14 @@ gulp.task('minify-js', ['replace-js-strings'], function () {
     .pipe(gulp.dest(config.dirs.distJS));
 });
 
-function replaceJsStringsFn () {
+function replaceJsStringsFn() {
   return gulp.src(config.files.distJS)
     .pipe(replace('@@VERSION', packageInfo.version))
     .pipe(replace('@@ENV', process.env.NODE_ENV))
     .pipe(gulp.dest(config.dirs.distJS))
     .on('end', browserSyncReload);
 };
-gulp.task('replace-js-strings', ['webpack'], replaceJsStringsFn);
+gulp.task('replace-js-strings', replaceJsStringsFn);
 
 gulp.task('server', function () {
   connect.server({
@@ -123,12 +181,15 @@ gulp.task('watch', function () {
   gulp.watch(config.files.srcHTML, ['html']);
   gulp.watch(config.dirs.srcCSS + '/**/*.less', ['less']);
   gulp.watch(config.dirs.srcImg + '/**/*.*', ['images']);
+  var watcher = gulp.watch(pluginsGlob, ['copy:changed-external-plugins']);
+  watcher.on('change', deletePluginFile);
   // Why aren't we watching any JS files? Because we use webpack's
   // internal watch, which is faster due to insane caching.
 });
 
-// Use webpack to compile jsx into js.
-gulp.task('webpack', ['eslint'], function () {
+function webpackFn(callback) {
+  var firstRun = true;
+
   webpack(webpackConfig, function (err, stats) {
     if (err) {
       throw new gutil.PluginError('webpack', err);
@@ -142,15 +203,44 @@ gulp.task('webpack', ['eslint'], function () {
       timing: true
     }));
 
+    if (firstRun) {
+      firstRun = false;
+      if (callback) {
+        callback();
+      }
+    } else {
+      // This runs after webpack's internal watch rebuild.
+      replaceJsStringsFn();
+    }
     eslintFn();
-    replaceJsStringsFn();
   });
+}
+gulp.task('default', function (callback) {
+  runSequence(
+    'copy:external-plugins',
+    ['replace-js-strings', 'less', 'images', 'html'],
+    'webpack',
+    'eslint',
+    callback);
 });
 
-gulp.task('default', ['webpack', 'eslint', 'replace-js-strings', 'less', 'fonts', 'favicon', 'images', 'html']);
+gulp.task('livereload', function (callback) {
+  runSequence(
+    'default',
+    'browsersync',
+    'watch',
+    callback
+  );
+});
 
-gulp.task('dist', ['default', 'minify-css', 'minify-js']);
-
+gulp.task('dist', function (callback) {
+  runSequence(
+    'default',
+    'minify-css',
+    'minify-js',
+    callback
+  );
+});
+// Use webpack to compile jsx into js.
+gulp.task('webpack', webpackFn);
 gulp.task('serve', ['server', 'default', 'watch']);
-
-gulp.task('livereload', ['default', 'browsersync', 'watch']);

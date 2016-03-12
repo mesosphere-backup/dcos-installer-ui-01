@@ -122,9 +122,7 @@ let SetupStore = Store.createStore({
     let errors = this.get('errors');
 
     Object.keys(data).forEach((key) => {
-      if (key === 'zk_exhibitor_hosts' || key === 'zk_exhibitor_port') {
-        key = 'exhibitor_zk_hosts';
-      } else if (key === 'ip_detect_script') {
+      if (key === 'ip_detect_script') {
         // Clear the error on both ip_detect_script and ip_detect_path
         delete(displayedErrors['ip_detect_path']);
         delete(errors['ip_detect_path']);

@@ -1,8 +1,10 @@
-let Config = {
+var Config = {
   apiPrefix: '/api/v1/',
   apiRequestThrottle: 1000,
   environment: '@@ENV',
-  rootUrl: ''
+  rootUrl: '',
+  externalPluginsDirectory: '../dcos-installer-ui-plugins-private',
+  pluginsConfig: {}
 };
 
 if (Config.environment === 'development') {
@@ -12,4 +14,12 @@ if (Config.environment === 'development') {
   Config = Util.extend(Config, ConfigDev);
 }
 
+if (Config.environment === 'production') {
+  var Util = require('../utils/Util');
+  var ConfigProd = require('./Config.production.js');
+
+  Config = Util.extend(Config, ConfigProd);
+}
+
 module.exports = Config;
+
