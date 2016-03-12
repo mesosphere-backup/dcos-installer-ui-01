@@ -1,0 +1,53 @@
+{
+  "chain_name": "pre-flight",
+  "hosts": {
+    "52.10.40.23:22": {
+      "commands": [
+        
+      ],
+      "host_status": "success",
+      "tags": {
+        "role": "master"
+      }
+    },
+    "52.24.115.54:23": {
+      "commands": [
+        
+      ],
+      "host_status": "success",
+      "tags": {
+        "role": "master"
+      }
+    },
+    "52.24.115.54:24": {
+      "commands": [
+        
+      ],
+      "host_status": "success",
+      "tags": {
+        "role": "agent"
+      }
+    },
+    "52.24.115.54:25": {
+      "commands": [
+        
+      ],
+      "host_status": "success",
+      "tags": {
+        "role": "agent"
+      }
+    },
+    "52.24.115.54:26": {
+      "commands": [
+        
+      ],
+      "host_status": "success",
+      "tags": {
+        "role": "agent"
+      }
+    }
+  },
+  "total_agents": 3,
+  "total_hosts": 5,
+  "total_masters": 2
+}

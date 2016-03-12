@@ -1,0 +1,16 @@
+{
+  "master_list": "default master list",
+  "agent_list": "default agent list",
+  "ssh_user": "default ssh user",
+  "ssh_port": "default ssh port",
+  "ssh_key": "default ssh key",
+  "ssh_key_path": "default ssh key path",
+  "superuser_username": "default username",
+  "superuser_password": "",
+  "resolvers": "default resolver",
+  "zk_exhibitor_hosts": "",
+  "zk_exhibitor_port": "",
+  "exhibitor_zk_hosts": "",
+  "ip_detect_path": "",
+  "ip_detect_script": ""
+}
