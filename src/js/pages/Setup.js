@@ -191,9 +191,9 @@ class Setup extends mixin(StoreMixin) {
       }
     });
 
-    displayedConfig = Hooks.applyFilter('currentConfig',
-      displayedConfig,
-      mergedData);
+    displayedConfig = Hooks.applyFilter(
+      'currentConfig', displayedConfig, mergedData
+    );
 
     this.setState({
       formData: displayedConfig,
@@ -546,10 +546,9 @@ class Setup extends mixin(StoreMixin) {
       this.submitFormData.flush();
     }
 
-    this.setState(Hooks.applyFilter('handleFormChange',
-      this.state,
-      formData,
-      eventDetails));
+    this.setState(Hooks.applyFilter(
+      'handleFormChange', this.state, formData, eventDetails
+    ));
 
     let newFormData = this.getNewFormData({[fieldName]: fieldValue});
     this.setState({formData: newFormData});
