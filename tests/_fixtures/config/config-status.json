@@ -1,0 +1,16 @@
+{
+  "master_list": "default master error",
+  "agent_list": "default agent error",
+  "ssh_user": "default ssh user error",
+  "ssh_port": "default ssh port error",
+  "ssh_key": "default ssh key error",
+  "ssh_key_path": "default ssh key path error",
+  "superuser_username": "default username error",
+  "superuser_password": "default password error",
+  "resolvers": "default resolver error",
+  "zk_exhibitor_hosts": "default zk hosts error",
+  "zk_exhibitor_port": "default zk port error",
+  "exhibitor_zk_hosts": "exhibitor hosts error",
+  "ip_detect_path": "ip detect path error",
+  "ip_detect_script": "ip detect script error"
+}
