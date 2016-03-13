@@ -1,6 +1,6 @@
 var srcFolder = './src';
-var distFolderAssets = '../dcos_installer/templates/assets';
-var distFolderHTML = '../dcos_installer/templates';
+var distFolderAssets = './dist/templates/assets';
+var distFolderHTML = './dist/templates';
 var externalPluginsTmpFolder = './.external_plugins';
 
 var dirs = {
