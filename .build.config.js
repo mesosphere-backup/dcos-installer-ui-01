@@ -1,6 +1,6 @@
 var srcFolder = './src';
-var distFolderAssets = './dist/templates/assets';
-var distFolderHTML = './dist/templates';
+var distFolderAssets = './dist/assets';
+var distFolderHTML = './dist';
 var externalPluginsTmpFolder = './.external_plugins';
 
 var dirs = {
