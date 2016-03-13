@@ -218,7 +218,7 @@ function webpackFn(callback) {
 gulp.task('default', function (callback) {
   runSequence(
     'copy:external-plugins',
-    ['replace-js-strings', 'less', 'images', 'html'],
+    ['replace-js-strings', 'less', 'images', 'fonts', 'favicon', 'html'],
     'webpack',
     'eslint',
     callback);
