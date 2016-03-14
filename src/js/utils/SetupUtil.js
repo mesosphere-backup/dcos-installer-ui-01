@@ -4,7 +4,7 @@ const SetupUtil = {
       return string;
     }
 
-    return string.replace(/[^0-9\.\,\:]/g,'').split(',');
+    return string.replace(/\s/g,'').split(',');
   },
 
   getStringFromHostsArray(array) {
