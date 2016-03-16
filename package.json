@@ -1,6 +1,6 @@
 {
   "name": "dcos-installer-ui",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Mesosphere DCOS Installer UI",
   "main": "./bin/www",
   "author": "Mesosphere Web Team",
