@@ -546,12 +546,11 @@ class Setup extends mixin(StoreMixin) {
       this.submitFormData.flush();
     }
 
-    this.setState(Hooks.applyFilter(
-      'handleFormChange', this.state, formData, eventDetails
-    ));
-
     let newFormData = this.getNewFormData({[fieldName]: fieldValue});
-    this.setState({formData: newFormData});
+
+    this.setState(Hooks.applyFilter(
+      'handleFormChange', this.state, newFormData, eventDetails
+    ));
 
     if (this.isFormReady()) {
       InstallerStore.setNextStep({
