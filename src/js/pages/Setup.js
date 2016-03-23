@@ -547,9 +547,10 @@ class Setup extends mixin(StoreMixin) {
     }
 
     let newFormData = this.getNewFormData({[fieldName]: fieldValue});
+    let newState = _.extend({}, this.state, {formData: newFormData});
 
     this.setState(Hooks.applyFilter(
-      'handleFormChange', this.state, newFormData, eventDetails
+      'handleFormChange', newState, eventDetails
     ));
 
     if (this.isFormReady()) {
