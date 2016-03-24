@@ -209,15 +209,18 @@ class Setup extends mixin(StoreMixin) {
     return null;
   }
 
-  getErrors(key) {
+  getErrors(key, opts = {}) {
     let error = null;
-    let errors = SetupStore.get('displayedErrors');
+    let errors = SetupStore.get('displayedErrors') || {};
     let localValidationErrors = this.state.localValidationErrors;
 
-    if (((this.state.formData[key] == null || this.state.formData[key] === '')
-      && (this.state.initialFormData[key] == null
-      || this.state.initialFormData[key] === ''))
-      || (errors == null && Object.keys(localValidationErrors).length === 0)) {
+    let isFieldCurrentlyEmpty = this.state.formData[key] == null || this.state.formData[key] === '';
+    let isFieldInitiallyEmpty = this.state.initialFormData[key] == null || this.state.initialFormData[key] === '';
+    let isErrorsEmpty = errors == null && Object.keys(localValidationErrors).length === 0;
+
+    let shouldSuppressErrors = (isFieldCurrentlyEmpty && isFieldInitiallyEmpty) || isErrorsEmpty;
+
+    if (shouldSuppressErrors && opts.suppressErrors !== false) {
       return null;
     }
 
@@ -236,7 +239,7 @@ class Setup extends mixin(StoreMixin) {
         {
           fieldType: 'textarea',
           name: 'master_list',
-          placeholder: 'Specify a comma-separated list of 1, 3, or 5 ' +
+          placeholder: 'Specify a newline-separated list of 1, 3, or 5 ' +
             'private IPv4 addresses.',
           showLabel: (
             <FormLabel>
@@ -247,20 +250,23 @@ class Setup extends mixin(StoreMixin) {
                   wrapText={true} />
               </FormLabelContent>
               <FormLabelContent position="right">
-                <Upload displayText="Upload .csv" extensions=".csv"
-                  onUploadFinish={this.getUploadHandler('master_list')} />
+                <Tooltip content={'CSVs must be newline delimited.'}
+                  width={200} wrapText={true}>
+                  <Upload displayText="Upload .csv" extensions=".csv"
+                    onUploadFinish={this.getUploadHandler('master_list', 'csv')} />
+                </Tooltip>
               </FormLabelContent>
             </FormLabel>
           ),
-          showError: this.getErrors('master_list'),
-          validationErrorText: this.getErrors('master_list'),
+          showError: this.getErrors('master_list', {suppressErrors: false}),
+          validationErrorText: this.getErrors('master_list', {suppressErrors: false}),
           validation: this.getValidationFn('master_list'),
           value: this.state.formData.master_list
         },
         {
           fieldType: 'textarea',
           name: 'agent_list',
-          placeholder: 'Specify a comma-separated list of 1 to n ' +
+          placeholder: 'Specify a newline-separated list of 1 to n ' +
             'private IPv4 addresses.',
           showLabel: (
             <FormLabel>
@@ -270,13 +276,16 @@ class Setup extends mixin(StoreMixin) {
                   width={200} wrapText={true} />
               </FormLabelContent>
               <FormLabelContent position="right">
-                <Upload displayText="Upload .csv" extensions=".csv"
-                  onUploadFinish={this.getUploadHandler('agent_list')} />
+                <Tooltip content={'CSVs must be newline delimited.'}
+                  width={200} wrapText={true}>
+                  <Upload displayText="Upload .csv" extensions=".csv"
+                    onUploadFinish={this.getUploadHandler('agent_list', 'csv')} />
+                </Tooltip>
               </FormLabelContent>
             </FormLabel>
           ),
-          showError: this.getErrors('agent_list'),
-          validationErrorText: this.getErrors('agent_list'),
+          showError: this.getErrors('agent_list', {suppressErrors: false}),
+          validationErrorText: this.getErrors('agent_list', {suppressErrors: false}),
           validation: this.getValidationFn('agent_list'),
           value: this.state.formData.agent_list
         }
@@ -332,8 +341,8 @@ class Setup extends mixin(StoreMixin) {
               </FormLabelContent>
             </FormLabel>
           ),
-          showError: this.getErrors('ssh_port', 'port'),
-          validationErrorText: this.getErrors('ssh_port', 'port'),
+          showError: this.getErrors('ssh_port'),
+          validationErrorText: this.getErrors('ssh_port'),
           validation: this.getValidationFn('ssh_port', 'port'),
           value: this.state.formData.ssh_port
         }
@@ -473,12 +482,36 @@ class Setup extends mixin(StoreMixin) {
     return _.extend({}, this.state.formData, newFormData);
   }
 
-  getUploadHandler(destination) {
-    return (fileContents) => {
-      let formData = this.getNewFormData({[destination]: fileContents});
+  getUploadHandler(destinationKey, fileType) {
+    let localValidationErrors = this.state.localValidationErrors;
 
-      this.submitFormData({[destination]: fileContents});
-      this.setState({formData});
+    return (fileContents) => {
+      let fileContentsError = false;
+
+      if (fileType === 'csv') {
+        fileContents.some(function (csvEntry) {
+          if (csvEntry.indexOf(',') > -1) {
+            fileContentsError = true;
+            return true;
+          }
+          return false;
+        });
+
+        if (!fileContentsError) {
+          fileContents = fileContents.join(', ');
+        }
+      }
+
+      if (fileContentsError) {
+        fileContents = '';
+        localValidationErrors[destinationKey] = 'CSVs must not contain commas.';
+      } else {
+        delete(localValidationErrors[destinationKey]);
+        this.submitFormData({[destinationKey]: fileContents});
+      }
+
+      let formData = this.getNewFormData({[destinationKey]: fileContents});
+      this.setState({formData, localValidationErrors});
     }
   }
 

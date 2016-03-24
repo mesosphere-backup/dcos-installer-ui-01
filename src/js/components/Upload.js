@@ -41,11 +41,10 @@ class Upload extends React.Component {
   }
 
   processCSVResult(result) {
-    return result.replace(/[\n\r]+/mg, '')
-      .split(',')
+    return result.replace(/[\"\']+/mg, '')
+      .split('\n')
       .map(function (csvValue) { return csvValue.trim(); })
-      .filter(function (csvValue) { return csvValue.length > 0; })
-      .join(', ');
+      .filter(function (csvValue) { return csvValue.length > 0; });
   }
 
   uploadFile(file) {
