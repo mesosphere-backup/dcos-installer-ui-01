@@ -27,6 +27,7 @@ import SectionBody from '../components/SectionBody';
 import SectionHeader from '../components/SectionHeader';
 import SectionHeaderPrimary from '../components/SectionHeaderPrimary';
 import SectionFooter from '../components/SectionFooter';
+import SetupFormConfirmation from '../components/SetupFormConfirmation';
 import SetupStore from '../stores/SetupStore';
 import SetupUtil from '../utils/SetupUtil';
 import Tooltip from '../components/Tooltip';
@@ -42,7 +43,9 @@ const METHODS_TO_BIND = [
   'getValidationFn',
   'handleFormChange',
   'handleIPDetectSelection',
+  'handleSubmitCancel',
   'handleSubmitClick',
+  'handleSubmitConfirm',
   'isFormReady',
   'isLastFormField',
   'submitFormData',
@@ -55,6 +58,7 @@ class Setup extends mixin(StoreMixin) {
 
     let state = {
       buttonText: 'Run Pre-Flight',
+      confirmModalOpen: false,
       errorAlert: null,
       formData: {
         master_list: null,
@@ -73,7 +77,8 @@ class Setup extends mixin(StoreMixin) {
         ssh_port: null,
         ssh_key: null
       },
-      localValidationErrors: {}
+      localValidationErrors: {},
+      submitRequestPending: false
     };
 
     this.state = Hooks.applyFilter('state', state);
@@ -163,13 +168,22 @@ class Setup extends mixin(StoreMixin) {
   }
 
   onPreFlightStoreBeginSuccess() {
-    this.setState({buttonText: 'Continuing to Pre-Flight'});
+    this.setState({
+      buttonText: 'Continuing to Pre-Flight',
+      confirmModalOpen: false,
+      submitRequestPending: false
+    });
     this.context.router.push('/pre-flight');
   }
 
   onPreFlightStoreBeginError(data) {
     let error = data.errors || 'An unknown error occurred. Please check the command line for details.';
-    this.setState({buttonText: 'Run Pre-Flight', errorAlert: error});
+    this.setState({
+      buttonText: 'Run Pre-Flight',
+      errorAlert: error,
+      confirmModalOpen: false,
+      submitRequestPending: false
+    });
     this.refs.page.scrollToTop();
   }
 
@@ -450,7 +464,7 @@ class Setup extends mixin(StoreMixin) {
       ]
     ];
 
-    return Hooks.applyFilter('FormDefinition', formDefintion)
+    return Hooks.applyFilter('FormDefinition', formDefintion);
   }
 
   getIPDetectOptions() {
@@ -608,8 +622,19 @@ class Setup extends mixin(StoreMixin) {
   }
 
   handleSubmitClick() {
+    this.setState({confirmModalOpen: true});
+  }
+
+  handleSubmitCancel() {
+    this.setState({confirmModalOpen: false, submitRequestPending: false});
+  }
+
+  handleSubmitConfirm() {
     this.savePublicURL(this.state.formData.public_ip_address);
-    this.setState({buttonText: 'Verifying Configuration...'});
+    this.setState({
+      buttonText: 'Verifying Configuration...',
+      submitRequestPending: true
+    });
     this.beginPreFlight();
   }
 
@@ -676,6 +701,10 @@ class Setup extends mixin(StoreMixin) {
                   Deployment Settings
                 </SectionHeaderPrimary>
               </SectionHeader>
+              <SetupFormConfirmation open={this.state.confirmModalOpen}
+                handleButtonCancel={this.handleSubmitCancel}
+                handleButtonConfirm={this.handleSubmitConfirm}
+                pendingRequest={this.state.submitRequestPending} />
               <Form definition={this.getFormDefinition()}
                 onChange={this.handleFormChange} />
             </SectionBody>
