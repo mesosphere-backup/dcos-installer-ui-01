@@ -82,7 +82,7 @@ let SetupStore = Store.createStore({
 
     Object.keys(displayedErrors).forEach((key) => {
       if (this.isValueEmpty(currentConfig[key])) {
-        delete(displayedErrors[key]);
+        delete displayedErrors[key];
       }
     });
 

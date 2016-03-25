@@ -209,7 +209,7 @@ class Setup extends mixin(StoreMixin) {
     return null;
   }
 
-  getErrors(key, opts = {}) {
+  getErrors(key) {
     let error = null;
     let errors = SetupStore.get('displayedErrors') || {};
     let localValidationErrors = this.state.localValidationErrors;
@@ -218,9 +218,9 @@ class Setup extends mixin(StoreMixin) {
     let isFieldInitiallyEmpty = this.state.initialFormData[key] == null || this.state.initialFormData[key] === '';
     let isErrorsEmpty = errors == null && Object.keys(localValidationErrors).length === 0;
 
-    let shouldSuppressErrors = (isFieldCurrentlyEmpty && isFieldInitiallyEmpty) || isErrorsEmpty;
+    let shouldSuppressErrors = ((isFieldCurrentlyEmpty && isFieldInitiallyEmpty) || isErrorsEmpty) && localValidationErrors[key] == null;
 
-    if (shouldSuppressErrors && opts.suppressErrors !== false) {
+    if (shouldSuppressErrors) {
       return null;
     }
 
@@ -229,6 +229,7 @@ class Setup extends mixin(StoreMixin) {
     } else if (errors[key]) {
       error = errors[key];
     }
+
 
     return error;
   }
@@ -258,8 +259,8 @@ class Setup extends mixin(StoreMixin) {
               </FormLabelContent>
             </FormLabel>
           ),
-          showError: this.getErrors('master_list', {suppressErrors: false}),
-          validationErrorText: this.getErrors('master_list', {suppressErrors: false}),
+          showError: this.getErrors('master_list'),
+          validationErrorText: this.getErrors('master_list'),
           validation: this.getValidationFn('master_list'),
           value: this.state.formData.master_list
         },
@@ -284,8 +285,8 @@ class Setup extends mixin(StoreMixin) {
               </FormLabelContent>
             </FormLabel>
           ),
-          showError: this.getErrors('agent_list', {suppressErrors: false}),
-          validationErrorText: this.getErrors('agent_list', {suppressErrors: false}),
+          showError: this.getErrors('agent_list'),
+          validationErrorText: this.getErrors('agent_list'),
           validation: this.getValidationFn('agent_list'),
           value: this.state.formData.agent_list
         }
@@ -489,12 +490,8 @@ class Setup extends mixin(StoreMixin) {
       let fileContentsError = false;
 
       if (fileType === 'csv') {
-        fileContents.some(function (csvEntry) {
-          if (csvEntry.indexOf(',') > -1) {
-            fileContentsError = true;
-            return true;
-          }
-          return false;
+        fileContentsError = fileContents.some(function (csvEntry) {
+          return csvEntry.indexOf(',') > -1;
         });
 
         if (!fileContentsError) {
@@ -503,10 +500,10 @@ class Setup extends mixin(StoreMixin) {
       }
 
       if (fileContentsError) {
-        fileContents = '';
+        fileContents = this.state.formData[destinationKey];
         localValidationErrors[destinationKey] = 'CSVs must not contain commas.';
       } else {
-        delete(localValidationErrors[destinationKey]);
+        delete localValidationErrors[destinationKey];
         this.submitFormData({[destinationKey]: fileContents});
       }
 
@@ -517,11 +514,8 @@ class Setup extends mixin(StoreMixin) {
 
   getValidationFn(key, type) {
     return (fieldValue) => {
-      this.clearLocalValidationItem(key);
-
-      if ((this.state.formData[key] == null || this.state.formData[key] === '')
-        && (this.state.initialFormData[key] == null || this.state.initialFormData[key] === '')) {
-        return true;
+      if ((key === 'master_list' || key === 'agent_list') && (fieldValue != null || fieldValue !== '')) {
+        this.clearLocalValidationItem(key);
       }
 
       if (type === 'port' && fieldValue != null && fieldValue !== '') {
