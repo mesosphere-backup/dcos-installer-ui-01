@@ -254,7 +254,7 @@ class Setup extends mixin(StoreMixin) {
         {
           fieldType: 'textarea',
           name: 'master_list',
-          placeholder: 'Specify a newline-separated list of 1, 3, or 5 ' +
+          placeholder: 'Specify a comma-separated list of 1, 3, or 5 ' +
             'private IPv4 addresses.',
           showLabel: (
             <FormLabel>
@@ -281,7 +281,7 @@ class Setup extends mixin(StoreMixin) {
         {
           fieldType: 'textarea',
           name: 'agent_list',
-          placeholder: 'Specify a newline-separated list of 1 to n ' +
+          placeholder: 'Specify a comma-separated list of 1 to n ' +
             'private IPv4 addresses.',
           showLabel: (
             <FormLabel>
