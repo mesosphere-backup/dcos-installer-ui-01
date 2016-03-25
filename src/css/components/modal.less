@@ -19,4 +19,36 @@
   .modal-footer {
     padding: @base-spacing-unit;
   }
+
+  .modal-heading {
+    font-size: @body-text-font-size * 1.75;
+    margin-bottom: @base-spacing-unit * 2/3;
+  }
+
+  .modal-copy {
+    font-size: @body-text-font-size * 1.125;
+  }
+
+  .modal-content {
+
+    &:before {
+      display: none;
+    }
+  }
+
+  &.modal-confirmation {
+
+    .modal-content-inner {
+      padding-top: @base-spacing-unit;
+    }
+  }
+
+  .button-new-line {
+    display: block;
+
+    &,
+    &:last-child {
+      margin: 0 auto;
+    }
+  }
 }
