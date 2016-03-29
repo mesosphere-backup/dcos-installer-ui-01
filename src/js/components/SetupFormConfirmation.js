@@ -24,7 +24,7 @@ class SetupFormConfirmation extends React.Component {
           <p className="modal-copy tall">
             {'Machines will be checked for appropriate configuration. ' +
             'Machines detected without DCOS pre-requisite packages will be ' +
-            'patched with the necessary pacakges. For more info see '}
+            'patched with the necessary packages. For more info see '}
             <a href="https://docs.mesosphere.com/getting-started/installing/"
               target="_blank">
               docs
