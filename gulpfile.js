@@ -1,3 +1,9 @@
+var fs = require('fs');
+// Make sure we have a Config.dev so we don't error on Config loading
+var configFilePath = './src/js/config/Config.dev.js';
+if (!fs.existsSync(configFilePath)) {
+  fs.writeFileSync(configFilePath, 'module.exports = {};', 'utf8');
+}
 var autoprefixer = require('gulp-autoprefixer');
 var browserSync = require('browser-sync');
 var colorLighten = require('less-color-lighten');
