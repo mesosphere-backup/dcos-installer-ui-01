@@ -79,7 +79,7 @@ module.exports = class Success extends mixin(StoreMixin) {
               <SectionHeaderSecondary
                 layoutClassName="text-align-center short flush-top"
                 supplementalClassName="successful-heading">
-                DCOS 1.6 Successfully Installed
+                DCOS 1.7 Successfully Installed
               </SectionHeaderSecondary>
               <SectionHeaderTertiary>
                 <span className="successful-nodes">

@@ -51,11 +51,11 @@ module.exports = class Begin extends React.Component {
                 <IconLogomark />
               </SectionHeaderIcon>
               <SectionHeaderPrimary inverse={true}>
-                Mesosphere DCOS 1.6
+                Mesosphere DCOS 1.7
               </SectionHeaderPrimary>
               <SectionHeaderSecondary inverse={true}>
-                Welcome to the DCOS 1.6 Installer. You will be guided through the
-                steps necessary to setup and install version 1.6 of the DCOS in
+                Welcome to the DCOS 1.7 Installer. You will be guided through the
+                steps necessary to setup and install version 1.7 of the DCOS in
                 your datacenter.
               </SectionHeaderSecondary>
             </SectionHeader>
