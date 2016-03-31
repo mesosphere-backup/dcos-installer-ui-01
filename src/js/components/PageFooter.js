@@ -1,6 +1,8 @@
 import classnames from 'classnames';
 import React from 'react';
 
+import Config from '../config/Config';
+
 class PageFooter extends React.Component {
   getYear() {
     return new Date().getFullYear();
@@ -13,13 +15,13 @@ class PageFooter extends React.Component {
       <div className={classes}>
         <ul className="page-footer-links list-unstyled">
           <li>
-            <a href="https://docs.mesosphere.com/getting-started/installing/system-requirements/" target="_blank">System Requirements</a>
+            <a href={`${Config.documentationURI}/getting-started/installing/system-requirements/`} target="_blank">System Requirements</a>
           </li>
           <li>
-            <a href="http://docs.mesosphere.com/" target="_blank">Docs & Tutorials</a>
+            <a href={`${Config.documentationURI}/`} target="_blank">Docs & Tutorials</a>
           </li>
           <li>
-            <a href="https://docs.mesosphere.com/support/" target="_blank">Support</a>
+            <a href={`${Config.documentationURI}/support/`} target="_blank">Support</a>
           </li>
         </ul>
         <p className="page-footer-legal">

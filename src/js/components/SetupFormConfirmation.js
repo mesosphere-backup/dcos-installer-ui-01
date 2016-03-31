@@ -1,6 +1,8 @@
 import {Confirm} from 'reactjs-components';
 import React from 'react';
 
+import Config from '../config/Config';
+
 class SetupFormConfirmation extends React.Component {
   render() {
     return (
@@ -25,7 +27,7 @@ class SetupFormConfirmation extends React.Component {
             {'Machines will be checked for appropriate configuration. ' +
             'Machines detected without DCOS pre-requisite packages will be ' +
             'patched with the necessary packages. For more info see '}
-            <a href="https://docs.mesosphere.com/getting-started/installing/"
+            <a href={`${Config.documentationURI}/getting-started/installing/`}
               target="_blank">
               docs
             </a>.

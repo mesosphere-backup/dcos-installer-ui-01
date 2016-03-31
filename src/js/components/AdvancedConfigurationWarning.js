@@ -1,6 +1,8 @@
 import {Modal} from 'reactjs-components';
 import React from 'react';
 
+import Config from '../config/Config';
+
 class AdvancedConfigurationWarning extends React.Component {
   getContent() {
     return (
@@ -21,7 +23,7 @@ class AdvancedConfigurationWarning extends React.Component {
     return (
       <div className="text-align-center">
         <a className="button button-primary button-rounded"
-          href="https://docs.mesosphere.com/installing-enterprise-edition-1-6/">
+          href={`${Config.documentationURI}/installing-enterprise-edition-1-6/`}>
           View Documentation
         </a>
       </div>
