@@ -23,7 +23,7 @@ class AdvancedConfigurationWarning extends React.Component {
     return (
       <div className="text-align-center">
         <a className="button button-primary button-rounded"
-          href={`${Config.documentationURI}/installing-enterprise-edition-1-6/`}>
+          href={`${Config.documentationURI}/administration/installing/`}>
           View Documentation
         </a>
       </div>
