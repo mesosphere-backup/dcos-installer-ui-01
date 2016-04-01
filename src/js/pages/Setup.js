@@ -484,7 +484,7 @@ class Setup extends mixin(StoreMixin) {
       },
       {
         id: 'gce',
-        html: 'GCE'
+        html: 'Google Compute Engine'
       },
       {
         id: 'custom',
