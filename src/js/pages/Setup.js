@@ -244,7 +244,6 @@ class Setup extends mixin(StoreMixin) {
       error = errors[key];
     }
 
-
     return error;
   }
 
