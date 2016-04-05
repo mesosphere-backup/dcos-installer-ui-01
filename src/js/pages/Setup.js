@@ -77,6 +77,7 @@ class Setup extends mixin(StoreMixin) {
         ssh_port: null,
         ssh_key: null
       },
+      ipDetectSelectedOption: null,
       localValidationErrors: {},
       submitRequestPending: false
     };
@@ -243,7 +244,6 @@ class Setup extends mixin(StoreMixin) {
     } else if (errors[key]) {
       error = errors[key];
     }
-
 
     return error;
   }
@@ -452,6 +452,7 @@ class Setup extends mixin(StoreMixin) {
                 items={this.getIPDetectOptions()}
                 onItemSelection={this.handleIPDetectSelection}
                 initialID="dropdown-label"
+                persistentID={this.state.ipDetectSelectedOption}
                 transition={false}
                 wrapperClassName="dropdown ip-detect-dropdown"/>
             </div>
@@ -522,7 +523,11 @@ class Setup extends mixin(StoreMixin) {
       }
 
       let formData = this.getNewFormData({[destinationKey]: fileContents});
-      this.setState({formData, localValidationErrors});
+      this.setState({
+        formData,
+        ipDetectSelectedOption: 'custom',
+        localValidationErrors
+      });
     }
   }
 
@@ -609,16 +614,19 @@ class Setup extends mixin(StoreMixin) {
 
   handleIPDetectSelection(selection) {
     let {id} = selection;
+    let state = {ipDetectSelectedOption: id};
 
     if (id === 'custom') {
+      state.ipDetectSelectedOption = this.getIPDetectOptions()[0].id;
       ReactDOM.findDOMNode(this.refs.ipDetectUpload.refs.uploadInput).click();
     } else {
-      let formData = this.state.formData;
-      formData['ip_detect_script'] = IPDetectScripts[id];
+      state.formData = this.state.formData;
+      state.formData['ip_detect_script'] = IPDetectScripts[id];
 
       this.submitFormData({'ip_detect_script': IPDetectScripts[id]});
-      this.setState({formData});
     }
+
+    this.setState(state);
   }
 
   handleSubmitClick() {
