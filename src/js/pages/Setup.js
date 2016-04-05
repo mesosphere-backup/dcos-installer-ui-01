@@ -476,15 +476,15 @@ class Setup extends mixin(StoreMixin) {
       },
       {
         id: 'aws',
-        html: 'Amazon Web Services Script'
+        html: 'Amazon Web Services'
       },
       {
         id: 'azure',
-        html: 'Azure Script'
+        html: 'Azure'
       },
       {
         id: 'gce',
-        html: 'GCE Script'
+        html: 'GCE'
       },
       {
         id: 'custom',
