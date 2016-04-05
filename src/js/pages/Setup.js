@@ -404,7 +404,7 @@ class Setup extends mixin(StoreMixin) {
                       public internet, depending on your needs. Caution: If you set
                       this parameter incorrectly, you will have to reinstall
                       DCOS. <a
-                        href="https://docs.mesosphere.com/administration/service-discovery/"
+                        href={`${Config.documentationURI}/administration/service-discovery/`}
                         target="_blank">
                         Learn more
                       </a>.
@@ -432,7 +432,7 @@ class Setup extends mixin(StoreMixin) {
                       <span>
                         Enter or upload a script that runs on each node in the
                         cluster and outputs the node’s local IP address. <a
-                          href="https://docs.mesosphere.com/getting-started/installing/installing-enterprise-edition/#scrollNav-3"
+                          href={`${Config.documentationURI}/getting-started/installing/installing-enterprise-edition/#scrollNav-3`}
                           target="_blank">
                           Learn more
                         </a>.

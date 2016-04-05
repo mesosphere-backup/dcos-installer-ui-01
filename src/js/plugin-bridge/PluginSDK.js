@@ -54,7 +54,9 @@ const initialize = function (pluginsConfig) {
   Object.keys(pluginsConfig).forEach(function (pluginID) {
     // Make sure plugin is bundled
     if (!(pluginID in pluginsList) && !(pluginID in externalPluginsList)) {
-      console.warn(`Plugin ${pluginID} not available in bundle`);
+      if (Config.environment === 'development') {
+        console.warn(`Plugin ${pluginID} not available in bundle`);
+      }
       return;
     }
     let pluginType;

@@ -4,6 +4,7 @@ var Config = {
   environment: '@@ENV',
   rootUrl: '',
   externalPluginsDirectory: '../dcos-installer-ui-plugins-private',
+  documentationURI: 'https://dcos.io/docs',
   pluginsConfig: {}
 };
 
