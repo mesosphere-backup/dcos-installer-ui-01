@@ -38,4 +38,10 @@ class SetupFormConfirmation extends React.Component {
   }
 }
 
+SetupFormConfirmation.propTypes = {
+  handleButtonCancel: React.PropTypes.func,
+  open: React.PropTypes.boolean,
+  pendingRequest: React.PropTypes.boolean
+};
+
 module.exports = SetupFormConfirmation;
