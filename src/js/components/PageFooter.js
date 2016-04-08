@@ -32,7 +32,7 @@ class PageFooter extends React.Component {
             <a href={`${Config.documentationURI}/support/`} target="_blank">Support</a>
           </li>
         </ul>
-        <p className="page-footer-legal">
+        <p className="page-footer-legal short">
           {this.getLegalCopy()}
           <a href="https://mesosphere.com/terms/" target="_blank">Terms Of Service</a>
           <a href="https://mesosphere.com/privacy/" target="_blank">Privacy Policy</a>
