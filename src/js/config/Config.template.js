@@ -5,6 +5,9 @@ module.exports = {
     },
     documentation: {
       enabled: true
+    },
+    introduction: {
+      enabled: false
     }
   }
 };

@@ -85,7 +85,7 @@ class Deploy extends mixin(StoreMixin) {
       return 'Deploy Complete';
     }
 
-    return 'Deploying DCOS...';
+    return 'Deploying DC/OS...';
   }
 
   getProgressBarDetail(status, completed, total) {

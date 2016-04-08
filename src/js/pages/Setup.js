@@ -385,7 +385,7 @@ class Setup extends mixin(StoreMixin) {
       },
       <SectionHeader>
         <SectionHeaderPrimary align="left" layoutClassName="short-top flush-bottom">
-          DCOS Environment Settings
+          DC/OS Environment Settings
         </SectionHeaderPrimary>
       </SectionHeader>,
       [
@@ -403,7 +403,7 @@ class Setup extends mixin(StoreMixin) {
                       These can be DNS servers on your private network or on the
                       public internet, depending on your needs. Caution: If you set
                       this parameter incorrectly, you will have to reinstall
-                      DCOS. <a
+                      DC/OS. <a
                         href={`${Config.documentationURI}/administration/service-discovery/`}
                         target="_blank">
                         Learn more

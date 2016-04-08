@@ -47,7 +47,7 @@ module.exports = class Success extends mixin(StoreMixin) {
     return (
       <a href={url}
         className="button button-large button-rounded button-primary">
-        Log In to DCOS
+        Log In to DC/OS
         <IconArrow />
       </a>
     );
@@ -79,7 +79,7 @@ module.exports = class Success extends mixin(StoreMixin) {
               <SectionHeaderSecondary
                 layoutClassName="text-align-center short flush-top"
                 supplementalClassName="successful-heading">
-                DCOS Successfully Installed
+                DC/OS Successfully Installed
               </SectionHeaderSecondary>
               <SectionHeaderTertiary>
                 <span className="successful-nodes">
