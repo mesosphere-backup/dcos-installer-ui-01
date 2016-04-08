@@ -3,6 +3,9 @@ module.exports = {
     authentication: {
       enabled: true
     },
+    customerid: {
+      enabled: true
+    },
     documentation: {
       enabled: true
     },
