@@ -10,11 +10,11 @@
 
 @keyframes icon-loading-indicator-pulse {
   0% {
-    opacity: 1;
+    opacity: 0.4;
   }
 
   100% {
-    opacity: 0.35;
+    opacity: 0.2;
   }
 }
 
@@ -51,7 +51,10 @@
 }
 
 .icon-loading-indicator {
-  animation: icon-loading-indicator-pulse 1s linear 1.5s infinite alternate;
+  animation: icon-loading-indicator-pulse 1s linear 0s infinite alternate;
+  fill: @white;
+  height: 75px;
+  width: 60px;
 }
 
 .icon-password-strength {

@@ -2,10 +2,17 @@ import classnames from 'classnames';
 import React from 'react';
 
 import Config from '../config/Config';
+import PluginSDK from 'PluginSDK';
+
+let {Hooks} = PluginSDK;
 
 class PageFooter extends React.Component {
-  getYear() {
-    return new Date().getFullYear();
+  getFooterHeading() {
+    return Hooks.applyFilter('introductionFooterHeading');
+  }
+
+  getLegalCopy() {
+    return Hooks.applyFilter('introductionLegalCopy');
   }
 
   render() {
@@ -13,6 +20,7 @@ class PageFooter extends React.Component {
 
     return (
       <div className={classes}>
+        {this.getFooterHeading()}
         <ul className="page-footer-links list-unstyled">
           <li>
             <a href={`${Config.documentationURI}/getting-started/installing/system-requirements/`} target="_blank">System Requirements</a>
@@ -25,7 +33,7 @@ class PageFooter extends React.Component {
           </li>
         </ul>
         <p className="page-footer-legal">
-          &copy; {this.getYear()} Mesosphere, Inc. All Rights Reserved.
+          {this.getLegalCopy()}
           <a href="https://mesosphere.com/terms/" target="_blank">Terms Of Service</a>
           <a href="https://mesosphere.com/privacy/" target="_blank">Privacy Policy</a>
         </p>

@@ -6,15 +6,41 @@
 @page-begin-secondary-header-line-height: 1.2em;
 
 .page-begin {
-  padding-bottom: @fixed-footer-height;
+  flex-direction: column;
+  padding-bottom: 0;
+  padding-top: 0;
 
   .page-content {
+    display: flex;
+    align-items: center;
+    flex: 1 0 auto;
     max-width: 500px;
+    padding: @base-spacing-unit 0;
+  }
+
+  .page-footer {
+    flex: 0 0 auto;
+
+    .icon-mesosphere-logo {
+      fill: @white;
+      margin-bottom: @base-spacing-unit * 1/2;
+      max-width: 175px;
+      opacity: 0.15;
+      width: 100%;
+    }
   }
 
   .icon {
     height: auto;
     width: 100px;
+  }
+
+  .section-header-icon {
+
+    img {
+      display: block;
+      margin: 0 auto;
+    }
   }
 
   .section-header-primary {
