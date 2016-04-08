@@ -698,6 +698,12 @@ class Setup extends mixin(StoreMixin) {
   }
 
   render() {
+    let uiInstallerWarning = Hooks.applyFilter('uiInstallerWarning', (
+      <p>
+        Authentication and Telemetry are enabled by default. To change this, please reference the <a href={`${Config.documentationURI}/administration/opt-out`} target="_blank">DCOS documentation</a>.
+      </p>
+    ));
+
     return (
       <Page hasNavigationBar={true} size="large" pageName="setup" ref="page">
         <PageContent>
@@ -719,6 +725,7 @@ class Setup extends mixin(StoreMixin) {
           </PageSection>
           <PageSection>
             <SectionFooter>
+              {uiInstallerWarning}
               <SectionAction enabled={this.isFormReady()} linkTo="/pre-flight"
                 onClick={this.handleSubmitClick} type="primary">
                 {this.state.buttonText}
