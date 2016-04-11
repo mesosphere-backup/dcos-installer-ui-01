@@ -35,8 +35,11 @@ module.exports = class Begin extends React.Component {
             Resume Installation
             <IconArrow />
           </Link>
-          <Link to="/setup" className="stage-link button button-link button-inverse">
-            or, Begin New Installation
+          <div className="container-pod container-pod-short text-align-center">
+            or
+          </div>
+          <Link to="/setup" className="text-color-white">
+            Start new installation
           </Link>
         </div>
       );
