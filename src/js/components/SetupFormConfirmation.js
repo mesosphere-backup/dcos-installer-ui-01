@@ -27,9 +27,9 @@ class SetupFormConfirmation extends React.Component {
             {'Machines will be checked for appropriate configuration. ' +
             'Machines detected without DC/OS pre-requisite packages will be ' +
             'patched with the necessary packages. For more info see '}
-            <a href={`${Config.documentationURI}/getting-started/installing/`}
+            <a href={`${Config.documentationURI}/concepts/installing/`}
               target="_blank">
-              docs
+              documentation
             </a>.
           </p>
         </div>
