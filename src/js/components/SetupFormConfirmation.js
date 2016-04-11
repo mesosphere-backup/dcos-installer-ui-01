@@ -25,8 +25,9 @@ class SetupFormConfirmation extends React.Component {
           <h1 className="flush-top short modal-heading">Warning!</h1>
           <p className="modal-copy tall">
             {'Machines will be checked for appropriate configuration. ' +
-            'Machines detected without DC/OS pre-requisite packages will be ' +
-            'patched with the necessary packages. For more info see '}
+            `Machines detected without ${Config.productName} pre-requisite ` +
+            'packages will be patched with the necessary packages. For more ' +
+            'info see '}
             <a href={`${Config.documentationURI}/concepts/installing/`}
               target="_blank">
               documentation

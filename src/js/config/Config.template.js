@@ -3,6 +3,9 @@ module.exports = {
     authentication: {
       enabled: true
     },
+    branding: {
+      enabled: true
+    },
     customerid: {
       enabled: true
     },

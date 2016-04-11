@@ -13,7 +13,7 @@ class AdvancedConfigurationWarning extends React.Component {
         <p className="flush-bottom">
           It appears as though you have a previously setup Advanced
           Configuration for the listed IP address(es). Please use the command
-          line interface to continue your installation of the DC/OS.
+          line interface to continue your installation of the {Config.productName}.
         </p>
       </div>
     );
