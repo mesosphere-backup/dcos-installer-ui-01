@@ -4,6 +4,7 @@ import {StoreMixin} from 'mesosphere-shared-reactjs';
 import React from 'react';
 /* eslint-enable no-unused-vars */
 
+import Config from '../config/Config';
 import DeployStore from '../stores/DeployStore';
 import ErrorLabel from '../components/ErrorLabel';
 import IconCircleCheckmark from '../components/icons/IconCircleCheckmark';
@@ -85,7 +86,7 @@ class Deploy extends mixin(StoreMixin) {
       return 'Deploy Complete';
     }
 
-    return 'Deploying DC/OS...';
+    return `Deploying ${Config.productName}...`;
   }
 
   getProgressBarDetail(status, completed, total) {

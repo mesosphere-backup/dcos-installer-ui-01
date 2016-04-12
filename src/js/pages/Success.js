@@ -4,6 +4,7 @@ import {StoreMixin} from 'mesosphere-shared-reactjs';
 import React from 'react';
 /* eslint-enable no-unused-vars */
 
+import Config from '../config/Config';
 import IconArrow from '../components/icons/IconArrow';
 import IconCircleCheckmark from '../components/icons/IconCircleCheckmark';
 import InstallerStore from '../stores/InstallerStore';
@@ -47,7 +48,7 @@ module.exports = class Success extends mixin(StoreMixin) {
     return (
       <a href={url}
         className="button button-large button-rounded button-primary">
-        Log In to DC/OS
+        Log In to {Config.productName}
         <IconArrow />
       </a>
     );
@@ -79,7 +80,7 @@ module.exports = class Success extends mixin(StoreMixin) {
               <SectionHeaderSecondary
                 layoutClassName="text-align-center short flush-top"
                 supplementalClassName="successful-heading">
-                DC/OS Successfully Installed
+                {Config.productName} Successfully Installed
               </SectionHeaderSecondary>
               <SectionHeaderTertiary>
                 <span className="successful-nodes">

@@ -1,6 +1,7 @@
 import {Link} from 'react-router';
 import React from 'react';
 
+import Config from '../config/Config';
 import IconArrow from '../components/icons/IconArrow';
 import IconDCOS from '../components/icons/IconDCOS';
 import InstallerStore from '../stores/InstallerStore';
@@ -20,7 +21,7 @@ let {Hooks} = PluginSDK;
 
 module.exports = class Begin extends React.Component {
   getBodyCopy() {
-    return Hooks.applyFilter('introductionBodyCopy', 'Welcome to the DC/OS Installer. You will be guided through the steps necessary to setup and install the DC/OS in your datacenter.');
+    return Hooks.applyFilter('introductionBodyCopy', `Welcome to the ${Config.productName} Installer. You will be guided through the steps necessary to setup and install the ${Config.productName} in your datacenter.`);
   }
 
   getLogo() {
@@ -51,7 +52,7 @@ module.exports = class Begin extends React.Component {
   }
 
   getPrimaryHeaderCopy() {
-    return Hooks.applyFilter('introductionPrimaryHeaderCopy', 'Install DC/OS');
+    return Hooks.applyFilter('introductionPrimaryHeaderCopy', `Install ${Config.productName}`);
   }
 
   render() {

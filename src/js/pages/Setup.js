@@ -385,7 +385,7 @@ class Setup extends mixin(StoreMixin) {
       },
       <SectionHeader>
         <SectionHeaderPrimary align="left" layoutClassName="short-top flush-bottom">
-          DC/OS Environment Settings
+          {Config.productName} Environment Settings
         </SectionHeaderPrimary>
       </SectionHeader>,
       [
@@ -403,7 +403,7 @@ class Setup extends mixin(StoreMixin) {
                       These can be DNS servers on your private network or on the
                       public internet, depending on your needs. Caution: If you set
                       this parameter incorrectly, you will have to reinstall
-                      DC/OS. <a
+                      {Config.productName}. <a
                         href={`${Config.documentationURI}/administration/service-discovery/`}
                         target="_blank">
                         Learn more
