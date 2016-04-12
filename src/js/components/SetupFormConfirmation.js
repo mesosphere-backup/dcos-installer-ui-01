@@ -21,17 +21,16 @@ class SetupFormConfirmation extends React.Component {
         rightButtonCallback={this.props.handleButtonCancel}
         rightButtonText="Cancel"
         useGemini={false}>
+
         <div className="text-align-center">
           <h1 className="flush-top short modal-heading">Warning!</h1>
           <p className="modal-copy tall">
-            {'Machines will be checked for appropriate configuration. ' +
-            `Machines detected without ${Config.productName} pre-requisite ` +
-            'packages will be patched with the necessary packages. For more ' +
-            'info see '}
-            <a href={`${Config.documentationURI}/concepts/installing/`}
-              target="_blank">
-              documentation
-            </a>.
+            {'The master and agent machines that you have specified will be ' +
+            'checked for appropriate configuration and software. Any missing ' +
+            'prerequisites will be added automatically. For more information,' +
+            ' see the '}
+            <a href={`${Config.documentationURI}/administration/installing/`}
+              target="_blank">documentation</a>.
           </p>
         </div>
       </Confirm>
