@@ -20,10 +20,6 @@ import SectionFooter from '../components/SectionFooter';
 let {Hooks} = PluginSDK;
 
 module.exports = class Begin extends React.Component {
-  getBodyCopy() {
-    return Hooks.applyFilter('introductionBodyCopy', `Welcome to the ${Config.productName} Installer. You will be guided through the steps necessary to setup and install the ${Config.productName} in your datacenter.`);
-  }
-
   getLogo() {
     return Hooks.applyFilter('dcosLogo', <IconDCOS />);
   }
@@ -54,10 +50,6 @@ module.exports = class Begin extends React.Component {
     );
   }
 
-  getPrimaryHeaderCopy() {
-    return Hooks.applyFilter('introductionPrimaryHeaderCopy', `Install ${Config.productName}`);
-  }
-
   render() {
     let currentStage = InstallerStore.get('currentStage');
     let logo = this.getLogo();
@@ -71,10 +63,12 @@ module.exports = class Begin extends React.Component {
                 {logo}
               </SectionHeaderIcon>
               <SectionHeaderPrimary inverse={true}>
-                {this.getPrimaryHeaderCopy()}
+                {`Install ${Config.fullProductName}`}
               </SectionHeaderPrimary>
               <SectionHeaderSecondary inverse={true}>
-                {this.getBodyCopy()}
+                {`Welcome to the ${Config.fullProductName} Installer. You ` +
+                'will be guided through the steps necessary to setup and ' +
+                `install the ${Config.fullProductName} in your datacenter.`}
               </SectionHeaderSecondary>
             </SectionHeader>
             <SectionFooter>
