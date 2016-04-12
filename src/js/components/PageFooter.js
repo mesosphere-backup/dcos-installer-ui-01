@@ -23,7 +23,7 @@ class PageFooter extends React.Component {
         {this.getFooterHeading()}
         <ul className="page-footer-links list-unstyled">
           <li>
-            <a href={`${Config.documentationURI}/getting-started/installing/system-requirements/`} target="_blank">System Requirements</a>
+            <a href={`${Config.documentationURI}/administration/installing/custom/automated-installer/system-requirements/`} target="_blank">System Requirements</a>
           </li>
           <li>
             <a href={`${Config.documentationURI}/`} target="_blank">Docs & Tutorials</a>
