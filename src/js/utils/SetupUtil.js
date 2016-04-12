@@ -4,7 +4,13 @@ const SetupUtil = {
       return string;
     }
 
-    return string.replace(/\s/g,'').split(',');
+    return string.replace(/\s/g,'').split(',').filter(function (host) {
+      if (host == null || host === '') {
+        return false;
+      }
+
+      return true;
+    });
   },
 
   getStringFromHostsArray(array) {
