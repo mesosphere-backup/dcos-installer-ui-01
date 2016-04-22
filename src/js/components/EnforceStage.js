@@ -220,17 +220,17 @@ class EnforceStage extends mixin(StoreMixin) {
   }
 
   render() {
-    if (this.hasError()) {
-      return this.getServerError();
-    }
+    // if (this.hasError()) {
+    //   return this.getServerError();
+    // }
 
-    if (this.state.configType.type === 'advanced') {
-      return this.getAdvancedConfigurationWarning();
-    }
+    // if (this.state.configType.type === 'advanced') {
+    //   return this.getAdvancedConfigurationWarning();
+    // }
 
-    if (this.isLoading()) {
-      return this.getLoadingScreen();
-    }
+    // if (this.isLoading()) {
+    //   return this.getLoadingScreen();
+    // }
 
     return this.props.children;
   }

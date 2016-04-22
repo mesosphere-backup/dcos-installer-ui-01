@@ -470,6 +470,13 @@ class Setup extends mixin(StoreMixin) {
     return Hooks.applyFilter('FormDefinition', formDefintion);
   }
 
+  getFormRowClass(rowDefinition) {
+    if (rowDefinition[0].name === 'telemetry_enabled') {
+      return 'custom-something';
+    }
+    return 'row';
+  }
+
   getIPDetectOptions() {
     return [
       {
@@ -566,6 +573,10 @@ class Setup extends mixin(StoreMixin) {
 
   handleFormChange(formData, eventDetails) {
     let {eventType, fieldName, fieldValue} = eventDetails;
+
+    if (fieldName === 'cluster_options') {
+      console.log(formData);
+    }
 
     if (eventType === 'blur' && fieldName === 'public_ip_address') {
       this.savePublicURL(fieldValue);
@@ -739,7 +750,7 @@ class Setup extends mixin(StoreMixin) {
                 handleButtonCancel={this.handleSubmitCancel}
                 handleButtonConfirm={this.handleSubmitConfirm}
                 pendingRequest={this.state.submitRequestPending} />
-              <Form definition={this.getFormDefinition()}
+              <Form definition={this.getFormDefinition()} formRowClass={this.getFormRowClass}
                 onChange={this.handleFormChange} />
             </SectionBody>
           </PageSection>
