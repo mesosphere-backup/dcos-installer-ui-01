@@ -28,6 +28,8 @@ const SetupUtil = {
         preparedData[key] = SetupUtil.getArrayFromHostsString(newFormData[key]);
       } else if (key === 'ssh_port') {
         preparedData[key] = parseInt(newFormData[key]);
+      } else if (key === 'nested_cluster_options') {
+        preparedData[newFormData[key].name] = newFormData[key].checked;
       } else {
         preparedData[key] = newFormData[key];
       }

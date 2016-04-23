@@ -14,6 +14,9 @@ module.exports = {
     },
     introduction: {
       enabled: false
+    },
+    'remove-oauth': {
+      enabled: false
     }
   }
 };

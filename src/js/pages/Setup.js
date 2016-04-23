@@ -69,7 +69,9 @@ class Setup extends mixin(StoreMixin) {
         public_ip_address: global.localStorage.getItem('publicHostname'),
         ssh_user: null,
         ssh_port: null,
-        ssh_key: null
+        ssh_key: null,
+        telemetry_enabled: true,
+        oauth_enabled: true
       },
       initialFormData: {
         master_list: null,
@@ -464,16 +466,64 @@ class Setup extends mixin(StoreMixin) {
           validationErrorText: this.getErrors('ip_detect_script'),
           value: this.state.formData.ip_detect_script
         }
-      ]
+      ],
+      {
+        fieldType: 'checkboxMultiple',
+        name: 'nested_cluster_options',
+        formRowType: 'inline',
+        value: [
+          {
+            name: 'telemetry_enabled',
+            label: (
+              <span>
+                Send Anonymous Telemetry
+                <Tooltip content={
+                    <span>
+                      Enter or upload a script that runs on each node in the
+                      cluster and outputs the node’s local IP address. <a
+                        href={`${Config.documentationURI}/advanced-installer/create-a-script-for-ip-address-discovery/`}
+                        target="_blank">
+                        Learn more
+                      </a>.
+                    </span>
+                  }
+                  width={300} wrapText={true} />
+              </span>
+            ),
+            checked: this.state.formData.telemetry_enabled
+          },
+          {
+            name: 'oauth_enabled',
+            label: (
+              <span>
+                Enable Authentication
+                <Tooltip content={
+                    <span>
+                      Enter or upload a script that runs on each node in the
+                      cluster and outputs the node’s local IP address. <a
+                        href={`${Config.documentationURI}/advanced-installer/create-a-script-for-ip-address-discovery/`}
+                        target="_blank">
+                        Learn more
+                      </a>.
+                    </span>
+                  }
+                  width={300} wrapText={true} />
+              </span>
+            ),
+            checked: this.state.formData.oauth_enabled
+          }
+        ]
+      }
     ];
 
     return Hooks.applyFilter('FormDefinition', formDefintion);
   }
 
-  getFormRowClass(rowDefinition) {
-    if (rowDefinition[0].name === 'telemetry_enabled') {
-      return 'custom-something';
+  getFormRowClass(definition) {
+    if (definition.formRowType === 'inline') {
+      return 'row row-inline-form-elements';
     }
+
     return 'row';
   }
 
@@ -574,16 +624,16 @@ class Setup extends mixin(StoreMixin) {
   handleFormChange(formData, eventDetails) {
     let {eventType, fieldName, fieldValue} = eventDetails;
 
-    if (fieldName === 'cluster_options') {
-      console.log(formData);
-    }
-
     if (eventType === 'blur' && fieldName === 'public_ip_address') {
       this.savePublicURL(fieldValue);
     }
 
     if (eventType === 'focus' || fieldValue === '' || fieldValue == null) {
       return;
+    }
+
+    if (eventType === 'multipleChange' && fieldName === 'nested_cluster_options') {
+      this.submitFormData({[fieldName]: fieldValue});
     }
 
     if (this.state.localValidationErrors[fieldName] == null
