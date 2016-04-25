@@ -1,3 +1,14 @@
+const STRING_TO_ARRAY_FIELDS = [
+  'master_list',
+  'agent_list',
+  'public_agent_list',
+  'resolvers'
+];
+
+function shouldConvertStringToArray(key) {
+  return STRING_TO_ARRAY_FIELDS.indexOf(key) > -1;
+}
+
 const SetupUtil = {
   getArrayFromHostsString(string) {
     if (string === '' || string == null) {
@@ -23,8 +34,7 @@ const SetupUtil = {
     Object.keys(newFormData).forEach((key) => {
       // For master_list and agent_list, we need to send an array of the IPs.
       // Everything else can be sent as entered by the user.
-      if (key === 'master_list' || key === 'agent_list'
-        || key === 'resolvers') {
+      if (shouldConvertStringToArray(key)) {
         preparedData[key] = SetupUtil.getArrayFromHostsString(newFormData[key]);
       } else if (key === 'ssh_port') {
         preparedData[key] = parseInt(newFormData[key]);
