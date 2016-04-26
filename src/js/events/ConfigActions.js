@@ -21,7 +21,8 @@ const ConfigActions = {
             response: RequestUtil.parseResponseBody(xhr)
           }
         });
-      }
+      },
+      timeout: Config.requestTimeout
     });
   },
 
@@ -41,7 +42,8 @@ const ConfigActions = {
             response: RequestUtil.parseResponseBody(xhr)
           }
         });
-      }
+      },
+      timeout: Config.requestTimeout
     });
   },
 
@@ -61,7 +63,8 @@ const ConfigActions = {
             response: RequestUtil.parseResponseBody(xhr)
           }
         });
-      }
+      },
+      timeout: Config.requestTimeout
     });
   },
 
@@ -84,7 +87,8 @@ const ConfigActions = {
             request: data
           }
         });
-      }
+      },
+      timeout: Config.requestTimeout
     });
   }
 };
