@@ -99,18 +99,12 @@ let InstallerStore = Store.createStore({
       case ActionTypes.TOTAL_AGENTS_ERROR:
         InstallerStore.emit(EventTypes.TOTAL_AGENTS_ERROR);
         break;
-      case ActionTypes.TOTAL_AGENTS_ONGOING:
-        InstallerStore.handleOngoingTotalAgentsRequest();
-        break;
       case ActionTypes.TOTAL_MASTERS_SUCCESS:
         InstallerStore.set({totalMasters: action.data});
         InstallerStore.emit(EventTypes.TOTAL_MASTERS_SUCCESS, action.data);
         break;
       case ActionTypes.TOTAL_MASTERS_ERROR:
         InstallerStore.emit(EventTypes.TOTAL_MASTERS_ERROR);
-        break;
-      case ActionTypes.TOTAL_MASTERS_ONGOING:
-        InstallerStore.handleOngoingTotalMastersRequest();
         break;
       case ActionTypes.DCOS_UI_URL_CHANGE:
         InstallerStore.set({dcosURL: action.data.success});

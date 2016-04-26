@@ -49,13 +49,11 @@ let ActionTypes = {};
   'PREFLIGHT_LOGS_ONGOING',
   'TOTAL_AGENTS_ERROR',
   'TOTAL_AGENTS_SUCCESS',
-  'TOTAL_AGENTS_ONGOING',
   'PREFLIGHT_COMPLETE',
   'SERVER_ACTION',
   'SETUP_COMPLETE',
   'TOTAL_MASTERS_ERROR',
   'TOTAL_MASTERS_SUCCESS',
-  'TOTAL_MASTERS_ONGOING',
   'UI_ACTION'
 ].forEach(function (actionType) {
   ActionTypes[actionType] = actionType;
