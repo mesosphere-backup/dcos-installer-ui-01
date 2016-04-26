@@ -20,6 +20,11 @@ const SuccessActions = {
           data: xhr
         });
       },
+      hangingRequestCallback: function () {
+        AppDispatcher.handleServerAction({
+          type: ActionTypes.DCOS_UI_URL_ONGOING
+        });
+      },
       timeout: Config.requestTimeout
     });
   }

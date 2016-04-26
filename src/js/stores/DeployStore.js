@@ -40,6 +40,14 @@ let DeployStore = Store.createStore({
     this.removeListener(eventName, callback);
   },
 
+  handleOngoingUpdateRequest: function () {
+    // We could do something here if we wanted.
+  },
+
+  handleOngoingBeginRequest: function () {
+    // We could do something here if we wanted.
+  },
+
   processUpdateError: function () {
     this.emit(EventTypes.DEPLOY_STATE_ERROR);
   },
@@ -69,11 +77,17 @@ let DeployStore = Store.createStore({
       case ActionTypes.DEPLOY_UPDATE_SUCCESS:
         DeployStore.processUpdateSuccess(action.data);
         break;
+      case ActionTypes.DEPLOY_UPDATE_ONGOING:
+        DeployStore.handleOngoingUpdateRequest();
+        break;
       case ActionTypes.DEPLOY_BEGIN_SUCCESS:
         DeployStore.emit(EventTypes.DEPLOY_BEGIN_SUCCESS);
         break;
       case ActionTypes.DEPLOY_BEGIN_ERROR:
         DeployStore.emit(EventTypes.DEPLOY_BEGIN_ERROR, action.data);
+        break;
+      case ActionTypes.DEPLOY_BEGIN_ONGOING:
+        DeployStore.handleOngoingBeginRequest();
         break;
     }
 

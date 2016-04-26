@@ -36,6 +36,14 @@ let PostFlightStore = Store.createStore({
     this.on(eventName, callback);
   },
 
+  handleOngoingUpdateRequest: function () {
+    // We could do something here if we wanted.
+  },
+
+  handleOngoingBeginRequest: function () {
+    // We could do something here if we wanted.
+  },
+
   removeChangeListener: function (eventName, callback) {
     this.removeListener(eventName, callback);
   },
@@ -67,11 +75,17 @@ let PostFlightStore = Store.createStore({
       case ActionTypes.POSTFLIGHT_UPDATE_SUCCESS:
         PostFlightStore.processUpdateSuccess(action.data);
         break;
+      case ActionTypes.POSTFLIGHT_UPDATE_ONGOING:
+        PostFlightStore.handleOngoingUpdateRequest();
+        break;
       case ActionTypes.POSTFLIGHT_BEGIN_SUCCESS:
         PostFlightStore.emit(EventTypes.POSTFLIGHT_BEGIN_SUCCESS);
         break;
       case ActionTypes.POSTFLIGHT_BEGIN_ERROR:
         PostFlightStore.emit(EventTypes.POSTFLIGHT_BEGIN_ERROR, action.data);
+        break;
+      case ActionTypes.POSTFLIGHT_BEGIN_ONGOING:
+        PostFlightStore.handleOngoingBeginRequest();
         break;
     }
 
