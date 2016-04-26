@@ -19,7 +19,8 @@ const SuccessActions = {
           type: ActionTypes.DCOS_UI_URL_ERROR,
           data: xhr
         });
-      }
+      },
+      timeout: Config.requestTimeout
     });
   }
 };

@@ -20,7 +20,8 @@ const StageActions = {
           type: ActionTypes[`${capitalizedStage}_UPDATE_ERROR`],
           data: RequestUtil.parseResponseBody(xhr)
         });
-      }
+      },
+      timeout: Config.requestTimeout
     });
   },
 
@@ -39,7 +40,8 @@ const StageActions = {
           type: ActionTypes[`${capitalizedStage}_BEGIN_ERROR`],
           data: RequestUtil.parseResponseBody(xhr)
         });
-      }
+      },
+      timeout: Config.requestTimeout
     };
 
     if (data && data.retry && Object.keys(data).length === 1) {
@@ -65,7 +67,8 @@ const StageActions = {
           type: ActionTypes[`${capitalizedStage}_LOGS_ERROR`],
           data: RequestUtil.parseResponseBody(xhr)
         });
-      }
+      },
+      timeout: Config.requestTimeout
     });
   },
 
@@ -83,7 +86,8 @@ const StageActions = {
           type: ActionTypes.CURRENT_STAGE_CHANGE_ERROR,
           data: RequestUtil.parseResponseBody(xhr)
         });
-      }
+      },
+      timeout: Config.requestTimeout
     });
   }
 };
