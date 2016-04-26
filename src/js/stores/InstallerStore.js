@@ -51,6 +51,18 @@ let InstallerStore = Store.createStore({
     // We could do something here if we wanted.
   },
 
+  handleOngoingCurrentStageChangeRequest: function () {
+    // We could do something here if we wanted.
+  },
+
+  handleOngoingTotalAgentsRequest: function () {
+    // We could do something here if we wanted.
+  },
+
+  handleOngoingTotalMastersRequest: function () {
+    // We could do something here if we wanted.
+  },
+
   processCurrentStage: function (stage) {
     this.set({currentStage: stage});
     this.emit(EventTypes.CURRENT_STAGE_CHANGE, stage);
@@ -77,6 +89,9 @@ let InstallerStore = Store.createStore({
       case ActionTypes.CURRENT_STAGE_CHANGE_SUCCESS:
         InstallerStore.processCurrentStage(action.data.current_action);
         break;
+      case ActionTypes.CURRENT_STAGE_CHANGE_ONGOING:
+        InstallerStore.handleOngoingCurrentStageChangeRequest();
+        break;
       case ActionTypes.TOTAL_AGENTS_SUCCESS:
         InstallerStore.set({totalAgents: action.data});
         InstallerStore.emit(EventTypes.TOTAL_AGENTS_SUCCESS, action.data);
@@ -84,12 +99,18 @@ let InstallerStore = Store.createStore({
       case ActionTypes.TOTAL_AGENTS_ERROR:
         InstallerStore.emit(EventTypes.TOTAL_AGENTS_ERROR);
         break;
+      case ActionTypes.TOTAL_AGENTS_ONGOING:
+        InstallerStore.handleOngoingTotalAgentsRequest();
+        break;
       case ActionTypes.TOTAL_MASTERS_SUCCESS:
         InstallerStore.set({totalMasters: action.data});
         InstallerStore.emit(EventTypes.TOTAL_MASTERS_SUCCESS, action.data);
         break;
       case ActionTypes.TOTAL_MASTERS_ERROR:
         InstallerStore.emit(EventTypes.TOTAL_MASTERS_ERROR);
+        break;
+      case ActionTypes.TOTAL_MASTERS_ONGOING:
+        InstallerStore.handleOngoingTotalMastersRequest();
         break;
       case ActionTypes.DCOS_UI_URL_CHANGE:
         InstallerStore.set({dcosURL: action.data.success});

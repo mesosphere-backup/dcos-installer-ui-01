@@ -36,6 +36,10 @@ let PostFlightStore = Store.createStore({
     this.on(eventName, callback);
   },
 
+  handleOngoingLogsRequest: function () {
+    // We could do something here if we wanted.
+  },
+
   handleOngoingUpdateRequest: function () {
     // We could do something here if we wanted.
   },
@@ -69,6 +73,9 @@ let PostFlightStore = Store.createStore({
     let {action} = payload;
 
     switch (action.type) {
+      case ActionTypes.POSTFLIGHT_LOGS_ONGOING:
+        PostFlightStore.handleOngoingLogsRequest();
+        break;
       case ActionTypes.POSTFLIGHT_UPDATE_ERROR:
         PostFlightStore.processUpdateError(action.data);
         break;
