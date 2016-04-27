@@ -47,6 +47,22 @@ let InstallerStore = Store.createStore({
     this.removeListener(eventName, callback);
   },
 
+  handleOngoingDcosUrlRequest: function () {
+    // We could do something here if we wanted.
+  },
+
+  handleOngoingCurrentStageChangeRequest: function () {
+    // We could do something here if we wanted.
+  },
+
+  handleOngoingTotalAgentsRequest: function () {
+    // We could do something here if we wanted.
+  },
+
+  handleOngoingTotalMastersRequest: function () {
+    // We could do something here if we wanted.
+  },
+
   processCurrentStage: function (stage) {
     this.set({currentStage: stage});
     this.emit(EventTypes.CURRENT_STAGE_CHANGE, stage);
@@ -73,6 +89,9 @@ let InstallerStore = Store.createStore({
       case ActionTypes.CURRENT_STAGE_CHANGE_SUCCESS:
         InstallerStore.processCurrentStage(action.data.current_action);
         break;
+      case ActionTypes.CURRENT_STAGE_CHANGE_ONGOING:
+        InstallerStore.handleOngoingCurrentStageChangeRequest();
+        break;
       case ActionTypes.TOTAL_AGENTS_SUCCESS:
         InstallerStore.set({totalAgents: action.data});
         InstallerStore.emit(EventTypes.TOTAL_AGENTS_SUCCESS, action.data);
@@ -90,6 +109,9 @@ let InstallerStore = Store.createStore({
       case ActionTypes.DCOS_UI_URL_CHANGE:
         InstallerStore.set({dcosURL: action.data.success});
         InstallerStore.emit(EventTypes.DCOS_URL_CHANGE, action.data);
+        break;
+      case ActionTypes.DCOS_UI_URL_ONGOING:
+        InstallerStore.handleOngoingDcosUrlRequest();
         break;
       case ActionTypes.PREFLIGHT_UPDATE_SUCCESS:
         AppDispatcher.waitFor([PreFlightStore.dispatcherIndex]);

@@ -22,6 +22,11 @@ const ConfigActions = {
           }
         });
       },
+      hangingRequestCallback: function () {
+        AppDispatcher.handleServerAction({
+          type: ActionTypes.CONFIGURE_CHANGE_ONGOING
+        });
+      },
       timeout: Config.requestTimeout
     });
   },
@@ -43,6 +48,11 @@ const ConfigActions = {
           }
         });
       },
+      hangingRequestCallback: function () {
+        AppDispatcher.handleServerAction({
+          type: ActionTypes.CONFIGURE_STATUS_CHANGE_ONGOING
+        });
+      },
       timeout: Config.requestTimeout
     });
   },
@@ -62,6 +72,11 @@ const ConfigActions = {
           data: {
             response: RequestUtil.parseResponseBody(xhr)
           }
+        });
+      },
+      hangingRequestCallback: function () {
+        AppDispatcher.handleServerAction({
+          type: ActionTypes.CONFIGURE_TYPE_CHANGE_ONGOING
         });
       },
       timeout: Config.requestTimeout
@@ -86,6 +101,11 @@ const ConfigActions = {
             response: RequestUtil.parseResponseBody(xhr),
             request: data
           }
+        });
+      },
+      hangingRequestCallback: function () {
+        AppDispatcher.handleServerAction({
+          type: ActionTypes.CONFIGURE_UPDATE_FIELD_ONGOING
         });
       },
       timeout: Config.requestTimeout

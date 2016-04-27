@@ -141,6 +141,22 @@ let SetupStore = Store.createStore({
     this.emit(EventTypes.CONFIGURE_UPDATE_FIELD_SUCCESS);
   },
 
+  handleOngoingConfigureChangeRequest: function () {
+    // We could do something here if we wanted.
+  },
+
+  handleOngoingConfigureStatusRequest: function () {
+    // We could do something here if we wanted.
+  },
+
+  handleOngoingConfigureTypeChangeRequest: function () {
+    // We could do something here if we wanted.
+  },
+
+  handleOngoingConfigureUpdateFieldRequest: function () {
+    // We could do something here if we wanted.
+  },
+
   isValueEmpty(values) {
     let isEmptyValue = false;
 
@@ -171,6 +187,9 @@ let SetupStore = Store.createStore({
         SetupStore.handleConfigureChangeSuccess(action.data);
         SetupStore.checkFormCompletion();
         break;
+      case ActionTypes.CONFIGURE_CHANGE_ONGOING:
+        SetupStore.handleOngoingConfigureChangeRequest();
+        break;
       case ActionTypes.CONFIGURE_STATUS_CHANGE_ERROR:
         SetupStore.handleConfigureStatusChangeError(action.data);
         SetupStore.checkFormCompletion();
@@ -179,11 +198,17 @@ let SetupStore = Store.createStore({
         SetupStore.handleConfigureStatusSuccess(action.data);
         SetupStore.checkFormCompletion();
         break;
+      case ActionTypes.CONFIGURE_STATUS_CHANGE_ONGOING:
+        SetupStore.handleOngoingConfigureStatusRequest();
+        break;
       case ActionTypes.CONFIGURE_TYPE_CHANGE_ERROR:
         SetupStore.handleConfigureTypeError(action.data);
         break;
       case ActionTypes.CONFIGURE_TYPE_CHANGE_SUCCESS:
         SetupStore.handleConfigureTypeResponse(action.data);
+        break;
+      case ActionTypes.CONFIGURE_TYPE_CHANGE_ONGOING:
+        SetupStore.handleOngoingConfigureTypeChangeRequest();
         break;
       case ActionTypes.CONFIGURE_UPDATE_FIELD_ERROR:
         SetupStore.handleConfigureUpdateFieldError(action.data);
@@ -192,6 +217,9 @@ let SetupStore = Store.createStore({
       case ActionTypes.CONFIGURE_UPDATE_FIELD_SUCCESS:
         SetupStore.handleConfigureUpdateFieldSuccess(action.data);
         SetupStore.checkFormCompletion();
+        break;
+      case ActionTypes.CONFIGURE_UPDATE_FIELD_ONGOING:
+        SetupStore.handleOngoingConfigureUpdateFieldRequest();
         break;
     }
 

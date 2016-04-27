@@ -40,6 +40,18 @@ let DeployStore = Store.createStore({
     this.removeListener(eventName, callback);
   },
 
+  handleOngoingLogsRequest: function () {
+    // We could do something here if we wanted.
+  },
+
+  handleOngoingUpdateRequest: function () {
+    // We could do something here if we wanted.
+  },
+
+  handleOngoingBeginRequest: function () {
+    // We could do something here if we wanted.
+  },
+
   processUpdateError: function () {
     this.emit(EventTypes.DEPLOY_STATE_ERROR);
   },
@@ -63,17 +75,26 @@ let DeployStore = Store.createStore({
     let {action} = payload;
 
     switch (action.type) {
+      case ActionTypes.DEPLOY_LOGS_ONGOING:
+        DeployStore.handleOngoingLogsRequest();
+        break;
       case ActionTypes.DEPLOY_UPDATE_ERROR:
         DeployStore.processUpdateError(action.data);
         break;
       case ActionTypes.DEPLOY_UPDATE_SUCCESS:
         DeployStore.processUpdateSuccess(action.data);
         break;
+      case ActionTypes.DEPLOY_UPDATE_ONGOING:
+        DeployStore.handleOngoingUpdateRequest();
+        break;
       case ActionTypes.DEPLOY_BEGIN_SUCCESS:
         DeployStore.emit(EventTypes.DEPLOY_BEGIN_SUCCESS);
         break;
       case ActionTypes.DEPLOY_BEGIN_ERROR:
         DeployStore.emit(EventTypes.DEPLOY_BEGIN_ERROR, action.data);
+        break;
+      case ActionTypes.DEPLOY_BEGIN_ONGOING:
+        DeployStore.handleOngoingBeginRequest();
         break;
     }
 

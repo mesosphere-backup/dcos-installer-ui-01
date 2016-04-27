@@ -21,6 +21,11 @@ const StageActions = {
           data: RequestUtil.parseResponseBody(xhr)
         });
       },
+      hangingRequestCallback: function () {
+        AppDispatcher.handleServerAction({
+          type: ActionTypes[`${capitalizedStage}_UPDATE_ONGOING`]
+        });
+      },
       timeout: Config.requestTimeout
     });
   },
@@ -39,6 +44,11 @@ const StageActions = {
         AppDispatcher.handleServerAction({
           type: ActionTypes[`${capitalizedStage}_BEGIN_ERROR`],
           data: RequestUtil.parseResponseBody(xhr)
+        });
+      },
+      hangingRequestCallback: function () {
+        AppDispatcher.handleServerAction({
+          type: ActionTypes[`${capitalizedStage}_BEGIN_ONGOING`]
         });
       },
       timeout: Config.requestTimeout
@@ -68,6 +78,11 @@ const StageActions = {
           data: RequestUtil.parseResponseBody(xhr)
         });
       },
+      hangingRequestCallback: function () {
+        AppDispatcher.handleServerAction({
+          type: ActionTypes[`${capitalizedStage}_LOGS_ONGOING`]
+        });
+      },
       timeout: Config.requestTimeout
     });
   },
@@ -85,6 +100,14 @@ const StageActions = {
         AppDispatcher.handleServerAction({
           type: ActionTypes.CURRENT_STAGE_CHANGE_ERROR,
           data: RequestUtil.parseResponseBody(xhr)
+        });
+      },
+      hangingRequestCallback: function () {
+        AppDispatcher.handleServerAction({
+          type: ActionTypes.CURRENT_STAGE_CHANGE_ONGOING,
+          data: {
+            response: RequestUtil.parseResponseBody(xhr)
+          }
         });
       },
       timeout: Config.requestTimeout

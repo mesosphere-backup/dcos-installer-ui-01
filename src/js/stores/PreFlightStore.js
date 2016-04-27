@@ -40,6 +40,18 @@ let PreFlightStore = Store.createStore({
     this.removeListener(eventName, callback);
   },
 
+  handleOngoingLogsRequest: function () {
+    // We could do something here if we wanted.
+  },
+
+  handleOngoingUpdateRequest: function () {
+    // We could do something here if we wanted.
+  },
+
+  handleOngoingBeginRequest: function () {
+    // We could do something here if we wanted.
+  },
+
   processUpdateError: function () {
     this.emit(EventTypes.PREFLIGHT_STATE_ERROR);
   },
@@ -61,17 +73,26 @@ let PreFlightStore = Store.createStore({
     let {action} = payload;
 
     switch (action.type) {
+      case ActionTypes.PREFLIGHT_LOGS_ONGOING:
+        PreFlightStore.handleOngoingLogsRequest();
+        break;
       case ActionTypes.PREFLIGHT_UPDATE_ERROR:
         PreFlightStore.processUpdateError(action.data);
         break;
       case ActionTypes.PREFLIGHT_UPDATE_SUCCESS:
         PreFlightStore.processUpdateSuccess(action.data);
         break;
+      case ActionTypes.PREFLIGHT_UPDATE_ONGOING:
+        PreFlightStore.handleOngoingUpdateRequest();
+        break;
       case ActionTypes.PREFLIGHT_BEGIN_SUCCESS:
         PreFlightStore.emit(EventTypes.PREFLIGHT_BEGIN_SUCCESS);
         break;
       case ActionTypes.PREFLIGHT_BEGIN_ERROR:
         PreFlightStore.emit(EventTypes.PREFLIGHT_BEGIN_ERROR, action.data);
+        break;
+      case ActionTypes.PREFLIGHT_BEGIN_ONGOING:
+        PreFlightStore.handleOngoingBeginRequest();
         break;
     }
 
