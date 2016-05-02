@@ -485,24 +485,18 @@ class Setup extends mixin(StoreMixin) {
           {
             name: 'telemetry_enabled',
             label: this.getCheckboxLabel('Send Anonymous Telemetry', (<span>
-                Enter or upload a script that runs on each node in the
-                cluster and outputs the node’s local IP address. <a
-                  href={`${Config.documentationURI}/advanced-installer/create-a-script-for-ip-address-discovery/`}
-                  target="_blank">
-                  Learn more
-                </a>.
+                Choose whether to enable sharing of anonymous data for your
+                cluster. For more information, see the <a href={`${Config.documentationURI}/administration/installing/custom/configuration-parameters/`}
+                target="_blank">documentation</a>.
               </span>)),
             checked: this.state.formData.telemetry_enabled
           },
           {
             name: 'oauth_enabled',
             label: this.getCheckboxLabel('Enable Authentication', (<span>
-                Enter or upload a script that runs on each node in the
-                cluster and outputs the node’s local IP address. <a
-                  href={`${Config.documentationURI}/advanced-installer/create-a-script-for-ip-address-discovery/`}
-                  target="_blank">
-                  Learn more
-                </a>.
+                Choose whether to enable authentication for your cluster. For
+                more information, see the <a href={`${Config.documentationURI}/administration/installing/custom/configuration-parameters/`}
+                target="_blank">documentation</a>.
               </span>)),
             checked: this.state.formData.oauth_enabled
           }
