@@ -479,7 +479,7 @@ class Setup extends mixin(StoreMixin) {
       ],
       {
         fieldType: 'checkboxMultiple',
-        name: 'nested_cluster_options',
+        name: 'cluster_configuration_options',
         formRowType: 'inline',
         value: [
           {
@@ -624,7 +624,7 @@ class Setup extends mixin(StoreMixin) {
       return;
     }
 
-    if (eventType === 'multipleChange' && fieldName === 'nested_cluster_options') {
+    if (eventType === 'multipleChange' && fieldName === 'cluster_configuration_options') {
       this.submitFormData({[fieldName]: fieldValue});
     }
 
