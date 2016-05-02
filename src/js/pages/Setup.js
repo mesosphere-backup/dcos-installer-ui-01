@@ -196,6 +196,15 @@ class Setup extends mixin(StoreMixin) {
     PreFlightStore.beginStage();
   }
 
+  getCheckboxLabel(label, tooltipContent) {
+    return (
+      <span>
+        {label}
+        <Tooltip content={tooltipContent} width={300} wrapText={true} />
+      </span>
+    );
+  }
+
   getCurrentConfig() {
     let mergedData = this.getNewFormData(SetupStore.get('currentConfig'));
     let displayedConfig = {};
@@ -474,42 +483,26 @@ class Setup extends mixin(StoreMixin) {
         value: [
           {
             name: 'telemetry_enabled',
-            label: (
-              <span>
-                Send Anonymous Telemetry
-                <Tooltip content={
-                    <span>
-                      Enter or upload a script that runs on each node in the
-                      cluster and outputs the node’s local IP address. <a
-                        href={`${Config.documentationURI}/advanced-installer/create-a-script-for-ip-address-discovery/`}
-                        target="_blank">
-                        Learn more
-                      </a>.
-                    </span>
-                  }
-                  width={300} wrapText={true} />
-              </span>
-            ),
+            label: this.getCheckboxLabel('Send Anonymous Telemetry', (<span>
+                Enter or upload a script that runs on each node in the
+                cluster and outputs the node’s local IP address. <a
+                  href={`${Config.documentationURI}/advanced-installer/create-a-script-for-ip-address-discovery/`}
+                  target="_blank">
+                  Learn more
+                </a>.
+              </span>)),
             checked: this.state.formData.telemetry_enabled
           },
           {
             name: 'oauth_enabled',
-            label: (
-              <span>
-                Enable Authentication
-                <Tooltip content={
-                    <span>
-                      Enter or upload a script that runs on each node in the
-                      cluster and outputs the node’s local IP address. <a
-                        href={`${Config.documentationURI}/advanced-installer/create-a-script-for-ip-address-discovery/`}
-                        target="_blank">
-                        Learn more
-                      </a>.
-                    </span>
-                  }
-                  width={300} wrapText={true} />
-              </span>
-            ),
+            label: this.getCheckboxLabel('Enable Authentication', (<span>
+                Enter or upload a script that runs on each node in the
+                cluster and outputs the node’s local IP address. <a
+                  href={`${Config.documentationURI}/advanced-installer/create-a-script-for-ip-address-discovery/`}
+                  target="_blank">
+                  Learn more
+                </a>.
+              </span>)),
             checked: this.state.formData.oauth_enabled
           }
         ]
