@@ -197,15 +197,6 @@ class Setup extends mixin(StoreMixin) {
     PreFlightStore.beginStage();
   }
 
-  getCheckboxLabel(label, tooltipContent) {
-    return (
-      <span>
-        {label}
-        <Tooltip content={tooltipContent} width={300} wrapText={true} />
-      </span>
-    );
-  }
-
   getCurrentConfig() {
     let mergedData = this.getNewFormData(SetupStore.get('currentConfig'));
     let displayedConfig = {};
@@ -484,20 +475,26 @@ class Setup extends mixin(StoreMixin) {
         value: [
           {
             name: 'telemetry_enabled',
-            label: this.getCheckboxLabel('Send Anonymous Telemetry', (<span>
-                Choose whether to enable sharing of anonymous data for your
-                cluster. For more information, see the <a href={`${Config.documentationURI}/administration/installing/custom/configuration-parameters/`}
-                target="_blank">documentation</a>.
-              </span>)),
+            label: <span>
+                Send Anonymous Telemetry
+                <Tooltip content={(<span>
+                    Choose whether to enable sharing of anonymous data for your
+                    cluster. For more information, see the <a href={`${Config.documentationURI}/administration/installing/custom/configuration-parameters/`}
+                    target="_blank">documentation</a>.
+                  </span>)} width={300} wrapText={true} />
+              </span>,
             checked: this.state.formData.telemetry_enabled
           },
           {
             name: 'oauth_enabled',
-            label: this.getCheckboxLabel('Enable Authentication', (<span>
-                Choose whether to enable authentication for your cluster. For
-                more information, see the <a href={`${Config.documentationURI}/administration/installing/custom/configuration-parameters/`}
-                target="_blank">documentation</a>.
-              </span>)),
+            label: <span>
+                Enable Authentication
+                <Tooltip content={(<span>
+                    Choose whether to enable authentication for your cluster. For
+                    more information, see the <a href={`${Config.documentationURI}/administration/installing/custom/configuration-parameters/`}
+                    target="_blank">documentation</a>.
+                  </span>)} width={300} wrapText={true} />
+              </span>,
             checked: this.state.formData.oauth_enabled
           }
         ]
