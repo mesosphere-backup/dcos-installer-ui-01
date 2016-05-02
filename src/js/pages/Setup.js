@@ -545,9 +545,13 @@ class Setup extends mixin(StoreMixin) {
 
       if (type === 'port' && !isValueEmpty) {
         return this.isPortValid(fieldValue, key);
-      } else if (key === 'public_ip_address' && !isValueEmpty) {
+      }
+
+      if (key === 'public_ip_address' && !isValueEmpty) {
         return this.isPublicIPValid(fieldValue);
-      } else if (key === 'public_ip_address' && isValueEmpty) {
+      }
+
+      if (key === 'public_ip_address' && isValueEmpty) {
         let newFormData = this.getNewFormData({public_ip_address: null});
         this.setState({formData: newFormData});
       }
@@ -678,6 +682,7 @@ class Setup extends mixin(StoreMixin) {
       let localValidationErrors = this.state.localValidationErrors;
       localValidationErrors[key] = 'Ports must be less than or equal to 65535.';
       this.setState({localValidationErrors});
+
       return false;
     }
 
