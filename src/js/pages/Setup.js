@@ -48,6 +48,8 @@ const METHODS_TO_BIND = [
   'handleSubmitConfirm',
   'isFormReady',
   'isLastFormField',
+  'isPortValid',
+  'isPublicIPValid',
   'submitFormData',
   'savePublicURL'
 ];
@@ -533,31 +535,23 @@ class Setup extends mixin(StoreMixin) {
 
   getValidationFn(key, type) {
     return (fieldValue) => {
-      if ((key === 'master_list' || key === 'agent_list') && (fieldValue != null || fieldValue !== '')) {
+      let isValueEmpty = fieldValue == null || fieldValue === '';
+      let isValidatedLocally = key === 'master_list' || key === 'agent_list'
+        || key === 'public_ip_address' || type === 'port';
+
+      if (isValidatedLocally && !isValueEmpty) {
         this.clearLocalValidationItem(key);
       }
 
-      if (type === 'port' && fieldValue != null && fieldValue !== '') {
-        if (parseInt(fieldValue) > 65535) {
-          let localValidationErrors = this.state.localValidationErrors;
-          localValidationErrors[key] = 'Ports must be less than or equal to 65535.';
-          this.setState({localValidationErrors});
+      if (type === 'port' && !isValueEmpty) {
+        return this.isPortValid(fieldValue, key);
+      }
 
-          return false;
-        }
+      if (key === 'public_ip_address' && !isValueEmpty) {
+        return this.isPublicIPValid(fieldValue);
+      }
 
-        this.clearLocalValidationItem(key);
-      } else if (key === 'public_ip_address' && fieldValue != null && fieldValue !== '') {
-        if (PUBLIC_HOSTNAME_VALIDATION.test(fieldValue) || fieldValue === '' || fieldValue == null) {
-          return true;
-        }
-
-        let localValidationErrors = this.state.localValidationErrors;
-        localValidationErrors[key] = 'Enter a valid IP address.';
-        this.setState({localValidationErrors});
-
-        return false;
-      } else if (key === 'public_ip_address' && (fieldValue == null || fieldValue === '')) {
+      if (key === 'public_ip_address' && isValueEmpty) {
         let newFormData = this.getNewFormData({public_ip_address: null});
         this.setState({formData: newFormData});
       }
@@ -649,6 +643,10 @@ class Setup extends mixin(StoreMixin) {
   isFormReady() {
     let emptyFormFields = false;
 
+    if (Object.keys(this.state.localValidationErrors).length !== 0) {
+      return false;
+    }
+
     ConfigFormFieldsRequiringInput.forEach((key) => {
       if (this.state.formData[key] === '' || this.state.formData[key] == null) {
         emptyFormFields = true;
@@ -659,9 +657,7 @@ class Setup extends mixin(StoreMixin) {
       return false;
     }
 
-    let isFormReady = !emptyFormFields && SetupStore.get('completed');
-
-    return isFormReady;
+    return !emptyFormFields && SetupStore.get('completed');
   }
 
   isLastFormField(fieldName) {
@@ -679,6 +675,30 @@ class Setup extends mixin(StoreMixin) {
     });
 
     return lastRemainingField;
+  }
+
+  isPortValid(port, key) {
+    if (parseInt(port) > 65535) {
+      let localValidationErrors = this.state.localValidationErrors;
+      localValidationErrors[key] = 'Ports must be less than or equal to 65535.';
+      this.setState({localValidationErrors});
+
+      return false;
+    }
+
+    return true;
+  }
+
+  isPublicIPValid(publicIP) {
+    if (PUBLIC_HOSTNAME_VALIDATION.test(publicIP)) {
+      return true;
+    }
+
+    let localValidationErrors = this.state.localValidationErrors;
+    localValidationErrors.public_ip_address = 'Enter a valid IP address.';
+    this.setState({localValidationErrors});
+
+    return false;
   }
 
   savePublicURL(url) {
