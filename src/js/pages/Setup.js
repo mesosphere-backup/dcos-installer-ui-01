@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import classnames from 'classnames';
 import {Dropdown, Form} from 'reactjs-components';
 import mixin from 'reactjs-mixin';
 /* eslint-disable no-unused-vars */
@@ -513,11 +514,9 @@ class Setup extends mixin(StoreMixin) {
   }
 
   getFormRowClass(definition) {
-    if (definition.formRowType === 'inline') {
-      return 'row row-inline-form-elements';
-    }
-
-    return 'row';
+    return classnames('row', {
+      'row-inline-form-elements': definition.formRowType === 'inline'
+    });
   }
 
   getIPDetectOptions() {
