@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import classnames from 'classnames';
 import {Dropdown, Form} from 'reactjs-components';
 import mixin from 'reactjs-mixin';
 /* eslint-disable no-unused-vars */
@@ -69,7 +70,9 @@ class Setup extends mixin(StoreMixin) {
         public_ip_address: global.localStorage.getItem('publicHostname'),
         ssh_user: null,
         ssh_port: null,
-        ssh_key: null
+        ssh_key: null,
+        telemetry_enabled: true,
+        oauth_enabled: true
       },
       initialFormData: {
         master_list: null,
@@ -464,10 +467,47 @@ class Setup extends mixin(StoreMixin) {
           validationErrorText: this.getErrors('ip_detect_script'),
           value: this.state.formData.ip_detect_script
         }
-      ]
+      ],
+      {
+        fieldType: 'checkboxMultiple',
+        name: 'cluster_configuration_options',
+        formRowType: 'inline',
+        value: [
+          {
+            name: 'telemetry_enabled',
+            label: <span>
+                Send Anonymous Telemetry
+                <Tooltip content={(<span>
+                    Choose whether to enable sharing of anonymous data for your
+                    cluster. For more information, see the <a href={`${Config.documentationURI}/administration/installing/custom/configuration-parameters/`}
+                    target="_blank">documentation</a>.
+                  </span>)} width={300} wrapText={true} />
+              </span>,
+            checked: this.state.formData.telemetry_enabled
+          },
+          {
+            name: 'oauth_enabled',
+            label: <span>
+                Enable Authentication
+                <Tooltip content={(<span>
+                    Choose whether to enable authentication for your cluster. For
+                    more information, see the <a href={`${Config.documentationURI}/administration/installing/custom/configuration-parameters/`}
+                    target="_blank">documentation</a>.
+                  </span>)} width={300} wrapText={true} />
+              </span>,
+            checked: this.state.formData.oauth_enabled
+          }
+        ]
+      }
     ];
 
     return Hooks.applyFilter('FormDefinition', formDefintion);
+  }
+
+  getFormRowClass(definition) {
+    return classnames('row', {
+      'row-inline-form-elements': definition.formRowType === 'inline'
+    });
   }
 
   getIPDetectOptions() {
@@ -573,6 +613,10 @@ class Setup extends mixin(StoreMixin) {
 
     if (eventType === 'focus' || fieldValue === '' || fieldValue == null) {
       return;
+    }
+
+    if (eventType === 'multipleChange' && fieldName === 'cluster_configuration_options') {
+      this.submitFormData({[fieldName]: fieldValue});
     }
 
     if (this.state.localValidationErrors[fieldName] == null
@@ -739,7 +783,7 @@ class Setup extends mixin(StoreMixin) {
                 handleButtonCancel={this.handleSubmitCancel}
                 handleButtonConfirm={this.handleSubmitConfirm}
                 pendingRequest={this.state.submitRequestPending} />
-              <Form definition={this.getFormDefinition()}
+              <Form definition={this.getFormDefinition()} formRowClass={this.getFormRowClass}
                 onChange={this.handleFormChange} />
             </SectionBody>
           </PageSection>

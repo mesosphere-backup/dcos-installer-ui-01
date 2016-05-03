@@ -4,8 +4,8 @@ import {GetSetMixin, Store} from 'mesosphere-shared-reactjs';
 import ActionTypes from '../constants/ActionTypes';
 import AppDispatcher from '../events/AppDispatcher';
 import ConfigActions from '../events/ConfigActions';
-import EventTypes from '../constants/EventTypes';
 import ConfigFormFields from '../constants/ConfigFormFields';
+import EventTypes from '../constants/EventTypes';
 
 let SetupStore = Store.createStore({
   storeID: 'setup',

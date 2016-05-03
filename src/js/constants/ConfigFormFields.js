@@ -1,4 +1,4 @@
-const REQUIRED_FORM_DATA = [
+const BACKEND_FORM_FIELDS = [
   'master_list',
   'agent_list',
   'ssh_user',
@@ -10,7 +10,9 @@ const REQUIRED_FORM_DATA = [
   'resolvers',
   'exhibitor_zk_hosts',
   'ip_detect_path',
-  'ip_detect_script'
+  'ip_detect_script',
+  'telemetry_enabled',
+  'oauth_enabled'
 ];
 
-module.exports = REQUIRED_FORM_DATA;
+module.exports = BACKEND_FORM_FIELDS;
