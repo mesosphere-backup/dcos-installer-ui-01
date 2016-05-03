@@ -437,7 +437,7 @@ class Setup extends mixin(StoreMixin) {
                       <span>
                         Enter or upload a script that runs on each node in the
                         cluster and outputs the node’s local IP address. <a
-                          href={`${Config.documentationURI}/advanced-installer/create-a-script-for-ip-address-discovery/`}
+                          href={`${Config.documentationURI}/administration/installing/custom/gui/`}
                           target="_blank">
                           Learn more
                         </a>.
