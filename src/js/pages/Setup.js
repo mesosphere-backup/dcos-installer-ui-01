@@ -36,6 +36,13 @@ import Upload from '../components/Upload';
 
 let {Hooks} = PluginSDK;
 
+const LOCALLY_VALIDATED_KEYS = [
+  'master_list',
+  'agent_list',
+  'public_ip_address',
+  'public_agent_list',
+  'port'
+];
 const PUBLIC_HOSTNAME_VALIDATION = /([0-9\.]+)|https?:\/\//;
 const METHODS_TO_BIND = [
   'getCurrentConfig',
@@ -67,6 +74,7 @@ class Setup extends mixin(StoreMixin) {
         master_list: null,
         agent_list: null,
         ip_detect_script: null,
+        public_agent_list: null,
         public_ip_address: global.localStorage.getItem('publicHostname'),
         ssh_user: null,
         ssh_port: null,
@@ -77,6 +85,7 @@ class Setup extends mixin(StoreMixin) {
       initialFormData: {
         master_list: null,
         agent_list: null,
+        public_agent_list: null,
         ip_detect_script: null,
         ssh_user: null,
         ssh_port: null,
@@ -282,7 +291,9 @@ class Setup extends mixin(StoreMixin) {
           validationErrorText: this.getErrors('master_list'),
           validation: this.getValidationFn('master_list'),
           value: this.state.formData.master_list
-        },
+        }
+      ],
+      [
         {
           fieldType: 'textarea',
           name: 'agent_list',
@@ -308,6 +319,32 @@ class Setup extends mixin(StoreMixin) {
           validationErrorText: this.getErrors('agent_list'),
           validation: this.getValidationFn('agent_list'),
           value: this.state.formData.agent_list
+        },
+        {
+          fieldType: 'textarea',
+          name: 'public_agent_list',
+          placeholder: 'Specify a comma-separated list of 1 to n ' +
+            'public IPv4 addresses.',
+          showLabel: (
+            <FormLabel>
+              <FormLabelContent>
+                Agent Public IP List
+                <Tooltip content={'The public IP addresses of the agents.'}
+                  width={200} wrapText={true} />
+              </FormLabelContent>
+              <FormLabelContent position="right">
+                <Tooltip content={'CSVs must be newline delimited.'}
+                  width={200} wrapText={true}>
+                  <Upload displayText="Upload .csv" extensions=".csv"
+                    onUploadFinish={this.getUploadHandler('public_agent_list', 'csv')} />
+                </Tooltip>
+              </FormLabelContent>
+            </FormLabel>
+          ),
+          showError: this.getErrors('public_agent_list'),
+          validationErrorText: this.getErrors('public_agent_list'),
+          validation: this.getValidationFn('public_agent_list'),
+          value: this.state.formData.public_agent_list
         }
       ],
       [
@@ -576,8 +613,7 @@ class Setup extends mixin(StoreMixin) {
   getValidationFn(key, type) {
     return (fieldValue) => {
       let isValueEmpty = fieldValue == null || fieldValue === '';
-      let isValidatedLocally = key === 'master_list' || key === 'agent_list'
-        || key === 'public_ip_address' || type === 'port';
+      let isValidatedLocally = this.isKeyValidatedLocally(key);
 
       if (isValidatedLocally && !isValueEmpty) {
         this.clearLocalValidationItem(key);
@@ -702,6 +738,10 @@ class Setup extends mixin(StoreMixin) {
     }
 
     return !emptyFormFields && SetupStore.get('completed');
+  }
+
+  isKeyValidatedLocally(key) {
+    return LOCALLY_VALIDATED_KEYS.indexOf(key) > -1;
   }
 
   isLastFormField(fieldName) {
