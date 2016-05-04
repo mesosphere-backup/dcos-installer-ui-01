@@ -6,7 +6,7 @@ var Config = {
   fullProductName: 'DC/OS',
   productName: 'DC/OS',
   externalPluginsDirectory: '../dcos-installer-ui-plugins-private',
-  documentationURI: 'https://dcos.io/docs',
+  documentationURI: 'https://dcos.io/docs/latest',
   pluginsConfig: {},
   requestTimeout: 10000
 };
