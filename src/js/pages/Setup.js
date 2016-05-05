@@ -329,8 +329,9 @@ class Setup extends mixin(StoreMixin) {
             <FormLabel>
               <FormLabelContent>
                 Agent Public IP List
-                <Tooltip content={'The public IP addresses of the agents.'}
-                  width={200} wrapText={true} />
+                <Tooltip content="Specify public agent nodes to run DC/OS apps
+                  and services in a publicly accessible network." width={200}
+                  wrapText={true} />
               </FormLabelContent>
               <FormLabelContent position="right">
                 <Tooltip content={'CSVs must be newline delimited.'}
@@ -514,11 +515,8 @@ class Setup extends mixin(StoreMixin) {
             name: 'telemetry_enabled',
             label: <span>
                 Send Anonymous Telemetry
-                <Tooltip content={(<span>
-                    Choose whether to enable sharing of anonymous data for your
-                    cluster. For more information, see the <a href={`${Config.documentationURI}/administration/installing/custom/configuration-parameters/`}
-                    target="_blank">documentation</a>.
-                  </span>)} width={300} wrapText={true} />
+                <Tooltip content="Indicate whether you want to report anonymous
+                  usage data." width={300} wrapText={true} />
               </span>,
             checked: this.state.formData.telemetry_enabled
           },
@@ -526,11 +524,9 @@ class Setup extends mixin(StoreMixin) {
             name: 'oauth_enabled',
             label: <span>
                 Enable Authentication
-                <Tooltip content={(<span>
-                    Choose whether to enable authentication for your cluster. For
-                    more information, see the <a href={`${Config.documentationURI}/administration/installing/custom/configuration-parameters/`}
-                    target="_blank">documentation</a>.
-                  </span>)} width={300} wrapText={true} />
+                <Tooltip content="Indicate whether you want enable
+                  authentication for your cluster." width={300}
+                  wrapText={true} />
               </span>,
             checked: this.state.formData.oauth_enabled
           }
