@@ -1,4 +1,3 @@
-jest.autoMockOff();
 jest.dontMock('../DeployStore');
 
 var DeployStore = require('../DeployStore');

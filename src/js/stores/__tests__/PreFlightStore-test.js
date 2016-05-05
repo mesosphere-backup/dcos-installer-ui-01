@@ -1,4 +1,3 @@
-jest.autoMockOff();
 jest.dontMock('../PreFlightStore');
 
 var PreFlightStore = require('../PreFlightStore');

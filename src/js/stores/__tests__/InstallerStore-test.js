@@ -1,4 +1,3 @@
-jest.autoMockOff();
 jest.dontMock('../InstallerStore');
 
 var InstallerStore = require('../InstallerStore');

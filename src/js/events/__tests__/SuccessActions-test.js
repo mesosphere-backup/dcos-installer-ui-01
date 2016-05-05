@@ -1,4 +1,4 @@
-jest.autoMockOff();
+jest.dontMock('../SuccessActions');
 
 var ActionTypes = require('../../constants/ActionTypes');
 var AppDispatcher = require('../AppDispatcher');

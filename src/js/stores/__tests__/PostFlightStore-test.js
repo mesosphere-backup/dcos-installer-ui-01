@@ -1,4 +1,3 @@
-jest.autoMockOff();
 jest.dontMock('../PostFlightStore');
 
 var PostFlightStore = require('../PostFlightStore');

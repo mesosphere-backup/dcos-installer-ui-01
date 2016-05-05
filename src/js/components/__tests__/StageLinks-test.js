@@ -1,6 +1,12 @@
 jest.dontMock('../StageLinks');
-
-jest.autoMockOff();
+jest.dontMock('../icons/IconDownload');
+jest.dontMock('../icons/IconEdit');
+jest.dontMock('../../stores/InstallerStore');
+jest.dontMock('../../utils/ProcessStageUtil');
+jest.dontMock('../../events/StageActions');
+jest.dontMock('../../events/AppDispatcher');
+jest.dontMock('../../constants/ActionTypes');
+jest.dontMock('../../config/Config');
 
 var React = require('react');
 var ReactDOM = require('react-dom');

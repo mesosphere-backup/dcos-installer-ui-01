@@ -117,6 +117,8 @@
       "src/js/plugin-bridge/PluginTestUtils",
       "src/js/structs",
       "src/js/utils",
+      "src/js/stores",
+      "src/js/mixins",
       "plugins",
       "react",
       "reactjs-components",
