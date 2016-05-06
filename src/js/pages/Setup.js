@@ -524,7 +524,7 @@ class Setup extends mixin(StoreMixin) {
             name: 'oauth_enabled',
             label: <span>
                 Enable Authentication
-                <Tooltip content="Indicate whether you want enable
+                <Tooltip content="Indicate whether you want to enable
                   authentication for your cluster." width={300}
                   wrapText={true} />
               </span>,
