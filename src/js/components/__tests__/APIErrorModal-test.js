@@ -1,10 +1,6 @@
 jest.dontMock('../APIErrorModal');
 jest.dontMock('../../events/AppDispatcher');
 jest.dontMock('../../constants/ActionTypes');
-jest.dontMock('../../stores/PreFlightStore');
-jest.dontMock('../../stores/DeployStore');
-jest.dontMock('../../stores/PostFlightStore');
-jest.dontMock('../../mixins/getActionMixin');
 jest.dontMock('../icons/IconDownload');
 jest.dontMock('../../constants/StoreMap');
 
@@ -20,10 +16,10 @@ describe('APIErrorModal', function () {
     this.container = document.createElement('div');
 
     this.errors = [
-      {message: 'BOOM', host: 'SKI'},
-      {message: 'BOOM', host: 'SKI'},
-      {message: 'BOOM', host: 'SKI'},
-      {message: 'BOOM', host: 'SKI'}
+      {message: 'error message', host: '10.2.516.21'},
+      {message: 'error message', host: '10.2.516.21'},
+      {message: 'error message', host: '10.2.516.21'},
+      {message: 'error message', host: '10.2.516.21'}
     ]
   });
 
