@@ -89,6 +89,10 @@ const ProcessStageUtil = {
         role = hostStatus.tags.role;
       }
 
+      if (role === 'public_agent') {
+        role = 'agent';
+      }
+
       processHostState(hostStatus, host, role, state);
     });
 
