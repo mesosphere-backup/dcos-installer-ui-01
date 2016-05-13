@@ -63,6 +63,7 @@
     "jsx-loader": "0.13.2",
     "mkdirp": "0.5.1",
     "node-libs-browser": "0.5.2",
+    "react-addons-test-utils": "^0.14.6",
     "run-sequence": "1.1.5",
     "source-map-loader": "0.1.5",
     "transform-loader": "0.2.3",
@@ -100,6 +101,7 @@
       "d3",
       "events",
       "flux",
+      "lodash",
       "jasmine-reporters",
       "localStorage",
       "mesosphere-shared-reactjs",
@@ -107,7 +109,6 @@
       "mixins/index",
       "src/js/config/",
       "src/js/constants",
-      "src/js/mixins/PluginGetSetMixin",
       "src/js/plugin-bridge/AppReducer",
       "src/js/plugin-bridge/Hooks",
       "src/js/plugin-bridge/middleware",
@@ -115,13 +116,16 @@
       "src/js/plugin-bridge/PluginTestUtils",
       "src/js/structs",
       "src/js/utils",
+      "src/js/stores",
+      "src/js/mixins",
       "plugins",
       "react",
       "reactjs-components",
       "reactjs-mixin",
       "react-router",
       "redux",
-      "underscore"
+      "underscore",
+      "react-addons-test-utils"
     ],
     "testPathIgnorePatterns": [
       "/node_modules/"
