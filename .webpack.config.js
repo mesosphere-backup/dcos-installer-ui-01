@@ -23,7 +23,8 @@ module.exports = {
         cacheDirectory: true
       },
       test: /\.js$/
-    }],
+    },
+    { test: /\.json$/, loader: 'json-loader' }],
     preLoaders: [{
       test: /\.js$/,
       loader: 'source-map-loader',

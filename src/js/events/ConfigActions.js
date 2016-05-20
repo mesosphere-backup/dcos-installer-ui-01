@@ -113,4 +113,28 @@ const ConfigActions = {
   }
 };
 
+if (Config.useFixtures) {
+  let configStatus = require('../../../tests/_fixtures/config/config-form-no-errors.json');
+  let configType = require('../../../tests/_fixtures/config/config-type.json');
+  let configValues = require('../../../tests/_fixtures/config/config.json');
+  let configSuccess = require('../../../tests/_fixtures/config/config-form-no-errors.json');
+
+  if (!global.actionTypes) {
+    global.actionTypes = {};
+  }
+
+  global.actionTypes.ConfigActions = {
+    fetchConfig: {event: 'success', success: {response: configStatus}},
+    fetchConfigState: {event: 'success', success: {response: configStatus}},
+    fetchConfigType: {event: 'success', success: {response: configType}},
+    updateConfig: {event: 'success', success: {response: configSuccess}}
+  };
+
+  Object.keys(global.actionTypes.ConfigActions).forEach(function (method) {
+    ConfigActions[method] = RequestUtil.stubRequest(
+      ConfigActions, 'ConfigActions', method
+    );
+  });
+}
+
 module.exports = ConfigActions;
