@@ -64,7 +64,7 @@
     "jsx-loader": "0.13.2",
     "mkdirp": "0.5.1",
     "node-libs-browser": "0.5.2",
-    "react-addons-test-utils": "^0.14.6",
+    "react-addons-test-utils": "0.14.6",
     "run-sequence": "1.1.5",
     "source-map-loader": "0.1.5",
     "transform-loader": "0.2.3",
