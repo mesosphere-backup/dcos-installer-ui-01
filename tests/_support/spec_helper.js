@@ -38,7 +38,7 @@ Cypress.addParentCommand('configureCluster', function (configuration) {
   if (configuration.erroredForm) {
     cy.route({
       url: /configure\/status/,
-      response: 'fx:config/config-status.json',
+      response: 'fx:config/config-form-errors.json',
       status: 500
     });
   }

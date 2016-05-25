@@ -30,4 +30,22 @@ const SuccessActions = {
   }
 };
 
+if (Config.useFixtures) {
+  let success = require('../../../tests/_fixtures/config/success.json');
+
+  if (!global.actionTypes) {
+    global.actionTypes = {};
+  }
+
+  global.actionTypes.SuccessActions = {
+    fetchDCOSURL: {event: 'success', success: {response: success}}
+  };
+
+  Object.keys(global.actionTypes.SuccessActions).forEach(function (method) {
+    SuccessActions[method] = RequestUtil.stubRequest(
+      SuccessActions, 'SuccessActions', method
+    );
+  });
+}
+
 module.exports = SuccessActions;

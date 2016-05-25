@@ -115,4 +115,76 @@ const StageActions = {
   }
 };
 
+if (Config.useFixtures) {
+  let agentFail = require('../../../tests/_fixtures/stage-state-json/agent-fail.json');
+  let allFail = require('../../../tests/_fixtures/stage-state-json/all-fail.json');
+  let allRunning = require('../../../tests/_fixtures/stage-state-json/all-running.json');
+  let allSuccess = require('../../../tests/_fixtures/stage-state-json/all-success.json');
+  let masterFail = require('../../../tests/_fixtures/stage-state-json/master-fail.json');
+  let someRunning = require('../../../tests/_fixtures/stage-state-json/some-running.json');
+  let success = {};
+
+  let currentPageDeploy = require('../../../tests/_fixtures/current-page/deploy.json');
+  let currentPageNull = require('../../../tests/_fixtures/current-page/null.json');
+  let currentPagePostFlight = require('../../../tests/_fixtures/current-page/post-flight.json');
+  let currentPagePreFlight = require('../../../tests/_fixtures/current-page/pre-flight.json');
+
+  if (!global.actionTypes) {
+    global.actionTypes = {};
+  }
+
+  global.actionTypes.StageActions = {
+    fetchStageStatus: {
+      event: 'success',
+      success: {
+        response: success
+      },
+      responses: {
+        success,
+        agentFail,
+        allRunning,
+        allSuccess,
+        masterFail,
+        someRunning
+      }
+    },
+    beginStage: {
+      event: 'success',
+      success: {
+        response: success
+      },
+      responses: {
+        success
+      }
+    },
+    fetchLogs: {
+      event: 'success',
+      success: {
+        response: success
+      },
+      responses: {
+        success
+      }
+    },
+    fetchCurrentStage: {
+      event: 'success',
+      success: {
+        response: currentPageNull
+      },
+      responses: {
+        currentPageNull,
+        currentPageDeploy,
+        currentPagePostFlight,
+        currentPagePreFlight
+      }
+    }
+  };
+
+  Object.keys(global.actionTypes.StageActions).forEach(function (method) {
+    StageActions[method] = RequestUtil.stubRequest(
+      StageActions, 'StageActions', method
+    );
+  });
+}
+
 module.exports = StageActions;
