@@ -41,7 +41,7 @@ describe('ErrorLabel', function () {
     it('should say \'No Errors Found\' if no errors are found', function () {
       this.errors = [];
       var instance = ReactDOM.render(
-        <ErrorLabel step="postflight" />,
+        <ErrorLabel errors={[]} />,
         this.container
       );
 
@@ -62,7 +62,7 @@ describe('ErrorLabel', function () {
       ];
 
       var instance = ReactDOM.render(
-        <ErrorLabel step="postflight" />,
+        <ErrorLabel errors={this.errors} />,
         this.container
       );
 
@@ -70,7 +70,7 @@ describe('ErrorLabel', function () {
         instance
       ).querySelector('.error-label');
 
-      expect(result.textContent.indexOf('4 Nodes') > -1).toEqual(true);
+      expect(result.textContent.indexOf('4 Errors') > -1).toEqual(true);
     });
   });
 

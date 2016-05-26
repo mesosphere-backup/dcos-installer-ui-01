@@ -55,19 +55,12 @@ module.exports = class Success extends mixin(StoreMixin) {
   }
 
   render() {
-    let totalMasters = 0;
-    let totalAgents = 0;
+    let totalAgents = PostFlightStore.get('agentCount')
+      - PostFlightStore.get('agentErrorCount');
+    let totalMasters = PostFlightStore.get('masterCount');
 
-    let masterStatus = PostFlightStore.get('masters');
-    let agentStatus = PostFlightStore.get('agents');
-
-    if (masterStatus != null && agentStatus != null) {
-      totalMasters = masterStatus.totalMasters;
-      totalAgents = agentStatus.totalAgents - agentStatus.errors;
-    }
-
-    let masterNodeText = StringUtil.pluralize('Node', totalMasters);
     let agentNodeText = StringUtil.pluralize('Node', totalAgents);
+    let masterNodeText = StringUtil.pluralize('Node', totalMasters);
 
     return (
       <Page hasNavigationBar={true} pageName="success" size="medium">

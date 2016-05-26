@@ -5,28 +5,11 @@ import React from 'react';
 /* eslint-enable no-unused-vars */
 
 import DeployStore from '../stores/DeployStore';
-import ErrorLabel from '../components/ErrorLabel';
-import IconCircleCheckmark from '../components/icons/IconCircleCheckmark';
-import IconSpinner from '../components/icons/IconSpinner';
-import IconWarning from '../components/icons/IconWarning';
-import InstallerStore from '../stores/InstallerStore';
-import Page from '../components/Page';
-import PageContent from '../components/PageContent';
-import PageSection from '../components/PageSection';
+import IconStagePreflight from '../components/icons/IconStagePreflight';
 import PreFlightStore from '../stores/PreFlightStore';
-import ProgressBar from '../components/ProgressBar';
-import ProgressBarUtil from '../utils/ProgressBarUtil';
-import SectionBody from '../components/SectionBody';
-import SectionHeader from '../components/SectionHeader';
-import SectionHeaderIcon from '../components/SectionHeaderIcon';
-import SectionHeaderPrimary from '../components/SectionHeaderPrimary';
-import SectionHeaderSecondary from '../components/SectionHeaderSecondary';
-import SectionFooter from '../components/SectionFooter';
-import StageActionButtons from '../components/StageActionButtons';
-import StageLinks from '../components/StageLinks';
-import StringUtil from '../utils/StringUtil';
+import StageProgress from '../components/StageProgress';
 
-class Preflight extends mixin(StoreMixin) {
+class Postflight extends mixin(StoreMixin) {
   constructor() {
     super();
 
@@ -36,181 +19,30 @@ class Preflight extends mixin(StoreMixin) {
     ];
   }
 
-  componentWillMount() {
-    PreFlightStore.init();
-  }
-
-  componentDidMount() {
-    super.componentDidMount();
-    InstallerStore.setNextStep({
-      enabled: false,
-      label: 'Deploy',
-      link: null,
-      clickHandler: DeployStore.beginStage,
-      visible: true
-    });
-  }
-
   onDeployStoreBeginSuccess() {
     this.context.router.push('/deploy');
   }
 
-  handleRetryClick() {
-    PreFlightStore.beginStage({retry: true});
-    PreFlightStore.init();
-  }
-
-  getHeaderIcon(completed, failed, totalErrors) {
-    if (completed && totalErrors === 0) {
-      return <IconCircleCheckmark />;
-    }
-
-    if (completed && totalErrors > 0) {
-      return <IconWarning />;
-    }
-
-    return <IconSpinner />;
-  }
-
-  getHeaderContent(completed, failed, totalErrors) {
-    if (completed) {
-      if (failed) {
-        return 'Pre-Flight Failed';
-      }
-
-      if (totalErrors > 0) {
-        return 'Pre-Flight Completed with Errors';
-      }
-
-      return 'Pre-Flight Complete';
-    }
-
-    return 'Running Pre-Flight';
-  }
-
-  getProgressBarDetail(status, completed, total) {
-    if (completed) {
-      return '';
-    }
-
-    let hostCount = status.totalStarted;
-    return `Checking ${hostCount} of ${total}`;
-  }
-
-  getProgressBarLabel(type, completed, errors, totalOfType) {
-    if (errors > 0 && completed) {
-      let errorsText = StringUtil.pluralize('Error', errors);
-      let typeText = StringUtil.pluralize(type, totalOfType);
-      return `${errorsText} with ${errors} of ${totalOfType} ${typeText}`;
-    }
-
-    if (completed) {
-      let {errors, totalStarted} = PreFlightStore.get(`${type.toLowerCase()}s`);
-      let nodeCount = totalStarted - errors;
-
-      if (nodeCount < 0) {
-        nodeCount = 0;
-      }
-
-      let typeText = StringUtil.pluralize(type, nodeCount);
-
-      return `${nodeCount} ${typeText} Check Complete`;
-    }
-
-    return `Checking ${type}s`;
-  }
-
-  getProgressBar(type, completed, status, totalOfType) {
-    let progress = ProgressBarUtil.getPercentage(
-      status.totalStarted, totalOfType, type, PreFlightStore
-    );
-    let state = 'ongoing';
-
-    if (completed && status.errors > 0) {
-      state = 'error';
-    } else if (completed) {
-      state = 'success';
-    }
-
-    return (
-      <ProgressBar
-        detail={this.getProgressBarDetail(status, completed, totalOfType)}
-        label={this.getProgressBarLabel(type, completed, status.errors, totalOfType)}
-        progress={progress} state={state} />
-    );
-  }
-
   render() {
-    let masterStatus = PreFlightStore.get('masters');
-    let agentStatus = PreFlightStore.get('agents');
-
-    let completed = PreFlightStore.isCompleted();
-    let failed = PreFlightStore.isFailed();
-    let totalErrors = masterStatus.errors + agentStatus.errors;
-    let totalMasters = masterStatus.totalMasters;
-    let totalAgents = agentStatus.totalAgents;
     return (
-      <Page hasNavigationBar={true}>
-        <PageContent>
-          <PageSection>
-            <SectionHeader>
-              <SectionHeaderIcon>
-                {this.getHeaderIcon(completed, failed, totalErrors)}
-              </SectionHeaderIcon>
-              <SectionHeaderPrimary>
-                {this.getHeaderContent(completed, failed, totalErrors)}
-              </SectionHeaderPrimary>
-              <SectionHeaderSecondary>
-                <ErrorLabel step="preflight" />
-              </SectionHeaderSecondary>
-            </SectionHeader>
-            <SectionBody>
-              {
-                this.getProgressBar(
-                  'Master',
-                  PreFlightStore.isMasterCompleted(),
-                  masterStatus,
-                  totalMasters
-                )
-              }
-              {
-                this.getProgressBar(
-                  'Agent',
-                  PreFlightStore.isAgentCompleted(),
-                  agentStatus,
-                  totalAgents
-                )
-              }
-            </SectionBody>
-          </PageSection>
-          <PageSection>
-            <SectionFooter>
-              <StageActionButtons
-                completed={completed}
-                failed={failed}
-                nextText="Deploy"
-                onNextClick={DeployStore.beginStage.bind(DeployStore)}
-                onRetryClick={this.handleRetryClick.bind(this)}
-                showDisabled={true}
-                totalErrors={totalErrors} />
-            </SectionFooter>
-            <SectionFooter>
-              <StageLinks
-                completed={completed}
-                disabledDisplay={true}
-                failed={failed}
-                stage="preflight"
-                totalErrors={totalErrors} />
-            </SectionFooter>
-          </PageSection>
-        </PageContent>
-      </Page>
+      <StageProgress
+        nextButtonAction={DeployStore.beginStage}
+        nextButtonText="Deploy"
+        nextStageAction={DeployStore.beginStage.bind(DeployStore)}
+        nextStageText="Deploy"
+        router={this.context.router}
+        runningText="Running Pre-Flight..."
+        stageIcon={<IconStagePreflight />}
+        stageID="preflight"
+        stateText="Pre-Flight"
+        store={PreFlightStore}
+        />
     );
   }
 }
 
-Preflight.contextTypes = {
+Postflight.contextTypes = {
   router: React.PropTypes.object
 };
 
-module.exports = Preflight;
+module.exports = Postflight;
