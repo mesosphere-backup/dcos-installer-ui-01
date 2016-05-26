@@ -1,10 +1,12 @@
 import React from 'react';
 
-module.exports = class IconWarning extends React.Component {
+class IconWarning extends React.Component {
   render() {
+    let classes = classnames('icon icon-warning', this.props.className);
+
     return (
       <svg
-        className="icon icon-warning"
+        className={classes}
         height="64px"
         viewBox="0 0 64 64"
         width="64px"
@@ -16,3 +18,12 @@ module.exports = class IconWarning extends React.Component {
     );
   }
 }
+
+IconWarning.propTypes = {
+  className: React.PropTypes.oneOfType([
+    React.PropTypes.string,
+    React.PropTypes.object
+  ])
+};
+
+module.exports = IconWarning;
