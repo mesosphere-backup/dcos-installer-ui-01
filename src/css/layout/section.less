@@ -10,6 +10,12 @@
   margin-bottom: @section-header-margin-bottom;
 }
 
+.section-header-primary,
+.section-header-secondary {
+  position: relative;
+  z-index: 2;
+}
+
 .section-header-primary {
   margin-bottom: @section-header-primary-margin-bottom;
 
@@ -23,14 +29,57 @@
   &.successful-heading {
     font-size: @heading-h2-text-font-size * 1.8;
   }
+
+  &.section-header-secondary-stage-state {
+    font-size: @body-text-font-size * 1.2;
+    font-weight: 300;
+    line-height: @body-text-line-height * 0.8;
+  }
 }
 
 .section-header-icon {
   margin-bottom: @section-header-icon-margin-bottom;
+  position: relative;
+  text-align: center;
+  z-index: 1;
 
   .icon {
-    display: block;
-    margin: 0 auto;
+    display: inline-block;
+  }
+
+  &.section-header-icon-stage-status {
+    height: 64px;
+
+    .icon {
+      height: 64px;
+      left: 50%;
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.5s;
+      width: 64px;
+    }
+
+    .icon-stage-animation {
+      height: 155px;
+      width: 155px;
+    }
+  }
+
+  .section-header-icon-leave {
+    opacity: 1;
+
+    &.section-header-icon-leave-active {
+      opacity: 0;
+    }
+  }
+
+  .section-header-icon-enter {
+    opacity: 0;
+
+    &.section-header-icon-enter-active {
+      opacity: 1;
+    }
   }
 }
 
