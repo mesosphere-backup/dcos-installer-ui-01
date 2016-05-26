@@ -1,5 +1,5 @@
 @progress-bar-margin-top: @base-spacing-unit * 1/4;
-@progress-bar-header-margin-bottom: @base-spacing-unit * 1/6;
+@progress-bar-header-margin-bottom: @base-spacing-unit * 1/5;
 
 @progress-bar-label-foreground: #595E6C;
 @progress-bar-label-foreground-error: @red;
@@ -7,14 +7,14 @@
 @progress-bar-label-icon-margin-bottom: -0.15em;
 @progress-bar-label-icon-margin-right: @base-spacing-unit * 1/5;
 
-@progress-bar-timer-foreground: @progress-bar-label-foreground;
+@progress-bar-progress-foreground: @progress-bar-label-foreground;
 @progress-bar-detail-font-size: @body-text-font-size * 7/8;
 @progress-bar-detail-foreground: #999;
 
 @progress-bar-border: fade(@black, 10%);
 
 @progress-bar-fill-height: 6px;
-@progress-bar-fill-error: @red;
+@progress-bar-fill-error: @grey;
 @progress-bar-fill-ongoing: @blue;
 @progress-bar-fill-success: @green;
 
@@ -50,57 +50,51 @@
   }
 
   .progress-bar-label-content {
-    font-weight: 600;
     vertical-align: middle;
-
-    .progress-bar-label-precentage-complete,
-    .clickable {
-      font-weight: normal;
-    }
-
-    .clickable {
-      cursor: pointer;
-      display: inline-block;
-      margin-left: @base-spacing-unit * 1/5;
-      text-decoration: underline;
-    }
   }
 }
 
-.progress-bar-timer {
-  color: @progress-bar-timer-foreground;
+.progress-bar-progress {
+  color: @progress-bar-progress-foreground;
   flex: 0 0 auto;
   text-align: right;
 }
 
 .progress-bar-fill-wrapper {
-  animation: candy-stripe 1.125s linear infinite;
-  .candy-stripe(@grey, color-lighten(@grey, 30%));
-  border-radius: @progress-bar-fill-height;
   height: @progress-bar-fill-height;
-  font-size: 0;
-  line-height: 0;
   overflow: hidden;
   position: relative;
-  white-space: nowrap;
   z-index: 1;
+
+  &,
+  &:after {
+    border-radius: @progress-bar-fill-height;
+  }
+
+  &:after {
+    box-shadow: inset 0 0 0 1px @progress-bar-border;
+    content: '';
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    z-index: 2;
+  }
 }
 
 .progress-bar-fill {
   background: @progress-bar-fill-ongoing;
-  display: inline-block;
   height: 100%;
-  position: relative;
+  position: absolute;
   transition: color 1s, width 1s;
   z-index: 1;
-}
 
-.progress-bar-fill-error {
-  background: @progress-bar-fill-error;
-}
+  .is-erroneous & {
+    background: @progress-bar-fill-error;
+  }
 
-.progress-bar-fill-success {
-  background: @progress-bar-fill-success;
+  .is-successful & {
+    background: @progress-bar-fill-success;
+  }
 }
 
 .progress-bar-detail {
