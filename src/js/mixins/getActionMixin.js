@@ -10,34 +10,23 @@ function getActionMixin(stageID) {
 
     getInitialState: function () {
       return {
-        agents: {
-          completed: false,
-          errors: 0,
-          totalRunning: 0,
-          totalStarted: 0,
-          totalAgents: 0
-        },
+        agentCount: 0,
+        agentErrorCount: 0,
+        completed: false,
+        errorCount: 0,
         errorDetails: [],
-        totalHosts: 0,
-        masters: {
-          completed: false,
-          errors: 0,
-          totalRunning: 0,
-          totalStarted: 0,
-          totalMasters: 0
-        }
+        masterCount: 0,
+        masterErrorCount: 0,
+        nodes: [],
+        runningCount: 0,
+        startedCount: 0,
+        successCount: 0,
+        totalHosts: 0
       };
     },
 
     isCompleted: function () {
-      if (!this.get('masters')) {
-        return false;
-      }
-
-      let totalStarted = this.get('masters').totalStarted
-        + this.get('agents').totalStarted;
-      return this.isMasterCompleted() && this.isAgentCompleted()
-       && totalStarted === this.get('totalHosts');
+      return this.get('completed');
     },
 
     isFailed: function () {
@@ -47,29 +36,7 @@ function getActionMixin(stageID) {
         return false;
       }
 
-      return data.masters.errors > 0;
-    },
-
-    isMasterCompleted: function () {
-      let data = this.getSet_data || {};
-
-      if (Object.keys(data).length === 0) {
-        return false;
-      }
-
-      return data.masters.completed && data.masters.totalMasters > 0
-        && data.masters.totalStarted === data.masters.totalMasters;
-    },
-
-    isAgentCompleted: function () {
-      let data = this.getSet_data || {};
-
-      if (Object.keys(data).length === 0) {
-        return false;
-      }
-
-      return data.agents.completed && data.agents.totalAgents > 0
-        && data.agents.totalStarted === data.agents.totalAgents;
+      return this.get('errorCount') > 0;
     }
   };
 }

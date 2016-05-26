@@ -1,9 +1,6 @@
-/* eslint-disable no-unused-vars */
 import React from 'react';
-/* eslint-enable no-unused-vars */
 
 import APIErrorModal from './APIErrorModal';
-import StoreMap from '../constants/StoreMap';
 import StringUtil from '../utils/StringUtil';
 
 const METHODS_TO_BIND = ['handleErrorClose', 'handleErrorClick'];
@@ -34,23 +31,21 @@ class ErrorLabel extends React.Component {
       return <span>No Errors Found</span>;
     }
 
-    let nodesText = StringUtil.pluralize('Node', errors.length);
+    let errorText = StringUtil.pluralize('Error', errors.length);
 
     return (
       <a className={this.props.className} onClick={this.handleErrorClick}>
-        {`Errors Found on ${errors.length} ${nodesText}`}
+        {`${errors.length} ${errorText}`}
       </a>
     );
   }
 
   render() {
-    let errors = StoreMap[this.props.step].get('errorDetails');
-
     return (
       <div>
-        {this.getErrorLabel(errors)}
+        {this.getErrorLabel(this.props.errors)}
         <APIErrorModal
-          errors={errors}
+          errors={this.props.errors}
           onClose={this.handleErrorClose}
           open={this.state.openErrorModal}
           step={this.props.step} />
@@ -65,6 +60,7 @@ ErrorLabel.defaultProps = {
 
 ErrorLabel.propTypes = {
   className: React.PropTypes.string,
+  errors: React.PropTypes.array,
   step: React.PropTypes.string // preflight, deploy, postflight
 };
 

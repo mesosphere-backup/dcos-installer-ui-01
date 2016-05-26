@@ -1,0 +1,2512 @@
+{
+  "total_masters": 3,
+  "chain_name": "deploy",
+  "total_hosts": 18,
+  "hosts": {
+    "52.40.147.253:22": {
+      "commands": [
+        {
+          "cmd": [
+            "/usr/bin/ssh",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-p22",
+            "-i",
+            "/genconf/ssh_key",
+            "-tt",
+            "centos@52.40.147.253",
+            "sudo",
+            "mkdir",
+            "-p",
+            "/opt/dcos_install_tmp"
+          ],
+          "date": "2016-05-24 21:05:42.195266",
+          "stdout": [
+            ""
+          ],
+          "stage": "Creating temp directory",
+          "pid": 171,
+          "stderr": [
+            "",
+            "Connection to 52.40.147.253 closed.",
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/ssh",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-p22",
+            "-i",
+            "/genconf/ssh_key",
+            "-tt",
+            "centos@52.40.147.253",
+            "sudo",
+            "chown",
+            "centos",
+            "/opt/dcos_install_tmp"
+          ],
+          "date": "2016-05-24 21:05:42.417954",
+          "stdout": [
+            ""
+          ],
+          "stage": "Ensuring centos owns temporary directory",
+          "pid": 183,
+          "stderr": [
+            "",
+            "Connection to 52.40.147.253 closed.",
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/scp",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-P22",
+            "-i",
+            "/genconf/ssh_key",
+            "/genconf/serve/dcos_install.sh",
+            "centos@52.40.147.253:/opt/dcos_install_tmp/dcos_install.sh"
+          ],
+          "date": "2016-05-24 21:05:42.677435",
+          "stdout": [
+            ""
+          ],
+          "stage": "Coping dcos_install.sh",
+          "pid": 197,
+          "stderr": [
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/ssh",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-p22",
+            "-i",
+            "/genconf/ssh_key",
+            "-tt",
+            "centos@52.40.147.253",
+            "mkdir",
+            "-p",
+            "/opt/dcos_install_tmp/packages/dcos-config"
+          ],
+          "date": "2016-05-24 21:05:42.921476",
+          "stdout": [
+            ""
+          ],
+          "stage": "Creating package dir",
+          "pid": 213,
+          "stderr": [
+            "",
+            "Connection to 52.40.147.253 closed.",
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/scp",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-P22",
+            "-i",
+            "/genconf/ssh_key",
+            "/genconf/serve/packages/dcos-config/dcos-config--setup_e486fc9c32838d7c325ab015d07a1690126fbfe5.tar.xz",
+            "centos@52.40.147.253:/opt/dcos_install_tmp/packages/dcos-config"
+          ],
+          "date": "2016-05-24 21:05:43.173999",
+          "stdout": [
+            ""
+          ],
+          "stage": "Coping packages /genconf/serve/packages/dcos-config/dcos-config--setup_e486fc9c32838d7c325ab015d07a1690126fbfe5.tar.xz",
+          "pid": 231,
+          "stderr": [
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/ssh",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-p22",
+            "-i",
+            "/genconf/ssh_key",
+            "-tt",
+            "centos@52.40.147.253",
+            "mkdir",
+            "-p",
+            "/opt/dcos_install_tmp/packages/dcos-metadata"
+          ],
+          "date": "2016-05-24 21:05:43.382700",
+          "stdout": [
+            ""
+          ],
+          "stage": "Creating package dir",
+          "pid": 244,
+          "stderr": [
+            "",
+            "Connection to 52.40.147.253 closed.",
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/scp",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-P22",
+            "-i",
+            "/genconf/ssh_key",
+            "/genconf/serve/packages/dcos-metadata/dcos-metadata--setup_e486fc9c32838d7c325ab015d07a1690126fbfe5.tar.xz",
+            "centos@52.40.147.253:/opt/dcos_install_tmp/packages/dcos-metadata"
+          ],
+          "date": "2016-05-24 21:05:43.600344",
+          "stdout": [
+            ""
+          ],
+          "stage": "Coping packages /genconf/serve/packages/dcos-metadata/dcos-metadata--setup_e486fc9c32838d7c325ab015d07a1690126fbfe5.tar.xz",
+          "pid": 261,
+          "stderr": [
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/ssh",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-p22",
+            "-i",
+            "/genconf/ssh_key",
+            "-tt",
+            "centos@52.40.147.253",
+            "mkdir",
+            "-p",
+            "/opt/dcos_install_tmp/bootstrap"
+          ],
+          "date": "2016-05-24 21:05:43.808292",
+          "stdout": [
+            ""
+          ],
+          "stage": "Creating dir /opt/dcos_install_tmp/bootstrap",
+          "pid": 273,
+          "stderr": [
+            "",
+            "Connection to 52.40.147.253 closed.",
+            "",
+            ""
+          ],
+          "returncode": 0
+        }
+      ],
+      "tags": {
+        "dcos_install_param": "slave",
+        "role": "agent"
+      },
+      "host_status": "unstarted"
+    },
+    "52.38.201.85:22": {
+      "commands": [
+        {
+          "cmd": [
+            "/usr/bin/ssh",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-p22",
+            "-i",
+            "/genconf/ssh_key",
+            "-tt",
+            "centos@52.38.201.85",
+            "sudo",
+            "mkdir",
+            "-p",
+            "/opt/dcos_install_tmp"
+          ],
+          "date": "2016-05-24 21:05:42.212691",
+          "stdout": [
+            ""
+          ],
+          "stage": "Creating temp directory",
+          "pid": 174,
+          "stderr": [
+            "",
+            "Connection to 52.38.201.85 closed.",
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/ssh",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-p22",
+            "-i",
+            "/genconf/ssh_key",
+            "-tt",
+            "centos@52.38.201.85",
+            "sudo",
+            "chown",
+            "centos",
+            "/opt/dcos_install_tmp"
+          ],
+          "date": "2016-05-24 21:05:42.475963",
+          "stdout": [
+            ""
+          ],
+          "stage": "Ensuring centos owns temporary directory",
+          "pid": 184,
+          "stderr": [
+            "",
+            "Connection to 52.38.201.85 closed.",
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/scp",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-P22",
+            "-i",
+            "/genconf/ssh_key",
+            "/genconf/serve/dcos_install.sh",
+            "centos@52.38.201.85:/opt/dcos_install_tmp/dcos_install.sh"
+          ],
+          "date": "2016-05-24 21:05:42.725470",
+          "stdout": [
+            ""
+          ],
+          "stage": "Coping dcos_install.sh",
+          "pid": 203,
+          "stderr": [
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/ssh",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-p22",
+            "-i",
+            "/genconf/ssh_key",
+            "-tt",
+            "centos@52.38.201.85",
+            "mkdir",
+            "-p",
+            "/opt/dcos_install_tmp/packages/dcos-config"
+          ],
+          "date": "2016-05-24 21:05:42.931486",
+          "stdout": [
+            ""
+          ],
+          "stage": "Creating package dir",
+          "pid": 216,
+          "stderr": [
+            "",
+            "Connection to 52.38.201.85 closed.",
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/scp",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-P22",
+            "-i",
+            "/genconf/ssh_key",
+            "/genconf/serve/packages/dcos-config/dcos-config--setup_e486fc9c32838d7c325ab015d07a1690126fbfe5.tar.xz",
+            "centos@52.38.201.85:/opt/dcos_install_tmp/packages/dcos-config"
+          ],
+          "date": "2016-05-24 21:05:43.198939",
+          "stdout": [
+            ""
+          ],
+          "stage": "Coping packages /genconf/serve/packages/dcos-config/dcos-config--setup_e486fc9c32838d7c325ab015d07a1690126fbfe5.tar.xz",
+          "pid": 233,
+          "stderr": [
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/ssh",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-p22",
+            "-i",
+            "/genconf/ssh_key",
+            "-tt",
+            "centos@52.38.201.85",
+            "mkdir",
+            "-p",
+            "/opt/dcos_install_tmp/packages/dcos-metadata"
+          ],
+          "date": "2016-05-24 21:05:43.423504",
+          "stdout": [
+            ""
+          ],
+          "stage": "Creating package dir",
+          "pid": 247,
+          "stderr": [
+            "",
+            "Connection to 52.38.201.85 closed.",
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/scp",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-P22",
+            "-i",
+            "/genconf/ssh_key",
+            "/genconf/serve/packages/dcos-metadata/dcos-metadata--setup_e486fc9c32838d7c325ab015d07a1690126fbfe5.tar.xz",
+            "centos@52.38.201.85:/opt/dcos_install_tmp/packages/dcos-metadata"
+          ],
+          "date": "2016-05-24 21:05:43.677945",
+          "stdout": [
+            ""
+          ],
+          "stage": "Coping packages /genconf/serve/packages/dcos-metadata/dcos-metadata--setup_e486fc9c32838d7c325ab015d07a1690126fbfe5.tar.xz",
+          "pid": 264,
+          "stderr": [
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/ssh",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-p22",
+            "-i",
+            "/genconf/ssh_key",
+            "-tt",
+            "centos@52.38.201.85",
+            "mkdir",
+            "-p",
+            "/opt/dcos_install_tmp/bootstrap"
+          ],
+          "date": "2016-05-24 21:05:43.887082",
+          "stdout": [
+            ""
+          ],
+          "stage": "Creating dir /opt/dcos_install_tmp/bootstrap",
+          "pid": 277,
+          "stderr": [
+            "",
+            "Connection to 52.38.201.85 closed.",
+            "",
+            ""
+          ],
+          "returncode": 0
+        }
+      ],
+      "tags": {
+        "dcos_install_param": "slave",
+        "role": "agent"
+      },
+      "host_status": "success"
+    },
+    "52.40.171.139:22": {
+      "commands": [],
+      "tags": {
+        "dcos_install_param": "slave",
+        "role": "agent"
+      },
+      "host_status": "terminated"
+    },
+    "52.11.110.92:22": {
+      "commands": [
+        {
+          "cmd": [
+            "/usr/bin/ssh",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-p22",
+            "-i",
+            "/genconf/ssh_key",
+            "-tt",
+            "centos@52.11.110.92",
+            "sudo",
+            "mkdir",
+            "-p",
+            "/opt/dcos_install_tmp"
+          ],
+          "date": "2016-05-24 21:05:42.168059",
+          "stdout": [
+            ""
+          ],
+          "stage": "Creating temp directory",
+          "pid": 168,
+          "stderr": [
+            "",
+            "Connection to 52.11.110.92 closed.",
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/ssh",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-p22",
+            "-i",
+            "/genconf/ssh_key",
+            "-tt",
+            "centos@52.11.110.92",
+            "sudo",
+            "chown",
+            "centos",
+            "/opt/dcos_install_tmp"
+          ],
+          "date": "2016-05-24 21:05:42.425000",
+          "stdout": [
+            ""
+          ],
+          "stage": "Ensuring centos owns temporary directory",
+          "pid": 179,
+          "stderr": [
+            "",
+            "Connection to 52.11.110.92 closed.",
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/scp",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-P22",
+            "-i",
+            "/genconf/ssh_key",
+            "/genconf/serve/dcos_install.sh",
+            "centos@52.11.110.92:/opt/dcos_install_tmp/dcos_install.sh"
+          ],
+          "date": "2016-05-24 21:05:42.647078",
+          "stdout": [
+            ""
+          ],
+          "stage": "Coping dcos_install.sh",
+          "pid": 199,
+          "stderr": [
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/ssh",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-p22",
+            "-i",
+            "/genconf/ssh_key",
+            "-tt",
+            "centos@52.11.110.92",
+            "mkdir",
+            "-p",
+            "/opt/dcos_install_tmp/packages/dcos-config"
+          ],
+          "date": "2016-05-24 21:05:42.890785",
+          "stdout": [
+            ""
+          ],
+          "stage": "Creating package dir",
+          "pid": 211,
+          "stderr": [
+            "",
+            "Connection to 52.11.110.92 closed.",
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/scp",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-P22",
+            "-i",
+            "/genconf/ssh_key",
+            "/genconf/serve/packages/dcos-config/dcos-config--setup_e486fc9c32838d7c325ab015d07a1690126fbfe5.tar.xz",
+            "centos@52.11.110.92:/opt/dcos_install_tmp/packages/dcos-config"
+          ],
+          "date": "2016-05-24 21:05:43.111656",
+          "stdout": [
+            ""
+          ],
+          "stage": "Coping packages /genconf/serve/packages/dcos-config/dcos-config--setup_e486fc9c32838d7c325ab015d07a1690126fbfe5.tar.xz",
+          "pid": 227,
+          "stderr": [
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/ssh",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-p22",
+            "-i",
+            "/genconf/ssh_key",
+            "-tt",
+            "centos@52.11.110.92",
+            "mkdir",
+            "-p",
+            "/opt/dcos_install_tmp/packages/dcos-metadata"
+          ],
+          "date": "2016-05-24 21:05:43.355709",
+          "stdout": [
+            ""
+          ],
+          "stage": "Creating package dir",
+          "pid": 242,
+          "stderr": [
+            "",
+            "Connection to 52.11.110.92 closed.",
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/scp",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-P22",
+            "-i",
+            "/genconf/ssh_key",
+            "/genconf/serve/packages/dcos-metadata/dcos-metadata--setup_e486fc9c32838d7c325ab015d07a1690126fbfe5.tar.xz",
+            "centos@52.11.110.92:/opt/dcos_install_tmp/packages/dcos-metadata"
+          ],
+          "date": "2016-05-24 21:05:43.623228",
+          "stdout": [
+            ""
+          ],
+          "stage": "Coping packages /genconf/serve/packages/dcos-metadata/dcos-metadata--setup_e486fc9c32838d7c325ab015d07a1690126fbfe5.tar.xz",
+          "pid": 259,
+          "stderr": [
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/ssh",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-p22",
+            "-i",
+            "/genconf/ssh_key",
+            "-tt",
+            "centos@52.11.110.92",
+            "mkdir",
+            "-p",
+            "/opt/dcos_install_tmp/bootstrap"
+          ],
+          "date": "2016-05-24 21:05:43.842793",
+          "stdout": [
+            ""
+          ],
+          "stage": "Creating dir /opt/dcos_install_tmp/bootstrap",
+          "pid": 274,
+          "stderr": [
+            "",
+            "Connection to 52.11.110.92 closed.",
+            "",
+            ""
+          ],
+          "returncode": 0
+        }
+      ],
+      "tags": {
+        "dcos_install_param": "master",
+        "role": "master"
+      },
+      "host_status": "unstarted"
+    },
+    "52.33.13.188:22": {
+      "commands": [],
+      "tags": {
+        "dcos_install_param": "slave",
+        "role": "agent"
+      },
+      "host_status": "unstarted"
+    },
+    "52.40.161.242:22": {
+      "commands": [],
+      "tags": {
+        "dcos_install_param": "slave",
+        "role": "agent"
+      },
+      "host_status": "unstarted"
+    },
+    "52.32.155.42:22": {
+      "commands": [
+        {
+          "cmd": [
+            "/usr/bin/ssh",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-p22",
+            "-i",
+            "/genconf/ssh_key",
+            "-tt",
+            "centos@52.32.155.42",
+            "sudo",
+            "mkdir",
+            "-p",
+            "/opt/dcos_install_tmp"
+          ],
+          "date": "2016-05-24 21:05:42.133021",
+          "stdout": [
+            ""
+          ],
+          "stage": "Creating temp directory",
+          "pid": 169,
+          "stderr": [
+            "",
+            "Connection to 52.32.155.42 closed.",
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/ssh",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-p22",
+            "-i",
+            "/genconf/ssh_key",
+            "-tt",
+            "centos@52.32.155.42",
+            "sudo",
+            "chown",
+            "centos",
+            "/opt/dcos_install_tmp"
+          ],
+          "date": "2016-05-24 21:05:42.342540",
+          "stdout": [
+            ""
+          ],
+          "stage": "Ensuring centos owns temporary directory",
+          "pid": 177,
+          "stderr": [
+            "",
+            "Connection to 52.32.155.42 closed.",
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/scp",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-P22",
+            "-i",
+            "/genconf/ssh_key",
+            "/genconf/serve/dcos_install.sh",
+            "centos@52.32.155.42:/opt/dcos_install_tmp/dcos_install.sh"
+          ],
+          "date": "2016-05-24 21:05:42.551629",
+          "stdout": [
+            ""
+          ],
+          "stage": "Coping dcos_install.sh",
+          "pid": 189,
+          "stderr": [
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/ssh",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-p22",
+            "-i",
+            "/genconf/ssh_key",
+            "-tt",
+            "centos@52.32.155.42",
+            "mkdir",
+            "-p",
+            "/opt/dcos_install_tmp/packages/dcos-config"
+          ],
+          "date": "2016-05-24 21:05:42.792835",
+          "stdout": [
+            ""
+          ],
+          "stage": "Creating package dir",
+          "pid": 207,
+          "stderr": [
+            "",
+            "Connection to 52.32.155.42 closed.",
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/scp",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-P22",
+            "-i",
+            "/genconf/ssh_key",
+            "/genconf/serve/packages/dcos-config/dcos-config--setup_e486fc9c32838d7c325ab015d07a1690126fbfe5.tar.xz",
+            "centos@52.32.155.42:/opt/dcos_install_tmp/packages/dcos-config"
+          ],
+          "date": "2016-05-24 21:05:43.013345",
+          "stdout": [
+            ""
+          ],
+          "stage": "Coping packages /genconf/serve/packages/dcos-config/dcos-config--setup_e486fc9c32838d7c325ab015d07a1690126fbfe5.tar.xz",
+          "pid": 219,
+          "stderr": [
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/ssh",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-p22",
+            "-i",
+            "/genconf/ssh_key",
+            "-tt",
+            "centos@52.32.155.42",
+            "mkdir",
+            "-p",
+            "/opt/dcos_install_tmp/packages/dcos-metadata"
+          ],
+          "date": "2016-05-24 21:05:43.232070",
+          "stdout": [
+            ""
+          ],
+          "stage": "Creating package dir",
+          "pid": 238,
+          "stderr": [
+            "",
+            "Connection to 52.32.155.42 closed.",
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/scp",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-P22",
+            "-i",
+            "/genconf/ssh_key",
+            "/genconf/serve/packages/dcos-metadata/dcos-metadata--setup_e486fc9c32838d7c325ab015d07a1690126fbfe5.tar.xz",
+            "centos@52.32.155.42:/opt/dcos_install_tmp/packages/dcos-metadata"
+          ],
+          "date": "2016-05-24 21:05:43.459588",
+          "stdout": [
+            ""
+          ],
+          "stage": "Coping packages /genconf/serve/packages/dcos-metadata/dcos-metadata--setup_e486fc9c32838d7c325ab015d07a1690126fbfe5.tar.xz",
+          "pid": 249,
+          "stderr": [
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/ssh",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-p22",
+            "-i",
+            "/genconf/ssh_key",
+            "-tt",
+            "centos@52.32.155.42",
+            "mkdir",
+            "-p",
+            "/opt/dcos_install_tmp/bootstrap"
+          ],
+          "date": "2016-05-24 21:05:43.730497",
+          "stdout": [
+            ""
+          ],
+          "stage": "Creating dir /opt/dcos_install_tmp/bootstrap",
+          "pid": 268,
+          "stderr": [
+            "",
+            "Connection to 52.32.155.42 closed.",
+            "",
+            ""
+          ],
+          "returncode": 0
+        }
+      ],
+      "tags": {
+        "dcos_install_param": "slave",
+        "role": "agent"
+      },
+      "host_status": "running"
+    },
+    "52.40.146.251:22": {
+      "commands": [
+        {
+          "cmd": [
+            "/usr/bin/ssh",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-p22",
+            "-i",
+            "/genconf/ssh_key",
+            "-tt",
+            "centos@52.40.146.251",
+            "sudo",
+            "mkdir",
+            "-p",
+            "/opt/dcos_install_tmp"
+          ],
+          "date": "2016-05-24 21:05:42.181754",
+          "stdout": [
+            ""
+          ],
+          "stage": "Creating temp directory",
+          "pid": 170,
+          "stderr": [
+            "",
+            "Connection to 52.40.146.251 closed.",
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/ssh",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-p22",
+            "-i",
+            "/genconf/ssh_key",
+            "-tt",
+            "centos@52.40.146.251",
+            "sudo",
+            "chown",
+            "centos",
+            "/opt/dcos_install_tmp"
+          ],
+          "date": "2016-05-24 21:05:42.393287",
+          "stdout": [
+            ""
+          ],
+          "stage": "Ensuring centos owns temporary directory",
+          "pid": 182,
+          "stderr": [
+            "",
+            "Connection to 52.40.146.251 closed.",
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/scp",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-P22",
+            "-i",
+            "/genconf/ssh_key",
+            "/genconf/serve/dcos_install.sh",
+            "centos@52.40.146.251:/opt/dcos_install_tmp/dcos_install.sh"
+          ],
+          "date": "2016-05-24 21:05:42.629594",
+          "stdout": [
+            ""
+          ],
+          "stage": "Coping dcos_install.sh",
+          "pid": 193,
+          "stderr": [
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/ssh",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-p22",
+            "-i",
+            "/genconf/ssh_key",
+            "-tt",
+            "centos@52.40.146.251",
+            "mkdir",
+            "-p",
+            "/opt/dcos_install_tmp/packages/dcos-config"
+          ],
+          "date": "2016-05-24 21:05:42.863287",
+          "stdout": [
+            ""
+          ],
+          "stage": "Creating package dir",
+          "pid": 210,
+          "stderr": [
+            "",
+            "Connection to 52.40.146.251 closed.",
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/scp",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-P22",
+            "-i",
+            "/genconf/ssh_key",
+            "/genconf/serve/packages/dcos-config/dcos-config--setup_e486fc9c32838d7c325ab015d07a1690126fbfe5.tar.xz",
+            "centos@52.40.146.251:/opt/dcos_install_tmp/packages/dcos-config"
+          ],
+          "date": "2016-05-24 21:05:43.098445",
+          "stdout": [
+            ""
+          ],
+          "stage": "Coping packages /genconf/serve/packages/dcos-config/dcos-config--setup_e486fc9c32838d7c325ab015d07a1690126fbfe5.tar.xz",
+          "pid": 223,
+          "stderr": [
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/ssh",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-p22",
+            "-i",
+            "/genconf/ssh_key",
+            "-tt",
+            "centos@52.40.146.251",
+            "mkdir",
+            "-p",
+            "/opt/dcos_install_tmp/packages/dcos-metadata"
+          ],
+          "date": "2016-05-24 21:05:43.337137",
+          "stdout": [
+            ""
+          ],
+          "stage": "Creating package dir",
+          "pid": 241,
+          "stderr": [
+            "",
+            "Connection to 52.40.146.251 closed.",
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/scp",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-P22",
+            "-i",
+            "/genconf/ssh_key",
+            "/genconf/serve/packages/dcos-metadata/dcos-metadata--setup_e486fc9c32838d7c325ab015d07a1690126fbfe5.tar.xz",
+            "centos@52.40.146.251:/opt/dcos_install_tmp/packages/dcos-metadata"
+          ],
+          "date": "2016-05-24 21:05:43.588658",
+          "stdout": [
+            ""
+          ],
+          "stage": "Coping packages /genconf/serve/packages/dcos-metadata/dcos-metadata--setup_e486fc9c32838d7c325ab015d07a1690126fbfe5.tar.xz",
+          "pid": 257,
+          "stderr": [
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/ssh",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-p22",
+            "-i",
+            "/genconf/ssh_key",
+            "-tt",
+            "centos@52.40.146.251",
+            "mkdir",
+            "-p",
+            "/opt/dcos_install_tmp/bootstrap"
+          ],
+          "date": "2016-05-24 21:05:43.826426",
+          "stdout": [
+            ""
+          ],
+          "stage": "Creating dir /opt/dcos_install_tmp/bootstrap",
+          "pid": 272,
+          "stderr": [
+            "",
+            "Connection to 52.40.146.251 closed.",
+            "",
+            ""
+          ],
+          "returncode": 0
+        }
+      ],
+      "tags": {
+        "dcos_install_param": "slave",
+        "role": "agent"
+      },
+      "host_status": "running"
+    },
+    "52.25.5.219:22": {
+      "commands": [
+        {
+          "cmd": [
+            "/usr/bin/ssh",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-p22",
+            "-i",
+            "/genconf/ssh_key",
+            "-tt",
+            "centos@52.25.5.219",
+            "sudo",
+            "mkdir",
+            "-p",
+            "/opt/dcos_install_tmp"
+          ],
+          "date": "2016-05-24 21:05:42.169118",
+          "stdout": [
+            ""
+          ],
+          "stage": "Creating temp directory",
+          "pid": 172,
+          "stderr": [
+            "",
+            "Connection to 52.25.5.219 closed.",
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/ssh",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-p22",
+            "-i",
+            "/genconf/ssh_key",
+            "-tt",
+            "centos@52.25.5.219",
+            "sudo",
+            "chown",
+            "centos",
+            "/opt/dcos_install_tmp"
+          ],
+          "date": "2016-05-24 21:05:42.383260",
+          "stdout": [
+            ""
+          ],
+          "stage": "Ensuring centos owns temporary directory",
+          "pid": 180,
+          "stderr": [
+            "",
+            "Connection to 52.25.5.219 closed.",
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/scp",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-P22",
+            "-i",
+            "/genconf/ssh_key",
+            "/genconf/serve/dcos_install.sh",
+            "centos@52.25.5.219:/opt/dcos_install_tmp/dcos_install.sh"
+          ],
+          "date": "2016-05-24 21:05:42.583933",
+          "stdout": [
+            ""
+          ],
+          "stage": "Coping dcos_install.sh",
+          "pid": 191,
+          "stderr": [
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/ssh",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-p22",
+            "-i",
+            "/genconf/ssh_key",
+            "-tt",
+            "centos@52.25.5.219",
+            "mkdir",
+            "-p",
+            "/opt/dcos_install_tmp/packages/dcos-config"
+          ],
+          "date": "2016-05-24 21:05:42.777631",
+          "stdout": [
+            ""
+          ],
+          "stage": "Creating package dir",
+          "pid": 209,
+          "stderr": [
+            "",
+            "Connection to 52.25.5.219 closed.",
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/scp",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-P22",
+            "-i",
+            "/genconf/ssh_key",
+            "/genconf/serve/packages/dcos-config/dcos-config--setup_e486fc9c32838d7c325ab015d07a1690126fbfe5.tar.xz",
+            "centos@52.25.5.219:/opt/dcos_install_tmp/packages/dcos-config"
+          ],
+          "date": "2016-05-24 21:05:42.989889",
+          "stdout": [
+            ""
+          ],
+          "stage": "Coping packages /genconf/serve/packages/dcos-config/dcos-config--setup_e486fc9c32838d7c325ab015d07a1690126fbfe5.tar.xz",
+          "pid": 217,
+          "stderr": [
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/ssh",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-p22",
+            "-i",
+            "/genconf/ssh_key",
+            "-tt",
+            "centos@52.25.5.219",
+            "mkdir",
+            "-p",
+            "/opt/dcos_install_tmp/packages/dcos-metadata"
+          ],
+          "date": "2016-05-24 21:05:43.187765",
+          "stdout": [
+            ""
+          ],
+          "stage": "Creating package dir",
+          "pid": 237,
+          "stderr": [
+            "",
+            "Connection to 52.25.5.219 closed.",
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/scp",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-P22",
+            "-i",
+            "/genconf/ssh_key",
+            "/genconf/serve/packages/dcos-metadata/dcos-metadata--setup_e486fc9c32838d7c325ab015d07a1690126fbfe5.tar.xz",
+            "centos@52.25.5.219:/opt/dcos_install_tmp/packages/dcos-metadata"
+          ],
+          "date": "2016-05-24 21:05:43.400987",
+          "stdout": [
+            ""
+          ],
+          "stage": "Coping packages /genconf/serve/packages/dcos-metadata/dcos-metadata--setup_e486fc9c32838d7c325ab015d07a1690126fbfe5.tar.xz",
+          "pid": 245,
+          "stderr": [
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/ssh",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-p22",
+            "-i",
+            "/genconf/ssh_key",
+            "-tt",
+            "centos@52.25.5.219",
+            "mkdir",
+            "-p",
+            "/opt/dcos_install_tmp/bootstrap"
+          ],
+          "date": "2016-05-24 21:05:43.628141",
+          "stdout": [
+            ""
+          ],
+          "stage": "Creating dir /opt/dcos_install_tmp/bootstrap",
+          "pid": 263,
+          "stderr": [
+            "",
+            "Connection to 52.25.5.219 closed.",
+            "",
+            ""
+          ],
+          "returncode": 0
+        }
+      ],
+      "tags": {
+        "dcos_install_param": "slave",
+        "role": "agent"
+      },
+      "host_status": "unstarted"
+    },
+    "52.36.253.223:22": {
+      "commands": [],
+      "tags": {
+        "dcos_install_param": "slave",
+        "role": "agent"
+      },
+      "host_status": "unstarted"
+    },
+    "52.40.165.204:22": {
+      "commands": [
+        {
+          "cmd": [
+            "/usr/bin/ssh",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-p22",
+            "-i",
+            "/genconf/ssh_key",
+            "-tt",
+            "centos@52.40.165.204",
+            "sudo",
+            "mkdir",
+            "-p",
+            "/opt/dcos_install_tmp"
+          ],
+          "date": "2016-05-24 21:05:42.218873",
+          "stdout": [
+            ""
+          ],
+          "stage": "Creating temp directory",
+          "pid": 175,
+          "stderr": [
+            "",
+            "Connection to 52.40.165.204 closed.",
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/ssh",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-p22",
+            "-i",
+            "/genconf/ssh_key",
+            "-tt",
+            "centos@52.40.165.204",
+            "sudo",
+            "chown",
+            "centos",
+            "/opt/dcos_install_tmp"
+          ],
+          "date": "2016-05-24 21:05:42.444264",
+          "stdout": [
+            ""
+          ],
+          "stage": "Ensuring centos owns temporary directory",
+          "pid": 185,
+          "stderr": [
+            "",
+            "Connection to 52.40.165.204 closed.",
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/scp",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-P22",
+            "-i",
+            "/genconf/ssh_key",
+            "/genconf/serve/dcos_install.sh",
+            "centos@52.40.165.204:/opt/dcos_install_tmp/dcos_install.sh"
+          ],
+          "date": "2016-05-24 21:05:42.713432",
+          "stdout": [
+            ""
+          ],
+          "stage": "Coping dcos_install.sh",
+          "pid": 201,
+          "stderr": [
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/ssh",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-p22",
+            "-i",
+            "/genconf/ssh_key",
+            "-tt",
+            "centos@52.40.165.204",
+            "mkdir",
+            "-p",
+            "/opt/dcos_install_tmp/packages/dcos-config"
+          ],
+          "date": "2016-05-24 21:05:42.953608",
+          "stdout": [
+            ""
+          ],
+          "stage": "Creating package dir",
+          "pid": 215,
+          "stderr": [
+            "",
+            "Connection to 52.40.165.204 closed.",
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/scp",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-P22",
+            "-i",
+            "/genconf/ssh_key",
+            "/genconf/serve/packages/dcos-config/dcos-config--setup_e486fc9c32838d7c325ab015d07a1690126fbfe5.tar.xz",
+            "centos@52.40.165.204:/opt/dcos_install_tmp/packages/dcos-config"
+          ],
+          "date": "2016-05-24 21:05:43.224797",
+          "stdout": [
+            ""
+          ],
+          "stage": "Coping packages /genconf/serve/packages/dcos-config/dcos-config--setup_e486fc9c32838d7c325ab015d07a1690126fbfe5.tar.xz",
+          "pid": 235,
+          "stderr": [
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/ssh",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-p22",
+            "-i",
+            "/genconf/ssh_key",
+            "-tt",
+            "centos@52.40.165.204",
+            "mkdir",
+            "-p",
+            "/opt/dcos_install_tmp/packages/dcos-metadata"
+          ],
+          "date": "2016-05-24 21:05:43.438126",
+          "stdout": [
+            ""
+          ],
+          "stage": "Creating package dir",
+          "pid": 248,
+          "stderr": [
+            "",
+            "Connection to 52.40.165.204 closed.",
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/scp",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-P22",
+            "-i",
+            "/genconf/ssh_key",
+            "/genconf/serve/packages/dcos-metadata/dcos-metadata--setup_e486fc9c32838d7c325ab015d07a1690126fbfe5.tar.xz",
+            "centos@52.40.165.204:/opt/dcos_install_tmp/packages/dcos-metadata"
+          ],
+          "date": "2016-05-24 21:05:43.703021",
+          "stdout": [
+            ""
+          ],
+          "stage": "Coping packages /genconf/serve/packages/dcos-metadata/dcos-metadata--setup_e486fc9c32838d7c325ab015d07a1690126fbfe5.tar.xz",
+          "pid": 266,
+          "stderr": [
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/ssh",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-p22",
+            "-i",
+            "/genconf/ssh_key",
+            "-tt",
+            "centos@52.40.165.204",
+            "mkdir",
+            "-p",
+            "/opt/dcos_install_tmp/bootstrap"
+          ],
+          "date": "2016-05-24 21:05:43.922309",
+          "stdout": [
+            ""
+          ],
+          "stage": "Creating dir /opt/dcos_install_tmp/bootstrap",
+          "pid": 280,
+          "stderr": [
+            "",
+            "Connection to 52.40.165.204 closed.",
+            "",
+            ""
+          ],
+          "returncode": 0
+        }
+      ],
+      "tags": {
+        "dcos_install_param": "slave",
+        "role": "agent"
+      },
+      "host_status": "unstarted"
+    },
+    "52.39.50.10:22": {
+      "commands": [],
+      "tags": {
+        "dcos_install_param": "slave",
+        "role": "agent"
+      },
+      "host_status": "unstarted"
+    },
+    "52.40.35.141:22": {
+      "commands": [],
+      "tags": {
+        "dcos_install_param": "slave",
+        "role": "agent"
+      },
+      "host_status": "unstarted"
+    },
+    "52.38.58.20:22": {
+      "commands": [],
+      "tags": {
+        "dcos_install_param": "slave",
+        "role": "agent"
+      },
+      "host_status": "unstarted"
+    },
+    "52.36.211.172:22": {
+      "commands": [
+        {
+          "cmd": [
+            "/usr/bin/ssh",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-p22",
+            "-i",
+            "/genconf/ssh_key",
+            "-tt",
+            "centos@52.36.211.172",
+            "sudo",
+            "mkdir",
+            "-p",
+            "/opt/dcos_install_tmp"
+          ],
+          "date": "2016-05-24 21:05:42.220695",
+          "stdout": [
+            ""
+          ],
+          "stage": "Creating temp directory",
+          "pid": 173,
+          "stderr": [
+            "",
+            "Connection to 52.36.211.172 closed.",
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/ssh",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-p22",
+            "-i",
+            "/genconf/ssh_key",
+            "-tt",
+            "centos@52.36.211.172",
+            "sudo",
+            "chown",
+            "centos",
+            "/opt/dcos_install_tmp"
+          ],
+          "date": "2016-05-24 21:05:42.484679",
+          "stdout": [
+            ""
+          ],
+          "stage": "Ensuring centos owns temporary directory",
+          "pid": 186,
+          "stderr": [
+            "",
+            "Connection to 52.36.211.172 closed.",
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/scp",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-P22",
+            "-i",
+            "/genconf/ssh_key",
+            "/genconf/serve/dcos_install.sh",
+            "centos@52.36.211.172:/opt/dcos_install_tmp/dcos_install.sh"
+          ],
+          "date": "2016-05-24 21:05:42.694898",
+          "stdout": [
+            ""
+          ],
+          "stage": "Coping dcos_install.sh",
+          "pid": 205,
+          "stderr": [
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/ssh",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-p22",
+            "-i",
+            "/genconf/ssh_key",
+            "-tt",
+            "centos@52.36.211.172",
+            "mkdir",
+            "-p",
+            "/opt/dcos_install_tmp/packages/dcos-config"
+          ],
+          "date": "2016-05-24 21:05:42.912266",
+          "stdout": [
+            ""
+          ],
+          "stage": "Creating package dir",
+          "pid": 214,
+          "stderr": [
+            "",
+            "Connection to 52.36.211.172 closed.",
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/scp",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-P22",
+            "-i",
+            "/genconf/ssh_key",
+            "/genconf/serve/packages/dcos-config/dcos-config--setup_e486fc9c32838d7c325ab015d07a1690126fbfe5.tar.xz",
+            "centos@52.36.211.172:/opt/dcos_install_tmp/packages/dcos-config"
+          ],
+          "date": "2016-05-24 21:05:43.130077",
+          "stdout": [
+            ""
+          ],
+          "stage": "Coping packages /genconf/serve/packages/dcos-config/dcos-config--setup_e486fc9c32838d7c325ab015d07a1690126fbfe5.tar.xz",
+          "pid": 229,
+          "stderr": [
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/ssh",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-p22",
+            "-i",
+            "/genconf/ssh_key",
+            "-tt",
+            "centos@52.36.211.172",
+            "mkdir",
+            "-p",
+            "/opt/dcos_install_tmp/packages/dcos-metadata"
+          ],
+          "date": "2016-05-24 21:05:43.327017",
+          "stdout": [
+            ""
+          ],
+          "stage": "Creating package dir",
+          "pid": 243,
+          "stderr": [
+            "",
+            "Connection to 52.36.211.172 closed.",
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/scp",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-P22",
+            "-i",
+            "/genconf/ssh_key",
+            "/genconf/serve/packages/dcos-metadata/dcos-metadata--setup_e486fc9c32838d7c325ab015d07a1690126fbfe5.tar.xz",
+            "centos@52.36.211.172:/opt/dcos_install_tmp/packages/dcos-metadata"
+          ],
+          "date": "2016-05-24 21:05:43.574717",
+          "stdout": [
+            ""
+          ],
+          "stage": "Coping packages /genconf/serve/packages/dcos-metadata/dcos-metadata--setup_e486fc9c32838d7c325ab015d07a1690126fbfe5.tar.xz",
+          "pid": 255,
+          "stderr": [
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/ssh",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-p22",
+            "-i",
+            "/genconf/ssh_key",
+            "-tt",
+            "centos@52.36.211.172",
+            "mkdir",
+            "-p",
+            "/opt/dcos_install_tmp/bootstrap"
+          ],
+          "date": "2016-05-24 21:05:43.780209",
+          "stdout": [
+            ""
+          ],
+          "stage": "Creating dir /opt/dcos_install_tmp/bootstrap",
+          "pid": 271,
+          "stderr": [
+            "",
+            "Connection to 52.36.211.172 closed.",
+            "",
+            ""
+          ],
+          "returncode": 0
+        }
+      ],
+      "tags": {
+        "dcos_install_param": "slave",
+        "role": "agent"
+      },
+      "host_status": "unstarted"
+    },
+    "52.40.28.49:22": {
+      "commands": [
+        {
+          "cmd": [
+            "/usr/bin/ssh",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-p22",
+            "-i",
+            "/genconf/ssh_key",
+            "-tt",
+            "centos@52.40.28.49",
+            "sudo",
+            "mkdir",
+            "-p",
+            "/opt/dcos_install_tmp"
+          ],
+          "date": "2016-05-24 21:05:42.117002",
+          "stdout": [
+            ""
+          ],
+          "stage": "Creating temp directory",
+          "pid": 166,
+          "stderr": [
+            "",
+            "Connection to 52.40.28.49 closed.",
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/ssh",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-p22",
+            "-i",
+            "/genconf/ssh_key",
+            "-tt",
+            "centos@52.40.28.49",
+            "sudo",
+            "chown",
+            "centos",
+            "/opt/dcos_install_tmp"
+          ],
+          "date": "2016-05-24 21:05:42.331163",
+          "stdout": [
+            ""
+          ],
+          "stage": "Ensuring centos owns temporary directory",
+          "pid": 176,
+          "stderr": [
+            "",
+            "Connection to 52.40.28.49 closed.",
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/scp",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-P22",
+            "-i",
+            "/genconf/ssh_key",
+            "/genconf/serve/dcos_install.sh",
+            "centos@52.40.28.49:/opt/dcos_install_tmp/dcos_install.sh"
+          ],
+          "date": "2016-05-24 21:05:42.570967",
+          "stdout": [
+            ""
+          ],
+          "stage": "Coping dcos_install.sh",
+          "pid": 187,
+          "stderr": [
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/ssh",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-p22",
+            "-i",
+            "/genconf/ssh_key",
+            "-tt",
+            "centos@52.40.28.49",
+            "mkdir",
+            "-p",
+            "/opt/dcos_install_tmp/packages/dcos-config"
+          ],
+          "date": "2016-05-24 21:05:42.810539",
+          "stdout": [
+            ""
+          ],
+          "stage": "Creating package dir",
+          "pid": 208,
+          "stderr": [
+            "",
+            "Connection to 52.40.28.49 closed.",
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/scp",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-P22",
+            "-i",
+            "/genconf/ssh_key",
+            "/genconf/serve/packages/dcos-config/dcos-config--setup_e486fc9c32838d7c325ab015d07a1690126fbfe5.tar.xz",
+            "centos@52.40.28.49:/opt/dcos_install_tmp/packages/dcos-config"
+          ],
+          "date": "2016-05-24 21:05:43.057995",
+          "stdout": [
+            ""
+          ],
+          "stage": "Coping packages /genconf/serve/packages/dcos-config/dcos-config--setup_e486fc9c32838d7c325ab015d07a1690126fbfe5.tar.xz",
+          "pid": 221,
+          "stderr": [
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/ssh",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-p22",
+            "-i",
+            "/genconf/ssh_key",
+            "-tt",
+            "centos@52.40.28.49",
+            "mkdir",
+            "-p",
+            "/opt/dcos_install_tmp/packages/dcos-metadata"
+          ],
+          "date": "2016-05-24 21:05:43.270222",
+          "stdout": [
+            ""
+          ],
+          "stage": "Creating package dir",
+          "pid": 239,
+          "stderr": [
+            "",
+            "Connection to 52.40.28.49 closed.",
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/scp",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-P22",
+            "-i",
+            "/genconf/ssh_key",
+            "/genconf/serve/packages/dcos-metadata/dcos-metadata--setup_e486fc9c32838d7c325ab015d07a1690126fbfe5.tar.xz",
+            "centos@52.40.28.49:/opt/dcos_install_tmp/packages/dcos-metadata"
+          ],
+          "date": "2016-05-24 21:05:43.488502",
+          "stdout": [
+            ""
+          ],
+          "stage": "Coping packages /genconf/serve/packages/dcos-metadata/dcos-metadata--setup_e486fc9c32838d7c325ab015d07a1690126fbfe5.tar.xz",
+          "pid": 251,
+          "stderr": [
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/ssh",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-p22",
+            "-i",
+            "/genconf/ssh_key",
+            "-tt",
+            "centos@52.40.28.49",
+            "mkdir",
+            "-p",
+            "/opt/dcos_install_tmp/bootstrap"
+          ],
+          "date": "2016-05-24 21:05:43.693807",
+          "stdout": [
+            ""
+          ],
+          "stage": "Creating dir /opt/dcos_install_tmp/bootstrap",
+          "pid": 269,
+          "stderr": [
+            "",
+            "Connection to 52.40.28.49 closed.",
+            "",
+            ""
+          ],
+          "returncode": 0
+        }
+      ],
+      "tags": {
+        "dcos_install_param": "master",
+        "role": "master"
+      },
+      "host_status": "unstarted"
+    },
+    "52.39.174.151:22": {
+      "commands": [
+        {
+          "cmd": [
+            "/usr/bin/ssh",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-p22",
+            "-i",
+            "/genconf/ssh_key",
+            "-tt",
+            "centos@52.39.174.151",
+            "sudo",
+            "mkdir",
+            "-p",
+            "/opt/dcos_install_tmp"
+          ],
+          "date": "2016-05-24 21:05:42.156899",
+          "stdout": [
+            ""
+          ],
+          "stage": "Creating temp directory",
+          "pid": 167,
+          "stderr": [
+            "",
+            "Connection to 52.39.174.151 closed.",
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/ssh",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-p22",
+            "-i",
+            "/genconf/ssh_key",
+            "-tt",
+            "centos@52.39.174.151",
+            "sudo",
+            "chown",
+            "centos",
+            "/opt/dcos_install_tmp"
+          ],
+          "date": "2016-05-24 21:05:42.408109",
+          "stdout": [
+            ""
+          ],
+          "stage": "Ensuring centos owns temporary directory",
+          "pid": 178,
+          "stderr": [
+            "",
+            "Connection to 52.39.174.151 closed.",
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/scp",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-P22",
+            "-i",
+            "/genconf/ssh_key",
+            "/genconf/serve/dcos_install.sh",
+            "centos@52.39.174.151:/opt/dcos_install_tmp/dcos_install.sh"
+          ],
+          "date": "2016-05-24 21:05:42.663676",
+          "stdout": [
+            ""
+          ],
+          "stage": "Coping dcos_install.sh",
+          "pid": 195,
+          "stderr": [
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/ssh",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-p22",
+            "-i",
+            "/genconf/ssh_key",
+            "-tt",
+            "centos@52.39.174.151",
+            "mkdir",
+            "-p",
+            "/opt/dcos_install_tmp/packages/dcos-config"
+          ],
+          "date": "2016-05-24 21:05:42.870239",
+          "stdout": [
+            ""
+          ],
+          "stage": "Creating package dir",
+          "pid": 212,
+          "stderr": [
+            "",
+            "Connection to 52.39.174.151 closed.",
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/scp",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-P22",
+            "-i",
+            "/genconf/ssh_key",
+            "/genconf/serve/packages/dcos-config/dcos-config--setup_e486fc9c32838d7c325ab015d07a1690126fbfe5.tar.xz",
+            "centos@52.39.174.151:/opt/dcos_install_tmp/packages/dcos-config"
+          ],
+          "date": "2016-05-24 21:05:43.077087",
+          "stdout": [
+            ""
+          ],
+          "stage": "Coping packages /genconf/serve/packages/dcos-config/dcos-config--setup_e486fc9c32838d7c325ab015d07a1690126fbfe5.tar.xz",
+          "pid": 225,
+          "stderr": [
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/ssh",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-p22",
+            "-i",
+            "/genconf/ssh_key",
+            "-tt",
+            "centos@52.39.174.151",
+            "mkdir",
+            "-p",
+            "/opt/dcos_install_tmp/packages/dcos-metadata"
+          ],
+          "date": "2016-05-24 21:05:43.289950",
+          "stdout": [
+            ""
+          ],
+          "stage": "Creating package dir",
+          "pid": 240,
+          "stderr": [
+            "",
+            "Connection to 52.39.174.151 closed.",
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/scp",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-P22",
+            "-i",
+            "/genconf/ssh_key",
+            "/genconf/serve/packages/dcos-metadata/dcos-metadata--setup_e486fc9c32838d7c325ab015d07a1690126fbfe5.tar.xz",
+            "centos@52.39.174.151:/opt/dcos_install_tmp/packages/dcos-metadata"
+          ],
+          "date": "2016-05-24 21:05:43.529629",
+          "stdout": [
+            ""
+          ],
+          "stage": "Coping packages /genconf/serve/packages/dcos-metadata/dcos-metadata--setup_e486fc9c32838d7c325ab015d07a1690126fbfe5.tar.xz",
+          "pid": 253,
+          "stderr": [
+            "",
+            ""
+          ],
+          "returncode": 0
+        },
+        {
+          "cmd": [
+            "/usr/bin/ssh",
+            "-oConnectTimeout=10",
+            "-oStrictHostKeyChecking=no",
+            "-oUserKnownHostsFile=/dev/null",
+            "-oBatchMode=yes",
+            "-oPasswordAuthentication=no",
+            "-p22",
+            "-i",
+            "/genconf/ssh_key",
+            "-tt",
+            "centos@52.39.174.151",
+            "mkdir",
+            "-p",
+            "/opt/dcos_install_tmp/bootstrap"
+          ],
+          "date": "2016-05-24 21:05:43.743685",
+          "stdout": [
+            ""
+          ],
+          "stage": "Creating dir /opt/dcos_install_tmp/bootstrap",
+          "pid": 270,
+          "stderr": [
+            "",
+            "Connection to 52.39.174.151 closed.",
+            "",
+            ""
+          ],
+          "returncode": 0
+        }
+      ],
+      "tags": {
+        "dcos_install_param": "master",
+        "role": "master"
+      },
+      "host_status": "unstarted"
+    },
+    "52.40.154.55:22": {
+      "commands": [],
+      "tags": {
+        "dcos_install_param": "slave",
+        "role": "agent"
+      },
+      "host_status": "unstarted"
+    }
+  },
+  "total_agents": 15
+}

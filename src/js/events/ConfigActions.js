@@ -114,7 +114,7 @@ const ConfigActions = {
 };
 
 if (Config.useFixtures) {
-  let configStatus = require('../../../tests/_fixtures/config/config-form-no-errors.json');
+  let configStatus = require('../../../tests/_fixtures/config/config-form-filled.json');
   let configType = require('../../../tests/_fixtures/config/config-type.json');
   let configValues = require('../../../tests/_fixtures/config/config.json');
   let configSuccess = require('../../../tests/_fixtures/config/config-form-no-errors.json');

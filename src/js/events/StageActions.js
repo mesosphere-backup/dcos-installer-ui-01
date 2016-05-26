@@ -122,6 +122,7 @@ if (Config.useFixtures) {
   let allSuccess = require('../../../tests/_fixtures/stage-state-json/all-success.json');
   let masterFail = require('../../../tests/_fixtures/stage-state-json/master-fail.json');
   let someRunning = require('../../../tests/_fixtures/stage-state-json/some-running.json');
+  let agentDetails = require('../../../tests/_fixtures/stage-state-json/agent-details.json');
   let success = {};
 
   let currentPageDeploy = require('../../../tests/_fixtures/current-page/deploy.json');
@@ -137,10 +138,11 @@ if (Config.useFixtures) {
     fetchStageStatus: {
       event: 'success',
       success: {
-        response: success
+        response: agentDetails
       },
       responses: {
         success,
+        agentDetails,
         agentFail,
         allRunning,
         allSuccess,
