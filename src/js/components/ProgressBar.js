@@ -1,45 +1,50 @@
 import classnames from 'classnames';
 import React from 'react';
 
-import IconCheckmark from '../components/icons/IconCheckmark';
-import IconWarningSmall from '../components/icons/IconWarningSmall';
+import Timer from '../components/Timer';
 
 class ProgressBar extends React.Component {
   render() {
     let props = this.props;
+    let timer = null;
 
-    let classes = classnames(props.className, props.layoutClassName, {
-      'is-erroneous': props.state === 'error',
-      'is-successful': props.state === 'success'
-    });
+    let {
+      className,
+      errorFillClassName,
+      fillWrapperClassName,
+      headerClassName,
+      label,
+      labelClassName,
+      labelContentClassName,
+      layoutClassName,
+      progress,
+      successFillClassName,
+      timerClassName,
+      timerEnabled
+    } = props;
 
-    let icon = null;
-    let progress = props.progress.toFixed(props.decimalPrecision);
+    let {percentError, percentSuccess} = progress;
+    let classes = classnames(className, layoutClassName);
 
-    if (props.state === 'error') {
-      icon = <IconWarningSmall />;
-    } else if (props.state === 'success') {
-      icon = <IconCheckmark />;
+    if (timerEnabled) {
+      timer = <Timer className={timerClassName} ref="timer" />;
     }
 
     return (
       <div className={classes}>
-        <div className={props.headerClassName}>
-          <span className={props.labelClassName}>
-            {icon}
-            <span className={props.labelContentClassName}>{props.label}</span>
+        <div className={headerClassName}>
+          <span className={labelClassName}>
+            <span className={labelContentClassName}>{label}</span>
           </span>
-          <span className={props.progressClassName}>
-            {`${progress}%`}
-          </span>
+          {timer}
         </div>
-        <div className={props.fillWrapperClassName}>
-          <div className={props.fillClassName} style={{
-            width: `${props.progress}%`
+        <div className={fillWrapperClassName}>
+          <div className={errorFillClassName} style={{
+            width: `${percentError}%`
           }} />
-        </div>
-        <div className={props.detailClassName}>
-          {props.detail}
+          <div className={successFillClassName} style={{
+            width: `${percentSuccess}%`
+          }} />
         </div>
       </div>
     );
@@ -48,34 +53,33 @@ class ProgressBar extends React.Component {
 
 ProgressBar.defaultProps = {
   className: 'progress-bar',
-  decimalPrecision: 0,
   detailClassName: 'progress-bar-detail',
+  errorFillClassName: 'progress-bar-fill progress-bar-fill-error',
   headerClassName: 'progress-bar-header',
-  fillClassName: 'progress-bar-fill',
   fillWrapperClassName: 'progress-bar-fill-wrapper',
   labelClassName: 'progress-bar-label',
   labelContentClassName: 'progress-bar-label-content',
   layoutClassName: '',
   progress: 0,
-  progressClassName: 'progress-bar-progress'
+  successFillClassName: 'progress-bar-fill progress-bar-fill-success',
+  timerClassName: 'progress-bar-timer',
+  timerEnabled: true
 };
 
 ProgressBar.propTypes = {
   className: React.PropTypes.string,
-  decimalPrecision: React.PropTypes.number,
   detail: React.PropTypes.node,
   detailClassName: React.PropTypes.string,
   headerClassName: React.PropTypes.string,
-  fillClassName: React.PropTypes.string,
+  successFillClassName: React.PropTypes.string,
   fillWrapperClassName: React.PropTypes.string,
   label: React.PropTypes.node.isRequired,
   labelClassName: React.PropTypes.string,
   labelContentClassName: React.PropTypes.string,
   layoutClassName: React.PropTypes.string,
-  progress: React.PropTypes.number.isRequired,
-  progressClassName: React.PropTypes.string,
-  precision: React.PropTypes.number,
-  state: React.PropTypes.oneOf(['error', 'ongoing', 'success']).isRequired
+  progress: React.PropTypes.object.isRequired,
+  timerClassName: React.PropTypes.string,
+  timerEnabled: React.PropTypes.bool
 };
 
 module.exports = ProgressBar;
