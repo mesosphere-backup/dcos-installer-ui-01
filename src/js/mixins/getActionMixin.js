@@ -36,7 +36,7 @@ function getActionMixin(stageID) {
         return false;
       }
 
-      return this.get('errorCount') > 0;
+      return this.get('masterErrorCount') > 0;
     }
   };
 }
