@@ -19,7 +19,7 @@ class Postflight extends mixin(StoreMixin) {
   }
 
   onPostFlightStoreStateFinish() {
-    if (PostFlightStore.isCompleted() && !PostFlightStore.isFailed()) {
+    if (PostFlightStore.isCompleted() && PostFlightStore.get('masterErrorCount') === 0 &&  PostFlightStore.get('agentErrorCount') === 0) {
       this.goToSuccess();
     }
   }
