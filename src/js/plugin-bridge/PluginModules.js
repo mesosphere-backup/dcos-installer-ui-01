@@ -8,6 +8,9 @@ module.exports = {
     FormLabelContent: 'FormLabelContent',
     Tooltip: 'Tooltip'
   },
+  constants: {
+    EventTypes: 'EventTypes',
+  },
   utils: {
     StoreMixinConfig: 'StoreMixinConfig'
   }
