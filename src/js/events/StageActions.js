@@ -141,13 +141,14 @@ if (Config.useFixtures) {
         response: agentDetails
       },
       responses: {
-        success,
         agentDetails,
         agentFail,
+        allFail,
         allRunning,
         allSuccess,
         masterFail,
-        someRunning
+        someRunning,
+        success
       }
     },
     beginStage: {

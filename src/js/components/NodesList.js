@@ -50,9 +50,13 @@ class NodesList extends React.Component {
     // The height of the element must be determined and set explicitly so that
     // we can animate the height with CSS.
     if (this.props.visible && this.state.containerHeight === 0) {
+      /* eslint-disable */
       this.setState({containerHeight: containerHeight + LIST_PADDING});
+      /* eslint-enable */
     } else if (!this.props.visible && this.state.containerHeight > 0) {
+      /* eslint-disable */
       this.setState({containerHeight: 0});
+      /* eslint-enable */
     }
   }
 
