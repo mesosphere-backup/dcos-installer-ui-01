@@ -72,7 +72,6 @@ function processHostState(hostData, host, role, state) {
 
   if (hostStatus === NodeStatuses.FAILED
     || hostStatus === NodeStatuses.TERMINATED) {
-    isCompleted = false;
     errors = getErrors(hostData.commands, host);
     state.errorCount += 1;
     state[`${role}ErrorCount`] += 1;
@@ -101,7 +100,7 @@ const ProcessStageUtil = {
       totalHosts: response.total_hosts || 0
     };
 
-    let isCompleted = false;
+    let isStageCompleted = true;
 
     if (Object.keys(response).length === 0) {
       return state;
@@ -126,10 +125,14 @@ const ProcessStageUtil = {
         role = 'agent';
       }
 
-      isCompleted = processHostState(hostStatus, host, role, state);
+      let isNodeCompleted = processHostState(hostStatus, host, role, state);
+
+      if (!isNodeCompleted) {
+        isStageCompleted = false;
+      }
     });
 
-    state.completed = isCompleted;
+    state.completed = isStageCompleted;
 
     return state;
   },
