@@ -142,7 +142,7 @@ class StageProgress extends React.Component {
       percentComplete
     });
 
-    if (completed) {
+    if (completed || (totalHosts > 0 && totalHosts === errorCount)) {
       this.refs.progressBar.refs.timer.stopTimer();
     }
 
