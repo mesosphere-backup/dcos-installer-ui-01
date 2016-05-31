@@ -2,9 +2,9 @@ import classnames from 'classnames';
 import GeminiScrollbar from 'react-gemini-scrollbar';
 import React from 'react';
 
-import IconCircleCheckmark from './icons/IconCircleCheckmark';
-import IconError from './icons/IconError';
-import IconSpinner from './icons/IconSpinner';
+import IconCircleCheckmarkSmall from './icons/IconCircleCheckmarkSmall';
+import IconErrorSmall from './icons/IconErrorSmall';
+import IconSpinnerSmall from './icons/IconSpinnerSmall';
 import NodeRoles from '../constants/NodeRoles';
 import NodeStatusDisplayText from '../constants/NodeStatusDisplayText';
 import NodeStatuses from '../constants/NodeStatuses';
@@ -14,10 +14,10 @@ const METHODS_TO_BIND = ['checkScrollPosition', 'handleScroll'];
 const NODE_LIMIT = 8;
 const LIST_PADDING = 32;
 const STATUS_ICONS = {
-  [NodeStatuses.FAILED]: <IconError />,
-  [NodeStatuses.RUNNING]: <IconSpinner />,
-  [NodeStatuses.SUCCESS]: <IconCircleCheckmark />,
-  [NodeStatuses.TERMINATED]: <IconError />
+  [NodeStatuses.FAILED]: <IconErrorSmall />,
+  [NodeStatuses.RUNNING]: <IconSpinnerSmall />,
+  [NodeStatuses.SUCCESS]: <IconCircleCheckmarkSmall />,
+  [NodeStatuses.TERMINATED]: <IconErrorSmall />
 };
 
 class NodesList extends React.Component {
