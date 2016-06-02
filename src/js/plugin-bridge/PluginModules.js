@@ -7,5 +7,8 @@ module.exports = {
     FormLabel: 'FormLabel',
     FormLabelContent: 'FormLabelContent',
     Tooltip: 'Tooltip'
+  },
+  utils: {
+    StoreMixinConfig: 'StoreMixinConfig'
   }
 };

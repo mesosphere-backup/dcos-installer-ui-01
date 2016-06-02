@@ -5,6 +5,7 @@ const requireExternalPlugin = require.context('../../../.external_plugins', true
 const requireComponents = require.context('../components', false);
 const requireConfig = require.context('../config', false);
 const requireIcons = require.context('../components/icons', false);
+const requireUtils = require.context('../utils', false);
 
 let pluginsList = {};
 let externalPluginsList;
@@ -65,6 +66,8 @@ function requireModule(dir, name) {
       return requireConfig(path);
     case 'externalPlugin':
       return requireExternalPlugin(path);
+    case 'utils':
+      return requireUtils(path);
     default:
       throw Error('No loader for directory');
   }
