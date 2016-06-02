@@ -71,13 +71,13 @@ ProgressBar.propTypes = {
   detail: React.PropTypes.node,
   detailClassName: React.PropTypes.string,
   headerClassName: React.PropTypes.string,
-  successFillClassName: React.PropTypes.string,
   fillWrapperClassName: React.PropTypes.string,
   label: React.PropTypes.node.isRequired,
   labelClassName: React.PropTypes.string,
   labelContentClassName: React.PropTypes.string,
   layoutClassName: React.PropTypes.string,
   progress: React.PropTypes.object.isRequired,
+  successFillClassName: React.PropTypes.string,
   timerClassName: React.PropTypes.string,
   timerEnabled: React.PropTypes.bool
 };
