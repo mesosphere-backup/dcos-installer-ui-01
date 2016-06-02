@@ -47,12 +47,6 @@ class NavigationBar extends mixin(StoreMixin) {
         let chevron = <IconChevron isComplete={isRouteComplete} />;
         let link = null;
 
-        // We don't want to render the chevron for the last menu item. We are
-        // subtracting two from routes.length because the last route is *.
-        if (index >= routes.length - 2) {
-          chevron = null;
-        }
-
         // Add a link back to the setup page when pre-flight is complete.
         if (this.getActiveRoutePath(activeRoute) === 'pre-flight'
           && route.path === 'setup' && PreFlightStore.isCompleted()) {
