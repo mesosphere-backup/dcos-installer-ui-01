@@ -42,18 +42,16 @@ class NodesList extends React.Component {
       return;
     }
 
-    let containerHeight = Math.min(
-      this.refs.nodesList.offsetHeight,
-      MAX_HEIGHT
-    );
+    let {props, refs, state} = this;
+    let containerHeight = Math.min(refs.nodesList.offsetHeight, MAX_HEIGHT);
 
     // The height of the element must be determined and set explicitly so that
     // we can animate the height with CSS.
-    if (this.props.visible && this.state.containerHeight === 0) {
+    if (props.visible && state.containerHeight === 0) {
       /* eslint-disable */
       this.setState({containerHeight: containerHeight + LIST_PADDING});
       /* eslint-enable */
-    } else if (!this.props.visible && this.state.containerHeight > 0) {
+    } else if (!props.visible && state.containerHeight > 0) {
       /* eslint-disable */
       this.setState({containerHeight: 0});
       /* eslint-enable */
@@ -83,7 +81,10 @@ class NodesList extends React.Component {
   }
 
   checkScrollPosition() {
-    if (!this.refs.gemini) {
+    let {props, refs, state} = this;
+    let scrollView = refs['scroll-view'];
+
+    if (!refs.gemini) {
       this.setState({
         shouldRenderBottomMask: false,
         shouldRenderTopMask: false
@@ -92,23 +93,23 @@ class NodesList extends React.Component {
       return;
     }
 
-    if (!this.state.shouldRenderTopMask && this.refs.gemini.refs['scroll-view'].scrollTop > 0) {
+    if (!state.shouldRenderTopMask && scrollView.scrollTop > 0) {
       this.setState({shouldRenderTopMask: true});
-    } else if (!this.state.shouldRenderBottomMask
-      && this.refs.gemini.refs['scroll-view'].scrollTop + this.state.containerHeight
-      < this.refs.nodesList.offsetHeight + LIST_PADDING) {
+    } else if (!state.shouldRenderBottomMask
+      && scrollView.scrollTop + state.containerHeight
+      < refs.nodesList.offsetHeight + LIST_PADDING) {
       this.setState({shouldRenderBottomMask: true});
-    } else if (this.state.shouldRenderTopMask && this.refs.gemini.refs['scroll-view'].scrollTop <= 0) {
+    } else if (state.shouldRenderTopMask && scrollView.scrollTop <= 0) {
       this.setState({shouldRenderTopMask: false});
-    } else if (this.state.shouldRenderTopMask
-      && this.refs.gemini.refs['scroll-view'].scrollTop + this.state.containerHeight
-      >= this.refs.nodesList.offsetHeight + LIST_PADDING) {
+    } else if (state.shouldRenderTopMask
+      && scrollView.scrollTop + state.containerHeight
+      >= refs.nodesList.offsetHeight + LIST_PADDING) {
       this.setState({shouldRenderBottomMask: false});
     }
   }
 
   getNodesList(nodes) {
-    let sortedNodes = nodes.sort((a, b) => {
+    let sortedNodes = nodes.sort(function (a, b) {
       // We want to sort master nodes to the top of the list. Otherwise,
       // we sort alphabetically the string "ip:port".
       if (a.role === NodeRoles.MASTER && b.role === NodeRoles.AGENT) {
