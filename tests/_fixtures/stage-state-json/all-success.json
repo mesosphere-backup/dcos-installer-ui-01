@@ -3,7 +3,7 @@
   "hosts": {
     "52.10.40.23:22": {
       "commands": [
-        
+
       ],
       "host_status": "success",
       "tags": {
@@ -12,7 +12,7 @@
     },
     "52.24.115.54:23": {
       "commands": [
-        
+
       ],
       "host_status": "success",
       "tags": {
@@ -21,7 +21,7 @@
     },
     "52.24.115.54:24": {
       "commands": [
-        
+
       ],
       "host_status": "success",
       "tags": {
@@ -30,7 +30,7 @@
     },
     "52.24.115.54:25": {
       "commands": [
-        
+
       ],
       "host_status": "success",
       "tags": {
@@ -39,7 +39,97 @@
     },
     "52.24.115.54:26": {
       "commands": [
-        
+
+      ],
+      "host_status": "success",
+      "tags": {
+        "role": "agent"
+      }
+    },
+    "152.10.40.23:22": {
+      "commands": [
+
+      ],
+      "host_status": "success",
+      "tags": {
+        "role": "master"
+      }
+    },
+    "152.24.115.54:23": {
+      "commands": [
+
+      ],
+      "host_status": "success",
+      "tags": {
+        "role": "master"
+      }
+    },
+    "152.24.115.54:24": {
+      "commands": [
+
+      ],
+      "host_status": "success",
+      "tags": {
+        "role": "agent"
+      }
+    },
+    "152.24.115.54:25": {
+      "commands": [
+
+      ],
+      "host_status": "success",
+      "tags": {
+        "role": "agent"
+      }
+    },
+    "152.24.115.54:26": {
+      "commands": [
+
+      ],
+      "host_status": "success",
+      "tags": {
+        "role": "agent"
+      }
+    },
+    "142.10.40.23:22": {
+      "commands": [
+
+      ],
+      "host_status": "success",
+      "tags": {
+        "role": "master"
+      }
+    },
+    "142.24.115.54:23": {
+      "commands": [
+
+      ],
+      "host_status": "success",
+      "tags": {
+        "role": "master"
+      }
+    },
+    "142.24.115.54:24": {
+      "commands": [
+
+      ],
+      "host_status": "success",
+      "tags": {
+        "role": "agent"
+      }
+    },
+    "142.24.115.54:25": {
+      "commands": [
+
+      ],
+      "host_status": "success",
+      "tags": {
+        "role": "agent"
+      }
+    },
+    "142.24.115.54:26": {
+      "commands": [
+
       ],
       "host_status": "success",
       "tags": {
@@ -47,7 +137,7 @@
       }
     }
   },
-  "total_agents": 3,
-  "total_hosts": 5,
-  "total_masters": 2
+  "total_agents": 9,
+  "total_hosts": 15,
+  "total_masters": 6
 }

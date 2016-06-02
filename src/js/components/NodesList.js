@@ -82,7 +82,6 @@ class NodesList extends React.Component {
 
   checkScrollPosition() {
     let {props, refs, state} = this;
-    let scrollView = refs['scroll-view'];
 
     if (!refs.gemini) {
       this.setState({
@@ -92,6 +91,8 @@ class NodesList extends React.Component {
 
       return;
     }
+
+    let scrollView = refs.gemini.refs['scroll-view'];
 
     if (!state.shouldRenderTopMask && scrollView.scrollTop > 0) {
       this.setState({shouldRenderTopMask: true});
