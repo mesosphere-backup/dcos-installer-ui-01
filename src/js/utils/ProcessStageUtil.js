@@ -48,6 +48,16 @@ function getIPComponents(ip = '') {
   };
 }
 
+function getStage(commands) {
+  let lastCommand = commands[commands.length - 1];
+
+  if (!!lastCommand && !!lastCommand.stage) {
+    return lastCommand.stage;
+  }
+
+  return 'N/A';
+}
+
 function processHostState(hostData, host, role, state) {
   let errors = null;
   let hostStatus = hostData.host_status;
@@ -78,7 +88,14 @@ function processHostState(hostData, host, role, state) {
     state.errorDetails.push({host, message: errors});
   }
 
-  state.nodes.push({errors, ip, port, role, status: hostStatus});
+  state.nodes.push({
+    errors,
+    ip,
+    port,
+    role,
+    status: hostStatus,
+    stage: getStage(hostData.commands)
+  });
 
   return isCompleted;
 }

@@ -6,7 +6,6 @@ import IconCircleCheckmarkSmall from './icons/IconCircleCheckmarkSmall';
 import IconErrorSmall from './icons/IconErrorSmall';
 import IconSpinnerSmall from './icons/IconSpinnerSmall';
 import NodeRoles from '../constants/NodeRoles';
-import NodeStatusDisplayText from '../constants/NodeStatusDisplayText';
 import NodeStatuses from '../constants/NodeStatuses';
 
 const MAX_HEIGHT = 200;
@@ -143,7 +142,7 @@ class NodesList extends React.Component {
             {node.ip}:{node.port} {badge}
           </div>
           <div className="nodes-list-status">
-            {NodeStatusDisplayText[node.status] || node.status}
+            {node.stage}
           </div>
         </li>
       );
