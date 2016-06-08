@@ -101,7 +101,7 @@ class StageProgress extends React.Component {
 
     return (
       <span>
-        {`Checking ${nodeCount} ${nodeText} `}
+        {`${this.props.nodeAction} ${nodeCount} ${nodeText} `}
         <span className="progress-bar-label-precentage-complete">
           ({progressState.percentComplete}% Complete)
         </span>
@@ -215,11 +215,16 @@ class StageProgress extends React.Component {
   }
 }
 
+StageProgress.defaultProps = {
+  nodeAction: 'Checking'
+};
+
 StageProgress.propTypes = {
   nextButtonAction: React.PropTypes.func.isRequired,
   nextButtonText: React.PropTypes.string.isRequired,
   nextStageAction: React.PropTypes.func.isRequired,
   nextStageText: React.PropTypes.string.isRequired,
+  nodeAction: React.PropTypes.string,
   router: React.PropTypes.object,
   runningText: React.PropTypes.string.isRequired,
   stageIcon: React.PropTypes.node.isRequired,

@@ -31,6 +31,7 @@ class Postflight extends mixin(StoreMixin) {
         nextButtonText="Run Post-Flight"
         nextStageAction={PostFlightStore.beginStage.bind(PostFlightStore)}
         nextStageText="Run Post-Flight"
+        nodeAction="Installing"
         router={this.context.router}
         runningText={`Deploying ${Config.productName}...`}
         stageIcon={<IconStageDeploy />}

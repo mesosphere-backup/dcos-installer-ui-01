@@ -80,7 +80,7 @@ class NodesList extends React.Component {
   }
 
   checkScrollPosition() {
-    let {props, refs, state} = this;
+    let {refs, state} = this;
 
     if (!refs.gemini) {
       this.setState({
