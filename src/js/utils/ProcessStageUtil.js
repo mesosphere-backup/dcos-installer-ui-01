@@ -55,7 +55,7 @@ function getStage(commands) {
     return lastCommand.stage;
   }
 
-  return 'N/A';
+  return 'Not running';
 }
 
 function processHostState(hostData, host, role, state) {
@@ -63,6 +63,7 @@ function processHostState(hostData, host, role, state) {
   let hostStatus = hostData.host_status;
   let isCompleted = true;
   let {ip, port} = getIPComponents(host);
+  let stageStatus = getStage(hostData.commands);
 
   state.startedCount += 1;
   state[`${role}Count`] += 1;
@@ -78,6 +79,7 @@ function processHostState(hostData, host, role, state) {
 
   if (hostStatus === NodeStatuses.SUCCESS) {
     state.successCount += 1;
+    stageStatus = 'Success';
   }
 
   if (hostStatus === NodeStatuses.FAILED
@@ -86,6 +88,7 @@ function processHostState(hostData, host, role, state) {
     state.errorCount += 1;
     state[`${role}ErrorCount`] += 1;
     state.errorDetails.push({host, message: errors});
+    stageStatus = 'Failed';
   }
 
   state.nodes.push({
@@ -94,7 +97,7 @@ function processHostState(hostData, host, role, state) {
     port,
     role,
     status: hostStatus,
-    stage: getStage(hostData.commands)
+    stage: stageStatus
   });
 
   return isCompleted;
