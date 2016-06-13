@@ -119,15 +119,14 @@ class StageProgress extends React.Component {
     let failed = store.isFailed();
     let nodes = store.get('nodes');
     let runningCount = store.get('runningCount');
-    let successCount = store.get('successCount');
     let totalHosts = store.get('totalHosts') || 0;
 
     let percentSuccess = 0;
     let percentError = 0;
 
     if (totalHosts !== 0) {
-      percentSuccess = Number((successCount / totalHosts * 100).toFixed(0));
-      percentError = Number((errorCount / totalHosts * 100).toFixed(0));
+      percentSuccess = store.getPercentSuccess();
+      percentError = store.getPercentError();
     }
 
     let percentComplete = percentSuccess + percentError;

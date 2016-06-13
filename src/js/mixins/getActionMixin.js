@@ -8,6 +8,20 @@ function getActionMixin(stageID) {
 
     fetchStageStatus: StageActions.fetchStageStatus.bind(null, stageID),
 
+    getPercentError: function () {
+      let errorCount = this.get('errorCount') || 0;
+      let totalHosts = this.get('totalHosts') || 0;
+
+      return Number((errorCount / totalHosts * 100).toFixed(0));
+    },
+
+    getPercentSuccess: function () {
+      let successCount = this.get('successCount');
+      let totalHosts = this.get('totalHosts') || 0;
+
+      return Number((successCount / totalHosts * 100).toFixed(0));
+    },
+
     getInitialState: function () {
       return {
         agentCount: 0,

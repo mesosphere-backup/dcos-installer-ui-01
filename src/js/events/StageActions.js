@@ -115,8 +115,6 @@ const StageActions = {
   }
 };
 
-console.log(Config.useFixtures);
-
 if (Config.useFixtures) {
   let agentFail = require('../../../tests/_fixtures/stage-state-json/agent-fail.json');
   let allFail = require('../../../tests/_fixtures/stage-state-json/all-fail.json');
