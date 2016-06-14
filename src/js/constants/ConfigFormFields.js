@@ -7,7 +7,7 @@ const BACKEND_FORM_FIELDS = [
   'ssh_key',
   'ssh_key_path',
   'superuser_username',
-  'superuser_password',
+  'superuser_password_hash',
   'resolvers',
   'exhibitor_zk_hosts',
   'ip_detect_path',

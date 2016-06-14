@@ -3,6 +3,7 @@
 // doubling the built output
 const requireExternalPlugin = require.context('../../../.external_plugins', true, /index/);
 const requireComponents = require.context('../components', false);
+const requireConstants = require.context('../constants', false);
 const requireConfig = require.context('../config', false);
 const requireIcons = require.context('../components/icons', false);
 const requireUtils = require.context('../utils', false);
@@ -62,6 +63,8 @@ function requireModule(dir, name) {
   switch (dir) {
     case 'components':
       return pluckComponent(path);
+    case 'constants':
+      return requireConstants(path);
     case 'config':
       return requireConfig(path);
     case 'externalPlugin':

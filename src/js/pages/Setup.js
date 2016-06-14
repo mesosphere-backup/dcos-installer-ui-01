@@ -8,6 +8,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {StoreMixin} from 'mesosphere-shared-reactjs';
 
+import {HASHED_PASSWORD_CHANGE} from '../constants/EventTypes';
+
 import Config from '../config/Config';
 import ConfigActions from '../events/ConfigActions';
 import ConfigFormFields from '../constants/ConfigFormFields';
@@ -133,6 +135,15 @@ class Setup extends mixin(StoreMixin) {
   }
 
   componentDidMount() {
+    PluginSDK.onDispatch((action) => {
+      switch (action.type) {
+        case HASHED_PASSWORD_CHANGE:
+          this.forceUpdate();
+          this.submitFormData({superuser_password_hash: action.hashedPassword});
+          break;
+      }
+    });
+
     super.componentDidMount();
     SetupStore.fetchConfig();
 
@@ -733,7 +744,13 @@ class Setup extends mixin(StoreMixin) {
       return false;
     }
 
-    return !emptyFormFields && SetupStore.get('completed');
+    // Allow plugins to prevent the form from visually conveying that it's
+    // ready for submission.
+    return Hooks.applyFilter(
+      'isFormReadyToSubmit',
+      !emptyFormFields && SetupStore.get('completed'),
+      this.state.formData
+    );
   }
 
   isKeyValidatedLocally(key) {
@@ -790,10 +807,19 @@ class Setup extends mixin(StoreMixin) {
   }
 
   submitFormData(formData) {
-    let preparedData = SetupUtil.prepareDataForAPI(formData);
+    // Let plugins decide whether or not we should submit the data.
+    let shouldSubmitFormData = Hooks.applyFilter(
+      'shouldSubmitForm',
+      true,
+      formData
+    );
 
-    if (preparedData) {
-      ConfigActions.updateConfig(preparedData);
+    if (shouldSubmitFormData) {
+      let preparedData = SetupUtil.prepareDataForAPI(formData);
+
+      if (preparedData) {
+        ConfigActions.updateConfig(preparedData);
+      }
     }
   }
 
