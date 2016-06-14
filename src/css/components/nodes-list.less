@@ -29,6 +29,8 @@
   .nodes-list-ip {
     flex: 1 1 auto;
     font-weight: 600;
+    padding-right: @base-spacing-unit * 1/3;
+    white-space: nowrap;
 
     .badge {
       font-weight: normal;
@@ -38,7 +40,10 @@
 
   .nodes-list-status {
     flex: 0 1 auto;
+    overflow: hidden;
     text-align: right;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
 

@@ -6,7 +6,6 @@ import IconCircleCheckmarkSmall from './icons/IconCircleCheckmarkSmall';
 import IconErrorSmall from './icons/IconErrorSmall';
 import IconSpinnerSmall from './icons/IconSpinnerSmall';
 import NodeRoles from '../constants/NodeRoles';
-import NodeStatusDisplayText from '../constants/NodeStatusDisplayText';
 import NodeStatuses from '../constants/NodeStatuses';
 
 const MAX_HEIGHT = 200;
@@ -81,8 +80,7 @@ class NodesList extends React.Component {
   }
 
   checkScrollPosition() {
-    let {props, refs, state} = this;
-    let scrollView = refs['scroll-view'];
+    let {refs, state} = this;
 
     if (!refs.gemini) {
       this.setState({
@@ -92,6 +90,8 @@ class NodesList extends React.Component {
 
       return;
     }
+
+    let scrollView = refs.gemini.refs['scroll-view'];
 
     if (!state.shouldRenderTopMask && scrollView.scrollTop > 0) {
       this.setState({shouldRenderTopMask: true});
@@ -142,7 +142,7 @@ class NodesList extends React.Component {
             {node.ip}:{node.port} {badge}
           </div>
           <div className="nodes-list-status">
-            {NodeStatusDisplayText[node.status] || node.status}
+            {node.stage}
           </div>
         </li>
       );
