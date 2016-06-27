@@ -1,7 +1,10 @@
+import _ from 'lodash';
 import React from 'react';
 
 module.exports = class IconSpinnerSmall extends React.Component {
   render() {
+    let clipPathID = _.uniqueId('spinner-ring-clip-path-');
+
     return (
       <svg
         className="icon icon-spinner"
@@ -9,11 +12,11 @@ module.exports = class IconSpinnerSmall extends React.Component {
         viewBox="0 0 12 12"
         width="12px">
         <defs>
-          <clipPath id="spinner-ring-clip-path">
+          <clipPath id={clipPathID}>
             <path d="M6,1C3.2,1,1,3.2,1,6c0,2.8,2.2,5,5,5c2.8,0,5-2.2,5-5C11,3.2,8.8,1,6,1z M6,0c3.3,0,6,2.7,6,6 c0,3.3-2.7,6-6,6c-3.3,0-6-2.7-6-6C0,2.7,2.7,0,6,0z"/>
           </clipPath>
         </defs>
-        <g style={{clipPath: 'url(#spinner-ring-clip-path)'}}>
+        <g style={{clipPath: `url(#${clipPathID})`}}>
           <image width="1028" height="1028"
             transform="matrix(1.167315e-02 0 0 -1.167315e-02 0 12)"
             xlinkHref="data:image/png;base64,
