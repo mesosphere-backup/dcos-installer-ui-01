@@ -6,7 +6,7 @@ import React from 'react';
 
 import Config from '../config/Config';
 import DeployStore from '../stores/DeployStore';
-import IconStageDeploy from '../components/icons/IconStageDeploy';
+import IconSpinnerLarge from '../components/icons/IconSpinnerLarge';
 import PostFlightStore from '../stores/PostFlightStore';
 import StageProgress from '../components/StageProgress';
 
@@ -34,7 +34,7 @@ class Postflight extends mixin(StoreMixin) {
         nodeAction="Installing"
         router={this.context.router}
         runningText={`Deploying ${Config.productName}...`}
-        stageIcon={<IconStageDeploy />}
+        stageIcon={<IconSpinnerLarge />}
         stageID="deploy"
         stateText="Deploy"
         store={DeployStore}
