@@ -5,7 +5,7 @@ import React from 'react';
 /* eslint-enable no-unused-vars */
 
 import DeployStore from '../stores/DeployStore';
-import IconStagePreflight from '../components/icons/IconStagePreflight';
+import IconSpinnerLarge from '../components/icons/IconSpinnerLarge';
 import PreFlightStore from '../stores/PreFlightStore';
 import StageProgress from '../components/StageProgress';
 
@@ -32,7 +32,7 @@ class Postflight extends mixin(StoreMixin) {
         nextStageText="Deploy"
         router={this.context.router}
         runningText="Running Pre-Flight..."
-        stageIcon={<IconStagePreflight />}
+        stageIcon={<IconSpinnerLarge />}
         stageID="preflight"
         stateText="Pre-Flight"
         store={PreFlightStore}

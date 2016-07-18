@@ -4,7 +4,7 @@ import {StoreMixin} from 'mesosphere-shared-reactjs';
 import React from 'react';
 /* eslint-enable no-unused-vars */
 
-import IconStagePostflight from '../components/icons/IconStagePostflight';
+import IconSpinnerLarge from '../components/icons/IconSpinnerLarge';
 import InstallerStore from '../stores/InstallerStore';
 import PostFlightStore from '../stores/PostFlightStore';
 import StageProgress from '../components/StageProgress';
@@ -38,7 +38,7 @@ class Postflight extends mixin(StoreMixin) {
         nextStageText="Continue"
         router={this.context.router}
         runningText="Running Post-Flight..."
-        stageIcon={<IconStagePostflight />}
+        stageIcon={<IconSpinnerLarge />}
         stageID="postflight"
         stateText="Post-Flight"
         store={PostFlightStore}

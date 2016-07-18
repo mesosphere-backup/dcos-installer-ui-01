@@ -47,16 +47,20 @@
     display: inline-block;
   }
 
+  .section-header-icon-wrapper {
+    display: inline-block;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.5s;
+  }
+
   &.section-header-icon-stage-status {
     height: 64px;
 
     .icon {
       height: 64px;
-      left: 50%;
-      position: absolute;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      transition: opacity 0.5s;
       width: 64px;
     }
 

@@ -60,17 +60,22 @@ class StageProgress extends React.Component {
   }
 
   getHeaderIcon(progressState = {}) {
+    let icon = this.props.stageIcon;
+    let key = 'icon-spinner';
+
     if (progressState.completed && progressState.errorCount === 0) {
-      return (
-        <IconCircleCheckmark
-          classNames="icon-padded"
-          key="icon-circle-checkmark" />
-      );
+      icon = <IconCircleCheckmark classNames="icon-padded" />;
+      key = 'icon-circle-checkmark';
+    } else if (progressState.completed && progressState.errorCount > 0) {
+      icon = <IconWarning className="icon-padded" />;
+      key = 'icon-warning';
     }
 
-    if (progressState.completed && progressState.errorCount > 0) {
-      return <IconWarning className="icon-padded" key="icon-warning" />;
-    }
+    return (
+      <div className="section-header-icon-wrapper" key={key}>
+        {icon}
+      </div>
+    );
 
     return this.props.stageIcon;
   }
