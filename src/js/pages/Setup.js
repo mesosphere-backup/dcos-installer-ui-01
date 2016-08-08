@@ -826,7 +826,7 @@ class Setup extends mixin(StoreMixin) {
   render() {
     let uiInstallerWarning = Hooks.applyFilter('uiInstallerWarning', (
       <p>
-        Authentication and Telemetry are enabled by default. To change this, please reference the <a href={`${Config.documentationURI}/administration/opt-out`} target="_blank">DCOS documentation</a>.
+        Authentication and Telemetry are enabled by default. To change this, please reference the <a href={`${Config.documentationURI}/administration/opt-out`} target="_blank">{Config.productName} documentation</a>.
       </p>
     ));
 
