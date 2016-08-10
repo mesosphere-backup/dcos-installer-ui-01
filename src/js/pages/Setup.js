@@ -277,7 +277,7 @@ class Setup extends mixin(StoreMixin) {
     let formDefintion = [
       [
         {
-          fieldType: 'textarea',
+          fieldType: 'text',
           name: 'master_list',
           placeholder: 'Specify a comma-separated list of 1, 3, or 5 ' +
             'private IPv4 addresses.',
@@ -306,7 +306,7 @@ class Setup extends mixin(StoreMixin) {
       ],
       [
         {
-          fieldType: 'textarea',
+          fieldType: 'text',
           name: 'agent_list',
           placeholder: 'Specify a comma-separated list of 1 to n ' +
             'private IPv4 addresses.',
@@ -330,7 +330,9 @@ class Setup extends mixin(StoreMixin) {
           validationErrorText: this.getErrors('agent_list'),
           validation: this.getValidationFn('agent_list'),
           value: this.state.formData.agent_list
-        },
+        }
+      ],
+      [
         {
           fieldType: 'textarea',
           name: 'public_agent_list',
