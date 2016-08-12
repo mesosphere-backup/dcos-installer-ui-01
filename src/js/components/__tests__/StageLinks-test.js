@@ -8,9 +8,10 @@ jest.dontMock('../../events/AppDispatcher');
 jest.dontMock('../../constants/ActionTypes');
 jest.dontMock('../../config/Config');
 
+/* eslint-disable no-unused-vars */
 var React = require('react');
+/* eslint-enable no-unused-vars */
 var ReactDOM = require('react-dom');
-var ReactTestUtils = require('react-addons-test-utils');
 
 var StageLinks = require('../StageLinks');
 
