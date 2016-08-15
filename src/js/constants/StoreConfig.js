@@ -79,6 +79,8 @@ const ListenersDescription = {
       configUpdateSuccess: EventTypes.CONFIGURE_UPDATE_FIELD_SUCCESS,
       currentConfigChangeError: EventTypes.CONFIGURE_CHANGE_ERROR,
       currentConfigChangeSuccess: EventTypes.CONFIGURE_CHANGE_SUCCESS,
+      setInstallTypeError: EventTypes.SET_INSTALL_TYPE_ERROR,
+      setInstallTypeSuccess: EventTypes.SET_INSTALL_TYPE_SUCCESS,
       validateUserInput: EventTypes.SETUP_USER_INPUT_VALIDATED
     },
     unmountWhen: function () {

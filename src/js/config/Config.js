@@ -1,5 +1,5 @@
 var Config = {
-  apiPrefix: '/api/v1/',
+  apiPrefix: '/api/v2/',
   apiRequestThrottle: 1000,
   environment: '@@ENV',
   rootUrl: '',

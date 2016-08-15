@@ -83,6 +83,28 @@ const ConfigActions = {
     });
   },
 
+  setInstallType: function (data) {
+    RequestUtil.json({
+      method: 'post',
+      url: `${Config.rootUrl}${Config.apiPrefix}configure/new`,
+      data,
+      success: function (response) {
+        AppDispatcher.handleServerAction({
+          type: ActionTypes.SET_INSTALL_TYPE_SUCCESS,
+          data: response
+        });
+      },
+      error: function (xhr) {
+        AppDispatcher.handleServerAction({
+          type: ActionTypes.SET_INSTALL_TYPE_ERROR,
+          data: {
+            response: RequestUtil.parseResponseBody(xhr)
+          }
+        });
+      }
+    });
+  },
+
   updateConfig: function (data) {
     RequestUtil.json({
       url: `${Config.rootUrl}${Config.apiPrefix}configure`,
@@ -117,6 +139,7 @@ if (Config.useFixtures) {
   let configStatus = require('../../../tests/_fixtures/config/config-form-filled.json');
   let configType = require('../../../tests/_fixtures/config/config-type.json');
   let configSuccess = require('../../../tests/_fixtures/config/config-form-no-errors.json');
+  let installType = require('../../../tests/_fixtures/config/config-install-type-on-prem.json');
 
   if (!global.actionTypes) {
     global.actionTypes = {};
@@ -126,6 +149,7 @@ if (Config.useFixtures) {
     fetchConfig: {event: 'success', success: {response: configStatus}},
     fetchConfigState: {event: 'success', success: {response: configStatus}},
     fetchConfigType: {event: 'success', success: {response: configType}},
+    setInstallType: {event: 'success', success: {response: installType}},
     updateConfig: {event: 'success', success: {response: configSuccess}}
   };
 

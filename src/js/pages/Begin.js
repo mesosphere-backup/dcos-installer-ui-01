@@ -1,5 +1,8 @@
 import {Link} from 'react-router';
+import classnames from 'classnames';
+import mixin from 'reactjs-mixin';
 import React from 'react';
+import {StoreMixin} from 'mesosphere-shared-reactjs';
 
 import Config from '../config/Config';
 import IconArrow from '../components/icons/IconArrow';
@@ -16,10 +19,49 @@ import SectionHeaderIcon from '../components/SectionHeaderIcon';
 import SectionHeaderPrimary from '../components/SectionHeaderPrimary';
 import SectionHeaderSecondary from '../components/SectionHeaderSecondary';
 import SectionFooter from '../components/SectionFooter';
+import SetupStore from '../stores/SetupStore';
 
 let {Hooks} = PluginSDK;
 
-module.exports = class Begin extends React.Component {
+const METHODS_TO_BIND = ['handleBeginClick'];
+
+class Begin extends mixin(StoreMixin) {
+  constructor() {
+    super();
+
+    this.state = {
+      isLoadingConfigType: false
+    };
+
+    this.store_listeners = [
+      {
+        name: 'setup',
+        events: ['setInstallTypeError', 'setInstallTypeSuccess'],
+        suppressUpdate: true
+      }
+    ];
+
+    METHODS_TO_BIND.forEach((method) => {
+      this[method] = this[method].bind(this);
+    });
+  }
+
+  onSetupStoreSetInstallTypeError(error) {
+    // TODO: Handle this error.
+    console.log('this is an error', error);
+  }
+
+  onSetupStoreSetInstallTypeSuccess() {
+    this.setState({isLoadingConfigType: false}, () => {
+      this.context.router.push('/setup')
+    });
+  }
+
+  handleBeginClick() {
+    this.setState({isLoadingConfigType: true});
+    SetupStore.setInstallType({configurationProvider: 'onprem'});
+  }
+
   getLogo() {
     return Hooks.applyFilter('dcosLogo', <IconDCOS />);
   }
@@ -41,6 +83,19 @@ module.exports = class Begin extends React.Component {
         </div>
       );
     }
+
+    let beginClasses = classnames('button button-large button-rounded button-primary', {
+      'disabled': this.state.isLoadingConfigType
+    });
+
+    let beginText = this.state.isLoadingConfigType ? 'Loading...' : 'Begin Installation';
+
+    return (
+      <a className={beginClasses} onClick={this.handleBeginClick}>
+        {beginText}
+        <IconArrow />
+      </a>
+    );
 
     return (
       <Link to="/setup" className="button button-large button-rounded button-primary">
@@ -81,3 +136,9 @@ module.exports = class Begin extends React.Component {
     );
   }
 }
+
+Begin.contextTypes = {
+  router: React.PropTypes.object
+};
+
+module.exports = Begin;

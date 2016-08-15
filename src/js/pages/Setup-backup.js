@@ -38,12 +38,6 @@ import Upload from '../components/Upload';
 
 let {Hooks} = PluginSDK;
 
-const FIELD_TYPE_MAP = {
-  'text': 'text',
-  'text_area': 'textarea',
-  'dropdown': 'select',
-  'text_box': 'text'
-};
 const LOCALLY_VALIDATED_KEYS = [
   'master_list',
   'agent_list',
@@ -280,150 +274,286 @@ class Setup extends mixin(StoreMixin) {
   }
 
   getFormDefinition() {
-    let configDefinition = SetupStore.get('configFields');
-    // TODO: Make the onprem key configurable.
-    let uiGroup = configDefinition.ui_groups.onprem;
-    let fulfilledFields = [];
-
-    let formDefinition = uiGroup.reduce((memo, group) => {
-      // Add form group's title to the definition.
-      memo.push(this.getFormGroupTitle(group));
-
-      // Convert the backend's group definition to the form's definition.
-      let {groupRows, groupFieldKeys} = this.getFormGroupRows(
-        group.rows,
-        configDefinition
-      );
-
-      // Keep track of the fields defined in the UI groups.
-      fulfilledFields = fulfilledFields.concat(groupFieldKeys);
-
-      // Add the group's form rows to the definition.
-      return memo.concat(groupRows);
-    }, []);
-
-    // Check for additional fields that were not defined in ui_groups.
-    let additionalFormFields = Object.keys(configDefinition)
-      .filter((formField) => {
-        return formField !== 'ui_groups' && !fulfilledFields.includes(formField);
-      })
-      .reduce((memo, formField) => {
-        if (memo.length === 0) {
-          memo.push(this.getFormGroupTitle({title: 'Other'}));
+    let formDefintion = [
+      [
+        {
+          fieldType: 'text',
+          name: 'master_list',
+          placeholder: 'Specify a comma-separated list of 1, 3, or 5 ' +
+            'private IPv4 addresses.',
+          showLabel: (
+            <FormLabel>
+              <FormLabelContent position="left">
+                Master Private IP List
+                <Tooltip content={'The private IP addresses of the masters. ' +
+                  'We recommend a minimum of 3 masters.'} width={200}
+                  wrapText={true} />
+              </FormLabelContent>
+              <FormLabelContent position="right">
+                <Tooltip content={'CSVs must be newline delimited.'}
+                  width={200} wrapText={true}>
+                  <Upload displayText="Upload .csv" extensions=".csv"
+                    onUploadFinish={this.getUploadHandler('master_list', 'csv')} />
+                </Tooltip>
+              </FormLabelContent>
+            </FormLabel>
+          ),
+          showError: this.getErrors('master_list'),
+          validationErrorText: this.getErrors('master_list'),
+          validation: this.getValidationFn('master_list'),
+          value: this.state.formData.master_list
         }
+      ],
+      [
+        {
+          fieldType: 'text',
+          name: 'agent_list',
+          placeholder: 'Specify a comma-separated list of 1 to n ' +
+            'private IPv4 addresses.',
+          showLabel: (
+            <FormLabel>
+              <FormLabelContent>
+                Agent Private IP List
+                <Tooltip content={'The private IP addresses of the agents.'}
+                  width={200} wrapText={true} />
+              </FormLabelContent>
+              <FormLabelContent position="right">
+                <Tooltip content={'CSVs must be newline delimited.'}
+                  width={200} wrapText={true}>
+                  <Upload displayText="Upload .csv" extensions=".csv"
+                    onUploadFinish={this.getUploadHandler('agent_list', 'csv')} />
+                </Tooltip>
+              </FormLabelContent>
+            </FormLabel>
+          ),
+          showError: this.getErrors('agent_list'),
+          validationErrorText: this.getErrors('agent_list'),
+          validation: this.getValidationFn('agent_list'),
+          value: this.state.formData.agent_list
+        }
+      ],
+      [
+        {
+          fieldType: 'textarea',
+          name: 'public_agent_list',
+          placeholder: 'Specify a comma-separated list of 1 to n ' +
+            'public IPv4 addresses.',
+          showLabel: (
+            <FormLabel>
+              <FormLabelContent>
+                Agent Public IP List
+                <Tooltip content="Specify public agent nodes to run DC/OS apps
+                  and services in a publicly accessible network." width={200}
+                  wrapText={true} />
+              </FormLabelContent>
+              <FormLabelContent position="right">
+                <Tooltip content={'CSVs must be newline delimited.'}
+                  width={200} wrapText={true}>
+                  <Upload displayText="Upload .csv" extensions=".csv"
+                    onUploadFinish={this.getUploadHandler('public_agent_list', 'csv')} />
+                </Tooltip>
+              </FormLabelContent>
+            </FormLabel>
+          ),
+          showError: this.getErrors('public_agent_list'),
+          validationErrorText: this.getErrors('public_agent_list'),
+          validation: this.getValidationFn('public_agent_list'),
+          value: this.state.formData.public_agent_list
+        }
+      ],
+      [
+        {
+          fieldType: 'text',
+          name: 'public_ip_address',
+          placeholder: 'Specify one IPv4 address.',
+          showLabel: (
+            <FormLabel>
+              <FormLabelContent>
+                Master Public IP
+                <Tooltip content={'The public IP address of a master that is ' +
+                  'accessible to the bootstrap node without a firewall.'}
+                  width={200} wrapText={true} />
+              </FormLabelContent>
+            </FormLabel>
+          ),
+          showError: this.getErrors('public_ip_address'),
+          validationErrorText: this.getErrors('public_ip_address'),
+          validation: this.getValidationFn('public_ip_address'),
+          value: this.state.formData.public_ip_address
+        },
+        {
+          fieldType: 'text',
+          name: 'ssh_user',
+          placeholder: 'e.g. root, admin, core',
+          showLabel: (
+            <FormLabel>
+              <FormLabelContent>
+                SSH Username
+                <Tooltip content={'The SSH username must be the same for all ' +
+                  'target hosts. The only unacceptable username is "None".'}
+                  width={200} wrapText={true} />
+              </FormLabelContent>
+            </FormLabel>
+          ),
+          showError: this.getErrors('ssh_user'),
+          validationErrorText: this.getErrors('ssh_user'),
+          validation: this.getValidationFn('ssh_user'),
+          value: this.state.formData.ssh_user
+        },
+        {
+          fieldType: 'text',
+          name: 'ssh_port',
+          showLabel: (
+            <FormLabel>
+              <FormLabelContent>
+                SSH Listening Port
+                <Tooltip content={'The SSH port must be the same on all ' +
+                  'target hosts.'} width={200} wrapText={true} />
+              </FormLabelContent>
+            </FormLabel>
+          ),
+          showError: this.getErrors('ssh_port'),
+          validationErrorText: this.getErrors('ssh_port'),
+          validation: this.getValidationFn('ssh_port', 'port'),
+          value: this.state.formData.ssh_port
+        }
+      ],
+      {
+        fieldType: 'textarea',
+        name: 'ssh_key',
+        showLabel: (
+          <FormLabel>
+            <FormLabelContent>
+              Private SSH Key
+              <Tooltip content={'Enter the private SSH key.'}
+                width={200} wrapText={true} />
+            </FormLabelContent>
+            <FormLabelContent position="right">
+              <Upload displayText="Upload"
+                onUploadFinish={this.getUploadHandler('ssh_key')} />
+            </FormLabelContent>
+          </FormLabel>
+        ),
+        showError: this.getErrors('ssh_key'),
+        validationErrorText: this.getErrors('ssh_key'),
+        validation: this.getValidationFn('ssh_key'),
+        value: this.state.formData.ssh_key
+      },
+      <SectionHeader>
+        <SectionHeaderPrimary align="left" layoutClassName="short-top flush-bottom">
+          {Config.productName} Environment Settings
+        </SectionHeaderPrimary>
+      </SectionHeader>,
+      [
+        {
+          fieldType: 'textarea',
+          name: 'resolvers',
+          placeholder: 'Provide a single address or a comma-separated ' +
+            'list, e.g., 192.168.10.10, 10.0.0.1',
+          showLabel: (
+            <FormLabel>
+              <FormLabelContent>
+                Upstream DNS Servers
+                <Tooltip content={
+                    <span>
+                      These can be DNS servers on your private network or on the
+                      public internet, depending on your needs. Caution: If you set
+                      this parameter incorrectly, you will have to reinstall
+                      {Config.productName}. <a
+                        href={`${Config.documentationURI}/administration/service-discovery/`}
+                        target="_blank">
+                        Learn more
+                      </a>.
+                    </span>
+                  }
+                  width={300} wrapText={true} />
+              </FormLabelContent>
+            </FormLabel>
+          ),
+          showError: this.getErrors('resolvers'),
+          validation: this.getValidationFn('resolvers'),
+          validationErrorText: this.getErrors('resolvers'),
+          value: this.state.formData.resolvers
+        },
+        {
+          fieldType: 'textarea',
+          name: 'ip_detect_script',
+          placeholder: 'IP Detect Script',
+          showLabel: (
+            <div>
+              <FormLabel>
+                <FormLabelContent position="left">
+                  IP Detect Script
+                  <Tooltip content={
+                      <span>
+                        Enter or upload a script that runs on each node in the
+                        cluster and outputs the node’s local IP address. <a
+                          href={`${Config.documentationURI}/administration/installing/custom/gui/`}
+                          target="_blank">
+                          Learn more
+                        </a>.
+                      </span>
+                    }
+                    width={300} wrapText={true} />
+                </FormLabelContent>
+                <FormLabelContent position="right"
+                  supplementalClassName="hidden">
+                  <Upload displayText="Upload" ref="ipDetectUpload"
+                    onUploadFinish={this.getUploadHandler('ip_detect_script')} />
+                </FormLabelContent>
+              </FormLabel>
+              <Dropdown buttonClassName="button dropdown-toggle"
+                dropdownMenuClassName="dropdown-menu"
+                dropdownMenuListClassName="dropdown-menu-list"
+                items={this.getIPDetectOptions()}
+                onItemSelection={this.handleIPDetectSelection}
+                initialID="dropdown-label"
+                persistentID={this.state.ipDetectSelectedOption}
+                transition={false}
+                wrapperClassName="dropdown ip-detect-dropdown"/>
+            </div>
+          ),
+          showError: this.getErrors('ip_detect_script'),
+          validation: this.getValidationFn('ip_detect_script'),
+          validationErrorText: this.getErrors('ip_detect_script'),
+          value: this.state.formData.ip_detect_script
+        }
+      ],
+      {
+        fieldType: 'checkboxMultiple',
+        name: 'cluster_configuration_options',
+        formRowType: 'inline',
+        value: [
+          {
+            name: 'telemetry_enabled',
+            label: <span>
+                Send Anonymous Telemetry
+                <Tooltip content="Indicate whether you want to report anonymous
+                  usage data." width={300} wrapText={true} />
+              </span>,
+            checked: this.state.formData.telemetry_enabled
+          },
+          {
+            name: 'oauth_enabled',
+            label: <span>
+                Enable Authentication
+                <Tooltip content="Indicate whether you want to enable
+                  authentication for your cluster." width={300}
+                  wrapText={true} />
+              </span>,
+            checked: this.state.formData.oauth_enabled
+          }
+        ]
+      }
+    ];
 
-        memo = memo.concat(
-          this.getFormColumns(
-            [configDefinition[formField]],
-            configDefinition
-          ).formColumns
-        );
-
-        return memo;
-      }, []);
-
-    return formDefinition.concat(additionalFormFields);
-    // return Hooks.applyFilter('FormDefinition', formDefinition);
-  }
-
-  getFieldType(fieldKey, fieldDefinition, fullFormDefinition) {
-    let fieldType = 'text';
-    let fieldData = fullFormDefinition[fieldKey];
-
-    if (fieldData && fieldData.field_type) {
-      fieldType = FIELD_TYPE_MAP[fieldData.field_type];
-    }
-
-    if (fieldType === 'text' && fieldDefinition.hidden === true) {
-      fieldType = 'password';
-    }
-
-    return fieldType;
+    return Hooks.applyFilter('FormDefinition', formDefintion);
   }
 
   getFormRowClass(definition) {
     return classnames('row', {
       'row-inline-form-elements': definition.formRowType === 'inline'
     });
-  }
-
-  getFormColumns(columnsDefinition, fullFormDefinition) {
-    let columnKeys = [];
-
-    let formColumns = columnsDefinition.map((fieldDefinition) => {
-      let fieldKey = fieldDefinition.validation_param;
-
-      let fieldTooltip = null;
-      let fieldUpload = null;
-
-      if (fieldDefinition.help) {
-        fieldTooltip = (
-          <Tooltip content={fieldDefinition.help} width={300} wrapText={true} />
-        );
-      }
-
-      let fieldLabel = (
-        <FormLabelContent>
-          {fieldDefinition.title || fieldDefinition.validation_param} {fieldTooltip}
-        </FormLabelContent>
-      );
-
-      if (fieldDefinition.uploadable) {
-        fieldUpload = (
-          <FormLabelContent position="right">
-            <Upload displayText="Upload"
-              onUploadFinish={this.getUploadHandler(fieldKey)} />
-          </FormLabelContent>
-        );
-      }
-
-      columnKeys.push(fieldKey);
-
-      return {
-        name: fieldKey,
-        fieldType: this.getFieldType(fieldKey, fieldDefinition, fullFormDefinition),
-        placeholder: fieldDefinition['place-holder'],
-        showLabel: <FormLabel>{fieldLabel}{fieldUpload}</FormLabel>,
-        showError: this.getErrors(fieldKey),
-        validationErrorText: this.getErrors(fieldKey),
-        validation: this.getValidationFn(fieldKey),
-        value: this.state.formData[fieldKey]
-      };
-    });
-
-    return {formColumns, columnKeys};
-  }
-
-  getFormGroupRows(rowsDefinition, fullFormDefinition) {
-    let groupFieldKeys = [];
-    let groupRows = [];
-
-    if (rowsDefinition && rowsDefinition.length > 0) {
-      groupRows = rowsDefinition.map((formRow) => {
-        let {formColumns, columnKeys} = this.getFormColumns(formRow.cols, fullFormDefinition);
-
-        groupFieldKeys = groupFieldKeys.concat(columnKeys);
-        return formColumns;
-      });
-    }
-
-    return {groupFieldKeys, groupRows};
-  }
-
-  getFormGroupTitle(group) {
-    let {title} = group;
-
-    if (!title) {
-      return null;
-    }
-
-    return (
-      <SectionHeader>
-        <SectionHeaderPrimary align="left" layoutClassName="short-top flush-bottom">
-          {title}
-        </SectionHeaderPrimary>
-      </SectionHeader>
-    );
   }
 
   getIPDetectOptions() {
@@ -708,6 +838,11 @@ class Setup extends mixin(StoreMixin) {
           <PageSection>
             <SectionBody>
               {this.getErrorAlert()}
+              <SectionHeader>
+                <SectionHeaderPrimary align="left" layoutClassName="flush">
+                  Deployment Settings
+                </SectionHeaderPrimary>
+              </SectionHeader>
               <SetupFormConfirmation open={this.state.confirmModalOpen}
                 handleButtonCancel={this.handleSubmitCancel}
                 handleButtonConfirm={this.handleSubmitConfirm}

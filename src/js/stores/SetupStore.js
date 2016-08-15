@@ -15,6 +15,7 @@ let SetupStore = Store.createStore({
   init: function () {
     this.set({
       completed: false,
+      configFields: {},
       configType: {
         type: null,
         message: null
@@ -35,6 +36,8 @@ let SetupStore = Store.createStore({
   fetchConfigState: ConfigActions.fetchConfigState,
 
   fetchConfigType: ConfigActions.fetchConfigType,
+
+  setInstallType: ConfigActions.setInstallType,
 
   updateConfig: ConfigActions.updateConfig,
 
@@ -157,6 +160,15 @@ let SetupStore = Store.createStore({
     // We could do something here if we wanted.
   },
 
+  handleSetInstallTypeError(error) {
+    this.emit(EventTypes.SET_INSTALL_TYPE_ERROR, error);
+  },
+
+  handleSetInstallTypeSuccess(configFields) {
+    this.set({configFields});
+    this.emit(EventTypes.SET_INSTALL_TYPE_SUCCESS);
+  },
+
   isValueEmpty(values) {
     let isEmptyValue = false;
 
@@ -220,6 +232,12 @@ let SetupStore = Store.createStore({
         break;
       case ActionTypes.CONFIGURE_UPDATE_FIELD_ONGOING:
         SetupStore.handleOngoingConfigureUpdateFieldRequest();
+        break;
+      case ActionTypes.SET_INSTALL_TYPE_ERROR:
+        SetupStore.handleSetInstallTypeError(action.data.response);
+        break;
+      case ActionTypes.SET_INSTALL_TYPE_SUCCESS:
+        SetupStore.handleSetInstallTypeSuccess(action.data);
         break;
     }
 
