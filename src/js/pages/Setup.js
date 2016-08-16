@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import classnames from 'classnames';
-import {Dropdown, Form} from 'reactjs-components';
+import {Form} from 'reactjs-components';
 import mixin from 'reactjs-mixin';
 /* eslint-disable no-unused-vars */
 import React from 'react';
@@ -39,6 +39,8 @@ import Upload from '../components/Upload';
 let {Hooks} = PluginSDK;
 
 const FIELD_TYPE_MAP = {
+  'choice': 'select',
+  'boolean': 'checkbox',
   'text': 'text',
   'text_area': 'textarea',
   'dropdown': 'select',
@@ -311,6 +313,8 @@ class Setup extends mixin(StoreMixin) {
       return memo.concat(groupRows);
     }, []);
 
+    let lastIndex = 1;
+
     // Check for additional fields that were not defined in ui_groups.
     let additionalFormFields = Object.keys(configDefinition)
       .filter((formField) => {
@@ -322,13 +326,21 @@ class Setup extends mixin(StoreMixin) {
         }
 
         if (this.state.isAdvancedExpanded) {
-          memo = memo.concat(
-            this.getFormColumns(
-              [configDefinition[formField]],
-              configDefinition,
-              formField
-            ).formColumns
-          );
+          let column = this.getFormColumns(
+            [configDefinition[formField]],
+            configDefinition,
+            formField
+          ).formColumns[0];
+
+          if (memo[lastIndex] != null && memo[lastIndex].length === 2) {
+            lastIndex++;
+          }
+
+          if (memo[lastIndex] == null) {
+            memo[lastIndex] = [];
+          }
+
+          memo[lastIndex].push(column);
         }
 
         return memo;
@@ -342,8 +354,8 @@ class Setup extends mixin(StoreMixin) {
     let fieldType = 'text';
     let fieldData = fullFormDefinition[fieldKey];
 
-    if (fieldData && fieldData.field_type) {
-      fieldType = FIELD_TYPE_MAP[fieldData.field_type];
+    if (fieldData && fieldData.type) {
+      fieldType = FIELD_TYPE_MAP[fieldData.type];
     }
 
     if (fieldType === 'text' && fieldDefinition.hidden === true) {
@@ -366,7 +378,22 @@ class Setup extends mixin(StoreMixin) {
       let fieldKey = fieldDefinition.validation_param || fieldName;
 
       let fieldTooltip = null;
+      let fieldType = this.getFieldType(fieldKey, fieldDefinition, fullFormDefinition);
       let fieldUpload = null;
+      let labelString = fieldDefinition.title || fieldDefinition.validation_param || fieldKey;
+      let options = null;
+
+      if (labelString.indexOf('_') > -1) {
+        labelString = labelString.split('_').map((segment) => {
+          if (segment === 'ip') {
+            return 'IP';
+          } else if (segment === 'dns') {
+            return 'DNS';
+          }
+
+          return `${segment.charAt(0).toUpperCase()}${segment.slice(1)}`;
+        }).join(' ');
+      }
 
       if (fieldDefinition.help) {
         fieldTooltip = (
@@ -376,7 +403,7 @@ class Setup extends mixin(StoreMixin) {
 
       let fieldLabel = (
         <FormLabelContent>
-          {fieldDefinition.title || fieldDefinition.validation_param || fieldKey} {fieldTooltip}
+          {labelString} {fieldTooltip}
         </FormLabelContent>
       );
 
@@ -393,11 +420,59 @@ class Setup extends mixin(StoreMixin) {
 
       let value = this.state.formData[fieldKey] || fieldDefinition.value;
 
+      if (value === 'true') {
+        value = true;
+      } else if (value === 'false') {
+        value = false;
+      }
+
+      let showLabel = <FormLabel>{fieldLabel}{fieldUpload}</FormLabel>;
+
+      if (fieldType === 'checkbox') {
+        showLabel = (
+          <FormLabel>
+            <span style={{visibility: 'hidden'}}>
+              {fieldLabel}
+            </span>
+          </FormLabel>
+        );
+      } else if (fieldType === 'select') {
+        if (fieldDefinition.options && fieldDefinition.options.length > 0) {
+          options = fieldDefinition.options.map((option) => {
+            return {
+              html: option,
+              id: option
+            }
+          })
+
+          options.unshift({
+            className: 'hidden',
+            html: 'Select an option',
+            id: 'default'
+          });
+
+          if (!value) {
+            value = 'default';
+          }
+        } else {
+          options = [{
+            html: <em>No options available</em>,
+            id: 'none'
+          }];
+
+          value = 'none';
+        }
+      }
+
+      console.log(fieldType, options, value);
+
       return {
         name: fieldKey,
-        fieldType: this.getFieldType(fieldKey, fieldDefinition, fullFormDefinition),
+        fieldType,
+        label: labelString,
+        options,
         placeholder: fieldDefinition['place-holder'],
-        showLabel: <FormLabel>{fieldLabel}{fieldUpload}</FormLabel>,
+        showLabel,
         showError: this.getErrors(fieldKey),
         validationErrorText: this.getErrors(fieldKey),
         validation: this.getValidationFn(fieldKey),
@@ -751,7 +826,7 @@ class Setup extends mixin(StoreMixin) {
                 handleButtonCancel={this.handleSubmitCancel}
                 handleButtonConfirm={this.handleSubmitConfirm}
                 pendingRequest={this.state.submitRequestPending} />
-              <Form definition={this.getFormDefinition()} formRowClass={this.getFormRowClass}
+              <Form definition={this.getFormDefinition()}
                 onChange={this.handleFormChange} />
             </SectionBody>
           </PageSection>
