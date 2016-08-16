@@ -9,7 +9,7 @@ class SectionHeaderPrimary extends React.Component {
       });
 
     return (
-      <h1 className={classes}>
+      <h1 className={classes} onClick={this.props.onClick}>
         {this.props.children}
       </h1>
     );
@@ -27,7 +27,8 @@ SectionHeaderPrimary.propTypes = {
   children: React.PropTypes.node,
   className: React.PropTypes.string,
   inverse: React.PropTypes.bool,
-  layoutClassName: React.PropTypes.string
+  layoutClassName: React.PropTypes.string,
+  onClick: React.PropTypes.func
 };
 
 module.exports = SectionHeaderPrimary;

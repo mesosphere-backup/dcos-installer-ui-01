@@ -67,7 +67,8 @@ const METHODS_TO_BIND = [
   'isPortValid',
   'isPublicIPValid',
   'submitFormData',
-  'savePublicURL'
+  'savePublicURL',
+  'toggleCollapsableConfigBlock'
 ];
 
 class Setup extends mixin(StoreMixin) {
@@ -100,6 +101,7 @@ class Setup extends mixin(StoreMixin) {
         ssh_key: null
       },
       ipDetectSelectedOption: null,
+      isAdvancedExpanded: false,
       localValidationErrors: {},
       submitRequestPending: false
     };
@@ -256,6 +258,12 @@ class Setup extends mixin(StoreMixin) {
   }
 
   getErrors(key) {
+    let allErrors = SetupStore.get('errors');
+
+    if (allErrors[key] != null) {
+      return allErrors[key];
+    }
+
     let error = null;
     let errors = SetupStore.get('displayedErrors') || {};
     let localValidationErrors = this.state.localValidationErrors;
@@ -310,16 +318,18 @@ class Setup extends mixin(StoreMixin) {
       })
       .reduce((memo, formField) => {
         if (memo.length === 0) {
-          memo.push(this.getFormGroupTitle({title: 'Other'}));
+          memo.push(this.getFormGroupTitle({title: 'Advanced Configuration', collapsable: true}));
         }
 
-        memo = memo.concat(
-          this.getFormColumns(
-            [configDefinition[formField]],
-            configDefinition,
-            formField
-          ).formColumns
-        );
+        if (this.state.isAdvancedExpanded) {
+          memo = memo.concat(
+            this.getFormColumns(
+              [configDefinition[formField]],
+              configDefinition,
+              formField
+            ).formColumns
+          );
+        }
 
         return memo;
       }, []);
@@ -415,16 +425,31 @@ class Setup extends mixin(StoreMixin) {
   }
 
   getFormGroupTitle(group) {
+    let arrow = null;
+    let clickHandler = null;
     let {title} = group;
 
     if (!title) {
       return null;
     }
 
+    if (group.collapsable) {
+      arrow = (
+        <span className={classnames('caret', {
+          'is-expanded': this.state.isAdvancedExpanded
+        })} />
+      );
+      clickHandler = this.toggleCollapsableConfigBlock;
+    }
+
     return (
       <SectionHeader>
-        <SectionHeaderPrimary align="left" layoutClassName="short-top flush-bottom">
+        <SectionHeaderPrimary
+          align="left"
+          layoutClassName="short-top flush-bottom"
+          onClick={clickHandler}>
           {title}
+          {arrow}
         </SectionHeaderPrimary>
       </SectionHeader>
     );
@@ -525,6 +550,10 @@ class Setup extends mixin(StoreMixin) {
 
   handleFormChange(formData, eventDetails) {
     let {eventType, fieldName, fieldValue} = eventDetails;
+
+    if (eventType === 'blur') {
+      ConfigActions.fetchConfigState();
+    }
 
     if (eventType === 'blur' && fieldName === 'public_ip_address') {
       this.savePublicURL(fieldValue);
@@ -697,6 +726,10 @@ class Setup extends mixin(StoreMixin) {
         ConfigActions.updateConfig(preparedData);
       }
     }
+  }
+
+  toggleCollapsableConfigBlock() {
+    this.setState({isAdvancedExpanded: !this.state.isAdvancedExpanded});
   }
 
   render() {
