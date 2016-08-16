@@ -143,6 +143,8 @@ let SetupStore = Store.createStore({
     this.set({displayedErrors});
     this.set({errors});
     this.emit(EventTypes.CONFIGURE_UPDATE_FIELD_SUCCESS);
+
+    ConfigActions.fetchConfigState();
   },
 
   handleOngoingConfigureChangeRequest: function () {

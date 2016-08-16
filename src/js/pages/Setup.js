@@ -446,7 +446,9 @@ class Setup extends mixin(StoreMixin) {
       <SectionHeader>
         <SectionHeaderPrimary
           align="left"
-          layoutClassName="short-top flush-bottom"
+          layoutClassName={classnames('short-top flush-bottom', {
+            'clickable': group.collapsable
+          })}
           onClick={clickHandler}>
           {title}
           {arrow}

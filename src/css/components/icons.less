@@ -22,10 +22,19 @@
   }
 }
 
+.clickable {
+  cursor: pointer;
+  display: inline-block;
+
+  &:hover {
+    color: @purple;
+  }
+}
+
 .caret {
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
-  border-top: 5px solid @neutral;
+  border-top: 5px solid currentColor;
   display: inline-block;
   margin-left: 10px;
   transition: transform 0.2s;
