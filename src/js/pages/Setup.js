@@ -281,8 +281,9 @@ class Setup extends mixin(StoreMixin) {
 
   getFormDefinition() {
     let configDefinition = SetupStore.get('configFields');
+    let clusterType = SetupStore.get('clusterType');
     // TODO: Make the onprem key configurable.
-    let uiGroup = configDefinition.ui_groups.onprem;
+    let uiGroup = configDefinition.ui_groups[clusterType];
     let fulfilledFields = [];
 
     let formDefinition = uiGroup.reduce((memo, group) => {
@@ -315,7 +316,8 @@ class Setup extends mixin(StoreMixin) {
         memo = memo.concat(
           this.getFormColumns(
             [configDefinition[formField]],
-            configDefinition
+            configDefinition,
+            formField
           ).formColumns
         );
 
@@ -347,11 +349,11 @@ class Setup extends mixin(StoreMixin) {
     });
   }
 
-  getFormColumns(columnsDefinition, fullFormDefinition) {
+  getFormColumns(columnsDefinition, fullFormDefinition, fieldName) {
     let columnKeys = [];
 
     let formColumns = columnsDefinition.map((fieldDefinition) => {
-      let fieldKey = fieldDefinition.validation_param;
+      let fieldKey = fieldDefinition.validation_param || fieldName;
 
       let fieldTooltip = null;
       let fieldUpload = null;
@@ -364,7 +366,7 @@ class Setup extends mixin(StoreMixin) {
 
       let fieldLabel = (
         <FormLabelContent>
-          {fieldDefinition.title || fieldDefinition.validation_param} {fieldTooltip}
+          {fieldDefinition.title || fieldDefinition.validation_param || fieldKey} {fieldTooltip}
         </FormLabelContent>
       );
 
@@ -379,6 +381,8 @@ class Setup extends mixin(StoreMixin) {
 
       columnKeys.push(fieldKey);
 
+      let value = this.state.formData[fieldKey] || fieldDefinition.value;
+
       return {
         name: fieldKey,
         fieldType: this.getFieldType(fieldKey, fieldDefinition, fullFormDefinition),
@@ -387,7 +391,7 @@ class Setup extends mixin(StoreMixin) {
         showError: this.getErrors(fieldKey),
         validationErrorText: this.getErrors(fieldKey),
         validation: this.getValidationFn(fieldKey),
-        value: this.state.formData[fieldKey]
+        value
       };
     });
 

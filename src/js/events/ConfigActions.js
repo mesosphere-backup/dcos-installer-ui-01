@@ -86,12 +86,13 @@ const ConfigActions = {
   setInstallType: function (data) {
     RequestUtil.json({
       method: 'post',
-      url: `${Config.rootUrl}${Config.apiPrefix}configure/new`,
+      url: `${Config.rootUrl}${Config.apiPrefix}configure`,
       data,
       success: function (response) {
         AppDispatcher.handleServerAction({
           type: ActionTypes.SET_INSTALL_TYPE_SUCCESS,
-          data: response
+          data: response,
+          clusterType: data
         });
       },
       error: function (xhr) {

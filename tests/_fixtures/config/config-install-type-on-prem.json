@@ -1,138 +1,267 @@
 {
-  "ui_groups": {
-    "onprem": [
-      {
-        "title": "Deployment Settings",
-        "rows": [
-          {
-            "height": 2.0,
-            "cols": [
-              {
-                "validation_param": "master_list",
-                "title": "Master Private IP List",
-                "help": "The private IP addresses of the master; should be 1, 3, 5",
-                "uploadable": true,
-                "hidden": false,
-                "width-factor": 1.0,
-                "place-holder": "Specify a comma-separated list"
-              }
-            ]
-          },
-          {
-            "height": 2.0,
-            "cols": [
-              {
-                "validation_param": "agent_list",
-                "title": "Agent Private IP List",
-                "uploadable": true,
-                "help": "Private IP addresses of the agents",
-                "place-holder": "Specify a comma-separated list of 1 to n IPv4 private addresses"
-              },
-              {
-                "validation_param": "agent_public_list",
-                "title": "Agent Public IP List",
-                "help": "",
-                "uploadable": true,
-                "place-holder": "Specify a comma-separated list of 1 to n IPv4 public addresses"
-              }
-            ]
-          },
-          {
-            "height": 1.0,
-            "cols": [
-              {
-                "validation_param": "public_ip_address",
-                "title": "Master Public IP",
-                "place-holder": "Specify one IPv4 address."
-              },
-              {
-                "validation_param": "ssh_user",
-                "title": "SSH Usernname",
-                "place-holder": "e.g. root, admiin, core"
-              },
-              {
-                "validation_param": "ssh_port",
-                "title": "SSH Listening Port"
-              }
-            ]
-          },
-          {
-            "height": 2.0,
-            "cols": [
-              {
-                "validation_param": "ssh_key",
-                "title": "Private SSH Key",
-                "help": "Enter the private SSH Key"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "title": "DC/OS Environment Settings",
-        "rows": [
-          {
-            "height": 2.0,
-            "cols": [
-              {
-                "validation_param": "upstream_dns",
-                "title": "Upstream DNS Servers"
-              },
-              {
-                "validation_param": "ip_detect",
-                "title": "IP Detect Script"
-              }
-            ]
-          },
-          {
-            "height": 1.0,
-            "cols": [
-              {
-                "validation_param": "telemtry_enabled",
-                "title": "Sent Anonymous Telemetry"
-              },
-              {
-                "validation_param": "auth_enabled",
-                "title": "Enable Authentication"
-              }
-            ]
-          }
-        ]
-      }
-    ],
-    "aws": [],
-    "azure": []
-  },
-  "master_list": {
-    "validation_param": "master_list",
-    "errors": "errors found",
-    "value": ["10.0.0.1", "10.0.0.2"],
-    "field_type": "text_area",
-    "dependencies": ["field1", "field2"],
-    "allowable": ["opt1", "opt2"]
-  },
-  "some_field": {
-    "validation_param": "some_field",
-    "errors": "errors found",
-    "value": ["10.0.0.1", "10.0.0.2"],
-    "field_type": "text_area",
-    "dependencies": ["field1", "field2"],
-    "allowable": ["opt1", "opt2"]
-  },
-  "other_field_1": {
-    "validation_param": "other_field_1",
-    "errors": "errors found",
-    "value": ["10.0.0.1", "10.0.0.2"],
-    "field_type": "text",
-    "dependencies": ["field1", "field2"],
-    "allowable": ["opt1", "opt2"]
-  },
-  "other_field_2": {
-    "validation_param": "other_field_2",
-    "errors": "errors found",
-    "value": ["10.0.0.1", "10.0.0.2"],
-    "field_type": "text",
-    "dependencies": ["field1", "field2"],
-    "allowable": ["opt1", "opt2"]
-  }
+   "adminrouter_auth_enabled": {
+      "type": "boolean",
+      "value": "true"
+   },
+   "bootstrap_url": {
+      "type": "text",
+      "value": "file:///opt/dcos_install_tmp"
+   },
+   "cluster_name": {
+      "type": "text",
+      "value": "DC/OS"
+   },
+   "dcos_overlay_enable": {
+      "type": "choice",
+      "value": "true"
+   },
+   "dcos_overlay_mtu": {
+      "type": "text",
+      "value": "1420"
+   },
+   "dcos_overlay_network": {
+      "type": "text",
+      "value": "{                                  \"vtep_subnet\": \"44.128.0.0/20\",                         \"vtep_mac_oui\": \"70:B3:D5:00:00:00\",                    \"overlays\": [                                             {                                                         \"name\": \"dcos\",                                         \"subnet\": \"9.0.0.0/8\",                                  \"prefix\": 24                                          }                                                     ]}"
+   },
+   "dcos_remove_dockercfg_enable": {
+      "type": "choice",
+      "value": "false"
+   },
+   "dns_search": {
+      "type": "text",
+      "value": null
+   },
+   "docker_remove_delay": {
+      "type": "text",
+      "value": "1hrs"
+   },
+   "docker_stop_timeout": {
+      "type": "text",
+      "value": "20secs"
+   },
+   "exhibitor_storage_backend": {
+      "options": [
+         "static",
+         "zookeeper",
+         "azure",
+         "agent_only_group_no_exhibitor",
+         "aws_s3",
+         "shared_filesystem"
+      ],
+      "type": "choice",
+      "value": "static"
+   },
+   "expanded_config": {
+      "type": "text",
+      "value": "\"DO NOT USE THIS AS AN ARGUMENT TO OTHER ARGUMENTS. IT IS TEMPORARY\""
+   },
+   "gc_delay": {
+      "type": "text",
+      "value": "2days"
+   },
+   "ip_detect_contents": {
+      "type": "text",
+      "value": null
+   },
+   "ip_detect_filename": {
+      "error": "value unset",
+      "type": "text",
+      "value": null
+   },
+   "ip_detect_public_contents": {
+      "type": "text",
+      "value": null
+   },
+   "master_discovery": {
+      "options": [
+         "static",
+         "master_http_loadbalancer"
+      ],
+      "type": "choice",
+      "value": "static"
+   },
+   "master_dns_bindall": {
+      "type": "choice",
+      "value": "true"
+   },
+   "master_list": {
+      "error": "Must be valid JSON",
+      "type": "text",
+      "value": null
+   },
+   "mesos_container_logger": {
+      "type": "text",
+      "value": "org_apache_mesos_LogrotateContainerLogger"
+   },
+   "mesos_dns_ip_sources": {
+      "type": "text",
+      "value": "[\"host\", \"netinfo\"]"
+   },
+   "num_masters": {
+      "type": "text",
+      "value": null
+   },
+   "oauth_auth_host": {
+      "type": "text",
+      "value": "https://dcos.auth0.com"
+   },
+   "oauth_auth_redirector": {
+      "type": "text",
+      "value": "https://auth.dcos.io"
+   },
+   "oauth_available": {
+      "type": "boolean",
+      "value": "true"
+   },
+   "oauth_client_id": {
+      "type": "text",
+      "value": "3yF5TOSzdlI45Q1xspxzeoGBe9fNxm9m"
+   },
+   "oauth_enabled": {
+      "type": "boolean",
+      "value": "true"
+   },
+   "oauth_issuer_url": {
+      "type": "text",
+      "value": "https://dcos.auth0.com/"
+   },
+   "provider": {
+      "options": [
+         "azure",
+         "aws",
+         "onprem",
+         "other"
+      ],
+      "type": "choice",
+      "value": "onprem"
+   },
+   "resolvers": {
+      "type": "text",
+      "value": "[\"8.8.8.8\", \"8.8.4.4\"]"
+   },
+   "rexray_config_contents": {
+      "type": "text",
+      "value": "\"\\nrexray:\\n  loglevel: info\\n  modules:\\n    default-docker:\\n      disabled: true\\n\"\n"
+   },
+   "rexray_config_method": {
+      "options": [
+         "empty",
+         "aws",
+         "file"
+      ],
+      "type": "choice",
+      "value": "empty"
+   },
+   "telemetry_enabled": {
+      "type": "boolean",
+      "value": "true"
+   },
+   "ui_groups": {
+      "aws": [],
+      "azure": [],
+      "onprem": [
+         {
+            "rows": [
+               {
+                  "cols": [
+                     {
+                        "help": "The private IP addresses of the master; should be 1, 3, 5",
+                        "hidden": false,
+                        "place-holder": "Specify a comma-separated list",
+                        "title": "Master Private IP List",
+                        "uploadable": true,
+                        "validation_param": "master_list",
+                        "width-factor": 1.0
+                     }
+                  ],
+                  "height": 2.0
+               },
+               {
+                  "cols": [
+                     {
+                        "help": "Private IP addresses of the agents",
+                        "place-holder": "Specify a comma-separated list of 1 to n IPv4 private addresses",
+                        "title": "Agent Private IP List",
+                        "uploadable": true,
+                        "validation_param": "agent_list"
+                     },
+                     {
+                        "help": "",
+                        "place-holder": "Specify a comma-separated list of 1 to n IPv4 public addresses",
+                        "title": "Agent Public IP List",
+                        "uploadable": true,
+                        "validation_param": "public_agent_list"
+                     }
+                  ],
+                  "height": 2.0
+               },
+               {
+                  "cols": [
+                     {
+                        "place-holder": "Specify one IPv4 address.",
+                        "title": "Master Public IP",
+                        "validation_param": "master_public_ip"
+                     },
+                     {
+                        "place-holder": "e.g. root, admiin, core",
+                        "title": "SSH Usernname",
+                        "validation_param": "ssh_user"
+                     },
+                     {
+                        "title": "SSH Listening Port",
+                        "validation_param": "ssh_port"
+                     }
+                  ],
+                  "height": 1.0
+               },
+               {
+                  "cols": [
+                     {
+                        "help": "Enter the private SSH Key",
+                        "title": "Private SSH Key",
+                        "validation_param": "ssh_key"
+                     }
+                  ],
+                  "height": 2.0
+               }
+            ],
+            "title": "Deployment Settings"
+         },
+         {
+            "rows": [
+               {
+                  "cols": [
+                     {
+                        "title": "Upstream DNS Servers",
+                        "validation_param": "upstream_dns"
+                     },
+                     {
+                        "title": "IP Detect Script",
+                        "validation_param": "ip_detect"
+                     }
+                  ],
+                  "height": 2.0
+               },
+               {
+                  "cols": [
+                     {
+                        "title": "Sent Anonymous Telemetry",
+                        "validation_param": "telemtry_enabled"
+                     },
+                     {
+                        "title": "Enable Authentication",
+                        "validation_param": "auth_enabled"
+                     }
+                  ],
+                  "height": 1.0
+               }
+            ],
+            "title": "DC/OS Environment Settings"
+         }
+      ]
+   },
+   "weights": {
+      "type": "text",
+      "value": null
+   }
 }

@@ -14,6 +14,7 @@ let SetupStore = Store.createStore({
 
   init: function () {
     this.set({
+      clusterType: null,
       completed: false,
       configFields: {},
       configType: {
@@ -164,8 +165,9 @@ let SetupStore = Store.createStore({
     this.emit(EventTypes.SET_INSTALL_TYPE_ERROR, error);
   },
 
-  handleSetInstallTypeSuccess(configFields) {
+  handleSetInstallTypeSuccess(configFields, clusterType) {
     this.set({configFields});
+    this.set({clusterType})
     this.emit(EventTypes.SET_INSTALL_TYPE_SUCCESS);
   },
 
@@ -237,7 +239,7 @@ let SetupStore = Store.createStore({
         SetupStore.handleSetInstallTypeError(action.data.response);
         break;
       case ActionTypes.SET_INSTALL_TYPE_SUCCESS:
-        SetupStore.handleSetInstallTypeSuccess(action.data);
+        SetupStore.handleSetInstallTypeSuccess(action.data, action.clusterType.configurationProvider);
         break;
     }
 

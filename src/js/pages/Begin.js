@@ -23,7 +23,7 @@ import SetupStore from '../stores/SetupStore';
 
 let {Hooks} = PluginSDK;
 
-const METHODS_TO_BIND = ['handleBeginClick'];
+const METHODS_TO_BIND = ['handleBeginOnPremClick', 'handleBeginAWSClick'];
 
 class Begin extends mixin(StoreMixin) {
   constructor() {
@@ -57,9 +57,14 @@ class Begin extends mixin(StoreMixin) {
     });
   }
 
-  handleBeginClick() {
-    this.setState({isLoadingConfigType: true});
-    SetupStore.setInstallType({configurationProvider: 'onprem'});
+  handleBeginOnPremClick() {
+    this.setState({isLoadingConfigType: 'onprem'});
+    SetupStore.setInstallType({provider: 'onprem'});
+  }
+
+  handleBeginAWSClick() {
+    this.setState({isLoadingConfigType: 'aws'});
+    SetupStore.setInstallType({provider: 'aws'});
   }
 
   getLogo() {
@@ -88,13 +93,24 @@ class Begin extends mixin(StoreMixin) {
       'disabled': this.state.isLoadingConfigType
     });
 
-    let beginText = this.state.isLoadingConfigType ? 'Loading...' : 'Begin Installation';
+    let onPremText = this.state.isLoadingConfigType === 'onprem' ? 'Loading...' : 'Begin On Prem Installation';
+    let awsText = this.state.isLoadingConfigType === 'aws' ? 'Loading...' : 'Begin AWS Installation';
 
     return (
-      <a className={beginClasses} onClick={this.handleBeginClick}>
-        {beginText}
-        <IconArrow />
-      </a>
+      <div>
+        <div className="button-collection">
+          <a className={beginClasses} onClick={this.handleBeginOnPremClick}>
+            {onPremText}
+            <IconArrow />
+          </a>
+        </div>
+        <div className="button-colletion">
+          <a className={beginClasses} onClick={this.handleBeginAWSClick}>
+            {awsText}
+            <IconArrow />
+          </a>
+        </div>
+      </div>
     );
 
     return (
