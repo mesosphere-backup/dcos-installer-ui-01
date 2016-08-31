@@ -456,9 +456,9 @@ class Setup extends mixin(StoreMixin) {
                 <Tooltip
                   content={
                     <span>
-                      <p><b>Permissive:</b> Both authenticated and unauthenticated frameworks are allowed; both encrypted and unencrypted communications are allowed.</p>
-                      <p><b>Strict:</b> Unauthenticated frameworks are rejected; unencrypted communications are rejected; etc.</p>
-                      <p className="flush"><b>Disabled:</b> Encryption and framework authentication are not supported.</p>
+                      <p><strong>Permissive</strong>: Both authenticated and unauthenticated frameworks are allowed; both encrypted and unencrypted communications are allowed.</p>
+                      <p><strong>Strict</strong>: Unauthenticated frameworks are rejected; unencrypted communications are rejected; etc.</p>
+                      <p className="flush"><strong>Disabled</strong>: Encryption and framework authentication are not supported.</p>
                     </span>
                   }
                   tooltipWrapperClassName='tooltip-wrapper'
