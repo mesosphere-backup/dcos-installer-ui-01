@@ -517,6 +517,7 @@ class Setup extends mixin(StoreMixin) {
         },
         {
           fieldType: 'textarea',
+          inputClass: 'hidden',
           name: 'ip_detect_script',
           placeholder: 'IP Detect Script',
           showLabel: (
