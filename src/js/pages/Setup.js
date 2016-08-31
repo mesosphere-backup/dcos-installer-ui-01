@@ -453,14 +453,17 @@ class Setup extends mixin(StoreMixin) {
             <FormLabel>
               <FormLabelContent position="left">
                 Security Settings
-                <Tooltip content={
+                <Tooltip
+                  content={
                     <span>
-                      <b>Permissive:</b><br />Both authenticated and unauthenticated frameworks are allowed; both encrypted and unencrypted communications are allowed.<br />
-                      <b>Strict:</b><br />Unauthenticated frameworks are rejected; unencrypted communications are rejected; etc.<br />
-                      <b>Disabled:</b><br />Encryption and framework authentication are not supported.
+                      <p><b>Permissive:</b> Both authenticated and unauthenticated frameworks are allowed; both encrypted and unencrypted communications are allowed.</p>
+                      <p><b>Strict:</b> Unauthenticated frameworks are rejected; unencrypted communications are rejected; etc.</p>
+                      <p className="flush"><b>Disabled:</b> Encryption and framework authentication are not supported.</p>
                     </span>
                   }
-                  width={300} wrapText={true} />
+                  tooltipWrapperClassName='tooltip-wrapper'
+                  width={500}
+                  wrapText={true} />
               </FormLabelContent>
             </FormLabel>
             <Dropdown buttonClassName="button dropdown-toggle"
