@@ -461,7 +461,7 @@ class Setup extends mixin(StoreMixin) {
                       <p className="flush"><strong>Disabled</strong>: Encryption and framework authentication are not supported.</p>
                     </span>
                   }
-                  tooltipWrapperClassName='tooltip-wrapper'
+                  tooltipWrapperClassName="tooltip-wrapper"
                   width={500}
                   wrapText={true} />
               </FormLabelContent>
@@ -641,7 +641,7 @@ class Setup extends mixin(StoreMixin) {
         html: 'Strict'
       },
       {
-        id: 'diabled',
+        id: 'disabled',
         html: 'Disabled'
       }
     ];
