@@ -53,7 +53,6 @@ const METHODS_TO_BIND = [
   'getValidationFn',
   'handleFormChange',
   'handleIPDetectSelection',
-  'handleSecuritySelection',
   'handleSubmitCancel',
   'handleSubmitClick',
   'handleSubmitConfirm',
@@ -79,7 +78,6 @@ class Setup extends mixin(StoreMixin) {
         ip_detect_script: null,
         public_agent_list: null,
         public_ip_address: global.localStorage.getItem('publicHostname'),
-        security: 'permissive',
         ssh_user: null,
         ssh_port: null,
         ssh_key: null,
@@ -91,7 +89,6 @@ class Setup extends mixin(StoreMixin) {
         agent_list: null,
         public_agent_list: null,
         ip_detect_script: null,
-        security: 'permissive',
         ssh_user: null,
         ssh_port: null,
         ssh_key: null
@@ -442,46 +439,6 @@ class Setup extends mixin(StoreMixin) {
         validation: this.getValidationFn('ssh_key'),
         value: this.state.formData.ssh_key
       },
-      {
-        fieldType: 'textarea',
-        columnWidth: 6,
-        formGroupClass: 'form-group flush-bottom',
-        inputClass: 'hidden',
-        name: 'security',
-        showLabel: (
-          <div>
-            <FormLabel>
-              <FormLabelContent position="left">
-                Security Settings
-                <Tooltip
-                  content={
-                    <span>
-                      <p><strong>Permissive</strong>: Both authenticated and unauthenticated frameworks are allowed; both encrypted and unencrypted communications are allowed.</p>
-                      <p><strong>Strict</strong>: Unauthenticated frameworks are rejected; unencrypted communications are rejected; etc.</p>
-                      <p className="flush"><strong>Disabled</strong>: Encryption and framework authentication are not supported.</p>
-                    </span>
-                  }
-                  tooltipWrapperClassName="tooltip-wrapper"
-                  width={500}
-                  wrapText={true} />
-              </FormLabelContent>
-            </FormLabel>
-            <Dropdown buttonClassName="button dropdown-toggle"
-              dropdownMenuClassName="dropdown-menu"
-              dropdownMenuListClassName="dropdown-menu-list"
-              items={this.getSecurityOptions()}
-              onItemSelection={this.handleSecuritySelection}
-              initialID="dropdown-label"
-              persistentID={this.state.formData.security}
-              transition={false}
-              wrapperClassName="dropdown ip-detect-dropdown"/>
-          </div>
-        ),
-        showError: this.getErrors('security'),
-        validation: this.getValidationFn('security'),
-        validationErrorText: this.getErrors('security'),
-        value: this.state.formData.security
-      },
       <SectionHeader>
         <SectionHeaderPrimary align="left" layoutClassName="short-top flush-bottom">
           {Config.productName} Environment Settings
@@ -630,23 +587,6 @@ class Setup extends mixin(StoreMixin) {
     return _.extend({}, this.state.formData, newFormData);
   }
 
-  getSecurityOptions() {
-    return [
-      {
-        id: 'permissive',
-        html: 'Permissive'
-      },
-      {
-        id: 'strict',
-        html: 'Strict'
-      },
-      {
-        id: 'disabled',
-        html: 'Disabled'
-      }
-    ];
-  }
-
   getUploadHandler(destinationKey, fileType) {
     let localValidationErrors = this.state.localValidationErrors;
 
@@ -771,15 +711,6 @@ class Setup extends mixin(StoreMixin) {
     }
 
     this.setState(state);
-  }
-
-  handleSecuritySelection(selection) {
-    let {id} = selection;
-
-    let change = {security: id};
-    let formData = Object.assign({}, this.state.formData, change);
-    this.submitFormData(change);
-    this.setState({formData});
   }
 
   handleSubmitClick() {

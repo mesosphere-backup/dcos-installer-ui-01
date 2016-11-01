@@ -2,7 +2,6 @@ const BACKEND_FORM_FIELDS = [
   'master_list',
   'agent_list',
   'public_agent_list',
-  'security',
   'ssh_user',
   'ssh_port',
   'ssh_key',
