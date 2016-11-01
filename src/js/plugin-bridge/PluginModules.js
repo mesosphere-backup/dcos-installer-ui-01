@@ -6,6 +6,7 @@ module.exports = {
   components: {
     FormLabel: 'FormLabel',
     FormLabelContent: 'FormLabelContent',
+    SectionHeader: 'SectionHeader',
     Tooltip: 'Tooltip'
   },
   constants: {
