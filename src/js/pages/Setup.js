@@ -657,7 +657,7 @@ class Setup extends mixin(StoreMixin) {
       this.savePublicURL(fieldValue);
     }
 
-    if (eventType === 'focus' || fieldValue === '' || fieldValue == null) {
+    if (eventType === 'focus') {
       return;
     }
 
@@ -681,19 +681,19 @@ class Setup extends mixin(StoreMixin) {
 
     this.setState(Hooks.applyFilter(
       'handleFormChange', newState, eventDetails
-    ));
-
-    if (this.isFormReady()) {
-      InstallerStore.setNextStep({
-        clickHandler: this.handleSubmitClick,
-        enabled: true
-      });
-    } else {
-      InstallerStore.setNextStep({
-        clickHandler: null,
-        enabled: false
-      });
-    }
+    ), () => {
+      if (this.isFormReady()) {
+        InstallerStore.setNextStep({
+          clickHandler: this.handleSubmitClick,
+          enabled: true
+        });
+      } else {
+        InstallerStore.setNextStep({
+          clickHandler: null,
+          enabled: false
+        });
+      }
+    });
   }
 
   handleIPDetectSelection(selection) {
