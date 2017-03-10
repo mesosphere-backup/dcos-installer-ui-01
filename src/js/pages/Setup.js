@@ -237,7 +237,8 @@ class Setup extends mixin(StoreMixin) {
 
     this.setState({
       formData: displayedConfig,
-      initialFormData: displayedConfig
+      initialFormData: displayedConfig,
+      ipDetectSelectedOption: this.getSelectedIPDetectScript(displayedConfig)
     });
   }
 
@@ -587,6 +588,42 @@ class Setup extends mixin(StoreMixin) {
     return _.extend({}, this.state.formData, newFormData);
   }
 
+  getSelectedIPDetectScript(installConfig = {}) {
+    if (installConfig != null) {
+      const {
+        ip_detect_script: ipDetectScript,
+        ip_detect_path: ipDetectPath
+      } = installConfig;
+      const selectedScriptString = (ipDetectScript || '').replace(/\s/g,'');
+
+      let selectedIPDetectScriptKey = null;
+
+      // Find the selected script.
+      const isPredefinedScriptSelected = Object.keys(IPDetectScripts)
+        .some((scriptKey) => {
+          // Strip all whitespace from the script strings for comparison.
+          const predefinedScript = IPDetectScripts[scriptKey].replace(/\s/g,'');
+          const isScriptSelected = selectedScriptString === predefinedScript;
+
+          if (isScriptSelected) {
+            selectedIPDetectScriptKey = scriptKey;
+          }
+
+          return isScriptSelected;
+        });
+
+      // Display the custom option if a predefined script wasn't selected, and
+      // either the ip_detect_path or ip_detect_script were provided defined.
+      if (!isPredefinedScriptSelected && (ipDetectPath || ipDetectScript)) {
+        selectedIPDetectScriptKey = 'custom';
+      }
+
+      return selectedIPDetectScriptKey;
+    }
+
+    return null;
+  }
+
   getUploadHandler(destinationKey, fileType) {
     let localValidationErrors = this.state.localValidationErrors;
 
@@ -734,6 +771,13 @@ class Setup extends mixin(StoreMixin) {
     let emptyFormFields = false;
 
     if (Object.keys(this.state.localValidationErrors).length !== 0) {
+      return false;
+    }
+
+    // Return early if the backend returned nothing on ip_detect_path and the
+    // user has not selected a script.
+    if (!this.state.formData.ip_detect_path
+      && !this.state.formData.ip_detect_script) {
       return false;
     }
 
