@@ -14,7 +14,7 @@ get_private_ip_from_metaserver()
     curl -fsSL http://169.254.169.254/latest/meta-data/local-ipv4
 }
 
-echo \${COREOS_PRIVATE_IPV4:-$(get_private_ip_from_metaserver)}`;
+echo -n \${COREOS_PRIVATE_IPV4:-$(get_private_ip_from_metaserver)}`;
 
 let azureScript = `#!/bin/sh
 set -o nounset -o errexit
@@ -33,7 +33,7 @@ get_ip_from_interface()
   /sbin/ifconfig "$1" | awk '/(inet addr)/ { print $2 }' | cut -d":" -f2 | head -1
 }
 
-echo \${COREOS_PRIVATE_IPV4:-$(get_ip_from_interface eth0)}`;
+echo -n \${COREOS_PRIVATE_IPV4:-$(get_ip_from_interface eth0)}`;
 
 let gceScript = `#!/bin/sh
 # Example ip-detect script using an external authority
