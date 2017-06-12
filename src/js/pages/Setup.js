@@ -314,7 +314,7 @@ class Setup extends mixin(StoreMixin) {
           showLabel: (
             <FormLabel>
               <FormLabelContent>
-                Agent Private IP List
+                Private Agent IP List
                 <Tooltip content={'The private IP addresses of the agents.'}
                   width={200} wrapText={true} />
               </FormLabelContent>
@@ -342,7 +342,7 @@ class Setup extends mixin(StoreMixin) {
           showLabel: (
             <FormLabel>
               <FormLabelContent>
-                Agent Public IP List
+                Public Agent IP List
                 <Tooltip content="Specify public agent nodes to run DC/OS apps
                   and services in a publicly accessible network." width={200}
                   wrapText={true} />
