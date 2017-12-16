@@ -75,7 +75,8 @@
     "dist": "npm test && npm run clean && NODE_ENV='production' ./node_modules/.bin/gulp dist",
     "serve": "NODE_ENV='development' ./node_modules/.bin/gulp serve",
     "livereload": "NODE_ENV='development' ./node_modules/.bin/gulp livereload",
-    "test": "./node_modules/.bin/gulp copy:external-plugins && jest"
+    "test": "./node_modules/.bin/gulp copy:external-plugins && jest",
+    "shrinkwrap": "npm shrinkwrap --dev && ./node_modules/.bin/gulp fixShrinkwrap"
   },
   "jest-webpack-alias": {
     "configFile": ".webpack.config.js"

@@ -30,6 +30,7 @@ var webpackConfig = require('./.webpack.config');
 
 var development = process.env.NODE_ENV === 'development';
 var appConfig = require('./src/js/config/Config');
+var shrinkwrap = require('./npm-shrinkwrap.json');
 
 var pluginsGlob = [
   appConfig.externalPluginsDirectory + '/**/*.*'
@@ -237,6 +238,15 @@ gulp.task('dist', function (callback) {
     callback
   );
 });
+
+// remove 'fsevents' from shrinkwrap, since it causes errors on non-Mac hosts
+// see https://github.com/npm/npm/issues/2679
+gulp.task('fixShrinkwrap', function (done) {
+  delete shrinkwrap.dependencies.fsevents;
+  var shrinkwrapString = JSON.stringify(shrinkwrap, null, '  ') + '\n';
+  fs.writeFile('./npm-shrinkwrap.json', shrinkwrapString, done);
+});
+
 // Use webpack to compile jsx into js.
 gulp.task('webpack', webpackFn);
 gulp.task('serve', ['server', 'default', 'watch']);
