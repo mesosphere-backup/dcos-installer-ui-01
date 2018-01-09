@@ -17,10 +17,10 @@ describe('InstallerStore', function () {
     });
 
     it('emits correct event type', function () {
-      expect(InstallerStore.emit.calls[0].args[0]).toEqual(
+      expect(InstallerStore.emit.calls.allArgs()[0][0]).toEqual(
         EventTypes.CURRENT_STAGE_CHANGE
       );
-      expect(InstallerStore.emit.calls[0].args[1]).toEqual('preflight');
+      expect(InstallerStore.emit.calls.allArgs()[0][1]).toEqual('preflight');
     });
   });
 
@@ -37,7 +37,7 @@ describe('InstallerStore', function () {
     });
 
     it('emits correct event type', function () {
-      expect(InstallerStore.emit.calls[0].args[0]).toEqual(
+      expect(InstallerStore.emit.calls.allArgs()[0][0]).toEqual(
         EventTypes.GLOBAL_INSTALL_IN_PROGRESS_CHANGE
       );
     });

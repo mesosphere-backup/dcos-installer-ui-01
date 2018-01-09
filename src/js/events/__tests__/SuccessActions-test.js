@@ -14,7 +14,7 @@ describe('SuccessActions', function () {
       this.previousJSON = RequestUtil.json;
       RequestUtil.json = jasmine.createSpy();
       SuccessActions.fetchDCOSURL();
-      this.configuration = RequestUtil.json.calls[0].args[0];
+      this.configuration = RequestUtil.json.calls.allArgs()[0][0];
     });
 
     afterEach(function () {

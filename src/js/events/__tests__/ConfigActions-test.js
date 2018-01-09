@@ -14,7 +14,7 @@ describe('ConfigActions', function () {
       this.previousJSON = RequestUtil.json;
       RequestUtil.json = jasmine.createSpy();
       ConfigActions.fetchConfig();
-      this.configuration = RequestUtil.json.calls[0].args[0];
+      this.configuration = RequestUtil.json.calls.allArgs()[0][0];
     });
 
     afterEach(function () {
@@ -58,7 +58,7 @@ describe('ConfigActions', function () {
       this.previousJSON = RequestUtil.json;
       RequestUtil.json = jasmine.createSpy();
       ConfigActions.fetchConfigState();
-      this.configuration = RequestUtil.json.calls[0].args[0];
+      this.configuration = RequestUtil.json.calls.allArgs()[0][0];
     });
 
     afterEach(function () {
@@ -102,7 +102,7 @@ describe('ConfigActions', function () {
       this.previousJSON = RequestUtil.json;
       RequestUtil.json = jasmine.createSpy();
       ConfigActions.fetchConfigType();
-      this.configuration = RequestUtil.json.calls[0].args[0];
+      this.configuration = RequestUtil.json.calls.allArgs()[0][0];
     });
 
     afterEach(function () {
@@ -146,7 +146,7 @@ describe('ConfigActions', function () {
       this.previousJSON = RequestUtil.json;
       RequestUtil.json = jasmine.createSpy();
       ConfigActions.updateConfig();
-      this.configuration = RequestUtil.json.calls[0].args[0];
+      this.configuration = RequestUtil.json.calls.allArgs()[0][0];
     });
 
     afterEach(function () {

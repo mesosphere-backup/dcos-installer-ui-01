@@ -1,12 +1,12 @@
 // Provide webpack contexts for smarter build. Without these,
 // webpack will try to be smart and auto create the contexts,
 // doubling the built output
-const requireExternalPlugin = require.context('../../../.external_plugins', true, /index/);
-const requireComponents = require.context('../components', false);
-const requireConstants = require.context('../constants', false);
-const requireConfig = require.context('../config', false);
-const requireIcons = require.context('../components/icons', false);
-const requireUtils = require.context('../utils', false);
+const requireExternalPlugin = require('../../../.external_plugins', true, /index/);
+const requireComponents = require('../components', false);
+const requireConstants = require('../constants', false);
+const requireConfig = require('../config', false);
+const requireIcons = require('../components/icons', false);
+const requireUtils = require('../utils', false);
 
 let pluginsList = {};
 let externalPluginsList;

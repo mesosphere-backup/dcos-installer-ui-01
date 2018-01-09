@@ -14,7 +14,7 @@ describe('StageActions', function () {
       this.previousJSON = RequestUtil.json;
       RequestUtil.json = jasmine.createSpy();
       StageActions.fetchStageStatus('preflight');
-      this.configuration = RequestUtil.json.calls[0].args[0];
+      this.configuration = RequestUtil.json.calls.allArgs()[0][0];
     });
 
     afterEach(function () {
@@ -58,7 +58,7 @@ describe('StageActions', function () {
       this.previousJSON = RequestUtil.json;
       RequestUtil.json = jasmine.createSpy();
       StageActions.beginStage('preflight');
-      this.configuration = RequestUtil.json.calls[0].args[0];
+      this.configuration = RequestUtil.json.calls.allArgs()[0][0];
     });
 
     afterEach(function () {
@@ -102,7 +102,7 @@ describe('StageActions', function () {
       this.previousJSON = RequestUtil.json;
       RequestUtil.json = jasmine.createSpy();
       StageActions.fetchLogs('preflight');
-      this.configuration = RequestUtil.json.calls[0].args[0];
+      this.configuration = RequestUtil.json.calls.allArgs()[0][0];
     });
 
     afterEach(function () {
@@ -146,7 +146,7 @@ describe('StageActions', function () {
       this.previousJSON = RequestUtil.json;
       RequestUtil.json = jasmine.createSpy();
       StageActions.fetchCurrentStage();
-      this.configuration = RequestUtil.json.calls[0].args[0];
+      this.configuration = RequestUtil.json.calls.allArgs()[0][0];
     });
 
     afterEach(function () {

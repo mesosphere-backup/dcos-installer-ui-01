@@ -24,10 +24,10 @@ describe('DeployStore', function () {
     });
 
     it('emits correct event type', function () {
-      expect(DeployStore.emit.calls[0].args[0]).toEqual(
+      expect(DeployStore.emit.calls.allArgs()[0][0]).toEqual(
         EventTypes.DEPLOY_STATE_CHANGE
       );
-      expect(DeployStore.emit.calls[0].args[1]).toEqual({});
+      expect(DeployStore.emit.calls.allArgs()[0][1]).toEqual({});
     });
 
     it('emits state finish if stage is completed', function () {
@@ -38,7 +38,7 @@ describe('DeployStore', function () {
       DeployStore.emit = jasmine.createSpy();
       DeployStore.processUpdateSuccess({});
 
-      expect(DeployStore.emit.calls[1].args[0]).toEqual(
+      expect(DeployStore.emit.calls.allArgs()[1][0]).toEqual(
         EventTypes.POSTFLIGHT_STATE_FINISH
       );
 

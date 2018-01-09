@@ -24,7 +24,7 @@ describe('PreFlightStore', function () {
     });
 
     it('emits correct event type', function () {
-      expect(PreFlightStore.emit.calls[0].args[0]).toEqual(
+      expect(PreFlightStore.emit.calls.allArgs()[0][0]).toEqual(
         EventTypes.PREFLIGHT_STATE_CHANGE
       );
     });
@@ -37,7 +37,7 @@ describe('PreFlightStore', function () {
       PreFlightStore.emit = jasmine.createSpy();
       PreFlightStore.processUpdateSuccess({});
 
-      expect(PreFlightStore.emit.calls[1].args[0]).toEqual(
+      expect(PreFlightStore.emit.calls.allArgs()[1][0]).toEqual(
         EventTypes.PREFLIGHT_STATE_FINISH
       );
 

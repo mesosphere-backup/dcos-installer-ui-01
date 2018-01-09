@@ -24,7 +24,7 @@ describe('PostFlightStore', function () {
     });
 
     it('emits correct event type', function () {
-      expect(PostFlightStore.emit.calls[0].args[0]).toEqual(
+      expect(PostFlightStore.emit.calls.allArgs()[0][0]).toEqual(
         EventTypes.POSTFLIGHT_STATE_CHANGE
       );
     });
@@ -37,7 +37,7 @@ describe('PostFlightStore', function () {
       PostFlightStore.emit = jasmine.createSpy();
       PostFlightStore.processUpdateSuccess({});
 
-      expect(PostFlightStore.emit.calls[1].args[0]).toEqual(
+      expect(PostFlightStore.emit.calls.allArgs()[1][0]).toEqual(
         EventTypes.POSTFLIGHT_STATE_FINISH
       );
 
