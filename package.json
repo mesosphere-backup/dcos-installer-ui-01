@@ -72,11 +72,13 @@
   },
   "scripts": {
     "clean": "rm -rf dist",
-    "dist": "npm test && npm run clean && NODE_ENV='production' ./node_modules/.bin/gulp dist",
+    "dist":
+      "npm test && npm run clean && NODE_ENV='production' ./node_modules/.bin/gulp dist",
     "serve": "NODE_ENV='development' ./node_modules/.bin/gulp serve",
     "livereload": "NODE_ENV='development' ./node_modules/.bin/gulp livereload",
     "test": "./node_modules/.bin/gulp copy:external-plugins && jest",
-    "shrinkwrap": "npm shrinkwrap --dev && ./node_modules/.bin/gulp fixShrinkwrap"
+    "shrinkwrap":
+      "npm shrinkwrap --dev && ./node_modules/.bin/gulp fixShrinkwrap"
   },
   "jest-webpack-alias": {
     "configFile": ".webpack.config.js"
@@ -86,20 +88,13 @@
       "__DEV__": true
     },
     "scriptPreprocessor": "jest/preprocessor.js",
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "es6"
-    ],
-    "modulePathIgnorePatterns": [
-      "/tmp/",
-      "/node_modules/",
-      "/.module-cache/"
-    ],
+    "moduleFileExtensions": ["js", "json", "es6"],
+    "modulePathIgnorePatterns": ["/tmp/", "/node_modules/", "/.module-cache/"],
     "unmockedModulePathPatterns": [
       "babel-runtime",
       "browser-info",
       "classnames",
+      "core-js",
       "d3",
       "events",
       "flux",
@@ -129,8 +124,6 @@
       "underscore",
       "react-addons-test-utils"
     ],
-    "testPathIgnorePatterns": [
-      "/node_modules/"
-    ]
+    "testPathIgnorePatterns": ["/node_modules/"]
   }
 }
